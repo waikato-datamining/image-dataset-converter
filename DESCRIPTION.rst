@@ -1,0 +1,10 @@
+The **image-dataset-converter** library allows the conversion between
+various dataset formats for image annotation datasets.
+Filters can be supplied as well, e.g., for cleaning up the data.
+
+Dataset formats:
+
+- image classification: TODO
+- object detection: TODO
+- image segmentation: TODO
+
