@@ -11,5 +11,5 @@ class Session(seppl.Session):
     """
     Session object shared among reader, filter(s), writer.
     """
-    logger: logging.Logger = logging.getLogger("img-dataset-converter")
+    logger: logging.Logger = logging.getLogger("image-dataset-converter")
     """ the global logger. """

@@ -83,10 +83,10 @@ def output_help(modules: List[str] = None, excluded_modules: Optional[List[str]]
     if index is not None:
         header_lines = []
         if help_format == HELP_FORMAT_MARKDOWN:
-            header_lines.append("# img-dataset-converter plugins")
+            header_lines.append("# image-dataset-converter plugins")
             header_lines.append("")
         elif help_format == HELP_FORMAT_TEXT:
-            heading = "img-dataset-converter plugins"
+            heading = "image-dataset-converter plugins"
             header_lines.append(heading)
             header_lines.append("=" * len(heading))
             header_lines.append("")
