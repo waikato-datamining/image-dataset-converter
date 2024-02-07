@@ -30,9 +30,9 @@ pip install git+https://github.com/waikato-datamining/image-dataset-converter.gi
 
 The following dataset formats are supported:
 
-| Domain               | Format | Read | Write | 
-|:---------------------|:-------|:-----|:------| 
-| Image classification | subdir | Y    | Y     | 
+| Domain               | Format | Read                           | Write                        | 
+|:---------------------|:-------|:-------------------------------|:-----------------------------| 
+| Image classification | subdir | [Y](plugins/from-subdir-ic.md) | [Y](plugins/to-subdir-ic.md) | 
 
 
 ## Tools
