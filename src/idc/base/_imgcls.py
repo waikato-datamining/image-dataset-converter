@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from .._data import ImageData
+from ._data import ImageData
 
 
 @dataclass

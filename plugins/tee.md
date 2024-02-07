@@ -1,15 +1,16 @@
-# strip-annotations
+# tee
 
 * accepts: idc.base.ImageData
 * generates: idc.base.ImageData, idc.base.ImageClassificationData, idc.base.ImageSegmentationData, idc.base.ObjectDetectionData
 
-Removes all annotations from the data coming through.
+Forwards the data passing through to the filter/writer defined as its sub-flow.
 
 ```
-usage: strip-annotations [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                         [-N LOGGER_NAME]
+usage: tee [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-N LOGGER_NAME]
+           [-f SUB_FLOW]
 
-Removes all annotations from the data coming through.
+Forwards the data passing through to the filter/writer defined as its sub-
+flow.
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -18,4 +19,7 @@ optional arguments:
   -N LOGGER_NAME, --logger_name LOGGER_NAME
                         The custom name to use for the logger, uses the plugin
                         name by default (default: None)
+  -f SUB_FLOW, --sub_flow SUB_FLOW
+                        The command-line defining the subflow
+                        (filter(s)/writer). (default: None)
 ```

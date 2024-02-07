@@ -1,6 +1,6 @@
 # to-subdir-ic
 
-* accepts: idc.base.imgcls.ImageClassificationData
+* accepts: idc.base.ImageClassificationData
 
 Saves images to sub-directories, using the classification label for the sub-directory.
 

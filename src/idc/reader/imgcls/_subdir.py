@@ -3,7 +3,7 @@ import os
 from typing import List, Iterable
 
 from wai.logging import LOGGING_WARNING
-from idc.base.imgcls import ImageClassificationData
+from idc.base import ImageClassificationData
 from idc.reader import Reader
 from idc.writer import SplittableStreamWriter
 

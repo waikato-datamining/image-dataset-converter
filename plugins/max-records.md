@@ -1,15 +1,16 @@
-# strip-annotations
+# max-records
 
 * accepts: idc.base.ImageData
 * generates: idc.base.ImageData, idc.base.ImageClassificationData, idc.base.ImageSegmentationData, idc.base.ObjectDetectionData
 
-Removes all annotations from the data coming through.
+Suppresses records after the specified maximum number of records have passed through.
 
 ```
-usage: strip-annotations [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                         [-N LOGGER_NAME]
+usage: max-records [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
+                   [-N LOGGER_NAME] [-m MAX_RECORDS]
 
-Removes all annotations from the data coming through.
+Suppresses records after the specified maximum number of records have passed
+through.
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -18,4 +19,7 @@ optional arguments:
   -N LOGGER_NAME, --logger_name LOGGER_NAME
                         The custom name to use for the logger, uses the plugin
                         name by default (default: None)
+  -m MAX_RECORDS, --max_records MAX_RECORDS
+                        The maximum number number of records to let through
+                        before suppressing records. (default: -1)
 ```
