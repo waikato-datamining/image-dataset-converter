@@ -1,0 +1,1 @@
+from ._strip_annotations import StripAnnotations

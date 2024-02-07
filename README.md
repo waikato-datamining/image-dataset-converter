@@ -30,8 +30,9 @@ pip install git+https://github.com/waikato-datamining/image-dataset-converter.gi
 
 The following dataset formats are supported:
 
-| Domain      | Format | Read  | Write | 
-| :---        | :---   | :---  | :---  | 
+| Domain               | Format | Read | Write | 
+|:---------------------|:-------|:-----|:------| 
+| Image classification | subdir | Y    | Y     | 
 
 
 ## Tools
@@ -48,11 +49,11 @@ usage: img-convert [-h|--help|--help-all|-help-plugin NAME] [-u INTERVAL]
 Tool for converting between image annotation dataset formats.
 
 readers:
-   
+   from-subdir-ic
 filters:
-   
+   strip-annotations
 writers:
-   
+   to-subdir-ic
 
 optional arguments:
   -h, --help            show basic help message and exit

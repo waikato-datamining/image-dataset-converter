@@ -23,8 +23,17 @@ ENV_IDC_MODULES_EXCL = "IDC_MODULES_EXCL"
 # can be overridden with IDC_MODULES environment variable
 DEFAULT_IDC_MODULES = ",".join([
     "idc.filter",
+    "idc.filter.imgcls",
+    "idc.filter.imgseg",
+    "idc.filter.objdet",
     "idc.reader",
+    "idc.reader.imgcls",
+    "idc.reader.imgseg",
+    "idc.reader.objdet",
     "idc.writer",
+    "idc.writer.imgcls",
+    "idc.writer.imgseg",
+    "idc.writer.objdet",
 ])
 
 REGISTRY = Registry(mode=MODE_DYNAMIC, default_modules=DEFAULT_IDC_MODULES,
