@@ -5,7 +5,7 @@ from typing import List, Iterable
 from wai.logging import LOGGING_WARNING
 from idc.base.imgcls import ImageClassificationData
 from idc.reader import Reader
-from idc.writer import StreamWriter
+from idc.writer import SplittableStreamWriter, add_splitting_params
 
 
 class SubDirReader(Reader):
@@ -120,20 +120,26 @@ class SubDirReader(Reader):
         return len(self._sub_dirs) == 0
 
 
-class SubDirWriter(StreamWriter):
+class SubDirWriter(SplittableStreamWriter):
 
-    def __init__(self, output_dir: str = None, logger_name: str = None, logging_level: str = LOGGING_WARNING):
+    def __init__(self, output_dir: str = None,
+                 split_names: List[str] = None, split_ratios: List[int] = None,
+                 logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
         Initializes the reader.
 
         :param output_dir: the output directory to create the sub-dirs in
         :type output_dir: str
+        :param split_names: the names of the splits, no splitting if None
+        :type split_names: list
+        :param split_ratios: the integer ratios of the splits (must sum up to 100)
+        :type split_ratios: list
         :param logger_name: the name to use for the logger
         :type logger_name: str
         :param logging_level: the logging level to use
         :type logging_level: str
         """
-        super().__init__(logger_name=logger_name, logging_level=logging_level)
+        super().__init__(split_names=split_names, split_ratios=split_ratios, logger_name=logger_name, logging_level=logging_level)
         self.output_dir = output_dir
         self._sub_dirs = None
 
@@ -163,7 +169,7 @@ class SubDirWriter(StreamWriter):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-o", "--output", type=str, help="The directory to create the sub-directories in according to the image labels.", required=True)
+        parser.add_argument("-o", "--output", type=str, help="The directory to create the sub-directories in according to the image labels. Any defined splits get added beneath there.", required=True)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
@@ -204,10 +210,12 @@ class SubDirWriter(StreamWriter):
             data = [data]
 
         for item in data:
-            if item.annotation is None:
-                sub_dir = self.output_dir
-            else:
-                sub_dir = os.path.join(self.output_dir, item.annotation)
+            sub_dir = self.output_dir
+            if self.splitter is not None:
+                split = self.splitter.next()
+                sub_dir = os.path.join(sub_dir, split)
+            if item.annotation is not None:
+                sub_dir = os.path.join(sub_dir, item.annotation)
             if not os.path.exists(sub_dir):
                 self.logger().info("Creating sub dir: %s" % sub_dir)
                 os.makedirs(sub_dir)
