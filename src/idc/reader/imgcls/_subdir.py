@@ -5,7 +5,7 @@ from typing import List, Iterable
 from wai.logging import LOGGING_WARNING
 from idc.base.imgcls import ImageClassificationData
 from idc.reader import Reader
-from idc.writer import SplittableStreamWriter, add_splitting_params
+from idc.writer import SplittableStreamWriter
 
 
 class SubDirReader(Reader):
