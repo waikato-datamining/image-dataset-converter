@@ -10,30 +10,6 @@ from PIL import Image
 from seppl import MetaDataHandler, LoggingHandler
 
 
-def locate_image(path: str) -> Optional[str]:
-    """
-    Tries to locate the image (png or jpg) for the given path by replacing its extension.
-
-    :param path: the base path to use
-    :type path: str
-    :return: the located image, None if not found
-    :rtype: str
-    """
-    noext = os.path.splitext(path)[0]
-    images = [
-        noext + ".png",
-        noext + ".PNG",
-        noext + ".jpg",
-        noext + ".JPG",
-        noext + ".jpeg",
-        noext + ".JPEG",
-    ]
-    for image in images:
-        if os.path.exists(image):
-            return image
-    return None
-
-
 @dataclass
 class ImageData(MetaDataHandler, LoggingHandler):
 
