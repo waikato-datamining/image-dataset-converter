@@ -1,5 +1,6 @@
 # image-dataset-converter plugins
 ## Readers
+* [from-adams-ic](from-adams-ic.md)
 * [from-subdir-ic](from-subdir-ic.md)
 
 ## Filters
@@ -10,4 +11,5 @@
 * [tee](tee.md)
 
 ## Writers
+* [to-adams-ic](to-adams-ic.md)
 * [to-subdir-ic](to-subdir-ic.md)

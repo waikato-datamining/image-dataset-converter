@@ -48,7 +48,7 @@ def _print_usage(plugin_details: bool = False):
     print(prefix + "[-l {%s}]" % logging_levels)
     print(prefix + "reader")
     print(prefix + "[filter [filter [...]]]")
-    print(prefix + "writer")
+    print(prefix + "[writer]")
     print()
     print("Tool for converting between image annotation dataset formats.")
     print()

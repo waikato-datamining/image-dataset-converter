@@ -33,6 +33,7 @@ setup(
     install_requires=[
         "seppl>=0.1.1",
         "wai.logging",
+        "wai.common",
         "pillow<10.0",
     ],
     version="0.0.1",

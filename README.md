@@ -32,6 +32,7 @@ The following dataset formats are supported:
 
 | Domain               | Format | Read                           | Write                        | 
 |:---------------------|:-------|:-------------------------------|:-----------------------------| 
+| Image classification | ADAMS  | [Y](plugins/from-adams-ic.md)  | [Y](plugins/to-adams-ic.md)  | 
 | Image classification | subdir | [Y](plugins/from-subdir-ic.md) | [Y](plugins/to-subdir-ic.md) | 
 
 
@@ -44,16 +45,16 @@ usage: img-convert [-h|--help|--help-all|-help-plugin NAME] [-u INTERVAL]
                    [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                    reader
                    [filter [filter [...]]]
-                   writer
+                   [writer]
 
 Tool for converting between image annotation dataset formats.
 
 readers:
-   from-subdir-ic
+   from-adams-ic, from-subdir-ic
 filters:
-   strip-annotations
+   max-records, metadata, split, strip-annotations, tee
 writers:
-   to-subdir-ic
+   to-adams-ic, to-subdir-ic
 
 optional arguments:
   -h, --help            show basic help message and exit
