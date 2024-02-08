@@ -3,8 +3,9 @@ import logging
 import os.path
 import shutil
 from dataclasses import dataclass
-from typing import Dict, Optional
+from typing import Dict, Optional, Tuple
 
+import imagesize
 from PIL import Image
 from seppl import MetaDataHandler, LoggingHandler
 
@@ -53,6 +54,9 @@ class ImageData(MetaDataHandler, LoggingHandler):
 
     format: str = None
     """ the format of the image. """
+
+    size: Tuple[int, int] = None
+    """ the size (width, height) tuple of the image. """
 
     metadata: Dict = None
     """ the dictionary with optional meta-data. """
@@ -104,6 +108,23 @@ class ImageData(MetaDataHandler, LoggingHandler):
             return os.path.basename(self.source)
         else:
             return None
+
+    def image_size(self) -> Optional[Tuple[int, int]]:
+        """
+        Returns the size tuple (width, height) for the image.
+
+        :return: the width/height tuple, None if failed to determine
+        :rtype: tuple
+        """
+        if self.size is not None:
+            return self.size
+        elif self.data is not None:
+            self.size = imagesize.get(self.data)
+            return self.size
+        elif self.source is not None:
+            self.size = imagesize.get(self.source)
+            return self.size
+        return None
 
     def save_image(self, path: str) -> bool:
         """
