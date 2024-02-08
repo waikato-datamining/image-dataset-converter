@@ -52,7 +52,8 @@ Tool for converting between image annotation dataset formats.
 readers:
    from-adams-ic, from-subdir-ic
 filters:
-   max-records, metadata, split, strip-annotations, tee
+   max-records, metadata, randomize-records, record-window, split, 
+   strip-annotations, tee
 writers:
    to-adams-ic, to-subdir-ic
 

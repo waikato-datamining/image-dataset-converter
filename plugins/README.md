@@ -6,6 +6,8 @@
 ## Filters
 * [max-records](max-records.md)
 * [metadata](metadata.md)
+* [randomize-records](randomize-records.md)
+* [record-window](record-window.md)
 * [split](split.md)
 * [strip-annotations](strip-annotations.md)
 * [tee](tee.md)
