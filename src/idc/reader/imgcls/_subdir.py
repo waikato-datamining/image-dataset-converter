@@ -99,15 +99,19 @@ class SubDirReader(Reader):
         :return: the data
         :rtype: Iterable
         """
-        input_dirs = list(self._sub_dirs.keys())
+        input_dirs = sorted(list(self._sub_dirs.keys()))
         for input_dir in input_dirs:
             for sub_dir in self._sub_dirs[input_dir]:
+                files = []
                 for f in os.listdir(sub_dir):
                     path = os.path.join(sub_dir, f)
                     f = f.lower()
                     if f.endswith(".jpg") or f.endswith(".jpeg") or f.endswith(".png"):
                         self.logger().info("Reading image from: %s" % path)
-                        yield ImageClassificationData(source=path, annotation=os.path.basename(sub_dir))
+                        files.append(path)
+                files = sorted(files)
+                for file in files:
+                    yield ImageClassificationData(source=file, annotation=os.path.basename(sub_dir))
             del self._sub_dirs[input_dir]
 
     def has_finished(self) -> bool:
