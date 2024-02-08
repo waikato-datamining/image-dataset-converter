@@ -34,6 +34,7 @@ The following dataset formats are supported:
 |:---------------------|:-------|:-------------------------------|:-----------------------------| 
 | Image classification | ADAMS  | [Y](plugins/from-adams-ic.md)  | [Y](plugins/to-adams-ic.md)  | 
 | Image classification | subdir | [Y](plugins/from-subdir-ic.md) | [Y](plugins/to-subdir-ic.md) | 
+| Object detection     | ADAMS  | [Y](plugins/from-adams-od.md)  | [Y](plugins/to-adams-od.md)  | 
 
 
 ## Tools
@@ -50,12 +51,12 @@ usage: img-convert [-h|--help|--help-all|-help-plugin NAME] [-u INTERVAL]
 Tool for converting between image annotation dataset formats.
 
 readers:
-   from-adams-ic, from-subdir-ic
+   from-adams-ic, from-adams-od, from-subdir-ic
 filters:
    max-records, metadata, randomize-records, record-window, split, 
    strip-annotations, tee
 writers:
-   to-adams-ic, to-subdir-ic
+   to-adams-ic, to-adams-od, to-subdir-ic
 
 optional arguments:
   -h, --help            show basic help message and exit
@@ -182,5 +183,41 @@ See [here](plugins/README.md) for an overview of all plugins.
 
 ## Command-line examples
 
-TODO
+### sub-dir to ADAMS
 
+The following converts an image classification dataset from the sub-dir format
+(sub-directory names represent the image classification labels) into the ADAMS
+format, which stores the label in an associated .report file (Java properties file):
+
+```bash
+img-convert -l INFO \
+  from-subdir-ic \
+    -l INFO \
+    -i ./input/ \
+  to-adams-ic \
+    -l INFO \
+    -o ./output \
+    -c classification
+```
+
+
+### sub-dir (randomized train/val/test splits)
+
+By enforcing batch-processing `--force_batch` and using the 
+`randomize-records` filter, randomized train/val/test splits
+(writers typically support generating splits) can be generated 
+like this:
+
+```bash
+img-convert -l INFO --force_batch \
+  from-subdir-ic \
+    -l INFO \
+    -i ./input/ \
+  randomize-records \
+    -s 42 \
+  to-subdir-ic \
+    -l INFO \
+    -o ./output \
+    --split_names train val test \
+    --split_ratios 70 15 15
+```
