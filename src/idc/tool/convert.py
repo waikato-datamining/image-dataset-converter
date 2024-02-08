@@ -131,7 +131,7 @@ def _parse_args(args: List[str], require_reader: bool = True, require_writer: bo
     else:
         filter_ = MultiFilter(filters=filters)
 
-    # check domain compatibility
+    # check compatibility
     if writer is not None:
         if filter_ is not None:
             check_compatibility([reader, filter_, writer])
