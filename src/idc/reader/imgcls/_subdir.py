@@ -141,7 +141,6 @@ class SubDirWriter(SplittableStreamWriter):
         """
         super().__init__(split_names=split_names, split_ratios=split_ratios, logger_name=logger_name, logging_level=logging_level)
         self.output_dir = output_dir
-        self._sub_dirs = None
 
     def name(self) -> str:
         """
