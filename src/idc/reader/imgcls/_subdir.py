@@ -1,6 +1,6 @@
 import argparse
 import os
-from typing import List, Iterable
+from typing import List, Iterable, Union
 
 from wai.logging import LOGGING_WARNING
 from idc.base import ImageClassificationData
@@ -10,19 +10,21 @@ from idc.writer import SplittableStreamWriter
 
 class SubDirReader(Reader):
 
-    def __init__(self, input_dirs: List[str] = None, logger_name: str = None, logging_level: str = LOGGING_WARNING):
+    def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
+                 logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
         Initializes the reader.
 
-        :param input_dirs: the top-level directories to use
-        :type input_dirs: list
+        :param source: the top-level directories to use
+        :param source_list: the file(s) with top-level dir(s)
         :param logger_name: the name to use for the logger
         :type logger_name: str
         :param logging_level: the logging level to use
         :type logging_level: str
         """
         super().__init__(logger_name=logger_name, logging_level=logging_level)
-        self.input_dirs = input_dirs
+        self.source = source
+        self.source_list = source_list
         self._sub_dirs = None
 
     def name(self) -> str:
@@ -52,6 +54,7 @@ class SubDirReader(Reader):
         """
         parser = super()._create_argparser()
         parser.add_argument("-i", "--input", type=str, help="Path to the directory with the sub-directories containing the images", required=False, nargs="*")
+        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the directories to use", required=False, nargs="*")
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
@@ -62,7 +65,8 @@ class SubDirReader(Reader):
         :type ns: argparse.Namespace
         """
         super()._apply_args(ns)
-        self.input_dirs = ns.input
+        self.source = ns.input
+        self.source_list = ns.input_list
 
     def generates(self) -> List:
         """
@@ -78,9 +82,36 @@ class SubDirReader(Reader):
         Initializes the processing, e.g., for opening files or databases.
         """
         super().initialize()
+
+        # assemble top-level dirs
+        all_dirs = []
+        if self.source is not None:
+            if isinstance(self.source, list):
+                all_dirs.extend(self.source)
+            else:
+                all_dirs.append(self.source)
+        if self.source_list is not None:
+            if isinstance(self.source_list, list):
+                files = self.source_list
+            else:
+                files = [self.source_list]
+            for file in files:
+                with open(file, "r") as fp:
+                    lines = fp.readline()
+                    lines = [x.strip() for x in lines]
+                    for line in lines:
+                        if len(line) == 0:
+                            continue
+                        if line.startswith("#"):
+                            continue
+                        all_dirs.append(line)
+
         # find all subdirs
         self._sub_dirs = dict()
-        for input_dir in self.input_dirs:
+        for input_dir in all_dirs:
+            if not os.path.exists(input_dir):
+                self.logger().warning("Directory does not exist: %s" % input_dir)
+                continue
             for f in os.listdir(input_dir):
                 path = os.path.join(input_dir, f)
                 if os.path.isdir(path):
