@@ -33,7 +33,7 @@ setup(
     install_requires=[
         "seppl>=0.1.1",
         "wai.logging",
-        "wai.common>=0.0.43",
+        "wai.common>=0.0.44",
         "pillow",
         "imagesize",
     ],
