@@ -21,14 +21,33 @@ class ObjectDetectionData(ImageData):
         """
         return isinstance(self.annotation, NormalizedLocatedObjects)
 
+    def get_normalized(self) -> NormalizedLocatedObjects:
+        """
+        Returns normalized annotations.
+        """
+        if self.is_normalized():
+            return self.annotation
+        else:
+            width, height = self.image_size()
+            return absolute_to_normalized(self.annotation, width, height)
+
     def to_normalized(self):
         """
         Turns the absolute annotations into normalized ones (in-place).
         """
         if self.is_normalized():
             return
-        width, height = self.image_size()
-        self.annotation = absolute_to_normalized(self.annotation, width, height)
+        self.annotation = self.get_normalized()
+
+    def get_absolute(self) -> LocatedObjects:
+        """
+        Returns absolute annotations.
+        """
+        if not self.is_normalized():
+            return self.annotation
+        else:
+            width, height = self.image_size()
+            return normalized_to_absolute(self.annotation, width, height)
 
     def to_absolute(self):
         """
@@ -36,5 +55,4 @@ class ObjectDetectionData(ImageData):
         """
         if not self.is_normalized():
             return
-        width, height = self.image_size()
-        self.annotation = normalized_to_absolute(self.annotation, width, height)
+        self.annotation = self.get_absolute()
