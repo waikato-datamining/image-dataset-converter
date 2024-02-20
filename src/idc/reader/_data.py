@@ -4,7 +4,7 @@ from typing import List, Iterable, Union
 from seppl.io import locate_files
 from wai.logging import LOGGING_WARNING
 
-from idc.api import DATATYPES, data_type_to_class
+from idc.api import DATATYPES, data_type_to_class, ImageData
 from idc.api import Reader
 
 
@@ -81,7 +81,10 @@ class DataReader(Reader):
         :return: the list of classes
         :rtype: list
         """
-        return [data_type_to_class(self.data_type)]
+        if self.data_type is None:
+            return [ImageData]
+        else:
+            return [data_type_to_class(self.data_type)]
 
     def initialize(self):
         """

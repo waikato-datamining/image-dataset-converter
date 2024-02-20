@@ -1,7 +1,7 @@
 # record-window
 
-* accepts: idc.base.ImageData
-* generates: idc.base.ImageClassificationData, idc.base.ImageSegmentationData, idc.base.ObjectDetectionData
+* accepts: idc.api.ImageData
+* generates: idc.api.ImageClassificationData, idc.api.ImageSegmentationData, idc.api.ObjectDetectionData
 
 Only lets records pass that match the defined window and step size.
 

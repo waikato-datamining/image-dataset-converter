@@ -1,7 +1,7 @@
 # max-records
 
-* accepts: idc.base.ImageData
-* generates: idc.base.ImageData, idc.base.ImageClassificationData, idc.base.ImageSegmentationData, idc.base.ObjectDetectionData
+* accepts: idc.api.ImageData
+* generates: idc.api.ImageData, idc.api.ImageClassificationData, idc.api.ImageSegmentationData, idc.api.ObjectDetectionData
 
 Suppresses records after the specified maximum number of records have passed through.
 

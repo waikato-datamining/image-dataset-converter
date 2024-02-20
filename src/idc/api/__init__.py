@@ -7,3 +7,4 @@ from ._data_types import DATATYPE_IMGCLS, DATATYPE_OBJDET, DATATYPE_IMGSEG, DATA
 from ._reader import Reader
 from ._writer import BatchWriter, SplittableBatchWriter
 from ._writer import StreamWriter, SplittableStreamWriter
+from ._splitting import init_splitting_params, add_splitting_params, transfer_splitting_params, initialize_splitting

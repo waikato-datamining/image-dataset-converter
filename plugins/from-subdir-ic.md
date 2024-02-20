@@ -1,6 +1,6 @@
 # from-subdir-ic
 
-* generates: idc.base.ImageClassificationData
+* generates: idc.api.ImageClassificationData
 
 Loads images from sub-directories, uses the name of the sub-directory as classification label.
 

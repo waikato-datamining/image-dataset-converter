@@ -1,7 +1,7 @@
 # randomize-records
 
-* accepts: idc.base.ImageData
-* generates: idc.base.ImageClassificationData, idc.base.ImageSegmentationData, idc.base.ObjectDetectionData
+* accepts: idc.api.ImageData
+* generates: idc.api.ImageClassificationData, idc.api.ImageSegmentationData, idc.api.ObjectDetectionData
 
 Batch filter that randomizes the order of the records.
 

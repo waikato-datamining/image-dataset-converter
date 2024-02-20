@@ -1,7 +1,7 @@
 # metadata
 
-* accepts: idc.base.ImageData
-* generates: idc.base.ImageData, idc.base.ImageClassificationData, idc.base.ImageSegmentationData, idc.base.ObjectDetectionData
+* accepts: idc.api.ImageData
+* generates: idc.api.ImageData, idc.api.ImageClassificationData, idc.api.ImageSegmentationData, idc.api.ObjectDetectionData
 
 Keeps or discards data records based on meta-data comparisons. Performs the following comparison: METADATA_VALUE COMPARISON VALUE. Records that do not have the required field get discarded automatically.
 

@@ -1,6 +1,6 @@
 # to-adams-od
 
-* accepts: idc.base.ObjectDetectionData
+* accepts: idc.api.ObjectDetectionData
 
 Saves the bounding box/polygon definitions in an ADAMS .report file alongside the image.
 

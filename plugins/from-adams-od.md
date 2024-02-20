@@ -1,6 +1,6 @@
 # from-adams-od
 
-* generates: idc.base.ObjectDetectionData
+* generates: idc.api.ObjectDetectionData
 
 Loads the bounding box and/or polygon definitions from the associated .report file.
 

@@ -1,15 +1,15 @@
-# to-adams-ic
+# to-data
 
-* accepts: idc.api.ImageClassificationData
+* accepts: idc.api.ImageData
 
-Saves the classification label in an ADAMS .report file alongside the image.
+Saves just the images.
 
 ```
-usage: to-adams-ic [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                   [-N LOGGER_NAME] [-r SPLIT_RATIOS [SPLIT_RATIOS ...]]
-                   [-n SPLIT_NAMES [SPLIT_NAMES ...]] -o OUTPUT -c FIELD
+usage: to-data [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-N LOGGER_NAME]
+               [-r SPLIT_RATIOS [SPLIT_RATIOS ...]]
+               [-n SPLIT_NAMES [SPLIT_NAMES ...]] -o OUTPUT
 
-Saves the classification label in an ADAMS .report file alongside the image.
+Saves just the images.
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -25,10 +25,6 @@ optional arguments:
                         The split names to use for the generated splits.
                         (default: None)
   -o OUTPUT, --output OUTPUT
-                        The directory to store the images/.report files in.
-                        Any defined splits get added beneath there. (default:
-                        None)
-  -c FIELD, --class_field FIELD
-                        The report field containing the image classification
-                        label (default: None)
+                        The directory to store the images in. Any defined
+                        splits get added beneath there. (default: None)
 ```

@@ -1,6 +1,6 @@
 # from-adams-ic
 
-* generates: idc.base.ImageClassificationData
+* generates: idc.api.ImageClassificationData
 
 Loads the image classification from the specified class field in the associated .report file.
 
