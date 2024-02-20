@@ -6,7 +6,7 @@ from typing import List
 
 from wai.logging import LOGGING_WARNING
 from seppl.io import Filter
-from idc.base import ImageClassificationData
+from idc.api import ImageClassificationData
 
 
 class LabelFromName(Filter):

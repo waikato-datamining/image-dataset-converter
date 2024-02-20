@@ -7,7 +7,7 @@ from seppl import MetaDataHandler
 from seppl.io import Filter, FILTER_ACTIONS, FILTER_ACTION_DISCARD, FILTER_ACTION_KEEP
 from idc.core import COMPARISONS_EXT, COMPARISON_LESSTHAN, COMPARISON_LESSOREQUAL, COMPARISON_EQUAL, COMPARISON_NOTEQUAL, \
     COMPARISON_GREATEROREQUAL, COMPARISON_GREATERTHAN, COMPARISON_CONTAINS, COMPARISON_MATCHES, COMPARISON_EXT_HELP
-from idc.base import ImageData, ImageClassificationData, ImageSegmentationData, ObjectDetectionData
+from idc.api import ImageData, ImageClassificationData, ImageSegmentationData, ObjectDetectionData
 
 
 class MetaData(Filter):

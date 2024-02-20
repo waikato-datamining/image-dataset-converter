@@ -3,8 +3,8 @@ import os
 from typing import List
 
 from wai.logging import LOGGING_WARNING
-from idc.base import ImageClassificationData
-from idc.writer import SplittableStreamWriter
+from idc.api import ImageClassificationData
+from idc.api import SplittableStreamWriter
 
 
 class SubDirWriter(SplittableStreamWriter):

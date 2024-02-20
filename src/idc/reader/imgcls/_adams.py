@@ -4,8 +4,8 @@ from typing import List, Iterable, Union
 from wai.logging import LOGGING_WARNING
 from wai.common.file.report import loadf
 from seppl.io import locate_files
-from idc.base import ImageClassificationData, locate_image
-from idc.reader import Reader
+from idc.api import ImageClassificationData, locate_image
+from idc.api import Reader
 
 
 class AdamsImageClassificationReader(Reader):

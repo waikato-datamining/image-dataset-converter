@@ -1,0 +1,211 @@
+import argparse
+import csv
+import os
+from collections import OrderedDict
+from typing import List
+
+from wai.logging import LOGGING_WARNING
+from idc.api import ObjectDetectionData
+from idc.api import SplittableStreamWriter
+
+
+class YoloObjectDetectionWriter(SplittableStreamWriter):
+
+    def __init__(self, output_dir: str = None,
+                 image_subdir: str = None, labels_subdir: str = None,
+                 use_polygon_format: bool = False, labels: str = None, labels_csv: str = None,
+                 split_names: List[str] = None, split_ratios: List[int] = None,
+                 logger_name: str = None, logging_level: str = LOGGING_WARNING):
+        """
+        Initializes the reader.
+
+        :param output_dir: the output directory to save the image/report in
+        :type output_dir: str
+        :param image_subdir: the sub-dir to use for the images
+        :type image_subdir: str
+        :param labels_subdir: the sub-dir to use for the labels
+        :type labels_subdir: str
+        :param use_polygon_format: whether to use the polygon format
+        :type use_polygon_format: bool
+        :param labels: the text file with the comma-separated list of labels
+        :type labels: str
+        :param labels_csv: the CSV file to write the label mapping to (index and label)
+        :type labels_csv: str
+        :param split_names: the names of the splits, no splitting if None
+        :type split_names: list
+        :param split_ratios: the integer ratios of the splits (must sum up to 100)
+        :type split_ratios: list
+        :param logger_name: the name to use for the logger
+        :type logger_name: str
+        :param logging_level: the logging level to use
+        :type logging_level: str
+        """
+        super().__init__(split_names=split_names, split_ratios=split_ratios, logger_name=logger_name, logging_level=logging_level)
+        self.output_dir = output_dir
+        self.image_subdir = image_subdir
+        self.labels_subdir = labels_subdir
+        self.use_polygon_format = use_polygon_format
+        self.labels = labels
+        self.labels_csv = labels_csv
+        self._label_mapping = None  # label -> index
+
+    def name(self) -> str:
+        """
+        Returns the name of the handler, used as sub-command.
+
+        :return: the name
+        :rtype: str
+        """
+        return "to-yolo-od"
+
+    def description(self) -> str:
+        """
+        Returns a description of the handler.
+
+        :return: the description
+        :rtype: str
+        """
+        return "Saves the bounding box/polygon definitions in YOLO .txt format. By default, places images in the 'images' subdir and the annotations in 'labels'."
+
+    def _create_argparser(self) -> argparse.ArgumentParser:
+        """
+        Creates an argument parser. Derived classes need to fill in the options.
+
+        :return: the parser
+        :rtype: argparse.ArgumentParser
+        """
+        parser = super()._create_argparser()
+        parser.add_argument("-o", "--output", type=str, help="The directory to store the images/.report files in. Any defined splits get added beneath there.", required=True)
+        parser.add_argument("--image_subdir", metavar="DIR", type=str, default=None, help="The name of the sub-dir to use for storing the images in.", required=False)
+        parser.add_argument("--labels_subdir", metavar="DIR", type=str, default=None, help="The name of the sub-dir to use for storing the annotations in.", required=False)
+        parser.add_argument("-p", "--use_polygon_format", action="store_true", help="Whether to read the annotations in polygon format rather than bbox format", required=False)
+        parser.add_argument("--labels", metavar="FILE", type=str, default=None, help="The text file with the comma-separated list of labels", required=False)
+        parser.add_argument("--labels_csv", metavar="FILE", type=str, default=None, help="The CSV file to write the label mapping to (index and label)", required=False)
+        return parser
+
+    def _apply_args(self, ns: argparse.Namespace):
+        """
+        Initializes the object with the arguments of the parsed namespace.
+
+        :param ns: the parsed arguments
+        :type ns: argparse.Namespace
+        """
+        super()._apply_args(ns)
+        self.output_dir = ns.output
+        self.image_subdir = ns.image_subdir
+        self.labels_subdir = ns.labels_subdir
+        self.use_polygon_format = ns.use_polygon_format
+        self.labels = ns.labels
+        self.labels_csv = ns.labels_csv
+
+    def accepts(self) -> List:
+        """
+        Returns the list of classes that are accepted.
+
+        :return: the list of classes
+        :rtype: list
+        """
+        return [ObjectDetectionData]
+
+    def initialize(self):
+        """
+        Initializes the processing, e.g., for opening files or databases.
+        """
+        super().initialize()
+        if self.labels is None:
+            raise Exception("No output file for labels provided!")
+        if not os.path.exists(self.output_dir):
+            self.logger().info("Creating output dir: %s" % self.output_dir)
+            os.makedirs(self.output_dir)
+        if self.image_subdir is None:
+            self.image_subdir = "images"
+        if self.labels_subdir is None:
+            self.labels_subdir = "labels"
+        self._label_mapping = OrderedDict()
+
+    def write_stream(self, data):
+        """
+        Saves the data one by one.
+
+        :param data: the data to write (single record or iterable of records)
+        """
+        if isinstance(data, ObjectDetectionData):
+            data = [data]
+
+        for item in data:
+            sub_dir = self.output_dir
+            if self.splitter is not None:
+                split = self.splitter.next()
+                sub_dir = os.path.join(sub_dir, split)
+            if not os.path.exists(sub_dir):
+                self.logger().info("Creating sub dir: %s" % sub_dir)
+                os.makedirs(sub_dir)
+
+            normalized = None
+            if len(item.annotation) > 0:
+                normalized = item.get_normalized()
+
+            # image
+            path = sub_dir
+            if len(self.image_subdir) > 0:
+                path = os.path.join(path, self.image_subdir)
+            path = os.path.join(path, item.image_name())
+            self.logger().info("Writing image to: %s" % path)
+            item.save_image(path)
+
+            # annotations
+            if normalized is not None:
+                lines = []
+                for obj in normalized:
+                    # determine index
+                    index = 0
+                    if (obj.metadata is not None) and ("type" in obj.metadata):
+                        label = obj.metadata["type"]
+                        if label not in self._label_mapping:
+                            self._label_mapping[label] = len(self._label_mapping)
+                        index = self._label_mapping[label]
+                    # determine coordinates
+                    if self.use_polygon_format:
+                        values = []
+                        for x, y in zip(obj.get_polygon_x(), obj.get_polygon_y()):
+                            values.append(x)
+                            values.append(y)
+                    else:
+                        values = [obj.x, obj.y, obj.width, obj.height]
+                    values = [str(value) for value in values]
+                    line = str(index) + " " + " ".join(values)
+                    lines.append(line)
+
+                path = sub_dir
+                if len(self.labels_subdir) > 0:
+                    path = os.path.join(path, self.labels_subdir)
+                path = os.path.join(path, item.image_name())
+                path = os.path.splitext(path)[0] + ".txt"
+                self.logger().info("Writing annotations to: %s" % path)
+                with open(path, "w") as fp:
+                    for line in lines:
+                        fp.write(line)
+                        fp.write("\n")
+
+    def finalize(self):
+        """
+        Finishes the processing, e.g., for closing files or databases.
+        """
+        super().finalize()
+
+        # labels
+        self.logger().info("Writing labels file: %s" % self.labels)
+        keys = sorted(self._label_mapping.keys())
+        labels = [self._label_mapping[key] for key in keys]
+        with open(self.labels, "w") as fp:
+            fp.write(",".join(labels))
+
+        # labels csv
+        if self.labels_csv is not None:
+            self.logger().info("Writing labels CSV file: %s" % self.labels_csv)
+            rows = [["Index", "Label"]]
+            for key in keys:
+                rows.append([key, self._label_mapping[key]])
+            with open(self.labels_csv, "w") as fp:
+                writer = csv.writer(fp)
+                writer.writerows(rows)

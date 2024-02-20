@@ -4,8 +4,8 @@ from typing import List
 
 from wai.logging import LOGGING_WARNING
 from wai.common.file.report import Report, Field, save
-from idc.base import ImageClassificationData
-from idc.writer import SplittableStreamWriter
+from idc.api import ImageClassificationData
+from idc.api import SplittableStreamWriter
 
 
 class AdamsImageClassificationWriter(SplittableStreamWriter):

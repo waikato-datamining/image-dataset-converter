@@ -4,7 +4,7 @@ from typing import List
 from wai.logging import LOGGING_WARNING
 from seppl import MetaDataHandler, get_metadata
 from seppl.io import Splitter, Filter
-from idc.base import ImageData, ImageClassificationData, ImageSegmentationData, ObjectDetectionData
+from idc.api import ImageData, ImageClassificationData, ImageSegmentationData, ObjectDetectionData
 
 META_SPLIT = "split"
 """ the key for storing the split name in the meta-data. """

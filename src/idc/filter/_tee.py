@@ -4,7 +4,7 @@ from typing import List
 from wai.logging import LOGGING_WARNING
 from seppl import split_args, split_cmdline, Plugin
 from seppl.io import Writer, BatchWriter, StreamWriter, Filter, MultiFilter
-from idc.base import ImageData, ImageClassificationData, ImageSegmentationData, ObjectDetectionData
+from idc.api import ImageData, ImageClassificationData, ImageSegmentationData, ObjectDetectionData
 
 
 class Tee(Filter):

@@ -6,7 +6,7 @@ from typing import List
 
 from wai.logging import LOGGING_WARNING
 from seppl.io import Filter
-from idc.base import ImageData, ImageClassificationData, ImageSegmentationData, ObjectDetectionData
+from idc.api import ImageData, ImageClassificationData, ImageSegmentationData, ObjectDetectionData
 
 
 class MetaDataFromName(Filter):

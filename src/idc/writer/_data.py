@@ -4,8 +4,8 @@ from typing import List
 
 from wai.logging import LOGGING_WARNING
 
-from idc.base import ImageData
-from idc.writer import SplittableStreamWriter
+from idc.api import ImageData
+from idc.api import SplittableStreamWriter
 
 
 class DataWriter(SplittableStreamWriter):

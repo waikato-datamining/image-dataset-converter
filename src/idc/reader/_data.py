@@ -4,8 +4,8 @@ from typing import List, Iterable, Union
 from seppl.io import locate_files
 from wai.logging import LOGGING_WARNING
 
-from idc.base import DATATYPES, data_type_to_class
-from idc.reader import Reader
+from idc.api import DATATYPES, data_type_to_class
+from idc.api import Reader
 
 
 class DataReader(Reader):

@@ -4,8 +4,8 @@ from typing import List
 
 from wai.logging import LOGGING_WARNING
 from wai.common.file.report import Report, Field, save
-from idc.base import ObjectDetectionData
-from idc.writer import SplittableStreamWriter
+from idc.api import ObjectDetectionData
+from idc.api import SplittableStreamWriter
 
 
 class AdamsObjectDetectionWriter(SplittableStreamWriter):

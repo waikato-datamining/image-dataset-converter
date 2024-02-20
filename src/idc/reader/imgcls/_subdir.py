@@ -3,8 +3,8 @@ import os
 from typing import List, Iterable, Union
 
 from wai.logging import LOGGING_WARNING
-from idc.base import ImageClassificationData
-from idc.reader import Reader
+from idc.api import ImageClassificationData
+from idc.api import Reader
 
 
 class SubDirReader(Reader):

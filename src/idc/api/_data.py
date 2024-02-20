@@ -102,15 +102,21 @@ class ImageData(MetaDataHandler, LoggingHandler):
             return self.size
         return None
 
-    def save_image(self, path: str) -> bool:
+    def save_image(self, path: str, make_dirs: bool = False) -> bool:
         """
         Saves the image under the specified path.
 
         :param path: the path to save the image under
         :type path: str
+        :param make_dirs: whether to create any missing parent dirs
+        :type make_dirs: bool
         :return: whether the file was saved
         :rtype: bool
         """
+        if make_dirs:
+            parent_dir = os.path.dirname(path)
+            if not os.path.exists(parent_dir):
+                os.makedirs(parent_dir)
         if (self.data is None) and (self.source is not None) and (os.path.exists(self.source)):
             shutil.copy(self.source, path)
             return True

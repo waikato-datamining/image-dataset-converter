@@ -5,8 +5,8 @@ from wai.logging import LOGGING_WARNING
 from wai.common.adams.imaging.locateobjects import LocatedObjects
 from wai.common.file.report import loadf
 from seppl.io import locate_files
-from idc.base import ObjectDetectionData, locate_image
-from idc.reader import Reader
+from idc.api import ObjectDetectionData, locate_image
+from idc.api import Reader
 
 
 class AdamsObjectDetectionReader(Reader):

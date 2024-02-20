@@ -2,7 +2,7 @@ from typing import List
 
 from seppl import get_class_name
 from seppl.io import Filter
-from idc.base import ImageData, ImageClassificationData, ImageSegmentationData, ObjectDetectionData
+from idc.api import ImageData, ImageClassificationData, ImageSegmentationData, ObjectDetectionData
 
 
 class StripAnnotations(Filter):
