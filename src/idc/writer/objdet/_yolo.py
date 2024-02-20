@@ -149,6 +149,7 @@ class YoloObjectDetectionWriter(SplittableStreamWriter):
             path = sub_dir
             if len(self.image_subdir) > 0:
                 path = os.path.join(path, self.image_subdir)
+            os.makedirs(path, exist_ok=True)
             path = os.path.join(path, item.image_name())
             self.logger().info("Writing image to: %s" % path)
             item.save_image(path)
@@ -172,13 +173,14 @@ class YoloObjectDetectionWriter(SplittableStreamWriter):
                             values.append(y)
                     else:
                         values = [obj.x, obj.y, obj.width, obj.height]
-                    values = [str(value) for value in values]
+                    values = ["%.6f" % value for value in values]
                     line = str(index) + " " + " ".join(values)
                     lines.append(line)
 
                 path = sub_dir
                 if len(self.labels_subdir) > 0:
                     path = os.path.join(path, self.labels_subdir)
+                os.makedirs(path, exist_ok=True)
                 path = os.path.join(path, item.image_name())
                 path = os.path.splitext(path)[0] + ".txt"
                 self.logger().info("Writing annotations to: %s" % path)
@@ -195,17 +197,15 @@ class YoloObjectDetectionWriter(SplittableStreamWriter):
 
         # labels
         self.logger().info("Writing labels file: %s" % self.labels)
-        keys = sorted(self._label_mapping.keys())
-        labels = [self._label_mapping[key] for key in keys]
         with open(self.labels, "w") as fp:
-            fp.write(",".join(labels))
+            fp.write(",".join(self._label_mapping.keys()))
 
         # labels csv
         if self.labels_csv is not None:
             self.logger().info("Writing labels CSV file: %s" % self.labels_csv)
             rows = [["Index", "Label"]]
-            for key in keys:
-                rows.append([key, self._label_mapping[key]])
+            for key in self._label_mapping:
+                rows.append([self._label_mapping[key], key])
             with open(self.labels_csv, "w") as fp:
                 writer = csv.writer(fp)
                 writer.writerows(rows)

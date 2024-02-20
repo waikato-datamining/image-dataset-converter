@@ -35,6 +35,7 @@ The following dataset formats are supported:
 | Image classification | ADAMS  | [Y](plugins/from-adams-ic.md)  | [Y](plugins/to-adams-ic.md)  | 
 | Image classification | subdir | [Y](plugins/from-subdir-ic.md) | [Y](plugins/to-subdir-ic.md) | 
 | Object detection     | ADAMS  | [Y](plugins/from-adams-od.md)  | [Y](plugins/to-adams-od.md)  | 
+| Object detection     | YOLO   | [Y](plugins/from-yolo-od.md)   | [Y](plugins/to-yolo-od.md)   | 
 
 
 ## Tools
