@@ -30,13 +30,13 @@ pip install git+https://github.com/waikato-datamining/image-dataset-converter.gi
 
 The following dataset formats are supported:
 
-| Domain               | Format  | Read                           | Write                        | 
-|:---------------------|:--------|:-------------------------------|:-----------------------------| 
-| Image classification | ADAMS   | [Y](plugins/from-adams-ic.md)  | [Y](plugins/to-adams-ic.md)  | 
-| Image classification | subdir  | [Y](plugins/from-subdir-ic.md) | [Y](plugins/to-subdir-ic.md) | 
-| Object detection     | ADAMS   | [Y](plugins/from-adams-od.md)  | [Y](plugins/to-adams-od.md)  | 
-| Object detection     | ROI CSV | [Y](plugins/from-roicsv-od.md) | [Y](plugins/to-roicsv-od.md) | 
-| Object detection     | YOLO    | [Y](plugins/from-yolo-od.md)   | [Y](plugins/to-yolo-od.md)   | 
+| Domain               | Format                       | Read                           | Write                        | 
+|:---------------------|:-----------------------------|:-------------------------------|:-----------------------------| 
+| Image classification | [ADAMS](formats/adams.md)    | [Y](plugins/from-adams-ic.md)  | [Y](plugins/to-adams-ic.md)  | 
+| Image classification | subdir                       | [Y](plugins/from-subdir-ic.md) | [Y](plugins/to-subdir-ic.md) | 
+| Object detection     | [ADAMS](formats/adams.md)    | [Y](plugins/from-adams-od.md)  | [Y](plugins/to-adams-od.md)  | 
+| Object detection     | [ROI CSV](formats/roicsv.md) | [Y](plugins/from-roicsv-od.md) | [Y](plugins/to-roicsv-od.md) | 
+| Object detection     | YOLO                         | [Y](plugins/from-yolo-od.md)   | [Y](plugins/to-yolo-od.md)   | 
 
 
 ## Tools
