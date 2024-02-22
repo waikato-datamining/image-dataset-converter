@@ -8,6 +8,7 @@ Saves the bounding box/polygon definitions in a ROI .csv file alongside the imag
 usage: to-roicsv-od [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                     [-N LOGGER_NAME] [-r SPLIT_RATIOS [SPLIT_RATIOS ...]]
                     [-n SPLIT_NAMES [SPLIT_NAMES ...]] -o OUTPUT [-s SUFFIX]
+                    [--size_mode]
 
 Saves the bounding box/polygon definitions in a ROI .csv file alongside the
 image.
@@ -32,4 +33,6 @@ optional arguments:
   -s SUFFIX, --suffix SUFFIX
                         The suffix used by the ROI CSV files. (default:
                         -rois.csv)
+  --size_mode           Whether to output w/h rather than x1/y1. (default:
+                        False)
 ```

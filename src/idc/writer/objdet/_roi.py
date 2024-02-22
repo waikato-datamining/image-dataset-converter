@@ -12,7 +12,7 @@ from idc.api import SplittableStreamWriter
 
 class ROIObjectDetectionWriter(SplittableStreamWriter):
 
-    def __init__(self, output_dir: str = None, suffix: str = "-rois.csv",
+    def __init__(self, output_dir: str = None, suffix: str = "-rois.csv", size_mode: bool = False,
                  split_names: List[str] = None, split_ratios: List[int] = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
@@ -22,6 +22,8 @@ class ROIObjectDetectionWriter(SplittableStreamWriter):
         :type output_dir: str
         :param suffix: the suffix of the ROI CSV files (eg -rois.csv)
         :type suffix: str
+        :param size_mode: whether to output w/h rather than x1/y1
+        :type size_mode: bool
         :param split_names: the names of the splits, no splitting if None
         :type split_names: list
         :param split_ratios: the integer ratios of the splits (must sum up to 100)
@@ -34,6 +36,7 @@ class ROIObjectDetectionWriter(SplittableStreamWriter):
         super().__init__(split_names=split_names, split_ratios=split_ratios, logger_name=logger_name, logging_level=logging_level)
         self.output_dir = output_dir
         self.suffix = suffix
+        self.size_mode = size_mode
         self._label_mapping = None
 
     def name(self) -> str:
@@ -64,6 +67,7 @@ class ROIObjectDetectionWriter(SplittableStreamWriter):
         parser = super()._create_argparser()
         parser.add_argument("-o", "--output", type=str, help="The directory to store the images/.report files in. Any defined splits get added beneath there.", required=True)
         parser.add_argument("-s", "--suffix", metavar="SUFFIX", type=str, default="-rois.csv", help="The suffix used by the ROI CSV files.", required=False)
+        parser.add_argument("--size_mode", action="store_true", help="Whether to output w/h rather than x1/y1.", required=False)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
@@ -76,6 +80,7 @@ class ROIObjectDetectionWriter(SplittableStreamWriter):
         super()._apply_args(ns)
         self.output_dir = ns.output
         self.suffix = ns.suffix
+        self.size_mode = ns.size_mode
 
     def accepts(self) -> List:
         """
@@ -124,7 +129,10 @@ class ROIObjectDetectionWriter(SplittableStreamWriter):
                 aobjs = item.annotation
                 width, height = item.image_size()
                 nobjs = absolute_to_normalized(aobjs, width, height)
-                fields = ["file", "x0", "y0", "x1", "y1", "x0n", "y0n", "x1n", "y1n", "label", "label_str", "score", "poly_x", "poly_y", "poly_xn", "poly_yn", "minrect_w", "minrect_h"]
+                if self.size_mode:
+                    fields = ["file", "x", "y", "w", "h", "xn", "yn", "wn", "hn", "label", "label_str", "score", "poly_x", "poly_y", "poly_xn", "poly_yn", "minrect_w", "minrect_h"]
+                else:
+                    fields = ["file", "x0", "y0", "x1", "y1", "x0n", "y0n", "x1n", "y1n", "label", "label_str", "score", "poly_x", "poly_y", "poly_xn", "poly_yn", "minrect_w", "minrect_h"]
                 with open(path, "w") as fp:
                     writer = csv.DictWriter(fp, fields)
                     writer.writeheader()
@@ -139,14 +147,24 @@ class ROIObjectDetectionWriter(SplittableStreamWriter):
                             label = ""
                         row = dict()
                         row["file"] = item.image_name()
-                        row["x0"] = aobj.x
-                        row["y0"] = aobj.y
-                        row["x1"] = aobj.x + aobj.width - 1
-                        row["y1"] = aobj.y + aobj.height - 1
-                        row["x0n"] = nobj.x
-                        row["y0n"] = nobj.y
-                        row["x1n"] = nobj.x + nobj.width
-                        row["y1n"] = nobj.y + nobj.height
+                        if self.size_mode:
+                            row["x"] = aobj.x
+                            row["y"] = aobj.y
+                            row["h"] = aobj.width
+                            row["y"] = aobj.height
+                            row["xn"] = nobj.x
+                            row["yn"] = nobj.y
+                            row["wn"] = nobj.width
+                            row["hn"] = nobj.height
+                        else:
+                            row["x0"] = aobj.x
+                            row["y0"] = aobj.y
+                            row["x1"] = aobj.x + aobj.width - 1
+                            row["y1"] = aobj.y + aobj.height - 1
+                            row["x0n"] = nobj.x
+                            row["y0n"] = nobj.y
+                            row["x1n"] = nobj.x + nobj.width
+                            row["y1n"] = nobj.y + nobj.height
                         row["label"] = label
                         row["label_str"] = label_str
                         if "score" in aobj.metadata:

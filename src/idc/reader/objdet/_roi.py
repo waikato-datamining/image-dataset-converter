@@ -118,10 +118,18 @@ class ROIObjectDetectionReader(Reader):
 
             annotations = LocatedObjects()
             for row in reader:
-                x0 = int(float(row["x0"]))
-                y0 = int(float(row["y0"]))
-                x1 = int(float(row["x1"]))
-                y1 = int(float(row["y1"]))
+                if "x0" in row:
+                    x0 = int(float(row["x0"]))
+                    y0 = int(float(row["y0"]))
+                    x1 = int(float(row["x1"]))
+                    y1 = int(float(row["y1"]))
+                else:
+                    x0 = int(float(row["x"]))
+                    y0 = int(float(row["y"]))
+                    w = int(float(row["w"]))
+                    h = int(float(row["h"]))
+                    x1 = x0 + w - 1
+                    y1 = y0 + h - 1
                 meta = dict()
                 fields = ["score", "label", "label_str", "minrect_w", "minrect_h"]
                 for field in fields:
