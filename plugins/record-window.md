@@ -1,7 +1,7 @@
 # record-window
 
-* accepts: idc.api.ImageData
-* generates: idc.api.ImageClassificationData, idc.api.ImageSegmentationData, idc.api.ObjectDetectionData
+* accepts: seppl.AnyData
+* generates: seppl.AnyData
 
 Only lets records pass that match the defined window and step size.
 

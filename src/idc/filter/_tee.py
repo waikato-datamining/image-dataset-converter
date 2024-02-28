@@ -2,9 +2,8 @@ import argparse
 from typing import List
 
 from wai.logging import LOGGING_WARNING
-from seppl import split_args, split_cmdline, Plugin
+from seppl import split_args, split_cmdline, Plugin, AnyData, Initializable
 from seppl.io import Writer, BatchWriter, StreamWriter, Filter, MultiFilter
-from idc.api import ImageData, ImageClassificationData, ImageSegmentationData, ObjectDetectionData
 
 
 class Tee(Filter):
@@ -55,7 +54,7 @@ class Tee(Filter):
         :return: the list of classes
         :rtype: list
         """
-        return [ImageData]
+        return [AnyData]
 
     def generates(self) -> List:
         """
@@ -64,7 +63,7 @@ class Tee(Filter):
         :return: the list of classes
         :rtype: list
         """
-        return [ImageData, ImageClassificationData, ImageSegmentationData, ObjectDetectionData]
+        return [AnyData]
 
     def _create_argparser(self) -> argparse.ArgumentParser:
         """
@@ -179,5 +178,5 @@ class Tee(Filter):
         # finalize sub-flow
         if self._filter is not None:
             self._filter.finalize()
-        if self._writer is not None:
+        if (self._writer is not None) and isinstance(self._writer, Initializable):
             self._writer.finalize()

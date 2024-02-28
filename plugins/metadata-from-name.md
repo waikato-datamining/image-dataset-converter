@@ -1,7 +1,7 @@
 # metadata-from-name
 
-* accepts: idc.api.ImageData
-* generates: idc.api.ImageClassificationData, idc.api.ImageSegmentationData, idc.api.ObjectDetectionData
+* accepts: seppl.AnyData
+* generates: seppl.AnyData
 
 Extracts a sub-string from the image name and stores them in the meta-data.
 

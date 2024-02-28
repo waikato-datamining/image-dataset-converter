@@ -2,12 +2,13 @@ import argparse
 import re
 from typing import List, Tuple
 
-from wai.logging import LOGGING_WARNING
-from seppl import MetaDataHandler
+from seppl import MetaDataHandler, AnyData
 from seppl.io import Filter, FILTER_ACTIONS, FILTER_ACTION_DISCARD, FILTER_ACTION_KEEP
-from idc.core import COMPARISONS_EXT, COMPARISON_LESSTHAN, COMPARISON_LESSOREQUAL, COMPARISON_EQUAL, COMPARISON_NOTEQUAL, \
+from wai.logging import LOGGING_WARNING
+
+from idc.core import COMPARISONS_EXT, COMPARISON_LESSTHAN, COMPARISON_LESSOREQUAL, COMPARISON_EQUAL, \
+    COMPARISON_NOTEQUAL, \
     COMPARISON_GREATEROREQUAL, COMPARISON_GREATERTHAN, COMPARISON_CONTAINS, COMPARISON_MATCHES, COMPARISON_EXT_HELP
-from idc.api import ImageData, ImageClassificationData, ImageSegmentationData, ObjectDetectionData
 
 
 class MetaData(Filter):
@@ -74,7 +75,7 @@ class MetaData(Filter):
         :return: the list of classes
         :rtype: list
         """
-        return [ImageData]
+        return [AnyData]
 
     def generates(self) -> List:
         """
@@ -83,7 +84,7 @@ class MetaData(Filter):
         :return: the list of classes
         :rtype: list
         """
-        return [ImageData, ImageClassificationData, ImageSegmentationData, ObjectDetectionData]
+        return [AnyData]
 
     def _create_argparser(self) -> argparse.ArgumentParser:
         """

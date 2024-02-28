@@ -1,7 +1,7 @@
 # tee
 
-* accepts: idc.api.ImageData
-* generates: idc.api.ImageData, idc.api.ImageClassificationData, idc.api.ImageSegmentationData, idc.api.ObjectDetectionData
+* accepts: seppl.AnyData
+* generates: seppl.AnyData
 
 Forwards the data passing through to the filter/writer defined as its sub-flow.
 

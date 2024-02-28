@@ -2,9 +2,8 @@ import argparse
 from typing import List
 
 from wai.logging import LOGGING_WARNING
-from seppl import MetaDataHandler, get_metadata
+from seppl import MetaDataHandler, get_metadata, AnyData
 from seppl.io import Splitter, Filter
-from idc.api import ImageData, ImageClassificationData, ImageSegmentationData, ObjectDetectionData
 
 META_SPLIT = "split"
 """ the key for storing the split name in the meta-data. """
@@ -59,7 +58,7 @@ class Split(Filter):
         :return: the list of classes
         :rtype: list
         """
-        return [ImageData]
+        return [AnyData]
 
     def generates(self) -> List:
         """
@@ -68,7 +67,7 @@ class Split(Filter):
         :return: the list of classes
         :rtype: list
         """
-        return [ImageData, ImageClassificationData, ImageSegmentationData, ObjectDetectionData]
+        return [AnyData]
 
     def _create_argparser(self) -> argparse.ArgumentParser:
         """

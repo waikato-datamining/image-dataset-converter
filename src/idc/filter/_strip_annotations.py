@@ -1,8 +1,9 @@
 from typing import List
 
-from seppl import get_class_name
+from seppl import get_class_name, AnyData
 from seppl.io import Filter
-from idc.api import ImageData, ImageClassificationData, ImageSegmentationData, ObjectDetectionData
+
+from idc.api import ImageData
 
 
 class StripAnnotations(Filter):
@@ -32,7 +33,7 @@ class StripAnnotations(Filter):
         :return: the list of classes
         :rtype: list
         """
-        return [ImageData]
+        return [AnyData]
 
     def generates(self) -> List:
         """
@@ -41,7 +42,7 @@ class StripAnnotations(Filter):
         :return: the list of classes
         :rtype: list
         """
-        return [ImageData, ImageClassificationData, ImageSegmentationData, ObjectDetectionData]
+        return [AnyData]
 
     def _do_process(self, data: ImageData):
         """

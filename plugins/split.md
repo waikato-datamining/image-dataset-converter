@@ -1,7 +1,7 @@
 # split
 
-* accepts: idc.api.ImageData
-* generates: idc.api.ImageData, idc.api.ImageClassificationData, idc.api.ImageSegmentationData, idc.api.ObjectDetectionData
+* accepts: seppl.AnyData
+* generates: seppl.AnyData
 
 Splits the incoming records into the specified split ratios by setting the 'split' meta-data value. Also stores the split names in the current session.
 

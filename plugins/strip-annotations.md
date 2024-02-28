@@ -1,7 +1,7 @@
 # strip-annotations
 
-* accepts: idc.api.ImageData
-* generates: idc.api.ImageData, idc.api.ImageClassificationData, idc.api.ImageSegmentationData, idc.api.ObjectDetectionData
+* accepts: seppl.AnyData
+* generates: seppl.AnyData
 
 Removes all annotations from the data coming through.
 

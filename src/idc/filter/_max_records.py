@@ -1,9 +1,9 @@
 import argparse
 from typing import List
 
-from wai.logging import LOGGING_WARNING
+from seppl import AnyData
 from seppl.io import Filter
-from idc.api import ImageData, ImageClassificationData, ImageSegmentationData, ObjectDetectionData
+from wai.logging import LOGGING_WARNING
 
 
 class MaxRecords(Filter):
@@ -51,7 +51,7 @@ class MaxRecords(Filter):
         :return: the list of classes
         :rtype: list
         """
-        return [ImageData]
+        return [AnyData]
 
     def generates(self) -> List:
         """
@@ -60,7 +60,7 @@ class MaxRecords(Filter):
         :return: the list of classes
         :rtype: list
         """
-        return [ImageData, ImageClassificationData, ImageSegmentationData, ObjectDetectionData]
+        return [AnyData]
 
     def _create_argparser(self) -> argparse.ArgumentParser:
         """
