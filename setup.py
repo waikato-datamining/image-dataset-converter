@@ -31,7 +31,7 @@ setup(
     },
     packages=find_namespace_packages(where='src'),
     install_requires=[
-        "seppl>=0.1.1",
+        "seppl>=0.1.3",
         "wai.logging",
         "wai.common>=0.0.44",
         "pillow",
