@@ -8,6 +8,7 @@
 * [from-yolo-od](from-yolo-od.md)
 
 ## Filters
+* [inspect](inspect.md)
 * [label-from-name](label-from-name.md)
 * [max-records](max-records.md)
 * [metadata](metadata.md)
