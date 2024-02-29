@@ -65,7 +65,7 @@ class ROIObjectDetectionWriter(SplittableStreamWriter):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-o", "--output", type=str, help="The directory to store the images/.report files in. Any defined splits get added beneath there.", required=True)
+        parser.add_argument("-o", "--output", type=str, help="The directory to store the images/.csv files in. Any defined splits get added beneath there.", required=True)
         parser.add_argument("-s", "--suffix", metavar="SUFFIX", type=str, default="-rois.csv", help="The suffix used by the ROI CSV files.", required=False)
         parser.add_argument("--size_mode", action="store_true", help="Whether to output w/h rather than x1/y1.", required=False)
         return parser

@@ -28,8 +28,8 @@ optional arguments:
                         The split names to use for the generated splits.
                         (default: None)
   -o OUTPUT, --output OUTPUT
-                        The directory to store the images/.report files in.
-                        Any defined splits get added beneath there. (default:
+                        The directory to store the images/.txt files in. Any
+                        defined splits get added beneath there. (default:
                         None)
   --image_subdir DIR    The name of the sub-dir to use for storing the images
                         in. (default: None)

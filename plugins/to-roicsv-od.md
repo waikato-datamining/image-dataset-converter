@@ -27,8 +27,8 @@ optional arguments:
                         The split names to use for the generated splits.
                         (default: None)
   -o OUTPUT, --output OUTPUT
-                        The directory to store the images/.report files in.
-                        Any defined splits get added beneath there. (default:
+                        The directory to store the images/.csv files in. Any
+                        defined splits get added beneath there. (default:
                         None)
   -s SUFFIX, --suffix SUFFIX
                         The suffix used by the ROI CSV files. (default:
