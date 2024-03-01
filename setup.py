@@ -36,6 +36,7 @@ setup(
         "wai.common>=0.0.44",
         "pillow",
         "imagesize",
+        "opex",
     ],
     version="0.0.1",
     author='Peter Reutemann',
