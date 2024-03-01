@@ -37,6 +37,7 @@ setup(
         "pillow",
         "imagesize",
         "opex",
+        "defusedxml",
     ],
     version="0.0.1",
     author='Peter Reutemann',
