@@ -23,8 +23,8 @@ optional arguments:
                         Path to the report file(s) to read; glob syntax is
                         supported (default: None)
   -I [INPUT_LIST [INPUT_LIST ...]], --input_list [INPUT_LIST [INPUT_LIST ...]]
-                        Path to the text file(s) listing the report files to
-                        use (default: None)
+                        Path to the text file(s) listing the CSV files to use
+                        (default: None)
   -s SUFFIX, --suffix SUFFIX
                         The suffix used by the ROI CSV files. (default:
                         -rois.csv)

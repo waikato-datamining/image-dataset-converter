@@ -23,6 +23,6 @@ optional arguments:
                         Path to the report file(s) to read; glob syntax is
                         supported (default: None)
   -I [INPUT_LIST [INPUT_LIST ...]], --input_list [INPUT_LIST [INPUT_LIST ...]]
-                        Path to the text file(s) listing the report files to
-                        use (default: None)
+                        Path to the text file(s) listing the JSON files to use
+                        (default: None)
 ```

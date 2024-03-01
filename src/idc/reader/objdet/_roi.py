@@ -60,7 +60,7 @@ class ROIObjectDetectionReader(Reader):
         """
         parser = super()._create_argparser()
         parser.add_argument("-i", "--input", type=str, help="Path to the report file(s) to read; glob syntax is supported", required=False, nargs="*")
-        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the report files to use", required=False, nargs="*")
+        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the CSV files to use", required=False, nargs="*")
         parser.add_argument("-s", "--suffix", metavar="SUFFIX", type=str, default="-rois.csv", help="The suffix used by the ROI CSV files.", required=False)
         return parser
 

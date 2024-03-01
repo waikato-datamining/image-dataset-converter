@@ -67,7 +67,7 @@ class YoloObjectDetectionReader(Reader):
         """
         parser = super()._create_argparser()
         parser.add_argument("-i", "--input", type=str, help="Path to the report file(s) to read; glob syntax is supported", required=False, nargs="*")
-        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the report files to use", required=False, nargs="*")
+        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the text files to use", required=False, nargs="*")
         parser.add_argument("--image_path_rel", metavar="PATH", type=str, default=None, help="The relative path from the annotations to the images directory", required=False)
         parser.add_argument("-p", "--use_polygon_format", action="store_true", help="Whether to read the annotations in polygon format rather than bbox format", required=False)
         parser.add_argument("--labels", metavar="FILE", type=str, default=None, help="The text file with the comma-separated list of labels", required=False)
