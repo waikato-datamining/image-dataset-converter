@@ -35,6 +35,7 @@ The following dataset formats are supported:
 | Image classification | [ADAMS](formats/adams.md)                                                     | [Y](plugins/from-adams-ic.md)  | [Y](plugins/to-adams-ic.md)  | 
 | Image classification | subdir                                                                        | [Y](plugins/from-subdir-ic.md) | [Y](plugins/to-subdir-ic.md) | 
 | Object detection     | [ADAMS](formats/adams.md)                                                     | [Y](plugins/from-adams-od.md)  | [Y](plugins/to-adams-od.md)  | 
+| Object detection     | [COCO](https://cocodataset.org/#format-data)                                                      | [Y](plugins/from-coco-od.md)   | [Y](plugins/to-coco-od.md)   | 
 | Object detection     | [OPEX](https://github.com/WaikatoLink2020/objdet-predictions-exchange-format) | [Y](plugins/from-opex-od.md)   | [Y](plugins/to-opex-od.md)   | 
 | Object detection     | [ROI CSV](formats/roicsv.md)                                                  | [Y](plugins/from-roicsv-od.md) | [Y](plugins/to-roicsv-od.md) | 
 | Object detection     | VOC                                                                           | [Y](plugins/from-voc-od.md)    | [Y](plugins/to-voc-od.md)    | 
@@ -55,14 +56,14 @@ usage: img-convert [-h|--help|--help-all|-help-plugin NAME] [-u INTERVAL]
 Tool for converting between image annotation dataset formats.
 
 readers:
-   from-adams-ic, from-adams-od, from-data, from-opex-od, 
+   from-adams-ic, from-adams-od, from-coco-od, from-data, from-opex-od, 
    from-roicsv-od, from-subdir-ic, from-voc-od, from-yolo-od
 filters:
    inspect, label-from-name, max-records, metadata, metadata-from-name, 
    randomize-records, record-window, split, strip-annotations, tee
 writers:
-   to-adams-ic, to-adams-od, to-data, to-opex-od, to-roicsv-od, 
-   to-subdir-ic, to-voc-od, to-yolo-od
+   to-adams-ic, to-adams-od, to-coco-od, to-data, to-opex-od, 
+   to-roicsv-od, to-subdir-ic, to-voc-od, to-yolo-od
 
 optional arguments:
   -h, --help            show basic help message and exit
