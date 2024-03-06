@@ -92,7 +92,7 @@ class LabelFromName(Filter):
         :param data: the record to update
         """
         try:
-            name = data.image_name()
+            name = data.image_name
             if name is None:
                 self.logger().warning("No image name available: %s" % str(data))
                 return data

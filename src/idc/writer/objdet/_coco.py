@@ -206,12 +206,12 @@ class COCOObjectDetectionWriter(SplittableBatchWriter):
         :type data: dict
         """
         image_id = len(data["images"]) + 1
-        self._image_lookup[item.image_name()] = image_id
+        self._image_lookup[item.image_name] = image_id
         image = dict()
         image["id"] = image_id
-        image["width"] = item.image_size()[0]
-        image["height"] = item.image_size()[1]
-        image["file_name"] = item.image_name()
+        image["width"] = item.image_width
+        image["height"] = item.image_height
+        image["file_name"] = item.image_name
         image["license"] = 1
         image["flickr_url"] = ""
         image["coco_url"] = ""
@@ -225,7 +225,7 @@ class COCOObjectDetectionWriter(SplittableBatchWriter):
         :param data: the annotations structure to update
         :type data: dict
         """
-        image_id = self._image_lookup[item.image_name()]
+        image_id = self._image_lookup[item.image_name]
         absolute = item.get_absolute()
         for obj in absolute:
             label = "object"
@@ -233,7 +233,7 @@ class COCOObjectDetectionWriter(SplittableBatchWriter):
                 label = str(obj.metadata["type"])
             if label not in self._category_lookup:
                 if self.error_on_new_category:
-                    raise Exception("Undefined label encountered with image %s: %s" % (item.image_name(), label))
+                    raise Exception("Undefined label encountered with image %s: %s" % (item.image_name, label))
                 self._category_lookup[label] = len(self._category_lookup) + 1
             category_id = self._category_lookup[label]
             annotation_id = len(data["annotations"]) + 1
@@ -241,7 +241,7 @@ class COCOObjectDetectionWriter(SplittableBatchWriter):
             annotation["id"] = annotation_id
             annotation["image_id"] = image_id
             annotation["category_id"] = category_id
-            annotation["area"] = float(item.image_size()[0] * item.image_size()[1])
+            annotation["area"] = float(item.image_width * item.image_height)
             annotation["bbox"] = [obj.x, obj.y, obj.width, obj.height]
             annotation["iscrowd"] = 0
             if obj.has_polygon():
@@ -274,7 +274,7 @@ class COCOObjectDetectionWriter(SplittableBatchWriter):
                 os.makedirs(sub_dir)
 
             # write image
-            path = os.path.join(sub_dir, item.image_name())
+            path = os.path.join(sub_dir, item.image_name)
             self.logger().info("Writing image to: %s" % path)
             item.save_image(path)
 

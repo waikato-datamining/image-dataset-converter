@@ -119,7 +119,7 @@ class ROIObjectDetectionWriter(SplittableStreamWriter):
                 self.logger().info("Creating sub dir: %s" % sub_dir)
                 os.makedirs(sub_dir)
 
-            path = os.path.join(sub_dir, item.image_name())
+            path = os.path.join(sub_dir, item.image_name)
             self.logger().info("Writing image to: %s" % path)
             item.save_image(path)
 
@@ -127,7 +127,7 @@ class ROIObjectDetectionWriter(SplittableStreamWriter):
                 path = os.path.splitext(path)[0] + self.suffix
                 self.logger().info("Writing ROI CSV to: %s" % path)
                 aobjs = item.annotation
-                width, height = item.image_size()
+                width, height = item.image_size
                 nobjs = absolute_to_normalized(aobjs, width, height)
                 if self.size_mode:
                     fields = ["file", "x", "y", "w", "h", "xn", "yn", "wn", "hn", "label", "label_str", "score", "poly_x", "poly_y", "poly_xn", "poly_yn", "minrect_w", "minrect_h"]
@@ -146,7 +146,7 @@ class ROIObjectDetectionWriter(SplittableStreamWriter):
                             label_str = ""
                             label = ""
                         row = dict()
-                        row["file"] = item.image_name()
+                        row["file"] = item.image_name
                         if self.size_mode:
                             row["x"] = aobj.x
                             row["y"] = aobj.y

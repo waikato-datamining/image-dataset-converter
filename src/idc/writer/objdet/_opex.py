@@ -113,7 +113,7 @@ class OPEXObjectDetectionWriter(SplittableStreamWriter):
             # image
             path = sub_dir
             os.makedirs(path, exist_ok=True)
-            path = os.path.join(path, item.image_name())
+            path = os.path.join(path, item.image_name)
             self.logger().info("Writing image to: %s" % path)
             item.save_image(path)
 
@@ -169,10 +169,10 @@ class OPEXObjectDetectionWriter(SplittableStreamWriter):
                 ts = datetime.now().strftime("%Y%m%d_%H%M%S.%f")
 
                 # ID
-                if item.image_name() is None:
+                if item.image_name is None:
                     id = ts
                 else:
-                    id = os.path.splitext(os.path.basename(item.image_name()))[0]
+                    id = os.path.splitext(os.path.basename(item.image_name))[0]
 
                 # assemble predictions
                 if meta is None:
@@ -182,7 +182,7 @@ class OPEXObjectDetectionWriter(SplittableStreamWriter):
 
                 path = sub_dir
                 os.makedirs(path, exist_ok=True)
-                path = os.path.join(path, item.image_name())
+                path = os.path.join(path, item.image_name)
                 path = os.path.splitext(path)[0] + ".json"
                 self.logger().info("Writing annotations to: %s" % path)
                 preds.save_json_to_file(path)

@@ -137,7 +137,7 @@ class VOCObjectDetectionWriter(SplittableStreamWriter):
             # image
             path = sub_dir
             os.makedirs(path, exist_ok=True)
-            path = os.path.join(path, item.image_name())
+            path = os.path.join(path, item.image_name)
             self.logger().info("Writing image to: %s" % path)
             item.save_image(path)
 
@@ -150,8 +150,8 @@ class VOCObjectDetectionWriter(SplittableStreamWriter):
 
                 size = Element("size")
                 root.append(size)
-                append_element(size, "width", item.image_size()[0])
-                append_element(size, "height", item.image_size()[1])
+                append_element(size, "width", item.image_width)
+                append_element(size, "height", item.image_height)
                 append_element(size, "depth", 3)
 
                 for lobj in absolute:
@@ -176,7 +176,7 @@ class VOCObjectDetectionWriter(SplittableStreamWriter):
 
                 path = sub_dir
                 os.makedirs(path, exist_ok=True)
-                path = os.path.join(path, item.image_name())
+                path = os.path.join(path, item.image_name)
                 path = os.path.splitext(path)[0] + ".xml"
                 self.logger().info("Writing annotations to: %s" % path)
                 tree = ElementTree(root)

@@ -184,7 +184,7 @@ class Inspect(Filter):
         self._output_data(self._assemble_data(data))
 
         if self.show_image:
-            img = data.pillow_image()
+            img = data.image
             if img is None:
                 self.logger().error("Failed to obtain image for display!")
             else:

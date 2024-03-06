@@ -105,6 +105,6 @@ class SubDirWriter(SplittableStreamWriter):
             if not os.path.exists(sub_dir):
                 self.logger().info("Creating sub dir: %s" % sub_dir)
                 os.makedirs(sub_dir)
-            path = os.path.join(sub_dir, item.image_name())
+            path = os.path.join(sub_dir, item.image_name)
             self.logger().info("Writing image to: %s" % path)
             item.save_image(path)

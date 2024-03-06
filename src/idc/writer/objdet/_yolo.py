@@ -150,7 +150,7 @@ class YoloObjectDetectionWriter(SplittableStreamWriter):
             if len(self.image_subdir) > 0:
                 path = os.path.join(path, self.image_subdir)
             os.makedirs(path, exist_ok=True)
-            path = os.path.join(path, item.image_name())
+            path = os.path.join(path, item.image_name)
             self.logger().info("Writing image to: %s" % path)
             item.save_image(path)
 
@@ -181,7 +181,7 @@ class YoloObjectDetectionWriter(SplittableStreamWriter):
                 if len(self.labels_subdir) > 0:
                     path = os.path.join(path, self.labels_subdir)
                 os.makedirs(path, exist_ok=True)
-                path = os.path.join(path, item.image_name())
+                path = os.path.join(path, item.image_name)
                 path = os.path.splitext(path)[0] + ".txt"
                 self.logger().info("Writing annotations to: %s" % path)
                 with open(path, "w") as fp:

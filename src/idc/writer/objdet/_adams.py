@@ -120,7 +120,7 @@ class AdamsObjectDetectionWriter(SplittableStreamWriter):
                     empty = False
                     report.set_value(Field.parse_field(k), item.get_metadata()[k])
 
-            path = os.path.join(sub_dir, item.image_name())
+            path = os.path.join(sub_dir, item.image_name)
             self.logger().info("Writing image to: %s" % path)
             item.save_image(path)
 

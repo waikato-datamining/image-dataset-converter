@@ -1,10 +1,18 @@
-from dataclasses import dataclass
+from PIL import Image
+from typing import Tuple, Dict
 
 from ._data import ImageData
 
 
-@dataclass
 class ImageClassificationData(ImageData):
+    """
+    The annotations are the classification label.
+    """
 
-    annotation: str = None
-    """ the classification label. """
+    def __init__(self, source: str = None, name: str = None, data: bytes = None,
+                 image: Image = None, image_format: str = None, size: Tuple[int, int] = None,
+                 metadata: Dict = None, annotation: str = None):
+
+        super().__init__(source=source, name=name, data=data,
+                         image=image, image_format=image_format, size=size,
+                         metadata=metadata, annotation=annotation)
