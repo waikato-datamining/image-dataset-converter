@@ -1,12 +1,10 @@
 import argparse
-import csv
 import os
 from collections import OrderedDict
 from typing import List
 
 from wai.logging import LOGGING_WARNING
-from idc.api import ObjectDetectionData
-from idc.api import SplittableStreamWriter
+from idc.api import ObjectDetectionData, SplittableStreamWriter, save_labels, save_labels_csv
 
 
 class YoloObjectDetectionWriter(SplittableStreamWriter):
@@ -196,16 +194,8 @@ class YoloObjectDetectionWriter(SplittableStreamWriter):
         super().finalize()
 
         # labels
-        self.logger().info("Writing labels file: %s" % self.labels)
-        with open(self.labels, "w") as fp:
-            fp.write(",".join(self._label_mapping.keys()))
+        save_labels(self.labels, self._label_mapping.keys(), logger=self.logger())
 
         # labels csv
         if self.labels_csv is not None:
-            self.logger().info("Writing labels CSV file: %s" % self.labels_csv)
-            rows = [["Index", "Label"]]
-            for key in self._label_mapping:
-                rows.append([self._label_mapping[key], key])
-            with open(self.labels_csv, "w") as fp:
-                writer = csv.writer(fp)
-                writer.writerows(rows)
+            save_labels_csv(self.labels_csv, self._label_mapping, logger=self.logger())

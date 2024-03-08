@@ -1,5 +1,10 @@
+import csv
+import io
+import logging
 import os
-from typing import Optional, Union, List
+from typing import Optional, Union, List, Dict, Tuple
+
+from PIL import Image
 
 
 def strip_suffix(path: str, suffix: str) -> str:
@@ -70,3 +75,88 @@ def locate_image(path: str, rel_path: str = None, suffix: str = None) -> Optiona
         return None
     else:
         return images[0]
+
+
+def load_image_from_bytes(data) -> Image:
+    """
+    Loads a Pillow image from the bytes.
+
+    :param data: the bytes to load from
+    :return: the image loaded from the data
+    :rtype: Image
+    """
+    return Image.open(io.BytesIO(data))
+
+
+def load_image_from_file(path: str) -> Image:
+    """
+    Loads a Pillow image from the specified file.
+
+    :param path: the path to load from
+    :return: the image loaded from the file
+    :rtype: Image
+    """
+    return Image.open(path)
+
+
+def load_labels(path: str, logger: logging.Logger = None) -> Tuple[List[str], Dict[int, str]]:
+    """
+    Loads the comma-separated labels from the text file and returns
+    them as list and as index/label mapping.
+
+    :param path: the file to load the labels from
+    :type path: str
+    :param logger: the optional logger to use for outputting information
+    :type logger: logging.Logger
+    :return: the tuple of labels list and dictionary of index/label mapping
+    :rtype: tuple
+    """
+    if logger is not None:
+        logger.info("Reading labels from: %s" % str(path))
+    with open(path, "r") as fp:
+        line = fp.readline()
+    labels = [x.strip() for x in line.strip().split(",")]
+    label_mapping = dict()
+    for i, label in enumerate(labels):
+        label_mapping[i] = label
+    if logger is not None:
+        logger.debug("label mapping: %s" % str(label_mapping))
+    return labels, label_mapping
+
+
+def save_labels(path: str, labels: List[str], logger: logging.Logger = None):
+    """
+    Writes the labels as comma-separated list to the specified file.
+
+    :param path: the file to write the labels to
+    :type path: str
+    :param labels: the labels to write
+    :type labels: list
+    :param logger: the optional logger to use for outputting information
+    :type logger: logging.Logger
+    """
+    if logger is not None:
+        logger.info("Writing labels file: %s" % path)
+    with open(path, "w") as fp:
+        fp.write(",".join(labels))
+
+
+def save_labels_csv(path: str, labels: Dict[int, str], logger: logging.Logger = None):
+    """
+    Writes the labels as CSV (Index,Label) to the specified file.
+
+    :param path: the file to write the labels to
+    :type path:
+    :param labels:
+    :param logger:
+    :return:
+    """
+    if logger is not None:
+        logger.info("Writing labels CSV file: %s" % path)
+
+    rows = [["Index", "Label"]]
+    for key in labels:
+        rows.append([labels[key], key])
+    with open(path, "w") as fp:
+        writer = csv.writer(fp)
+        writer.writerows(rows)

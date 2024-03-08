@@ -12,7 +12,7 @@ class ObjectDetectionData(ImageData):
     """
 
     def __init__(self, source: str = None, name: str = None, data: bytes = None,
-                 image: Image = None, image_format: str = None, size: Tuple[int, int] = None,
+                 image: Image.Image = None, image_format: str = None, size: Tuple[int, int] = None,
                  metadata: Dict = None, annotation: Union[LocatedObjects, NormalizedLocatedObjects] = None):
 
         super().__init__(source=source, name=name, data=data,

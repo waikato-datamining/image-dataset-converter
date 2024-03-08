@@ -1,4 +1,3 @@
-import io
 import logging
 import os.path
 import shutil
@@ -7,12 +6,13 @@ from typing import Dict, Optional, Tuple
 import imagesize
 from PIL import Image
 from seppl import MetaDataHandler, LoggingHandler
+from ._utils import load_image_from_bytes
 
 
 class ImageData(MetaDataHandler, LoggingHandler):
 
     def __init__(self, source: str = None, name: str = None, data: bytes = None,
-                 image: Image = None, image_format: str = None, size: Tuple[int, int] = None,
+                 image: Image.Image = None, image_format: str = None, size: Tuple[int, int] = None,
                  metadata: Dict = None, annotation=None):
         self._logger = None
         """ for logging. """
@@ -55,17 +55,17 @@ class ImageData(MetaDataHandler, LoggingHandler):
         return self._source
 
     @property
-    def image(self) -> Image:
+    def image(self) -> Image.Image:
         """
         Returns the image, loads it if necessary.
 
         :return: the pillow image data structure, None if not available or failed to load
-        :rtype: Image
+        :rtype: Image.Image
         """
         if self._image is not None:
             return self._image
         if self._data is not None:
-            self._image = Image.open(io.BytesIO(self._data))
+            self._image = load_image_from_bytes(self._data)
             self._format = self._image.format
             return self._image
         if self._source is not None:

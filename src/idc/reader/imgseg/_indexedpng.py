@@ -1,17 +1,19 @@
 import argparse
 from typing import List, Iterable, Union
 
-from wai.logging import LOGGING_WARNING
-from wai.common.geometry import NormalizedPoint, NormalizedPolygon
-from wai.common.adams.imaging.locateobjects import NormalizedLocatedObjects, NormalizedLocatedObject
+import numpy as np
+from PIL import Image
 from seppl.io import locate_files
-from idc.api import ObjectDetectionData, locate_image, Reader, load_labels
+from wai.logging import LOGGING_WARNING
+
+from idc.api import ImageSegmentationData, ImageSegmentationAnnotations, locate_file, load_image_from_file
+from idc.api import Reader
 
 
-class YoloObjectDetectionReader(Reader):
+class IndexedPngImageSegmentationReader(Reader):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
-                 image_path_rel: str = None, use_polygon_format: bool = False, labels: str = None,
+                 image_path_rel: str = None, labels: List[str] = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
         Initializes the reader.
@@ -20,10 +22,8 @@ class YoloObjectDetectionReader(Reader):
         :param source_list: the file(s) with filename(s)
         :param image_path_rel: the relative path from the annotations to the images
         :type image_path_rel: str
-        :param use_polygon_format: whether to use the polygon format
-        :type use_polygon_format: bool
-        :param labels: the text file with the comma-separated list of labels
-        :type labels: str
+        :param labels: the list of labels
+        :type labels: list
         :param logger_name: the name to use for the logger
         :type logger_name: str
         :param logging_level: the logging level to use
@@ -33,7 +33,6 @@ class YoloObjectDetectionReader(Reader):
         self.source = source
         self.source_list = source_list
         self.image_path_rel = image_path_rel
-        self.use_polygon_format = use_polygon_format
         self.labels = labels
         self._label_mapping = None
         self._inputs = None
@@ -46,7 +45,7 @@ class YoloObjectDetectionReader(Reader):
         :return: the name
         :rtype: str
         """
-        return "from-yolo-od"
+        return "from-indexed-png-is"
 
     def description(self) -> str:
         """
@@ -55,7 +54,7 @@ class YoloObjectDetectionReader(Reader):
         :return: the description
         :rtype: str
         """
-        return "Loads the bounding box and/or polygon definitions from the associated .txt file in YOLO format."
+        return "Loads the annotations from associated indexed PNG files."
 
     def _create_argparser(self) -> argparse.ArgumentParser:
         """
@@ -68,8 +67,7 @@ class YoloObjectDetectionReader(Reader):
         parser.add_argument("-i", "--input", type=str, help="Path to the report file(s) to read; glob syntax is supported", required=False, nargs="*")
         parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the text files to use", required=False, nargs="*")
         parser.add_argument("--image_path_rel", metavar="PATH", type=str, default=None, help="The relative path from the annotations to the images directory", required=False)
-        parser.add_argument("-p", "--use_polygon_format", action="store_true", help="Whether to read the annotations in polygon format rather than bbox format", required=False)
-        parser.add_argument("--labels", metavar="FILE", type=str, default=None, help="The text file with the comma-separated list of labels", required=False)
+        parser.add_argument("--labels", metavar="LABEL", type=str, default=None, help="The labels that the indices represent.", nargs="+")
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
@@ -83,7 +81,6 @@ class YoloObjectDetectionReader(Reader):
         self.source = ns.input
         self.source_list = ns.input_list
         self.image_path_rel = ns.image_path_rel
-        self.use_polygon_format = ns.use_polygon_format
         self.labels = ns.labels
 
     def generates(self) -> List:
@@ -93,19 +90,20 @@ class YoloObjectDetectionReader(Reader):
         :return: the list of classes
         :rtype: list
         """
-        return [ObjectDetectionData]
+        return [ImageSegmentationData]
 
     def initialize(self):
         """
         Initializes the processing, e.g., for opening files or databases.
         """
         super().initialize()
-        if self.image_path_rel is None:
-            self.image_path_rel = "../images"
         if self.labels is None:
-            raise Exception("No labels file defined!")
+            raise Exception("No labels defined!")
         self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True)
-        _, self._label_mapping = load_labels(self.labels, logger=self.logger())
+        self._label_mapping = dict()
+        for i, label in enumerate(self.labels):
+            self._label_mapping[i] = label
+        self.logger().debug("label mapping: %s" % str(self._label_mapping))
 
     def read(self) -> Iterable:
         """
@@ -118,55 +116,37 @@ class YoloObjectDetectionReader(Reader):
 
         self._current_input = self._inputs.pop(0)
         self.session.current_input = self._current_input
-        self.logger().info("Reading from: " + str(self.session.current_input))
-        with open(self.session.current_input, "r") as fp:
-            lines = fp.readlines()
-            lines = [x.strip() for x in lines]
 
-        annotations = NormalizedLocatedObjects()
-        for line in lines:
-            if len(line) == 0:
-                continue
-            parts = line.split(" ")
-            if len(parts) < 3:
-                continue
-            label = int(parts[0])
-            meta = {"type": self._label_mapping[label]}
-            parts = parts[1:]
-            if self.use_polygon_format:
-                if len(parts) % 2 != 0:
-                    self.logger().warning("Cannot process uneven number of coordinates in polygon format: %s" % line)
-                    continue
-                points = []
-                minx = 1.0
-                maxx = 0.0
-                miny = 1.0
-                maxy = 0.0
-                for i in range(len(parts) // 2):
-                    x = float(parts[i*2])
-                    y = float(parts[i*2+1])
-                    point = NormalizedPoint(x, y)
-                    points.append(point)
-                    minx = min(minx, x)
-                    maxx = max(maxx, x)
-                    miny = min(miny, y)
-                    maxy = max(maxy, y)
-                poly = NormalizedPolygon(*points)
-                obj = NormalizedLocatedObject(minx, miny, (maxx - minx), (maxy - miny), **meta)
-                obj.set_polygon(poly)
-                annotations.append(obj)
-            else:
-                if len(parts) != 4:
-                    self.logger().warning("BBox format requires 4 values (left, top, width, height), but got %d instead: %s" % (len(parts), line))
-                    continue
-                obj = NormalizedLocatedObject(float(parts[0]), float(parts[1]), float(parts[2]), float(parts[3]), **meta)
-                annotations.append(obj)
-
-        image = locate_image(self._current_input, rel_path=self.image_path_rel)
-        if image is None:
-            self.logger().warning("No associated image found: %s" % self._current_input)
+        # associated images?
+        imgs = locate_file(self.session.current_input, [".jpg", ".jpeg", ".JPG", ".JPEG"], rel_path=self.image_path_rel)
+        if len(imgs) == 0:
+            self.logger().warning("Failed to locate associated image for: %s" % self.session.current_input)
             yield None
-        yield ObjectDetectionData(source=image, annotation=annotations)
+
+        # read annotations
+        self.logger().info("Reading from: " + str(self.session.current_input))
+        ann = load_image_from_file(self.session.current_input)
+        arr = np.asarray(ann).astype(np.uint8)
+        unique = np.unique(arr)
+        layers = dict()
+        for index in list(unique):
+            # skip background
+            if index == 0:
+                continue
+            index = int(index)
+            if index not in self._label_mapping:
+                self.logger().warning("Index not covered by labels, skipping: %d" % index)
+                continue
+            sub_arr = np.where(arr == index, 255, 0).astype(np.uint8)
+            layers[self._label_mapping[index]] = sub_arr
+        annotations = ImageSegmentationAnnotations(self.labels, layers)
+
+        # associated image
+        if len(imgs) > 1:
+            self.logger().warning("Found more than one image associated with annotation, using first: %s" % imgs[0])
+            yield None
+
+        yield ImageSegmentationData(source=imgs[0], annotation=annotations)
 
     def has_finished(self) -> bool:
         """

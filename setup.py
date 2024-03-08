@@ -38,6 +38,7 @@ setup(
         "imagesize",
         "opex",
         "defusedxml",
+        "numpy",
     ],
     version="0.0.1",
     author='Peter Reutemann',

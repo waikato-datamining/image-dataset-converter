@@ -6,5 +6,5 @@ Dataset formats:
 
 - image classification: ADAMS (r/w), sub-dir (r/w)
 - object detection: ADAMS (r/w), COCO (r/w), OPEX (r/w), ROI (r/w), VOC (r/w), YOLO (r/w)
-- image segmentation: TODO
+- image segmentation: indexed PNG (r/w)
 
