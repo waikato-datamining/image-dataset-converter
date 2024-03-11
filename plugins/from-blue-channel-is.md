@@ -2,7 +2,7 @@
 
 * generates: idc.api.ImageSegmentationData
 
-Loads the annotations from associated blue channel PNG files.
+Loads the annotations from associated blue channel JPG/PNG files.
 
 ```
 usage: from-blue-channel-is [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
@@ -11,7 +11,7 @@ usage: from-blue-channel-is [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                             [--image_path_rel PATH]
                             [--labels LABEL [LABEL ...]]
 
-Loads the annotations from associated blue channel PNG files.
+Loads the annotations from associated blue channel JPG/PNG files.
 
 optional arguments:
   -h, --help            show this help message and exit

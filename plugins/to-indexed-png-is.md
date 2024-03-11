@@ -27,7 +27,7 @@ optional arguments:
                         The split names to use for the generated splits.
                         (default: None)
   -o OUTPUT, --output OUTPUT
-                        The directory to store the images/.txt files in. Any
+                        The directory to store the images files in. Any
                         defined splits get added beneath there. (default:
                         None)
   --image_path_rel PATH
