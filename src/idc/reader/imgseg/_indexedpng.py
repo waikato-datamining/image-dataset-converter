@@ -2,7 +2,6 @@ import argparse
 from typing import List, Iterable, Union
 
 import numpy as np
-from PIL import Image
 from seppl.io import locate_files
 from wai.logging import LOGGING_WARNING
 
