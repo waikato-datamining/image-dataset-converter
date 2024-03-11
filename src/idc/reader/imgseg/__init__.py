@@ -1,2 +1,3 @@
+from ._bluechannel import BlueChannelImageSegmentationReader
 from ._grayscale import GrayscaleImageSegmentationReader
 from ._indexedpng import IndexedPngImageSegmentationReader

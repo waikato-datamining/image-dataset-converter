@@ -2,6 +2,7 @@
 ## Readers
 * [from-adams-ic](from-adams-ic.md)
 * [from-adams-od](from-adams-od.md)
+* [from-blue-channel-is](from-blue-channel-is.md)
 * [from-coco-od](from-coco-od.md)
 * [from-data](from-data.md)
 * [from-grayscale-is](from-grayscale-is.md)
@@ -27,6 +28,7 @@
 ## Writers
 * [to-adams-ic](to-adams-ic.md)
 * [to-adams-od](to-adams-od.md)
+* [to-blue-channel-is](to-blue-channel-is.md)
 * [to-coco-od](to-coco-od.md)
 * [to-data](to-data.md)
 * [to-grayscale-is](to-grayscale-is.md)
