@@ -1,1 +1,2 @@
+from ._grayscale import GrayscaleImageSegmentationWriter
 from ._indexedpng import IndexedPngImageSegmentationWriter

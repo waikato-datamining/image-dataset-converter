@@ -1,1 +1,2 @@
+from ._grayscale import GrayscaleImageSegmentationReader
 from ._indexedpng import IndexedPngImageSegmentationReader
