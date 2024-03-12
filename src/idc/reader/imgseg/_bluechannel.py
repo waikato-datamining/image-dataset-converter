@@ -134,11 +134,12 @@ class BlueChannelImageSegmentationReader(Reader):
             if index == 0:
                 continue
             index = int(index)
-            if index not in self._label_mapping:
+            label_index = index - 1
+            if label_index not in self._label_mapping:
                 self.logger().warning("Blue channel value not covered by labels, skipping: %d" % index)
                 continue
             sub_arr = np.where(arr == index, 255, 0).astype(np.uint8)
-            layers[self._label_mapping[index]] = sub_arr
+            layers[self._label_mapping[label_index]] = sub_arr
         annotations = ImageSegmentationAnnotations(self.labels, layers)
 
         # associated image
