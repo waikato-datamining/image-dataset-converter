@@ -128,7 +128,7 @@ class IndexedPngImageSegmentationWriter(SplittableStreamWriter):
             if item.annotation is not None:
                 # combine layers
                 arr = np.zeros((item.image_height, item.image_width)).astype(dtype=np.uint8)
-                for index, label in enumerate(item.annotation.labels):
+                for index, label in enumerate(item.annotation.labels, start=1):
                     if label in item.annotation.layers:
                         sub_arr = item.annotation.layers[label]
                         sub_arr = np.where(sub_arr == 255, index, 0).astype(np.uint8)
