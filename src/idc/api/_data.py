@@ -90,6 +90,16 @@ class ImageData(MetaDataHandler, LoggingHandler):
         else:
             return None
 
+    @image_name.setter
+    def image_name(self, s: str):
+        """
+        Sets the new name.
+
+        :param s: the new name
+        :type s: str
+        """
+        self._name = s
+
     @property
     def image_format(self) -> Optional[str]:
         """
@@ -148,6 +158,28 @@ class ImageData(MetaDataHandler, LoggingHandler):
             return None
         else:
             return size[1]
+
+    @property
+    def data(self) -> bytes:
+        """
+        Returns the internal data, if any.
+
+        :return: the data
+        """
+        return self._data
+
+    @data.setter
+    def data(self, data: bytes):
+        """
+        Uses the provided data.
+
+        :param data: the data to use
+        """
+        self._name = self.image_name
+        self._source = None
+        self._format = None
+        self._size = None
+        self._data = data
 
     def save_image(self, path: str, make_dirs: bool = False) -> bool:
         """
