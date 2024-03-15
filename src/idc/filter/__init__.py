@@ -1,3 +1,4 @@
+from ._dimension_discarder import DimensionDiscarder
 from ._inspect import Inspect, MODES, MODE_NONINTERACTIVE, MODE_INTERACTIVE, OUTPUTS, OUTPUT_STDOUT, OUTPUT_STDERR, OUTPUT_LOGGER, OUTPUT_FILE
 from ._max_records import MaxRecords
 from ._metadata import MetaData

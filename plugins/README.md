@@ -15,6 +15,7 @@
 * [from-yolo-od](from-yolo-od.md)
 
 ## Filters
+* [dimension-discarder](dimension-discarder.md)
 * [inspect](inspect.md)
 * [label-from-name](label-from-name.md)
 * [max-records](max-records.md)
