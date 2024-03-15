@@ -17,6 +17,7 @@
 ## Filters
 * [coerce-box](coerce-box.md)
 * [coerce-mask](coerce-mask.md)
+* [convert-image-format](convert-image-format.md)
 * [dimension-discarder](dimension-discarder.md)
 * [inspect](inspect.md)
 * [label-from-name](label-from-name.md)

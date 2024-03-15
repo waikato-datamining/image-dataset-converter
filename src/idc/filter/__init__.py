@@ -1,5 +1,6 @@
 from ._coerce_box import CoerceBox
 from ._coerce_mask import CoerceMask
+from ._convert_image_format import ConvertImageFormat
 from ._dimension_discarder import DimensionDiscarder
 from ._inspect import Inspect, MODES, MODE_NONINTERACTIVE, MODE_INTERACTIVE, OUTPUTS, OUTPUT_STDOUT, OUTPUT_STDERR, OUTPUT_LOGGER, OUTPUT_FILE
 from ._max_records import MaxRecords
