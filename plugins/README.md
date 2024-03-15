@@ -15,6 +15,8 @@
 * [from-yolo-od](from-yolo-od.md)
 
 ## Filters
+* [coerce-box](coerce-box.md)
+* [coerce-mask](coerce-mask.md)
 * [dimension-discarder](dimension-discarder.md)
 * [inspect](inspect.md)
 * [label-from-name](label-from-name.md)
