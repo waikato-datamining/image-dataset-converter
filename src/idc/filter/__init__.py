@@ -7,6 +7,7 @@ from ._discard_invalid_images import DiscardInvalidImages
 from ._discard_negatives import DiscardNegatives
 from ._filter_labels import FilterLabels
 from ._inspect import Inspect, MODES, MODE_NONINTERACTIVE, MODE_INTERACTIVE, OUTPUTS, OUTPUT_STDOUT, OUTPUT_STDERR, OUTPUT_LOGGER, OUTPUT_FILE
+from ._label_present import LabelPresent
 from ._max_records import MaxRecords
 from ._metadata import MetaData
 from ._metadata_from_name import MetaDataFromName

@@ -25,6 +25,7 @@
 * [filter-labels](filter-labels.md)
 * [inspect](inspect.md)
 * [label-from-name](label-from-name.md)
+* [label-present](label-present.md)
 * [max-records](max-records.md)
 * [metadata](metadata.md)
 * [metadata-from-name](metadata-from-name.md)
