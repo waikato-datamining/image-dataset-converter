@@ -8,6 +8,7 @@ Ensures that file names are unique (raises an exception if not).
 ```
 usage: check-duplicate-filenames [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                                  [-N LOGGER_NAME]
+                                 [-a {ignore,warn,drop,error}]
 
 Ensures that file names are unique (raises an exception if not).
 
@@ -18,4 +19,7 @@ optional arguments:
   -N LOGGER_NAME, --logger_name LOGGER_NAME
                         The custom name to use for the logger, uses the plugin
                         name by default (default: None)
+  -a {ignore,warn,drop,error}, --action {ignore,warn,drop,error}
+                        The action to perform when encountering a duplicate
+                        file name (default: error)
 ```
