@@ -9,7 +9,7 @@ from idc.api import ImageData
 
 class DiscardInvalidImages(Filter):
     """
-    Discards invalid images, e..g, stemming from corrupt files.
+    Discards invalid images, e.g., stemming from corrupt files.
     """
 
     def __init__(self, logger_name: str = None, logging_level: str = LOGGING_WARNING):
@@ -39,7 +39,7 @@ class DiscardInvalidImages(Filter):
         :return: the description
         :rtype: str
         """
-        return "Discards invalid images, e..g, stemming from corrupt files."
+        return "Discards invalid images, e.g., stemming from corrupt files."
 
     def accepts(self) -> List:
         """

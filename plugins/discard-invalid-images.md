@@ -3,13 +3,13 @@
 * accepts: idc.api.ImageData
 * generates: seppl.AnyData
 
-Discards invalid images, e..g, stemming from corrupt files.
+Discards invalid images, e.g., stemming from corrupt files.
 
 ```
 usage: discard-invalid-images [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                               [-N LOGGER_NAME]
 
-Discards invalid images, e..g, stemming from corrupt files.
+Discards invalid images, e.g., stemming from corrupt files.
 
 optional arguments:
   -h, --help            show this help message and exit
