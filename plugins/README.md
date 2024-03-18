@@ -20,6 +20,7 @@
 * [convert-image-format](convert-image-format.md)
 * [dimension-discarder](dimension-discarder.md)
 * [discard-invalid-images](discard-invalid-images.md)
+* [discard-negatives](discard-negatives.md)
 * [inspect](inspect.md)
 * [label-from-name](label-from-name.md)
 * [max-records](max-records.md)
