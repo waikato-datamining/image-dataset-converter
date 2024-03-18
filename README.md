@@ -235,3 +235,12 @@ img-convert -l INFO --force_batch \
     --split_names train val test \
     --split_ratios 70 15 15
 ```
+
+
+## Additional libraries
+
+* [Image augmentation](https://github.com/waikato-datamining/image-dataset-converter-imgaug)
+* [Image statistics](https://github.com/waikato-datamining/image-dataset-converter-imgstats)
+* [Image visualizations](https://github.com/waikato-datamining/image-dataset-converter-imgvis)
+* [Redis predictions](https://github.com/waikato-datamining/image-dataset-converter-redis-predictions)
+* [Video](https://github.com/waikato-datamining/image-dataset-converter-video)
