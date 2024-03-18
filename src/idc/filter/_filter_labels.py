@@ -1,13 +1,14 @@
 import argparse
 import copy
+import numpy as np
 import re
 from shapely.geometry import Polygon
-from typing import List
+from typing import List, Dict
 
 from wai.logging import LOGGING_WARNING
-from wai.common.adams.imaging.locateobjects import LocatedObjects, LocatedObject
+from wai.common.adams.imaging.locateobjects import LocatedObjects, LocatedObject, normalized_to_absolute, NormalizedLocatedObjects
 from seppl.io import Filter
-from idc.api import ObjectDetectionData, ImageClassificationData, ImageData, to_polygon, intersect_over_union
+from idc.api import ObjectDetectionData, ImageClassificationData, ImageSegmentationData, ImageData, to_polygon, intersect_over_union
 
 
 class FilterLabels(Filter):
@@ -68,7 +69,7 @@ class FilterLabels(Filter):
         :return: the list of classes
         :rtype: list
         """
-        return [ObjectDetectionData, ImageClassificationData]
+        return [ObjectDetectionData, ImageClassificationData, ImageSegmentationData]
 
     def generates(self) -> List:
         """
@@ -77,7 +78,7 @@ class FilterLabels(Filter):
         :return: the list of classes
         :rtype: list
         """
-        return [ObjectDetectionData, ImageClassificationData]
+        return [ObjectDetectionData, ImageClassificationData, ImageSegmentationData]
 
     def _create_argparser(self) -> argparse.ArgumentParser:
         """
@@ -123,27 +124,40 @@ class FilterLabels(Filter):
             self._region = [float(x) for x in parts]
             self._normalized = sum([(0 if (x < 1) else 1) for x in self._region]) < 4
 
-    def remove_invalid_objects(self, located_objects: LocatedObjects, width: int, height: int):
+    def remove_invalid_objects(self, located_objects: LocatedObjects, width: int, height: int) -> LocatedObjects:
         """
         Removes objects with labels that are not valid under the given options.
 
         :param located_objects: The located objects to process.
         :param width: the width of the image
+        :type width: int
         :param height: the height of the image
+        :type height: int
+        :return: the (potentially) updated objects
+        :rtype: LocatedObjects
         """
         # Create a list of objects to remove
         invalid_objects: List[int] = []
 
+        if isinstance(located_objects, NormalizedLocatedObjects):
+            absolute = normalized_to_absolute(located_objects, width, height)
+        else:
+            absolute = located_objects
+
         # Search the located objects
-        for index, located_object in enumerate(located_objects):
+        for index, located_object in enumerate(absolute):
             if not self.filter_object(located_object):
                 invalid_objects.append(index)
             elif not self.filter_region(located_object, width, height):
                 invalid_objects.append(index)
 
         # Remove the invalid objects
-        for index in reversed(invalid_objects):
-            located_objects.pop(index)
+        if len(invalid_objects) > 0:
+            located_objects = copy.deepcopy(located_objects)
+            for index in reversed(invalid_objects):
+                located_objects.pop(index)
+
+        return located_objects
 
     def filter_label(self, label: str) -> bool:
         """
@@ -205,6 +219,25 @@ class FilterLabels(Filter):
 
         return iou > self.min_iou
 
+    def remove_invalid_layers(self, layers: Dict[str, np.ndarray]) -> Dict[str, np.ndarray]:
+        """
+        Removes all invalid layers.
+
+        :param layers: the layers to process
+        :type layers: dict
+        :return: the updated layers
+        :rtype: dict
+        """
+        delete = []
+        for label in layers:
+            if not self.filter_label(label):
+                delete.append(label)
+        if len(delete) > 0:
+            layers = copy.deepcopy(layers)
+            for label in delete:
+                del layers[label]
+        return layers
+
     def _do_process(self, data):
         """
         Processes the data record(s).
@@ -220,18 +253,28 @@ class FilterLabels(Filter):
         for item in data:
             if isinstance(item, ObjectDetectionData):
                 # Use the options to filter the located objects by label
-                absolute = copy.deepcopy(item.get_absolute())
-                self.remove_invalid_objects(absolute, item.image_width, item.image_height)
+                objects_new = self.remove_invalid_objects(item.annotation, item.image_width, item.image_height)
                 # no annotations left? mark as negative
-                if len(absolute) == 0:
+                if len(objects_new) == 0:
+                    item_new = copy.deepcopy(item)
+                    item_new.annotation = None
+                    result.append(item_new)
+                else:
+                    item.annotation = objects_new
+                    result.append(item)
+            elif isinstance(item, ImageClassificationData):
+                # mark as negative if label doesn't match
+                if not self.filter_label(item.annotation):
                     item_new = copy.deepcopy(item)
                     item_new.annotation = None
                     result.append(item_new)
                 else:
                     result.append(item)
-            elif isinstance(item, ImageClassificationData):
-                # mark as negative if label doesn't match
-                if not self.filter_label(item.annotation):
+            elif isinstance(item, ImageSegmentationData):
+                # remove layers
+                layers = self.remove_invalid_layers(item.annotation.layers)
+                # no layers left? mark as negative
+                if len(layers) == 0:
                     item_new = copy.deepcopy(item)
                     item_new.annotation = None
                     result.append(item_new)

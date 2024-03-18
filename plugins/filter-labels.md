@@ -1,7 +1,7 @@
 # filter-labels
 
-* accepts: idc.api.ObjectDetectionData, idc.api.ImageClassificationData
-* generates: idc.api.ObjectDetectionData, idc.api.ImageClassificationData
+* accepts: idc.api.ObjectDetectionData, idc.api.ImageClassificationData, idc.api.ImageSegmentationData
+* generates: idc.api.ObjectDetectionData, idc.api.ImageClassificationData, idc.api.ImageSegmentationData
 
 Filters out labels according to the parameters.
 
