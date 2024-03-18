@@ -22,6 +22,7 @@
 * [dimension-discarder](dimension-discarder.md)
 * [discard-invalid-images](discard-invalid-images.md)
 * [discard-negatives](discard-negatives.md)
+* [filter-labels](filter-labels.md)
 * [inspect](inspect.md)
 * [label-from-name](label-from-name.md)
 * [max-records](max-records.md)
