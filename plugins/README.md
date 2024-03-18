@@ -15,6 +15,7 @@
 * [from-yolo-od](from-yolo-od.md)
 
 ## Filters
+* [check-duplicate-filenames](check-duplicate-filenames.md)
 * [coerce-box](coerce-box.md)
 * [coerce-mask](coerce-mask.md)
 * [convert-image-format](convert-image-format.md)

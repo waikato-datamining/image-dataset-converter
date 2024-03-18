@@ -1,3 +1,4 @@
+from ._check_duplicate_filenames import CheckDuplicateFilenames
 from ._coerce_box import CoerceBox
 from ._coerce_mask import CoerceMask
 from ._convert_image_format import ConvertImageFormat, FORMATS, FORMAT_JPEG, FORMAT_PNG, FORMAT_BMP
