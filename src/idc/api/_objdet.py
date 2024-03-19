@@ -11,7 +11,7 @@ DEFAULT_LABEL = "object"
 LABEL_KEY = "type"
 
 
-def get_object_label(located_object: Union[LocatedObject, NormalizedLocatedObject], default_label: str = DEFAULT_LABEL) -> Optional[str]:
+def get_object_label(located_object: Union[LocatedObject, NormalizedLocatedObject], default_label: Optional[str] = DEFAULT_LABEL) -> Optional[str]:
     """
     Returns the object label from the located object.
 
