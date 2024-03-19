@@ -4,8 +4,7 @@ from datetime import datetime
 from typing import List
 
 from wai.logging import LOGGING_WARNING
-from idc.api import ObjectDetectionData
-from idc.api import SplittableStreamWriter
+from idc.api import ObjectDetectionData, SplittableStreamWriter, get_object_label
 from opex import ObjectPredictions, ObjectPrediction, BBox, Polygon
 
 
@@ -129,9 +128,7 @@ class OPEXObjectDetectionWriter(SplittableStreamWriter):
                         except:
                             pass
                     # label
-                    label = "object"
-                    if "type" in obj.metadata:
-                        label = str(obj.metadata["type"])
+                    label = get_object_label(obj)
                     # meta data
                     meta = dict()
                     for k, v in obj.metadata.items():

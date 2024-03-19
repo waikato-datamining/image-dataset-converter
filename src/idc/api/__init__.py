@@ -1,7 +1,7 @@
 from ._data import ImageData
 from ._imgcls import ImageClassificationData
 from ._imgseg import ImageSegmentationData, ImageSegmentationAnnotations
-from ._objdet import ObjectDetectionData
+from ._objdet import ObjectDetectionData, get_object_label, set_object_label, DEFAULT_LABEL, LABEL_KEY
 from ._utils import locate_file, locate_image, load_image_from_bytes, load_image_from_file
 from ._utils import load_labels, save_labels, save_labels_csv
 from ._data_types import DATATYPE_IMGCLS, DATATYPE_OBJDET, DATATYPE_IMGSEG, DATATYPES, data_type_to_class

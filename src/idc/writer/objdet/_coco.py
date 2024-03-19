@@ -6,8 +6,7 @@ from typing import List, Iterable, Dict
 
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ObjectDetectionData
-from idc.api import SplittableBatchWriter
+from idc.api import ObjectDetectionData, SplittableBatchWriter, get_object_label
 
 
 class COCOObjectDetectionWriter(SplittableBatchWriter):
@@ -228,9 +227,7 @@ class COCOObjectDetectionWriter(SplittableBatchWriter):
         image_id = self._image_lookup[item.image_name]
         absolute = item.get_absolute()
         for obj in absolute:
-            label = "object"
-            if "type" in obj.metadata:
-                label = str(obj.metadata["type"])
+            label = get_object_label(obj)
             if label not in self._category_lookup:
                 if self.error_on_new_category:
                     raise Exception("Undefined label encountered with image %s: %s" % (item.image_name, label))

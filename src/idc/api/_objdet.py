@@ -2,8 +2,42 @@ from PIL import Image
 from typing import Tuple, Dict, Union, Optional
 
 from ._data import ImageData
-from wai.common.adams.imaging.locateobjects import LocatedObjects, NormalizedLocatedObjects
+from wai.common.adams.imaging.locateobjects import LocatedObjects, LocatedObject, NormalizedLocatedObjects, NormalizedLocatedObject
 from wai.common.adams.imaging.locateobjects import absolute_to_normalized, normalized_to_absolute
+
+
+DEFAULT_LABEL = "object"
+
+LABEL_KEY = "type"
+
+
+def get_object_label(located_object: Union[LocatedObject, NormalizedLocatedObject], default_label: str = DEFAULT_LABEL) -> Optional[str]:
+    """
+    Returns the object label from the located object.
+
+    :param located_object: the located object to get the label from the meta-data
+    :type located_object: LocatedObject
+    :param default_label: the default label to use in case no label is stored in meta-data
+    :type default_label: str
+    :return: the label
+    :rtype: str
+    """
+    if LABEL_KEY in located_object.metadata:
+        return str(located_object.metadata[LABEL_KEY])
+    else:
+        return default_label
+
+
+def set_object_label(located_object: Union[LocatedObject, NormalizedLocatedObject], label: str):
+    """
+    Sets the object label for the located object.
+
+    :param located_object: the located object to set the label for in its meta-data
+    :type located_object: LocatedObject
+    :param label: the label to set
+    :type label: str
+    """
+    located_object.metadata[LABEL_KEY] = label
 
 
 class ObjectDetectionData(ImageData):

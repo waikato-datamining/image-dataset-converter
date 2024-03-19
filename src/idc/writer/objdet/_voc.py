@@ -4,8 +4,7 @@ from typing import List
 from xml.etree.ElementTree import Element, ElementTree
 
 from wai.logging import LOGGING_WARNING
-from idc.api import ObjectDetectionData
-from idc.api import SplittableStreamWriter
+from idc.api import ObjectDetectionData, SplittableStreamWriter, get_object_label
 
 
 def append_element(to: Element, tag: str, value):
@@ -158,11 +157,7 @@ class VOCObjectDetectionWriter(SplittableStreamWriter):
                     obj = Element("object")
                     root.append(obj)
 
-                    label = "object"
-                    if "type" in lobj.metadata:
-                        label = str(lobj.metadata["type"])
-
-                    append_element(obj, "name", label)
+                    append_element(obj, "name", get_object_label(lobj))
                     append_element(obj, "pose", "Unspecified")
                     append_element(obj, "truncated", 0)
                     append_element(obj, "difficult", 0)

@@ -7,7 +7,7 @@ from shapely.geometry import Polygon
 from wai.common.adams.imaging.locateobjects import LocatedObjects, LocatedObject
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ObjectDetectionData, to_polygon, intersect_over_union
+from idc.api import ObjectDetectionData, to_polygon, intersect_over_union, get_object_label
 
 
 class LabelPresent(Filter):
@@ -228,9 +228,7 @@ class LabelPresent(Filter):
 
         # Search the located objects
         for index, located_object in enumerate(located_objects):
-            label = "object"
-            if "type" in located_object.metadata:
-                label = located_object.metadata["type"]
+            label = get_object_label(located_object)
             label_ok = self.check_label(label)
             self.logger().debug("check_label: %s = %s" % (label, str(label_ok)))
             if label_ok:

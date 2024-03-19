@@ -8,7 +8,7 @@ from typing import List, Dict
 from wai.logging import LOGGING_WARNING
 from wai.common.adams.imaging.locateobjects import LocatedObjects, LocatedObject, normalized_to_absolute, NormalizedLocatedObjects
 from seppl.io import Filter
-from idc.api import ObjectDetectionData, ImageClassificationData, ImageSegmentationData, ImageData, to_polygon, intersect_over_union
+from idc.api import ObjectDetectionData, ImageClassificationData, ImageSegmentationData, ImageData, to_polygon, intersect_over_union, get_object_label
 
 
 class FilterLabels(Filter):
@@ -183,9 +183,7 @@ class FilterLabels(Filter):
         :return:                True if the object matches, false if not.
         """
         # Filter the label
-        label = "object"
-        if "type" in located_object.metadata:
-            label = str(located_object.metadata["type"])
+        label = get_object_label(located_object)
         return self.filter_label(label)
 
     def filter_region(self, located_object: LocatedObject, width: int, height: int) -> bool:
