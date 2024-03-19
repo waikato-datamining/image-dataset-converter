@@ -146,10 +146,12 @@ class MapLabels(Filter):
             if label in annotation.labels:
                 i = annotation.labels.index(label)
                 annotation.labels[i] = self._mapping[label]
+                result = True
             if label in annotation.layers:
                 data = annotation.layers[label]
                 del annotation.layers[label]
                 annotation.layers[self._mapping[label]] = data
+                result = True
 
         return result
 
