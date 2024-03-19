@@ -1,3 +1,4 @@
+import copy
 import logging
 import os.path
 import shutil
@@ -234,3 +235,48 @@ class ImageData(MetaDataHandler, LoggingHandler):
         :type metadata: dict
         """
         self._metadata = metadata
+
+    def duplicate(self, source: str = None, name: str = None, data: bytes = None,
+                  image: Image.Image = None, image_format: str = None, size: Tuple[int, int] = None,
+                  metadata: Dict = None, annotation=None):
+        """
+        Duplicates the container overwriting existing data with any provided data.
+
+        :param source: the source to use
+        :type source: str
+        :param name: the name to use
+        :type name: str
+        :param data: the data to use
+        :type data: bytes
+        :param image: the Pillow image to use
+        :type image: Image.Image
+        :param image_format: the image format
+        :type image_format: str
+        :param size: the size tuple
+        :type size: tuple
+        :param metadata: the metadata
+        :type metadata: dict
+        :param annotation: the annotations
+        :return: the duplicated container
+        """
+        if source is None:
+            source = self._source
+        if name is None:
+            name = self._name
+        if (data is None) and (self._data is not None):
+            data = copy.deepcopy(self._data)
+        # if the source changes, we need to force loading the image
+        if ((image is None) and (self._image is not None)) or (source != self._source):
+            image = copy.deepcopy(self.image)
+        if image_format is None:
+            image_format = self._format
+        if (size is None) and (self._size is not None):
+            size = copy.deepcopy(self._size)
+        if (metadata is None) and (self._metadata is not None):
+            metadata = copy.deepcopy(self._metadata)
+        if (annotation is None) and (self.annotation is not None):
+            annotation = copy.deepcopy(self.annotation)
+
+        return type(self)(source=source, name=name, data=data,
+                          image=image, image_format=image_format, size=size,
+                          metadata=metadata, annotation=annotation)
