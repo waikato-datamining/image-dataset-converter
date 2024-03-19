@@ -31,6 +31,7 @@
 * [metadata](metadata.md)
 * [metadata-from-name](metadata-from-name.md)
 * [passthrough](passthrough.md)
+* [polygon-discarder](polygon-discarder.md)
 * [randomize-records](randomize-records.md)
 * [record-window](record-window.md)
 * [split](split.md)

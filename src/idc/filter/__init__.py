@@ -13,6 +13,7 @@ from ._max_records import MaxRecords
 from ._metadata import MetaData
 from ._metadata_from_name import MetaDataFromName
 from ._passthrough import PassThrough
+from ._polygon_discarder import PolygonDiscarder
 from ._randomize_records import RandomizeRecords
 from ._record_window import RecordWindow
 from ._split import Split
