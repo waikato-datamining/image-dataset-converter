@@ -30,6 +30,7 @@
 * [max-records](max-records.md)
 * [metadata](metadata.md)
 * [metadata-from-name](metadata-from-name.md)
+* [passthrough](passthrough.md)
 * [randomize-records](randomize-records.md)
 * [record-window](record-window.md)
 * [split](split.md)
