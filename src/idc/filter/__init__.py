@@ -16,6 +16,7 @@ from ._passthrough import PassThrough
 from ._polygon_discarder import PolygonDiscarder
 from ._randomize_records import RandomizeRecords
 from ._record_window import RecordWindow
+from ._remove_classes import RemoveClasses
 from ._split import Split
 from ._strip_annotations import StripAnnotations
 from ._tee import Tee

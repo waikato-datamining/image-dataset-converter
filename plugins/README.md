@@ -34,6 +34,7 @@
 * [polygon-discarder](polygon-discarder.md)
 * [randomize-records](randomize-records.md)
 * [record-window](record-window.md)
+* [remove-classes](remove-classes.md)
 * [split](split.md)
 * [strip-annotations](strip-annotations.md)
 * [tee](tee.md)
