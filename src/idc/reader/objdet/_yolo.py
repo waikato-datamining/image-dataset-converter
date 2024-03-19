@@ -159,7 +159,11 @@ class YoloObjectDetectionReader(Reader):
                 if len(parts) != 4:
                     self.logger().warning("BBox format requires 4 values (left, top, width, height), but got %d instead: %s" % (len(parts), line))
                     continue
-                obj = NormalizedLocatedObject(float(parts[0]), float(parts[1]), float(parts[2]), float(parts[3]), **meta)
+                x_center = float(parts[0])
+                y_center = float(parts[1])
+                width = float(parts[2])
+                height = float(parts[3])
+                obj = NormalizedLocatedObject(x_center - width / 2, y_center - height / 2, width, height, **meta)
                 annotations.append(obj)
 
         image = locate_image(self._current_input, rel_path=self.image_path_rel)

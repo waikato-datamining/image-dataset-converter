@@ -167,7 +167,7 @@ class YoloObjectDetectionWriter(SplittableStreamWriter):
                             values.append(x)
                             values.append(y)
                     else:
-                        values = [obj.x, obj.y, obj.width, obj.height]
+                        values = [obj.x + obj.width / 2, obj.y + obj.height / 2, obj.width, obj.height]
                     values = ["%.6f" % value for value in values]
                     line = str(index) + " " + " ".join(values)
                     lines.append(line)
