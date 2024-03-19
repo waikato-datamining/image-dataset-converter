@@ -4,6 +4,7 @@ from typing import List
 from wai.logging import LOGGING_WARNING
 from seppl import MetaDataHandler, get_metadata, AnyData
 from seppl.io import Splitter, Filter
+from idc.api import ImageData
 
 META_SPLIT = "split"
 """ the key for storing the split name in the meta-data. """
@@ -122,19 +123,28 @@ class Split(Filter):
                 self._output_stats()
                 self._splitter.reset()
 
-        # get meta data
-        meta = get_metadata(data)
-        if meta is None:
-            if not isinstance(data, MetaDataHandler):
-                raise Exception("Cannot access meta-data for type: %s" % str(type(data)))
-            else:
-                meta = dict()
-                data.set_metadata(meta)
+        if isinstance(data, ImageData):
+            data = [data]
 
-        # find split according to schedule
-        meta[META_SPLIT] = self._splitter.next()
+        result = []
+        for item in data:
+            # get meta data
+            meta = get_metadata(item)
+            if meta is None:
+                if not isinstance(item, MetaDataHandler):
+                    raise Exception("Cannot access meta-data for type: %s" % str(type(item)))
+                else:
+                    meta = dict()
+                    item.set_metadata(meta)
 
-        return data
+            # find split according to schedule
+            meta[META_SPLIT] = self._splitter.next()
+            result.append(item)
+
+        if len(result) == 1:
+            result = result[0]
+
+        return result
 
     def finalize(self):
         """

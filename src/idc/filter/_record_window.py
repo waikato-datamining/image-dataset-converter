@@ -4,6 +4,7 @@ from typing import List
 from seppl import AnyData
 from seppl.io import Filter
 from wai.logging import LOGGING_WARNING
+from idc.api import ImageData
 
 
 class RecordWindow(Filter):
@@ -117,26 +118,33 @@ class RecordWindow(Filter):
         :param data: the record to process
         :return: the potentially updated record or None if to drop
         """
-        result = data
+        if isinstance(data, ImageData):
+            data = [data]
 
-        self._counter += 1
+        result = []
 
-        keep = True
-        if self.from_index is not None:
-            if self._counter < self.from_index:
-                keep = False
-        if self.to_index is not None:
-            if self._counter > self.to_index:
-                keep = False
-        if self.step > 1:
-            min_ = 1 if (self.from_index is None) else self.from_index
-            if (self._counter - min_) % self.step > 0:
-                keep = False
+        for item in data:
+            self._counter += 1
 
-        self.logger().debug("from=%s to=%s step=%s counter=%s -> %s"
-                            % (str(self.from_index), str(self.to_index), str(self.step), str(self._counter), str(keep)))
+            keep = True
+            if self.from_index is not None:
+                if self._counter < self.from_index:
+                    keep = False
+            if self.to_index is not None:
+                if self._counter > self.to_index:
+                    keep = False
+            if self.step > 1:
+                min_ = 1 if (self.from_index is None) else self.from_index
+                if (self._counter - min_) % self.step > 0:
+                    keep = False
 
-        if not keep:
-            result = None
+            self.logger().debug("from=%s to=%s step=%s counter=%s -> %s"
+                                % (str(self.from_index), str(self.to_index), str(self.step), str(self._counter), str(keep)))
+
+            if keep:
+                result.append(item)
+
+        if len(result) == 1:
+            result = result[0]
 
         return result

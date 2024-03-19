@@ -4,6 +4,7 @@ from typing import List
 from wai.logging import LOGGING_WARNING
 from seppl import split_args, split_cmdline, Plugin, AnyData, Initializable
 from seppl.io import Writer, BatchWriter, StreamWriter, Filter, MultiFilter
+from idc.api import ImageData
 
 
 class Tee(Filter):
@@ -146,20 +147,25 @@ class Tee(Filter):
         :param data: the record to process
         :return: the potentially updated record or None if to drop
         """
-        result = data
+        if isinstance(data, ImageData):
+            data = [data]
 
-        # filter data
-        if self._filter is not None:
-            data = self._filter.process(data)
+        result = []
+        for item in data:
+            # filter data
+            if self._filter is not None:
+                item = self._filter.process(item)
 
-        # write data
-        if (data is not None) and (self._writer is not None):
-            if isinstance(self._writer, BatchWriter):
-                self._data_buffer.append(data)
-            elif isinstance(self._writer, StreamWriter):
-                self._writer.write_stream(data)
-            else:
-                raise Exception("Unhandled type of writer: %s" % str(type(self._writer)))
+            # write data
+            if (item is not None) and (self._writer is not None):
+                if isinstance(self._writer, BatchWriter):
+                    self._data_buffer.append(item)
+                elif isinstance(self._writer, StreamWriter):
+                    self._writer.write_stream(item)
+                else:
+                    raise Exception("Unhandled type of writer: %s" % str(type(self._writer)))
+
+            result.append(item)
 
         return result
 

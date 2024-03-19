@@ -52,8 +52,19 @@ class StripAnnotations(Filter):
         :return: the potentially updated record(s)
         """
         if isinstance(data, ImageData):
-            data.annotation = None
-        else:
-            self.logger().warning("Expected %s but got %s instead, failed to strip annotations!"
-                                  % (get_class_name(ImageData), get_class_name(data)))
-        return data
+            data = [data]
+
+        result = []
+        for item in data:
+            if isinstance(item, ImageData):
+                data = data.duplicate()
+                data.annotation = None
+                result.append(data)
+            else:
+                self.logger().warning("Expected %s but got %s instead, failed to strip annotations!"
+                                      % (get_class_name(ImageData), get_class_name(data)))
+
+        if len(result) == 1:
+            result = result[0]
+
+        return result
