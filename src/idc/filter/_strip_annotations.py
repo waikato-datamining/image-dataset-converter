@@ -3,7 +3,7 @@ from typing import List
 from seppl import get_class_name, AnyData
 from seppl.io import Filter
 
-from idc.api import ImageData
+from idc.api import ImageData, flatten_list, make_list
 
 
 class StripAnnotations(Filter):
@@ -51,11 +51,8 @@ class StripAnnotations(Filter):
         :param data: the record(s) to process
         :return: the potentially updated record(s)
         """
-        if isinstance(data, ImageData):
-            data = [data]
-
         result = []
-        for item in data:
+        for item in make_list(data):
             if isinstance(item, ImageData):
                 data = data.duplicate()
                 data.annotation = None
@@ -64,7 +61,4 @@ class StripAnnotations(Filter):
                 self.logger().warning("Expected %s but got %s instead, failed to strip annotations!"
                                       % (get_class_name(ImageData), get_class_name(data)))
 
-        if len(result) == 1:
-            result = result[0]
-
-        return result
+        return flatten_list(result)

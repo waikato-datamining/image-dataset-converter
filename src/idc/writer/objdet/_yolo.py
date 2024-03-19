@@ -4,7 +4,7 @@ from collections import OrderedDict
 from typing import List
 
 from wai.logging import LOGGING_WARNING
-from idc.api import ObjectDetectionData, SplittableStreamWriter, save_labels, save_labels_csv
+from idc.api import ObjectDetectionData, SplittableStreamWriter, save_labels, save_labels_csv, make_list
 
 
 class YoloObjectDetectionWriter(SplittableStreamWriter):
@@ -127,10 +127,7 @@ class YoloObjectDetectionWriter(SplittableStreamWriter):
 
         :param data: the data to write (single record or iterable of records)
         """
-        if isinstance(data, ObjectDetectionData):
-            data = [data]
-
-        for item in data:
+        for item in make_list(data):
             sub_dir = self.output_dir
             if self.splitter is not None:
                 split = self.splitter.next()

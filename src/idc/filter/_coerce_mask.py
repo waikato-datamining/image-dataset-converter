@@ -5,7 +5,7 @@ from wai.logging import LOGGING_WARNING
 from wai.common.geometry import Polygon, Point, NormalizedPolygon, NormalizedPoint
 from wai.common.adams.imaging.locateobjects import LocatedObjects, NormalizedLocatedObjects
 from seppl.io import Filter
-from idc.api import ObjectDetectionData 
+from idc.api import ObjectDetectionData, flatten_list, make_list
 
 
 class CoerceMask(Filter):
@@ -111,17 +111,11 @@ class CoerceMask(Filter):
         """
         result = []
 
-        if isinstance(data, ObjectDetectionData):
-            data = [data]
-
-        for item in data:
+        for item in make_list(data):
             ann, updated = self._process_annotations(item.annotation)
             if updated > 0:
                 self.logger().info("Updated %d object(s)" % updated)
                 item = item.duplicate(annotation=ann)
             result.append(item)
 
-        if len(result) == 1:
-            result = result[0]
-
-        return result
+        return flatten_list(result)

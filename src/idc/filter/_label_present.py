@@ -7,7 +7,7 @@ from shapely.geometry import Polygon
 from wai.common.adams.imaging.locateobjects import LocatedObjects, LocatedObject
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ObjectDetectionData, to_polygon, intersect_over_union, get_object_label
+from idc.api import ObjectDetectionData, to_polygon, intersect_over_union, get_object_label, flatten_list, make_list
 
 
 class LabelPresent(Filter):
@@ -246,10 +246,7 @@ class LabelPresent(Filter):
         """
         result = []
 
-        if isinstance(data, ObjectDetectionData):
-            data = [data]
-
-        for item in data:
+        for item in make_list(data):
             # determines annotations that match criteria
             indices = self.find_valid_objects(item.get_absolute(), item.image_width, item.image_height)
             self.logger().debug("indices: %s" % str(indices))
@@ -258,7 +255,4 @@ class LabelPresent(Filter):
             else:
                 self.logger().info("Discarding: %s" % item.image_name)
 
-        if len(result) == 1:
-            result = result[0]
-
-        return result
+        return flatten_list(result)

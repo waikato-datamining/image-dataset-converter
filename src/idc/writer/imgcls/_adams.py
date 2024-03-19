@@ -4,8 +4,7 @@ from typing import List
 
 from wai.logging import LOGGING_WARNING
 from wai.common.file.report import Report, Field, save
-from idc.api import ImageClassificationData
-from idc.api import SplittableStreamWriter
+from idc.api import ImageClassificationData, SplittableStreamWriter, make_list
 
 
 class AdamsImageClassificationWriter(SplittableStreamWriter):
@@ -98,10 +97,7 @@ class AdamsImageClassificationWriter(SplittableStreamWriter):
 
         :param data: the data to write (single record or iterable of records)
         """
-        if isinstance(data, ImageClassificationData):
-            data = [data]
-
-        for item in data:
+        for item in make_list(data):
             sub_dir = self.output_dir
             if self.splitter is not None:
                 split = self.splitter.next()

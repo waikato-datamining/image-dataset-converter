@@ -1,4 +1,4 @@
-from ._data import ImageData
+from ._data import ImageData, make_list, flatten_list
 from ._imgcls import ImageClassificationData
 from ._imgseg import ImageSegmentationData, ImageSegmentationAnnotations
 from ._objdet import ObjectDetectionData, get_object_label, set_object_label, DEFAULT_LABEL, LABEL_KEY

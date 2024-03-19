@@ -6,9 +6,11 @@ from shapely.geometry import Polygon
 from typing import List, Dict
 
 from wai.logging import LOGGING_WARNING
-from wai.common.adams.imaging.locateobjects import LocatedObjects, LocatedObject, normalized_to_absolute, NormalizedLocatedObjects
+from wai.common.adams.imaging.locateobjects import LocatedObjects, LocatedObject, normalized_to_absolute, \
+    NormalizedLocatedObjects
 from seppl.io import Filter
-from idc.api import ObjectDetectionData, ImageClassificationData, ImageSegmentationData, ImageData, to_polygon, intersect_over_union, get_object_label
+from idc.api import ObjectDetectionData, ImageClassificationData, ImageSegmentationData, to_polygon, \
+    intersect_over_union, get_object_label, flatten_list, make_list
 
 
 class FilterLabels(Filter):
@@ -245,10 +247,7 @@ class FilterLabels(Filter):
         """
         result = []
 
-        if isinstance(data, ImageData):
-            data = [data]
-
-        for item in data:
+        for item in make_list(data):
             if isinstance(item, ObjectDetectionData):
                 # Use the options to filter the located objects by label
                 objects_new = self.remove_invalid_objects(item.annotation, item.image_width, item.image_height)
@@ -281,7 +280,4 @@ class FilterLabels(Filter):
             else:
                 self.logger().warning("Cannot process data type: %s" % str(type(item)))
 
-        if len(result) == 1:
-            result = result[0]
-
-        return result
+        return flatten_list(result)

@@ -4,7 +4,7 @@ from typing import List
 from wai.logging import LOGGING_WARNING
 from seppl import split_args, split_cmdline, Plugin, AnyData, Initializable
 from seppl.io import Writer, BatchWriter, StreamWriter, Filter, MultiFilter
-from idc.api import ImageData
+from idc.api import make_list
 
 
 class Tee(Filter):
@@ -147,11 +147,8 @@ class Tee(Filter):
         :param data: the record to process
         :return: the potentially updated record or None if to drop
         """
-        if isinstance(data, ImageData):
-            data = [data]
-
         result = []
-        for item in data:
+        for item in make_list(data):
             # filter data
             if self._filter is not None:
                 item = self._filter.process(item)

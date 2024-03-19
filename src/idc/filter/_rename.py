@@ -5,7 +5,7 @@ from typing import List
 from seppl import AnyData
 from seppl.io import Filter
 from wai.logging import LOGGING_WARNING
-from idc.api import ImageData
+from idc.api import ImageData, flatten_list, make_list
 
 RENAME_PH_NAME = "{name}"
 RENAME_PH_EXT = "{ext}"
@@ -166,11 +166,8 @@ class Rename(Filter):
         if self.name_format == RENAME_PH_SAME:
             return data
 
-        if isinstance(data, ImageData):
-            data = [data]
-
         result = []
-        for item in data:
+        for item in make_list(data):
             if item.source is None:
                 path = "."
             else:
@@ -208,7 +205,4 @@ class Rename(Filter):
             item_new = item.duplicate(source=os.path.join(path, name_new), name=name_new)
             result.append(item_new)
 
-        if len(result) == 1:
-            result = result[0]
-
-        return result
+        return flatten_list(result)

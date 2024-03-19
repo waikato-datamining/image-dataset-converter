@@ -5,7 +5,7 @@ from typing import List
 from seppl import AnyData
 from seppl.io import Filter
 from wai.logging import LOGGING_WARNING
-from idc.api import ImageData
+from idc.api import flatten_list, make_list
 
 
 class Sample(Filter):
@@ -108,17 +108,11 @@ class Sample(Filter):
         :param data: the record to process
         :return: the potentially updated record or None if to drop
         """
-        if isinstance(data, ImageData):
-            data = [data]
-
         result = []
 
-        for item in data:
+        for item in make_list(data):
             threshold = 0.0 if self.threshold is None else self.threshold
             if self._random.random() >= threshold:
                 result.append(item)
 
-        if len(result) == 1:
-            result = result[0]
-
-        return result
+        return flatten_list(result)

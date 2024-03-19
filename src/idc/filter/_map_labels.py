@@ -6,8 +6,8 @@ from seppl.io import Filter
 from wai.common.adams.imaging.locateobjects import LocatedObjects, NormalizedLocatedObjects
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ObjectDetectionData, ImageClassificationData, ImageSegmentationData, ImageData, get_object_label, \
-    set_object_label, ImageSegmentationAnnotations
+from idc.api import ObjectDetectionData, ImageClassificationData, ImageSegmentationData, get_object_label, \
+    set_object_label, ImageSegmentationAnnotations, flatten_list, make_list
 
 
 class MapLabels(Filter):
@@ -164,10 +164,7 @@ class MapLabels(Filter):
         """
         result = []
 
-        if isinstance(data, ImageData):
-            data = [data]
-
-        for item in data:
+        for item in make_list(data):
             item_new = item
             if item.annotation is not None:
                 if isinstance(item, ObjectDetectionData):
@@ -187,7 +184,4 @@ class MapLabels(Filter):
                     self.logger().warning("Cannot process data type: %s" % str(type(item)))
             result.append(item_new)
 
-        if len(result) == 1:
-            result = result[0]
-
-        return result
+        return flatten_list(result)

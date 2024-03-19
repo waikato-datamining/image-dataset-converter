@@ -5,7 +5,7 @@ from seppl import AnyData
 from seppl.io import Filter
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ImageData
+from idc.api import ImageData, flatten_list, make_list
 
 DUPLICATE_ACTION_IGNORE = "ignore"
 DUPLICATE_ACTION_WARN = "warn"
@@ -115,10 +115,7 @@ class CheckDuplicateFilenames(Filter):
         """
         result = []
 
-        if isinstance(data, ImageData):
-            data = [data]
-
-        for item in data:
+        for item in make_list(data):
             if item.image_name in self._names:
                 msg = "File name already encountered: %s" % item.image_name
                 if item.source is not None:
@@ -144,7 +141,4 @@ class CheckDuplicateFilenames(Filter):
                 if item.source is not None:
                     self._paths[item.image_name] = item.source
 
-        if len(result) == 1:
-            result = result[0]
-
-        return result
+        return flatten_list(result)

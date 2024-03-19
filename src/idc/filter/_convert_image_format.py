@@ -1,5 +1,4 @@
 import argparse
-import copy
 import io
 import os.path
 from typing import List
@@ -7,6 +6,7 @@ from typing import List
 from wai.logging import LOGGING_WARNING
 from seppl import AnyData
 from seppl.io import Filter
+from idc.api import flatten_list, make_list
 
 FORMAT_JPEG = "JPEG"
 FORMAT_PNG = "PNG"
@@ -119,15 +119,12 @@ class ConvertImageFormat(Filter):
         """
         result = []
 
-        if not isinstance(data, list):
-            data = [data]
-
-        for item in data:
+        for item in make_list(data):
             if item.image_format != self.image_format:
                 # convert format
                 img = item.image
                 output_io = io.BytesIO()
-                if img.mode is 'RGBA' or 'ARGB':
+                if img.mode in ['RGBA', 'ARGB']:
                     img = img.convert('RGB')
                 img.save(output_io, format=self.image_format)
                 data = output_io.getvalue()
@@ -138,7 +135,4 @@ class ConvertImageFormat(Filter):
 
             result.append(item)
 
-        if len(result) == 1:
-            result = result[0]
-
-        return result
+        return flatten_list(result)

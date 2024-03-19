@@ -4,7 +4,7 @@ from datetime import datetime
 from typing import List
 
 from wai.logging import LOGGING_WARNING
-from idc.api import ObjectDetectionData, SplittableStreamWriter, get_object_label
+from idc.api import ObjectDetectionData, SplittableStreamWriter, get_object_label, make_list
 from opex import ObjectPredictions, ObjectPrediction, BBox, Polygon
 
 
@@ -93,10 +93,7 @@ class OPEXObjectDetectionWriter(SplittableStreamWriter):
 
         :param data: the data to write (single record or iterable of records)
         """
-        if isinstance(data, ObjectDetectionData):
-            data = [data]
-
-        for item in data:
+        for item in make_list(data):
             sub_dir = self.output_dir
             if self.splitter is not None:
                 split = self.splitter.next()

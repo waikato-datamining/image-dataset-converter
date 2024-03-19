@@ -5,8 +5,7 @@ from typing import List
 from PIL import Image
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ImageSegmentationData
-from idc.api import SplittableStreamWriter
+from idc.api import ImageSegmentationData, SplittableStreamWriter, make_list
 
 
 class LayerSegmentsImageSegmentationWriter(SplittableStreamWriter):
@@ -102,10 +101,7 @@ class LayerSegmentsImageSegmentationWriter(SplittableStreamWriter):
 
         :param data: the data to write (single record or iterable of records)
         """
-        if isinstance(data, ImageSegmentationData):
-            data = [data]
-
-        for item in data:
+        for item in make_list(data):
             sub_dir = self.output_dir
             if self.splitter is not None:
                 split = self.splitter.next()

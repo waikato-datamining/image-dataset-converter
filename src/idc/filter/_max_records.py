@@ -4,7 +4,7 @@ from typing import List
 from seppl import AnyData
 from seppl.io import Filter
 from wai.logging import LOGGING_WARNING
-from idc.api import ImageData
+from idc.api import flatten_list, make_list
 
 
 class MaxRecords(Filter):
@@ -98,12 +98,9 @@ class MaxRecords(Filter):
         :param data: the record to process
         :return: the potentially updated record or None if to drop
         """
-        if isinstance(data, ImageData):
-            data = [data]
-
         result = []
 
-        for item in data:
+        for item in make_list(data):
             # maximum reached?
             if (self.max_records > 0) and (self._counter >= self.max_records):
                 if self._counter == self.max_records:
@@ -115,7 +112,4 @@ class MaxRecords(Filter):
             if item is not None:
                 result.append(item)
 
-        if len(result) == 1:
-            result = result[0]
-
-        return result
+        return flatten_list(result)

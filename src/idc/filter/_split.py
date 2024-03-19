@@ -4,7 +4,7 @@ from typing import List
 from wai.logging import LOGGING_WARNING
 from seppl import MetaDataHandler, get_metadata, AnyData
 from seppl.io import Splitter, Filter
-from idc.api import ImageData
+from idc.api import flatten_list, make_list
 
 META_SPLIT = "split"
 """ the key for storing the split name in the meta-data. """
@@ -123,11 +123,8 @@ class Split(Filter):
                 self._output_stats()
                 self._splitter.reset()
 
-        if isinstance(data, ImageData):
-            data = [data]
-
         result = []
-        for item in data:
+        for item in make_list(data):
             # get meta data
             meta = get_metadata(item)
             if meta is None:
@@ -141,10 +138,7 @@ class Split(Filter):
             meta[META_SPLIT] = self._splitter.next()
             result.append(item)
 
-        if len(result) == 1:
-            result = result[0]
-
-        return result
+        return flatten_list(result)
 
     def finalize(self):
         """

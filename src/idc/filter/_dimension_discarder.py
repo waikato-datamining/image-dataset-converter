@@ -1,11 +1,10 @@
 import argparse
-import copy
 from typing import List
 
 from wai.logging import LOGGING_WARNING
 from wai.common.adams.imaging.locateobjects import LocatedObjects, LocatedObject
 from seppl.io import Filter
-from idc.api import ObjectDetectionData 
+from idc.api import ObjectDetectionData, flatten_list, make_list
 
 
 class DimensionDiscarder(Filter):
@@ -172,10 +171,7 @@ class DimensionDiscarder(Filter):
         """
         result = []
 
-        if isinstance(data, ObjectDetectionData):
-            data = [data]
-
-        for item in data:
+        for item in make_list(data):
             ann = LocatedObjects((located_object
                                   for located_object in item.annotation
                                   if not self._should_discard_located_object(located_object)))
@@ -183,7 +179,4 @@ class DimensionDiscarder(Filter):
                 item = item.duplicate(annotation=ann)
             result.append(item)
 
-        if len(result) == 1:
-            result = result[0]
-
-        return result
+        return flatten_list(result)
