@@ -43,7 +43,7 @@ class RecordWindow(Filter):
 
     def description(self) -> str:
         """
-        Returns a description of the reader.
+        Returns a description of the filter.
 
         :return: the description
         :rtype: str
