@@ -65,8 +65,13 @@ readers:
    from-layer-segments-is, from-opex-od, from-roicsv-od, from-subdir-ic, 
    from-voc-od, from-yolo-od
 filters:
-   inspect, label-from-name, max-records, metadata, metadata-from-name, 
-   randomize-records, record-window, split, strip-annotations, tee
+   check-duplicate-filenames, coerce-box, coerce-mask, 
+   convert-image-format, dimension-discarder, discard-invalid-images, 
+   discard-negatives, filter-labels, inspect, label-from-name, 
+   label-present, map-labels, max-records, metadata, metadata-from-name, 
+   od-to-is, passthrough, polygon-discarder, randomize-records, 
+   record-window, remove-classes, rename, sample, split, 
+   strip-annotations, tee
 writers:
    to-adams-ic, to-adams-od, to-blue-channel-is, to-coco-od, to-data, 
    to-grayscale-is, to-indexed-png-is, to-layer-segments-is, to-opex-od, 
