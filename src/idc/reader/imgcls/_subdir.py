@@ -37,7 +37,7 @@ class SubDirReader(Reader):
 
     def description(self) -> str:
         """
-        Returns a description of the handler.
+        Returns a description of the reader.
 
         :return: the description
         :rtype: str

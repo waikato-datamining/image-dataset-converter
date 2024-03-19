@@ -44,7 +44,7 @@ class AdamsImageClassificationWriter(SplittableStreamWriter):
 
     def description(self) -> str:
         """
-        Returns a description of the handler.
+        Returns a description of the writer.
 
         :return: the description
         :rtype: str
