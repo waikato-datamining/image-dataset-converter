@@ -132,9 +132,9 @@ class ConvertImageFormat(Filter):
                 img.save(output_io, format=self.image_format)
                 data = output_io.getvalue()
                 # update container
-                item = copy.deepcopy(item)
-                item.data = data
-                item.image_name = os.path.splitext(item.image_name)[0] + EXTENSIONS[self.image_format]
+                item = item.duplicate(
+                    data=data,
+                    name=os.path.splitext(item.image_name)[0] + EXTENSIONS[self.image_format])
 
             result.append(item)
 

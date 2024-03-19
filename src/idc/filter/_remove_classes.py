@@ -167,14 +167,12 @@ class RemoveClasses(Filter):
                     ann_new = copy.deepcopy(item.annotation)
                     updated = self.process_object_detection(ann_new)
                     if updated:
-                        item_new = copy.deepcopy(item)
-                        item_new.annotation = ann_new
+                        item_new = item.duplicate(annotation=ann_new)
                 elif isinstance(item, ImageSegmentationData):
                     ann_new = copy.deepcopy(item.annotation)
                     updated = self.process_image_segmentation(ann_new)
                     if updated:
-                        item_new = copy.deepcopy(item)
-                        item_new.annotation = ann_new
+                        item_new = item.duplicate(annotation=ann_new)
                 else:
                     self.logger().warning("Cannot process data type: %s" % str(type(item)))
             result.append(item_new)

@@ -254,7 +254,7 @@ class FilterLabels(Filter):
                 objects_new = self.remove_invalid_objects(item.annotation, item.image_width, item.image_height)
                 # no annotations left? mark as negative
                 if len(objects_new) == 0:
-                    item_new = copy.deepcopy(item)
+                    item_new = item.duplicate()
                     item_new.annotation = None
                     result.append(item_new)
                 else:
@@ -263,7 +263,7 @@ class FilterLabels(Filter):
             elif isinstance(item, ImageClassificationData):
                 # mark as negative if label doesn't match
                 if not self.filter_label(item.annotation):
-                    item_new = copy.deepcopy(item)
+                    item_new = item.duplicate()
                     item_new.annotation = None
                     result.append(item_new)
                 else:
@@ -273,7 +273,7 @@ class FilterLabels(Filter):
                 layers = self.remove_invalid_layers(item.annotation.layers)
                 # no layers left? mark as negative
                 if len(layers) == 0:
-                    item_new = copy.deepcopy(item)
+                    item_new = item.duplicate()
                     item_new.annotation = None
                     result.append(item_new)
                 else:

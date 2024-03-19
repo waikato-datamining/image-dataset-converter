@@ -118,8 +118,7 @@ class CoerceMask(Filter):
             ann, updated = self._process_annotations(item.annotation)
             if updated > 0:
                 self.logger().info("Updated %d object(s)" % updated)
-                item = copy.deepcopy(item)
-                item.annotation = ann
+                item = item.duplicate(annotation=ann)
             result.append(item)
 
         if len(result) == 1:

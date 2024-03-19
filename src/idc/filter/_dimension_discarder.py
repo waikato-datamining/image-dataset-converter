@@ -180,8 +180,7 @@ class DimensionDiscarder(Filter):
                                   for located_object in item.annotation
                                   if not self._should_discard_located_object(located_object)))
             if len(ann) != len(item.annotation):
-                item = copy.deepcopy(item)
-                item.annotation = ann
+                item = item.duplicate(annotation=ann)
             result.append(item)
 
         if len(result) == 1:
