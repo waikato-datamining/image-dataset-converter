@@ -42,8 +42,8 @@ The following dataset formats are supported:
 | Object detection     | [COCO](https://cocodataset.org/#format-data)                                  | [Y](plugins/from-coco-od.md)               | [Y](plugins/to-coco-od.md)           | 
 | Object detection     | [OPEX](https://github.com/WaikatoLink2020/objdet-predictions-exchange-format) | [Y](plugins/from-opex-od.md)               | [Y](plugins/to-opex-od.md)           | 
 | Object detection     | [ROI CSV](formats/roicsv.md)                                                  | [Y](plugins/from-roicsv-od.md)             | [Y](plugins/to-roicsv-od.md)         | 
-| Object detection     | VOC                                                                           | [Y](plugins/from-voc-od.md)                | [Y](plugins/to-voc-od.md)            | 
-| Object detection     | YOLO                                                                          | [Y](plugins/from-yolo-od.md)               | [Y](plugins/to-yolo-od.md)           | 
+| Object detection     | [VOC](formats/voc.md)                                                         | [Y](plugins/from-voc-od.md)                | [Y](plugins/to-voc-od.md)            | 
+| Object detection     | [YOLO](formats/yolo.md)                                                       | [Y](plugins/from-yolo-od.md)               | [Y](plugins/to-yolo-od.md)           | 
 
 
 ## Tools
