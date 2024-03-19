@@ -112,10 +112,10 @@ class Split(Filter):
 
     def _do_process(self, data):
         """
-        Processes the data record.
+        Processes the data record(s).
 
-        :param data: the record to process
-        :return: the potentially updated record or None if to drop
+        :param data: the record(s) to process
+        :return: the potentially updated record(s)
         """
         if self._has_input_changed(update=True):
             if self._splitter.counter() > 0:

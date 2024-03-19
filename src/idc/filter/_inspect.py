@@ -176,10 +176,10 @@ class Inspect(Filter):
 
     def _do_process(self, data):
         """
-        Processes the data record.
+        Processes the data record(s).
 
-        :param data: the record to process
-        :return: the potentially updated record or None if to drop
+        :param data: the record(s) to process
+        :return: the potentially updated record(s)
         """
         self._output_data(self._assemble_data(data))
 

@@ -62,6 +62,6 @@ class PassThrough(Filter):
         Processes the data record(s).
 
         :param data: the record(s) to process
-        :return: the potentially updated record or None if to drop
+        :return: the potentially updated record(s)
         """
         return data

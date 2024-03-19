@@ -145,10 +145,10 @@ class MetaData(Filter):
 
     def _do_process(self, data):
         """
-        Processes the data record.
+        Processes the data record(s).
 
-        :param data: the record to process
-        :return: the potentially updated record or None if to drop
+        :param data: the record(s) to process
+        :return: the potentially updated record(s)
         """
         result = data
 
