@@ -98,8 +98,24 @@ class ObjectDetectionToImageSegmentation(Filter):
         """
         super().initialize()
         self._pattern = re.compile(self.regexp) if (self.regexp is not None) else None
-        if (self.labels is None) or (len(self.labels) == 0):
-            raise Exception("No labels/layers defined!")
+        if (self.labels is None) or (len(self.labels) == 0) and (self._pattern is None):
+            raise Exception("No labels/layers or regexp defined!")
+
+    def _label_matches(self, label: str) -> bool:
+        """
+        Checks whether the label matches.
+
+        :param label:   The label to test.
+        :return:        True if the label matches, false if not.
+        """
+        if len(self.labels) == 0 and self._pattern is None:
+            return False
+        elif len(self.labels) == 0:
+            return bool(self._pattern.match(label))
+        elif self._pattern is None:
+            return label in self.labels
+        else:
+            return bool(self._pattern.match(label)) or label in self.labels
 
     def _do_process(self, data):
         """
@@ -117,7 +133,7 @@ class ObjectDetectionToImageSegmentation(Filter):
             absolute = item.get_absolute()
             for obj in absolute:
                 label = get_object_label(obj)
-                if label not in self.labels:
+                if not self._label_matches(label):
                     continue
                 if label not in imgs:
                     img = Image.new("1", item.image_size)
