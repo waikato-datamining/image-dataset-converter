@@ -33,11 +33,11 @@ The following dataset formats are supported:
 | Domain               | Format                                                                        | Read                                       | Write                                | 
 |:---------------------|:------------------------------------------------------------------------------|:-------------------------------------------|:-------------------------------------| 
 | Image classification | [ADAMS](formats/adams.md)                                                     | [Y](plugins/from-adams-ic.md)              | [Y](plugins/to-adams-ic.md)          | 
-| Image classification | subdir                                                                        | [Y](plugins/from-subdir-ic.md)             | [Y](plugins/to-subdir-ic.md)         | 
-| Image segmentation   | Blue-channel                                                                  | [Y](plugins/from-blue-channel-is.md)       | [Y](plugins/to-blue-channel-is.md)   | 
-| Image segmentation   | Grayscale                                                                     | [Y](plugins/from-grayscale-is.md)          | [Y](plugins/to-grayscale-is.md)      | 
-| Image segmentation   | Indexed PNG                                                                   | [Y](plugins/from-indexed-png-is.md)        | [Y](plugins/to-indexed-png-is.md)    | 
-| Image segmentation   | Layer segments                                                                | [Y](plugins/from-layer-segments-is.md) | [Y](plugins/to-layer-segments-is.md) | 
+| Image classification | [subdir](formats/subdir.md)                                                   | [Y](plugins/from-subdir-ic.md)             | [Y](plugins/to-subdir-ic.md)         | 
+| Image segmentation   | [Blue-channel](formats/bluechannel.md)                                        | [Y](plugins/from-blue-channel-is.md)       | [Y](plugins/to-blue-channel-is.md)   | 
+| Image segmentation   | [Grayscale](formats/grayscale.md)                                             | [Y](plugins/from-grayscale-is.md)          | [Y](plugins/to-grayscale-is.md)      | 
+| Image segmentation   | [Indexed PNG](formats/indexedpng.md)                                          | [Y](plugins/from-indexed-png-is.md)        | [Y](plugins/to-indexed-png-is.md)    | 
+| Image segmentation   | [Layer segments](formats/layersegments.md)                                    | [Y](plugins/from-layer-segments-is.md) | [Y](plugins/to-layer-segments-is.md) | 
 | Object detection     | [ADAMS](formats/adams.md)                                                     | [Y](plugins/from-adams-od.md)              | [Y](plugins/to-adams-od.md)          | 
 | Object detection     | [COCO](https://cocodataset.org/#format-data)                                  | [Y](plugins/from-coco-od.md)               | [Y](plugins/to-coco-od.md)           | 
 | Object detection     | [OPEX](https://github.com/WaikatoLink2020/objdet-predictions-exchange-format) | [Y](plugins/from-opex-od.md)               | [Y](plugins/to-opex-od.md)           | 
