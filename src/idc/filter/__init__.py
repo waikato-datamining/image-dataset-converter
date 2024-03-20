@@ -13,6 +13,7 @@ from ._max_records import MaxRecords
 from ._metadata import MetaData
 from ._metadata_from_name import MetaDataFromName
 from ._od_to_is import ObjectDetectionToImageSegmentation
+from ._od_to_ic import ObjectDetectionToImageClassification, MULTIPLICITY, MULTIPLICITY_ERROR, MULTIPLICITY_SKIP, MULTIPLICITY_SINGLE, MULTIPLICITY_MAJORITY
 from ._passthrough import PassThrough
 from ._polygon_discarder import PolygonDiscarder
 from ._randomize_records import RandomizeRecords

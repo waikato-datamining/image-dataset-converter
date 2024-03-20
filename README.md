@@ -69,9 +69,9 @@ filters:
    convert-image-format, dimension-discarder, discard-invalid-images, 
    discard-negatives, filter-labels, inspect, label-from-name, 
    label-present, map-labels, max-records, metadata, metadata-from-name, 
-   od-to-is, passthrough, polygon-discarder, randomize-records, 
-   record-window, remove-classes, rename, sample, split, 
-   strip-annotations, tee
+   od-to-ic, od-to-is, passthrough, polygon-discarder, 
+   randomize-records, record-window, remove-classes, rename, sample, 
+   split, strip-annotations, tee
 writers:
    to-adams-ic, to-adams-od, to-blue-channel-is, to-coco-od, to-data, 
    to-grayscale-is, to-indexed-png-is, to-layer-segments-is, to-opex-od, 
