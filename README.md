@@ -71,7 +71,7 @@ filters:
    label-present, map-labels, max-records, metadata, metadata-from-name, 
    od-to-ic, od-to-is, passthrough, polygon-discarder, 
    randomize-records, record-window, remove-classes, rename, sample, 
-   split, strip-annotations, tee
+   split, strip-annotations, tee, write-labels
 writers:
    to-adams-ic, to-adams-od, to-blue-channel-is, to-coco-od, to-data, 
    to-grayscale-is, to-indexed-png-is, to-layer-segments-is, to-opex-od, 

@@ -42,6 +42,7 @@
 * [split](split.md)
 * [strip-annotations](strip-annotations.md)
 * [tee](tee.md)
+* [write-labels](write-labels.md)
 
 ## Writers
 * [to-adams-ic](to-adams-ic.md)
