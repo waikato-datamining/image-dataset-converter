@@ -23,7 +23,8 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 RUN pip3 --no-cache-dir install \
-        git+https://github.com/waikato-datamining/image-dataset-converter.git
+        git+https://github.com/waikato-datamining/image-dataset-converter.git \
+        git+https://github.com/waikato-datamining/image-dataset-converter-video.git
 
 COPY bash.bashrc /etc/bash.bashrc
 
