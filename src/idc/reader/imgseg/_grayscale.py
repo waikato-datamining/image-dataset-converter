@@ -1,11 +1,10 @@
 import argparse
 from typing import List, Iterable, Union
 
-import numpy as np
 from seppl.io import locate_files
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ImageSegmentationData, ImageSegmentationAnnotations, locate_file, load_image_from_file
+from idc.api import ImageSegmentationData, locate_file, load_image_from_file, from_grayscale
 from idc.api import Reader
 
 
@@ -125,21 +124,7 @@ class GrayscaleImageSegmentationReader(Reader):
         # read annotations
         self.logger().info("Reading from: " + str(self.session.current_input))
         ann = load_image_from_file(self.session.current_input)
-        arr = np.asarray(ann).astype(np.uint8)
-        unique = np.unique(arr)
-        layers = dict()
-        for index in list(unique):
-            # skip background
-            if index == 0:
-                continue
-            index = int(index)
-            label_index = index - 1
-            if label_index not in self._label_mapping:
-                self.logger().warning("Grayscale value not covered by labels, skipping: %d" % index)
-                continue
-            sub_arr = np.where(arr == index, 255, 0).astype(np.uint8)
-            layers[self._label_mapping[label_index]] = sub_arr
-        annotations = ImageSegmentationAnnotations(self.labels, layers)
+        annotations = from_grayscale(ann, self.labels, self._label_mapping, self.logger())
 
         # associated image
         if len(imgs) > 1:
