@@ -74,5 +74,8 @@ docker run -u $(id -u):$(id -g) \
     -it waikatodatamining/image-dataset-converter:latest
 ```
 
-**NB:** Replace `/local/dir` with a local directory that you want to map inside the container. 
-For the current directory, simply use `pwd`.
+**NB:** 
+
+* Replace `/local/dir` with a local directory that you want to map inside the container. 
+* For the current directory, simply use `pwd`.
+* You need to start the docker container with the `--net=host` option if you are using the host's Redis server.
