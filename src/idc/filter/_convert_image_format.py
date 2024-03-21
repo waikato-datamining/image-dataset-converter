@@ -6,21 +6,7 @@ from typing import List
 from wai.logging import LOGGING_WARNING
 from seppl import AnyData
 from seppl.io import Filter
-from idc.api import flatten_list, make_list
-
-FORMAT_JPEG = "JPEG"
-FORMAT_PNG = "PNG"
-FORMAT_BMP = "BMP"
-FORMATS = [
-    FORMAT_JPEG,
-    FORMAT_PNG,
-    FORMAT_BMP,
-]
-EXTENSIONS = {
-    FORMAT_JPEG: ".jpg",
-    FORMAT_PNG: ".png",
-    FORMAT_BMP: ".bmp",
-}
+from idc.api import flatten_list, make_list, FORMAT_EXTENSIONS, FORMATS
 
 
 class ConvertImageFormat(Filter):
@@ -131,7 +117,7 @@ class ConvertImageFormat(Filter):
                 # update container
                 item = item.duplicate(
                     data=data,
-                    name=os.path.splitext(item.image_name)[0] + EXTENSIONS[self.image_format])
+                    name=os.path.splitext(item.image_name)[0] + FORMAT_EXTENSIONS[self.image_format])
 
             result.append(item)
 

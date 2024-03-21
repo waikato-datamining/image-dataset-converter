@@ -9,6 +9,20 @@ from PIL import Image
 from seppl import MetaDataHandler, LoggingHandler
 from ._utils import load_image_from_bytes
 
+FORMAT_JPEG = "JPEG"
+FORMAT_PNG = "PNG"
+FORMAT_BMP = "BMP"
+FORMATS = [
+    FORMAT_JPEG,
+    FORMAT_PNG,
+    FORMAT_BMP,
+]
+FORMAT_EXTENSIONS = {
+    FORMAT_JPEG: ".jpg",
+    FORMAT_PNG: ".png",
+    FORMAT_BMP: ".bmp",
+}
+
 
 class ImageData(MetaDataHandler, LoggingHandler):
 

@@ -1,7 +1,7 @@
 from ._check_duplicate_filenames import CheckDuplicateFilenames, DUPLICATE_ACTIONS, DUPLICATE_ACTION_IGNORE, DUPLICATE_ACTION_WARN, DUPLICATE_ACTION_DROP, DUPLICATE_ACTION_ERROR
 from ._coerce_box import CoerceBox
 from ._coerce_mask import CoerceMask
-from ._convert_image_format import ConvertImageFormat, FORMATS, FORMAT_JPEG, FORMAT_PNG, FORMAT_BMP
+from ._convert_image_format import ConvertImageFormat
 from ._dimension_discarder import DimensionDiscarder
 from ._discard_invalid_images import DiscardInvalidImages
 from ._discard_negatives import DiscardNegatives
