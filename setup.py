@@ -39,6 +39,7 @@ setup(
         "opex",
         "defusedxml",
         "numpy",
+        "shapely",
     ],
     version="0.0.1",
     author='Peter Reutemann',
