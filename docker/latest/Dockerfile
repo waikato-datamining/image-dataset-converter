@@ -26,6 +26,7 @@ RUN pip3 --no-cache-dir install \
         git+https://github.com/waikato-datamining/image-dataset-converter.git \
         git+https://github.com/waikato-datamining/image-dataset-converter-imgstats.git \
         git+https://github.com/waikato-datamining/image-dataset-converter-imgvis.git \
+        git+https://github.com/waikato-datamining/image-dataset-converter-redis-predictions.git \
         git+https://github.com/waikato-datamining/image-dataset-converter-video.git
 
 COPY bash.bashrc /etc/bash.bashrc
