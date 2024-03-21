@@ -54,7 +54,7 @@ setup(
         "idc.readers": [
             "idc_readers1=idc.reader:seppl.io.Reader",
             "idc_readers_imgcls1=idc.reader.imgcls:seppl.io.Reader",
-            "idc_readers_imgseg1=idc.reader.imgset:seppl.io.Reader",
+            "idc_readers_imgseg1=idc.reader.imgseg:seppl.io.Reader",
             "idc_readers_objdet1=idc.reader.objdet:seppl.io.Reader",
         ],
         "idc.filters": [
