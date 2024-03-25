@@ -202,44 +202,8 @@ See [here](plugins/README.md) for an overview of all plugins.
 
 ## Command-line examples
 
-### sub-dir to ADAMS
-
-The following converts an image classification dataset from the sub-dir format
-(sub-directory names represent the image classification labels) into the ADAMS
-format, which stores the label in an associated .report file (Java properties file):
-
-```bash
-img-convert -l INFO \
-  from-subdir-ic \
-    -l INFO \
-    -i ./input/ \
-  to-adams-ic \
-    -l INFO \
-    -o ./output \
-    -c classification
-```
-
-
-### sub-dir (randomized train/val/test splits)
-
-By enforcing batch-processing `--force_batch` and using the 
-`randomize-records` filter, randomized train/val/test splits
-(writers typically support generating splits) can be generated 
-like this:
-
-```bash
-img-convert -l INFO --force_batch \
-  from-subdir-ic \
-    -l INFO \
-    -i ./input/ \
-  randomize-records \
-    -s 42 \
-  to-subdir-ic \
-    -l INFO \
-    -o ./output \
-    --split_names train val test \
-    --split_ratios 70 15 15
-```
+Examples can be found in the [image-dataset-converter-examples](https://github.com/waikato-datamining/image-dataset-converter-examples)
+repository.
 
 
 ## Additional libraries
