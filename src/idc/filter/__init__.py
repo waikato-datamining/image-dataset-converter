@@ -1,13 +1,9 @@
 from ._check_duplicate_filenames import CheckDuplicateFilenames, DUPLICATE_ACTIONS, DUPLICATE_ACTION_IGNORE, DUPLICATE_ACTION_WARN, DUPLICATE_ACTION_DROP, DUPLICATE_ACTION_ERROR
-from ._coerce_box import CoerceBox
-from ._coerce_mask import CoerceMask
 from ._convert_image_format import ConvertImageFormat
-from ._dimension_discarder import DimensionDiscarder
 from ._discard_invalid_images import DiscardInvalidImages
 from ._discard_negatives import DiscardNegatives
 from ._filter_labels import FilterLabels
 from ._inspect import Inspect, MODES, MODE_NONINTERACTIVE, MODE_INTERACTIVE, OUTPUTS, OUTPUT_STDOUT, OUTPUT_STDERR, OUTPUT_LOGGER, OUTPUT_FILE
-from ._label_present import LabelPresent
 from ._map_labels import MapLabels
 from ._max_records import MaxRecords
 from ._metadata import MetaData
@@ -15,7 +11,6 @@ from ._metadata_from_name import MetaDataFromName
 from ._od_to_is import ObjectDetectionToImageSegmentation
 from ._od_to_ic import ObjectDetectionToImageClassification, MULTIPLICITY, MULTIPLICITY_ERROR, MULTIPLICITY_SKIP, MULTIPLICITY_SINGLE, MULTIPLICITY_MAJORITY
 from ._passthrough import PassThrough
-from ._polygon_discarder import PolygonDiscarder
 from ._randomize_records import RandomizeRecords
 from ._record_window import RecordWindow
 from ._remove_classes import RemoveClasses
