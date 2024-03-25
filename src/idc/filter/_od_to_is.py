@@ -154,7 +154,7 @@ class ObjectDetectionToImageSegmentation(Filter):
             layers = dict()
             for label in imgs:
                 layers[label] = np.asarray(imgs[label]).astype(np.uint8)
-                layers[label] = np.where(layers[label] == 1, 255, 0)
+                layers[label] = np.where(layers[label] == 1, 255, 0).astype(np.uint8)
 
             self.logger().info("Layers generated: %s" % ",".join(sorted(layers.keys())))
 
