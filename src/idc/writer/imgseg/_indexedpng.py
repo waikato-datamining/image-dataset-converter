@@ -6,7 +6,7 @@ import numpy as np
 from PIL import Image
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ImageSegmentationData, SplittableStreamWriter, make_list
+from idc.api import ImageSegmentationData, SplittableStreamWriter, make_list, default_palette
 
 
 class IndexedPngImageSegmentationWriter(SplittableStreamWriter):
@@ -130,10 +130,7 @@ class IndexedPngImageSegmentationWriter(SplittableStreamWriter):
                         sub_arr = np.where(sub_arr == 255, index, 0).astype(np.uint8)
                         arr += sub_arr
                 ann = Image.fromarray(arr, "P")
-                ann.putpalette(
-                    [0, 0, 0,
-                     255, 0, 0,
-                     0, 255, 0] + [1 + i // 3 for i in range(759)])
+                ann.putpalette(default_palette())
                 path = sub_dir
                 os.makedirs(path, exist_ok=True)
                 path = os.path.join(path, item.image_name)

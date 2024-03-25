@@ -35,6 +35,7 @@ setup(
         "wai.logging",
         "wai.common>=0.0.44",
         "pillow",
+        "matplotlib",
         "imagesize",
         "opex",
         "defusedxml",
