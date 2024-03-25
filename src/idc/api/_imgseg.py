@@ -15,7 +15,7 @@ class ImageSegmentationAnnotations:
         Initializes the container.
 
         :param labels: the list of labels
-        :param layers: the label -> pillow image assocation
+        :param layers: the label -> numpy array association, binary (0/255)
         """
         if (labels is not None) and (layers is not None):
             for label in layers:
