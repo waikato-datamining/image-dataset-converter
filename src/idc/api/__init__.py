@@ -1,5 +1,5 @@
 from ._colors import X11_COLORS, LIGHT_COLORS, DARK_COLORS, default_colors, rgb2yiq, text_color, default_palette
-from ._fonts import DEFAULT_FONT_FAMILY, load_font
+from ._fonts import DEFAULT_FONT_FAMILY, load_font, text_size
 from ._data import ImageData, make_list, flatten_list, FORMATS, FORMAT_JPEG, FORMAT_PNG, FORMAT_BMP, FORMAT_EXTENSIONS
 from ._imgcls import ImageClassificationData
 from ._imgseg import ImageSegmentationData, ImageSegmentationAnnotations, from_indexedpng, from_bluechannel, from_grayscale

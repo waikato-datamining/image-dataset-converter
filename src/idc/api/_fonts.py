@@ -1,7 +1,8 @@
 import traceback
+from typing import Tuple
 
 from matplotlib import font_manager
-from PIL import ImageFont
+from PIL import ImageFont, Image, ImageDraw
 
 
 DEFAULT_FONT_FAMILY = "sans\\-serif"
@@ -33,3 +34,19 @@ def load_font(logger, family, size):
         mpl_font = font_manager.FontProperties(family=DEFAULT_FONT_FAMILY)
         font_file = font_manager.findfont(mpl_font)
         return ImageFont.truetype(font_file, size)
+
+
+def text_size(text: str, font) -> Tuple[int, int]:
+    """
+    Computes the width/height of a text using the specified Pillow font.
+
+    :param text: the text to get the dimensions for
+    :type text: str
+    :param font: the Pillow font to use
+    :return: the width and height
+    :rtype: tuple
+    """
+    im = Image.new(mode="P", size=(0, 0))
+    draw = ImageDraw.Draw(im)
+    _, _, width, height = draw.textbbox((0, 0), text=text, font=font)
+    return width, height
