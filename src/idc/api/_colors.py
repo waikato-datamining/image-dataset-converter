@@ -185,6 +185,115 @@ DARK_COLORS = [
 ]
 
 
+# Taken from here:
+# http://mkweb.bcgsc.ca/colorblind/palettes.mhtml
+# http://mkweb.bcgsc.ca/colorblind/palettes/8.color.blindness.palette.txt
+COLORBLIND8_COLORS = [
+    "#000000",
+    "#2271B2",
+    "#3DB7E9",
+    "#F748A5",
+    "#359B73",
+    "#d55e00",
+    "#e69f00",
+    "#f0e442",
+]
+
+
+# Taken from here:
+# http://mkweb.bcgsc.ca/colorblind/palettes.mhtml
+# http://mkweb.bcgsc.ca/colorblind/palettes/12.color.blindness.palette.txt
+COLORBLIND12_COLORS = [
+    "#9F0162",
+    "#009F81",
+    "#FF5AAF",
+    "#00FCCF",
+    "#8400CD",
+    "#008DF9",
+    "#00C2F9",
+    "#FFB2FD",
+    "#A40122",
+    "#E20134",
+    "#FF6E3A",
+    "#FFC33B",
+]
+
+
+# Taken from here:
+# http://mkweb.bcgsc.ca/colorblind/palettes.mhtml
+# http://mkweb.bcgsc.ca/colorblind/palettes/15.color.blindness.palette.txt
+COLORBLIND15_COLORS = [
+    "#68023F",
+    "#008169",
+    "#EF0096",
+    "#00DCB5",
+    "#FFCFE2",
+    "#003C86",
+    "#9400E6",
+    "#009FFA",
+    "#FF71FD",
+    "#7CFFFA",
+    "#6A0213",
+    "#008607",
+    "#F60239",
+    "#00E307",
+    "#FFDC3D",
+]
+
+
+# Taken from here:
+# http://mkweb.bcgsc.ca/colorblind/palettes.mhtml
+# http://mkweb.bcgsc.ca/colorblind/palettes/24.color.blindness.palette.txt
+COLORBLIND24_COLORS = [
+    "#003D30",
+    "#005745",
+    "#00735C",
+    "#009175",
+    "#00AF8E",
+    "#00CBA7",
+    "#00EBC1",
+    "#86FFDE",
+    "#00306F",
+    "#00489E",
+    "#005FCC",
+    "#0079FA",
+    "#009FFA",
+    "#00C2F9",
+    "#00E5F8",
+    "#7CFFFA",
+    "#004002",
+    "#005A01",
+    "#007702",
+    "#009503",
+    "#00B408",
+    "#00D302",
+    "#00F407",
+    "#AFFF2A",
+]
+
+
+PALETTE_AUTO = "auto"
+PALETTE_GRAYSCALE = "grayscale"
+PALETTE_X11 = "x11"
+PALETTE_LIGHT = "light"
+PALETTE_DARK = "dark"
+PALETTE_COLORBLIND8 = "colorblind8"
+PALETTE_COLORBLIND12 = "colorblind12"
+PALETTE_COLORBLIND15 = "colorblind15"
+PALETTE_COLORBLIND24 = "colorblind24"
+PALETTES = [
+    PALETTE_AUTO,
+    PALETTE_GRAYSCALE,
+    PALETTE_X11,
+    PALETTE_LIGHT,
+    PALETTE_DARK,
+    PALETTE_COLORBLIND8,
+    PALETTE_COLORBLIND12,
+    PALETTE_COLORBLIND15,
+    PALETTE_COLORBLIND24,
+]
+
+
 def rgb2yiq(r: int, g: int, b: int) -> float:
     """
     Generates YIQ perceived brightness from RGB colors.
@@ -243,13 +352,96 @@ def text_color(color: Tuple[int, int, int], threshold=128) -> Tuple[int, int, in
         return 255, 255, 255
 
 
-def default_palette() -> List[int]:
+def create_palette(num_colors: int) -> List[int]:
+    """
+    Returns a list of palette entries (R,G,B) with the specified number of colors.
+
+    :param num_colors: the number of colors to generate
+    :type num_colors: int
+    :return: the generated list of colors
+    :rtype: list
+    """
+    return [1 + i // 3 for i in range(3*num_colors)]
+
+
+def fill_palette(palette: List[int]) -> List[int]:
+    """
+    Makes sure that there are 256 R,G,B values present. Simply adds grayscale R,G,B values.
+
+    :param palette: the palette to fill up, if necessary
+    :type palette: list
+    :return: the (potentially) updated list of R,G,B values
+    :rtype: list
+    """
+    if len(palette) < 256*3:
+        if len(palette) % 3 != 0:
+            raise ValueError("Palette does not contain multiples of three (ie R,G,B values)!")
+        palette = palette + create_palette(256 - (len(palette) // 3))
+    return palette
+
+
+def default_palette(palette: str = None) -> List[int]:
     """
     Returns a palette of 255 R,G,B triplets all in a single list, to be used in indexed PNG files.
 
     :return: the flat list of R,G,B values
     :rtype: list
     """
-    return [0, 0, 0,
-            255, 0, 0,
-            0, 255, 0] + [1 + i // 3 for i in range(759)]
+    if palette is None:
+        palette = PALETTE_AUTO
+    if palette not in PALETTES:
+        raise ValueError("Unknown palette: %s" % palette)
+    if palette == PALETTE_AUTO:
+        result = [0, 0, 0,
+                  255, 0, 0,
+                  0, 255, 0,
+                  0, 0, 255]
+    elif palette == PALETTE_GRAYSCALE:
+        result = [0, 0, 0]
+    elif palette == PALETTE_X11:
+        result = [0, 0, 0]
+        for c in X11_COLORS:
+            if c == "#000000":
+                continue
+            result.extend(ImageColor.getrgb(c))
+    elif palette == PALETTE_LIGHT:
+        result = [0, 0, 0]
+        for c in LIGHT_COLORS:
+            if c == "#000000":
+                continue
+            result.extend(ImageColor.getrgb(c))
+    elif palette == PALETTE_DARK:
+        result = [0, 0, 0]
+        for c in DARK_COLORS:
+            if c == "#000000":
+                continue
+            result.extend(ImageColor.getrgb(c))
+    elif palette == PALETTE_COLORBLIND8:
+        result = [0, 0, 0]
+        for c in COLORBLIND8_COLORS:
+            if c == "#000000":
+                continue
+            result.extend(ImageColor.getrgb(c))
+    elif palette == PALETTE_COLORBLIND12:
+        result = [0, 0, 0]
+        for c in COLORBLIND12_COLORS:
+            if c == "#000000":
+                continue
+            result.extend(ImageColor.getrgb(c))
+    elif palette == PALETTE_COLORBLIND15:
+        result = [0, 0, 0]
+        for c in COLORBLIND15_COLORS:
+            if c == "#000000":
+                continue
+            result.extend(ImageColor.getrgb(c))
+    elif palette == PALETTE_COLORBLIND24:
+        result = [0, 0, 0]
+        for c in COLORBLIND24_COLORS:
+            if c == "#000000":
+                continue
+            result.extend(ImageColor.getrgb(c))
+    else:
+        raise Exception("Unhandled palette: %s" % palette)
+
+    result = fill_palette(result)
+    return result
