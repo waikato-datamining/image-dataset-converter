@@ -393,10 +393,13 @@ def default_palette(palette: str = None) -> List[int]:
     if palette not in PALETTES:
         raise ValueError("Unknown palette: %s" % palette)
     if palette == PALETTE_AUTO:
-        result = [0, 0, 0,
-                  255, 0, 0,
-                  0, 255, 0,
-                  0, 0, 255]
+        result = [0, 0, 0,      # black
+                  255, 0, 0,    # red
+                  0, 255, 0,    # green
+                  0, 0, 255,    # blue
+                  255, 0, 255,  # magenta
+                  255, 255, 0,  # yellow
+                  0, 255, 255]  # cyan
     elif palette == PALETTE_GRAYSCALE:
         result = [0, 0, 0]
     elif palette == PALETTE_X11:
