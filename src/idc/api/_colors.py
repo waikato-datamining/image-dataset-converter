@@ -383,6 +383,7 @@ def fill_palette(palette: List[int]) -> List[int]:
 def default_palette(palette: str = None) -> List[int]:
     """
     Returns a palette of 255 R,G,B triplets all in a single list, to be used in indexed PNG files.
+    Black is always the first color.
 
     :return: the flat list of R,G,B values
     :rtype: list
