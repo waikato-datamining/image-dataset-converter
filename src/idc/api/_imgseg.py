@@ -57,16 +57,17 @@ class ImageSegmentationData(ImageData):
                          metadata=metadata, annotation=annotation)
 
 
-def combine_layers(item: ImageSegmentationData) -> np.ndarray:
+def combine_layers(item: ImageSegmentationData, dtype=np.int32) -> np.ndarray:
     """
     Combines the layers into a single numpy array. The first label gets value 1.
 
     :param item: the segmentation data to combine
     :type item: ImageSegmentationData
+    :param dtype: the data type to use for the array
     :return: the generated array
     :rtype: np.ndarray
     """
-    result = np.zeros((item.image_height, item.image_width, 1), dtype=np.int32)
+    result = np.zeros((item.image_height, item.image_width, 1), dtype=dtype)
     for i, label in enumerate(item.annotation.labels, start=1):
         if label in item.annotation.layers:
             layer = item.annotation.layers[label]
