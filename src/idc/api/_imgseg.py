@@ -57,6 +57,46 @@ class ImageSegmentationData(ImageData):
                          metadata=metadata, annotation=annotation)
 
 
+def combine_layers(item: ImageSegmentationData) -> np.ndarray:
+    """
+    Combines the layers into a single numpy array. The first label gets value 1.
+
+    :param item: the segmentation data to combine
+    :type item: ImageSegmentationData
+    :return: the generated array
+    :rtype: np.ndarray
+    """
+    result = np.zeros((item.image_height, item.image_width, 1), dtype=np.int32)
+    for i, label in enumerate(item.annotation.labels, start=1):
+        if label in item.annotation.layers:
+            layer = item.annotation.layers[label]
+            layer = np.where(layer > 0, i, layer)
+            layer = np.expand_dims(layer, axis=-1)
+            result += layer
+    return result
+
+
+def split_layers(array: np.ndarray, labels: List[str]) -> ImageSegmentationAnnotations:
+    """
+    Generates annotations from the annotations array. Assumes the first label having value of 1.
+
+    :param array: the array to turn into annotations
+    :type array: np.ndarray
+    :param labels: the list of labels to use
+    :type labels: list
+    :return: the generated annotations
+    :rtype: ImageSegmentationAnnotations
+    """
+    layers = dict()
+    unique = set(np.unique(array))
+    for i, label in enumerate(labels, start=1):
+        if i in unique:
+            layer = np.where(array == i, 255, 0)
+            layer = np.squeeze(layer)
+            layers[label] = layer.astype(np.uint8)
+    return ImageSegmentationAnnotations(labels=labels, layers=layers)
+
+
 def from_indexedpng(img: Image.Image, labels: List[str], label_mapping: Dict[int, str],
                     logger: logging.Logger) -> ImageSegmentationAnnotations:
     """
