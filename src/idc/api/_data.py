@@ -151,12 +151,24 @@ class ImageData(MetaDataHandler, LoggingHandler):
         """
         if self._image_size is not None:
             return self._image_size
-        elif self._data is not None:
-            self._image_size = imagesize.get(self._data)
-            return self._image_size
-        elif self._source is not None:
-            self._image_size = imagesize.get(self._source)
-            return self._image_size
+
+        if self._data is not None:
+            try:
+                self._image_size = imagesize.get(self._data)
+                return self._image_size
+            except:
+                pass
+
+        if self._source is not None:
+            try:
+                self._image_size = imagesize.get(self._source)
+                return self._image_size
+            except:
+                pass
+
+        if self.image is not None:
+            return self.image.size
+
         return None
 
     @property
