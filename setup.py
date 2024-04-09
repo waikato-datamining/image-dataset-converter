@@ -47,10 +47,10 @@ setup(
     author_email='fracpete@waikato.ac.nz',
     entry_points={
         "console_scripts": [
-            "img-convert=idc.tool.convert:sys_main",
-            "img-find=idc.tool.find:sys_main",
-            "img-help=idc.tool.help:sys_main",
-            "img-registry=idc.registry:sys_main",
+            "idc-convert=idc.tool.convert:sys_main",
+            "idc-find=idc.tool.find:sys_main",
+            "idc-help=idc.tool.help:sys_main",
+            "idc-registry=idc.registry:sys_main",
         ],
         "idc.readers": [
             "idc_readers1=idc.reader:seppl.io.Reader",

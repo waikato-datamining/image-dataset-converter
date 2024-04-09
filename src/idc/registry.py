@@ -40,7 +40,7 @@ REGISTRY = Registry(mode=MODE_DYNAMIC, default_modules=DEFAULT_IDC_MODULES,
                     env_modules=ENV_IDC_MODULES, excluded_env_modules=ENV_IDC_MODULES_EXCL,
                     enforce_uniqueness=True)
 
-IMG_REGISTRY = "img-registry"
+IMG_REGISTRY = "idc-registry"
 
 _logger = None
 

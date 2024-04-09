@@ -51,7 +51,7 @@ The following dataset formats are supported:
 ### Dataset conversion
 
 ```
-usage: img-convert [-h|--help|--help-all|-help-plugin NAME] [-u INTERVAL]
+usage: idc-convert [-h|--help|--help-all|--help-plugin NAME] [-u INTERVAL]
                    [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                    reader
                    [filter [filter [...]]]
@@ -95,7 +95,7 @@ Readers tend to support input via file lists. The `img-find` tool can generate
 these.
 
 ```
-usage: img-find [-h] -i DIR [DIR ...] [-r] -o FILE [-m [REGEXP [REGEXP ...]]]
+usage: idc-find [-h] -i DIR [DIR ...] [-r] -o FILE [-m [REGEXP [REGEXP ...]]]
                 [-n [REGEXP [REGEXP ...]]]
                 [--split_ratios [SPLIT_RATIOS [SPLIT_RATIOS ...]]]
                 [--split_names [SPLIT_NAMES [SPLIT_NAMES ...]]]
@@ -137,7 +137,7 @@ optional arguments:
 ### Generating help screens for plugins
 
 ```
-usage: img-help [-h] [-m [PACKAGE [PACKAGE ...]]] [-e EXCLUDED_MODULES]
+usage: idc-help [-h] [-m [PACKAGE [PACKAGE ...]]] [-e EXCLUDED_MODULES]
                 [-p NAME] [-f FORMAT] [-L INT] [-o PATH] [-i FILE] [-t TITLE]
                 [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
 
@@ -179,7 +179,7 @@ optional arguments:
 ### Plugin registry
 
 ```
-usage: img-registry [-h] [-m CUSTOM_MODULES] [-e EXCLUDED_MODULES]
+usage: idc-registry [-h] [-m CUSTOM_MODULES] [-e EXCLUDED_MODULES]
                     [-l {plugins,custom-modules,env-modules,readers,filters,writers}]
 
 For inspecting/querying the registry.

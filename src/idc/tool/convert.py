@@ -13,7 +13,7 @@ from idc.help import generate_plugin_usage
 from idc.registry import available_readers, available_filters, available_writers
 
 
-CONVERT = "img-convert"
+CONVERT = "idc-convert"
 
 
 DEFAULT_UPDATE_INTERVAL = 1000

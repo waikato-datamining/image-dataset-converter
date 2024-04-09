@@ -11,7 +11,7 @@ from idc.help import generate_plugin_usage, HELP_FORMATS, HELP_FORMAT_TEXT, HELP
 from idc.registry import register_plugins, available_plugins
 from idc.registry import available_readers, available_filters, available_writers
 
-HELP = "img-help"
+HELP = "idc-help"
 
 _logger = logging.getLogger(HELP)
 

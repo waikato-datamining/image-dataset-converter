@@ -10,7 +10,7 @@ from wai.logging import init_logging, set_logging_level, add_logging_level
 from seppl.io import Splitter
 from idc.core import ENV_IDC_LOGLEVEL
 
-FIND = "img-find"
+FIND = "idc-find"
 
 _logger = logging.getLogger(FIND)
 
