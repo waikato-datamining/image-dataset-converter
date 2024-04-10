@@ -37,7 +37,7 @@ docker build -t image-dataset-converter:latest .
 * Use image
 
   ```bash
-  docker run -u $(id -u):$(id -g) \
+  docker run --rm -u $(id -u):$(id -g) \
       -v /local/dir:/workspace \
       -it public.aml-repo.cms.waikato.ac.nz:443/tools/image-dataset-converter:latest
   ```
@@ -69,7 +69,7 @@ For the current directory, simply use `pwd`.
 ### Use
 
 ```bash
-docker run -u $(id -u):$(id -g) \
+docker run --rm -u $(id -u):$(id -g) \
     -v /local/dir:/workspace \
     -it waikatodatamining/image-dataset-converter:latest
 ```
