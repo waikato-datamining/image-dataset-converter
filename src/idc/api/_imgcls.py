@@ -16,3 +16,12 @@ class ImageClassificationData(ImageData):
         super().__init__(source=source, image_name=image_name, data=data,
                          image=image, image_format=image_format, image_size=image_size,
                          metadata=metadata, annotation=annotation)
+
+    def has_annotation(self) -> bool:
+        """
+        Checks whether annotations are present.
+
+        :return: True if annotations present
+        :rtype: bool
+        """
+        return (self.annotation is not None) and (len(self.annotation) > 0)

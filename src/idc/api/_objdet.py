@@ -53,6 +53,15 @@ class ObjectDetectionData(ImageData):
                          image=image, image_format=image_format, image_size=image_size,
                          metadata=metadata, annotation=annotation)
 
+    def has_annotation(self) -> bool:
+        """
+        Checks whether annotations are present.
+
+        :return: True if annotations present
+        :rtype: bool
+        """
+        return (self.annotation is not None) and (len(self.annotation) > 0)
+
     def is_normalized(self) -> bool:
         """
         Returns whether the annotations are normalized or absolute.

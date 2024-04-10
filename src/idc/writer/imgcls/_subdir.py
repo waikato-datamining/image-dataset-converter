@@ -96,7 +96,7 @@ class SubDirWriter(SplittableStreamWriter):
             if self.splitter is not None:
                 split = self.splitter.next()
                 sub_dir = os.path.join(sub_dir, split)
-            if item.annotation is not None:
+            if item.has_annotation():
                 sub_dir = os.path.join(sub_dir, item.annotation)
             if not os.path.exists(sub_dir):
                 self.logger().info("Creating sub dir: %s" % sub_dir)

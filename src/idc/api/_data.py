@@ -248,6 +248,15 @@ class ImageData(MetaDataHandler, LoggingHandler):
             return True
         return False
 
+    def has_annotation(self) -> bool:
+        """
+        Checks whether annotations are present.
+
+        :return: True if annotations present
+        :rtype: bool
+        """
+        return self.annotation is not None
+
     def has_metadata(self) -> bool:
         """
         Returns whether meta-data is present.

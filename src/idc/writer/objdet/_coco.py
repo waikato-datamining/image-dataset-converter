@@ -279,7 +279,8 @@ class COCOObjectDetectionWriter(SplittableBatchWriter):
             if sub_dir not in self._splits:
                 self._splits[sub_dir] = self._init_annotations()
             self._append_image(self._splits[sub_dir], item)
-            self._append_annotations(self._splits[sub_dir], item)
+            if item.has_annotation():
+                self._append_annotations(self._splits[sub_dir], item)
 
     def finalize(self):
         """

@@ -108,7 +108,7 @@ class AdamsObjectDetectionWriter(SplittableStreamWriter):
 
             report = Report()
             empty = True
-            if len(item.annotation) > 0:
+            if item.has_annotation():
                 empty = False
                 report = item.get_absolute().to_report(prefix=self.prefix)
             if item.has_metadata():

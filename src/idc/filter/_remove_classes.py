@@ -155,7 +155,7 @@ class RemoveClasses(Filter):
 
         for item in make_list(data):
             item_new = item
-            if item.annotation is not None:
+            if item.has_annotation():
                 if isinstance(item, ImageClassificationData):
                     if item.annotation in self.classes:
                         # skip item

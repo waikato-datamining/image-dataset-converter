@@ -69,7 +69,7 @@ class DiscardNegatives(Filter):
         result = []
 
         for item in make_list(data):
-            if item.annotation is not None:
+            if item.has_annotation():
                 result.append(item)
             else:
                 self.logger().info("Discarding image: %s" % item.image_name)

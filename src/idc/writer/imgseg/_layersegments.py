@@ -118,7 +118,7 @@ class LayerSegmentsImageSegmentationWriter(SplittableStreamWriter):
             item.save_image(path)
 
             # annotations
-            if item.annotation is not None:
+            if item.has_annotation():
                 for label in item.annotation.layers:
                     arr = item.annotation.layers[label]
                     # first create grayscale from array with 0/255 values and then convert to binary

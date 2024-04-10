@@ -108,7 +108,7 @@ class AdamsImageClassificationWriter(SplittableStreamWriter):
 
             report = Report()
             empty = True
-            if item.annotation is not None:
+            if item.has_annotation():
                 report.set_string_value(self.class_field, item.annotation)
                 empty = False
             if item.has_metadata():

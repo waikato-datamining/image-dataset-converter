@@ -119,7 +119,7 @@ class ROIObjectDetectionWriter(SplittableStreamWriter):
             self.logger().info("Writing image to: %s" % path)
             item.save_image(path)
 
-            if len(item.annotation) > 0:
+            if item.has_annotation():
                 path = os.path.splitext(path)[0] + self.suffix
                 self.logger().info("Writing ROI CSV to: %s" % path)
                 aobjs = item.annotation

@@ -137,7 +137,7 @@ class YoloObjectDetectionWriter(SplittableStreamWriter):
                 os.makedirs(sub_dir)
 
             normalized = None
-            if len(item.annotation) > 0:
+            if item.has_annotation():
                 normalized = item.get_normalized()
 
             # image

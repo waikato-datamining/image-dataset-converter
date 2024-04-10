@@ -113,7 +113,7 @@ class WriteLabels(Filter):
         :return: the potentially updated record(s)
         """
         for item in make_list(data):
-            if item.annotation is None:
+            if not item.has_annotation():
                 continue
 
             if isinstance(item, ImageClassificationData):

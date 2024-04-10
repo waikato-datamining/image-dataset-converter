@@ -127,7 +127,7 @@ class VOCObjectDetectionWriter(SplittableStreamWriter):
                 os.makedirs(sub_dir)
 
             absolute = None
-            if len(item.annotation) > 0:
+            if item.has_annotation():
                 absolute = item.get_absolute()
 
             # image

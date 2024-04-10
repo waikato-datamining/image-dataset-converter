@@ -56,6 +56,15 @@ class ImageSegmentationData(ImageData):
                          image=image, image_format=image_format, image_size=image_size,
                          metadata=metadata, annotation=annotation)
 
+    def has_annotation(self) -> bool:
+        """
+        Checks whether annotations are present.
+
+        :return: True if annotations present
+        :rtype: bool
+        """
+        return (self.annotation is not None) and (len(self.annotation.layers) > 0)
+
 
 def combine_layers(item: ImageSegmentationData, dtype=np.int32) -> np.ndarray:
     """

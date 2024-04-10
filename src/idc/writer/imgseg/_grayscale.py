@@ -121,7 +121,7 @@ class GrayscaleImageSegmentationWriter(SplittableStreamWriter):
             item.save_image(path)
 
             # annotations
-            if item.annotation is not None:
+            if item.has_annotation():
                 # combine layers
                 arr = np.zeros((item.image_height, item.image_width)).astype(dtype=np.uint8)
                 for index, label in enumerate(item.annotation.labels, start=1):

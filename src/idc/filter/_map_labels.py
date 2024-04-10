@@ -166,7 +166,7 @@ class MapLabels(Filter):
 
         for item in make_list(data):
             item_new = item
-            if item.annotation is not None:
+            if item.has_annotation():
                 if isinstance(item, ObjectDetectionData):
                     ann_new = copy.deepcopy(item.annotation)
                     updated = self.process_object_detection(ann_new)
