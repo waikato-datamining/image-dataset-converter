@@ -257,8 +257,9 @@ class FilterLabels(Filter):
                     item_new.annotation = None
                     result.append(item_new)
                 else:
-                    item.annotation = objects_new
-                    result.append(item)
+                    item_new = item.duplicate()
+                    item_new.annotation = objects_new
+                    result.append(item_new)
             elif isinstance(item, ImageClassificationData):
                 # mark as negative if label doesn't match
                 if not self.filter_label(item.annotation):
@@ -276,7 +277,9 @@ class FilterLabels(Filter):
                     item_new.annotation = None
                     result.append(item_new)
                 else:
-                    result.append(item)
+                    item_new = item.duplicate()
+                    item_new.annotation.layers = layers
+                    result.append(item_new)
             else:
                 self.logger().warning("Cannot process data type: %s" % str(type(item)))
 
