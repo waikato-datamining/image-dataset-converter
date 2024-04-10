@@ -205,8 +205,8 @@ See [here](plugins/README.md) for an overview of all plugins.
 
 ## Command-line examples
 
-Examples can be found in the [image-dataset-converter-examples](https://github.com/waikato-datamining/image-dataset-converter-examples)
-repository.
+Examples can be found on the [image-dataset-converter-examples](https://waikato-datamining.github.io/image-dataset-converter-examples/)
+website.
 
 
 ## Additional libraries
