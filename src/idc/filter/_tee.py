@@ -137,8 +137,10 @@ class Tee(Filter):
 
         if self._filter is not None:
             self._filter.session = self.session
+            self._filter.initialize()
         if self._writer is not None:
             self._writer.session = self.session
+            self._writer.initialize()
 
     def _do_process(self, data):
         """
