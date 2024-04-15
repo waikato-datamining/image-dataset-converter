@@ -63,7 +63,7 @@ readers:
    from-adams-ic, from-adams-od, from-blue-channel-is, from-coco-od, 
    from-data, from-grayscale-is, from-indexed-png-is, 
    from-layer-segments-is, from-opex-od, from-roicsv-od, from-subdir-ic, 
-   from-voc-od, from-yolo-od
+   from-voc-od, from-yolo-od, poll-dir
 filters:
    check-duplicate-filenames, coerce-box, coerce-mask, 
    convert-image-format, dimension-discarder, discard-invalid-images, 

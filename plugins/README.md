@@ -13,6 +13,7 @@
 * [from-subdir-ic](from-subdir-ic.md)
 * [from-voc-od](from-voc-od.md)
 * [from-yolo-od](from-yolo-od.md)
+* [poll-dir](poll-dir.md)
 
 ## Filters
 * [check-duplicate-filenames](check-duplicate-filenames.md)
