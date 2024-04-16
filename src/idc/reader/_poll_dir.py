@@ -4,11 +4,10 @@ import os
 from time import sleep
 from typing import List, Iterable
 
-from seppl import split_args, split_cmdline, Initializable, init_initializable
+from seppl import Initializable, init_initializable
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ImageData
-from idc.api import Reader
+from idc.api import ImageData, Reader, parse_reader
 
 GLOB_NAME_PLACEHOLDER = "{NAME}"
 """ The glob placeholder for identifying other input files. """
@@ -148,8 +147,6 @@ class PollDir(Reader):
         """
         Initializes the processing, e.g., for opening files or databases.
         """
-        from idc.registry import available_readers
-        from seppl import args_to_objects
 
         super().initialize()
 
@@ -171,19 +168,7 @@ class PollDir(Reader):
         self._check_dir(self.dir_out, "output")
 
         # configure base reader
-        if self.base_reader is None:
-            raise Exception("No base reader supplied!")
-        valid = dict()
-        valid.update(available_readers())
-        args = split_args(split_cmdline(self.base_reader), list(valid.keys()))
-        objs = args_to_objects(args, valid, allow_global_options=False)
-        if len(objs) == 1:
-            if isinstance(objs[0], Reader):
-                self._base_reader = objs[0]
-            else:
-                raise Exception("Expected instance of Reader but got: %s" % str(type(objs[0])))
-        else:
-            raise Exception("Expected to obtain one reader from '%s' but got %d instead!" % (self.base_reader, len(objs)))
+        self._base_reader = parse_reader(self.base_reader)
         if not hasattr(self._base_reader, "source"):
             raise Exception("Reader does not have 'source' attribute: %s" % str(type(self._base_reader)))
         self._base_reader.session = self.session

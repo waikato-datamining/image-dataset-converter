@@ -147,3 +147,31 @@ class SplittableStreamWriter(StreamWriter):
         """
         super().initialize()
         initialize_splitting(self)
+
+
+def parse_writer(writer: str) -> seppl.io.Writer:
+    """
+    Parses the command-line and instantiates the writer.
+
+    :param writer: the command-line to parse
+    :type writer: str
+    :return: the writer
+    :rtype: seppl.io.Writer
+    """
+    from seppl import split_args, split_cmdline, args_to_objects
+    from idc.registry import available_writers
+
+    if writer is None:
+        raise Exception("No writer command-line supplied!")
+    valid = dict()
+    valid.update(available_writers())
+    args = split_args(split_cmdline(writer), list(valid.keys()))
+    objs = args_to_objects(args, valid, allow_global_options=False)
+    if len(objs) == 1:
+        if isinstance(objs[0], seppl.io.Writer):
+            result = objs[0]
+        else:
+            raise Exception("Expected instance of Writer but got: %s" % str(type(objs[0])))
+    else:
+        raise Exception("Expected to obtain one writer from '%s' but got %d instead!" % (writer, len(objs)))
+    return result
