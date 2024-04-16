@@ -214,5 +214,5 @@ website.
 * [Image augmentation](https://github.com/waikato-datamining/image-dataset-converter-imgaug)
 * [Image statistics](https://github.com/waikato-datamining/image-dataset-converter-imgstats)
 * [Image visualizations](https://github.com/waikato-datamining/image-dataset-converter-imgvis)
-* [Redis predictions](https://github.com/waikato-datamining/image-dataset-converter-redis-predictions)
+* [Redis](https://github.com/waikato-datamining/image-dataset-converter-redis)
 * [Video](https://github.com/waikato-datamining/image-dataset-converter-video)
