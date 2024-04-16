@@ -1,3 +1,5 @@
+import copy
+
 from PIL import Image
 from typing import Tuple, Dict, Union, Optional
 
@@ -119,3 +121,29 @@ class ObjectDetectionData(ImageData):
         if not self.is_normalized():
             return
         self.annotation = self.get_absolute()
+
+    def _annotation_to_dict(self):
+        """
+        Turns the annotations into a dictionary.
+
+        :return: the generated dictionary
+        :rtype: dict
+        """
+        objs = []
+        for lobj in self.annotation:
+            obj = dict()
+            obj["x"] = lobj.x
+            obj["y"] = lobj.y
+            obj["width"] = lobj.width
+            obj["height"] = lobj.height
+            obj["metadata"] = copy.deepcopy(lobj.metadata)
+            if lobj.has_polygon():
+                obj["poly_x"] = lobj.get_polygon_x()
+                obj["poly_y"] = lobj.get_polygon_y()
+            objs.append(obj)
+
+        result = dict()
+        result["objects"] = objs
+        result["normalized"] = self.is_normalized()
+
+        return result

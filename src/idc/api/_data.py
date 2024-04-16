@@ -1,3 +1,4 @@
+import base64
 import copy
 import io
 import logging
@@ -328,6 +329,49 @@ class ImageData(MetaDataHandler, LoggingHandler):
         return type(self)(source=source, image_name=name, data=data,
                           image=image, image_format=image_format, image_size=size,
                           metadata=metadata, annotation=annotation)
+
+    def _annotation_to_dict(self):
+        """
+        Turns the annotations into a dictionary.
+
+        :return: the generated dictionary
+        :rtype: dict
+        """
+        raise NotImplementedError()
+
+    def to_dict(self, source: bool = True, image: bool = True, annotation: bool = True, metadata: bool = True):
+        """
+        Returns itself as a dictionary that can be saved as JSON.
+
+        :param source: whether to include the source
+        :type source: bool
+        :param image: whether to include the image
+        :type image: bool
+        :param annotation: whether to include the annotations
+        :type annotation: bool
+        :param metadata: whether to include the metadata
+        :type metadata: bool
+        :return: the generated dictionary
+        :rtype: dict
+        """
+        result = dict()
+        if source and (self.source is not None):
+            result["source"] = self.source
+        if self.image_name is not None:
+            result["name"] = self.image_name
+        if self.image_format is not None:
+            result["format"] = self.image_format
+        if self.image_width is not None:
+            result["width"] = self.image_width
+        if self.image_height is not None:
+            result["height"] = self.image_height
+        if image:
+            result["image"] = base64.encodebytes(self.image_bytes).decode("ascii")
+        if annotation and (self.annotation is not None):
+            result["annotation"] = self._annotation_to_dict()
+        if metadata and (self.get_metadata() is not None):
+            result["metadata"] = copy.deepcopy(self.get_metadata())
+        return result
 
 
 def make_list(data, cls=ImageData) -> List:

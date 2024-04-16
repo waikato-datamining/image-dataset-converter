@@ -25,3 +25,12 @@ class ImageClassificationData(ImageData):
         :rtype: bool
         """
         return (self.annotation is not None) and (len(self.annotation) > 0)
+
+    def _annotation_to_dict(self):
+        """
+        Turns the annotations into a dictionary.
+
+        :return: the generated dictionary
+        :rtype: dict
+        """
+        return {"label": self.annotation}

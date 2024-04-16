@@ -1,3 +1,5 @@
+import base64
+import io
 import logging
 import numpy as np
 from typing import Tuple, Dict, List
@@ -64,6 +66,26 @@ class ImageSegmentationData(ImageData):
         :rtype: bool
         """
         return (self.annotation is not None) and (len(self.annotation.layers) > 0)
+
+    def _annotation_to_dict(self):
+        """
+        Turns the annotations into a dictionary.
+
+        :return: the generated dictionary
+        :rtype: dict
+        """
+        result = dict()
+        if self.annotation.labels is not None:
+            result["labels"] = self.annotation.labels[:]
+        result["layers"] = dict()
+        for label in self.annotation.layers:
+            arr = self.annotation.layers[label]
+            ann = Image.fromarray(arr, "L").convert("1")
+            buffer = io.BytesIO()
+            ann.save(buffer, format=self.image_format)
+            result["layers"][label] = base64.encodebytes(buffer.getvalue()).decode("ascii")
+
+        return result
 
 
 def combine_layers(item: ImageSegmentationData, dtype=np.int32) -> np.ndarray:
