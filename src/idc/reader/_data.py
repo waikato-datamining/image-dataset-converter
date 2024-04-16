@@ -30,6 +30,7 @@ class DataReader(Reader):
         self.data_type = data_type
         self._inputs = None
         self._current_input = None
+        self._output_cls = None
 
     def name(self) -> str:
         """
@@ -94,6 +95,7 @@ class DataReader(Reader):
         if self.data_type is None:
             raise Exception("No data type defined!")
         self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True)
+        self._output_cls = data_type_to_class(self.data_type)
 
     def read(self) -> Iterable:
         """
@@ -108,8 +110,7 @@ class DataReader(Reader):
         self.session.current_input = self._current_input
         self.logger().info("Reading from: " + str(self.session.current_input))
 
-        cls = data_type_to_class(self.data_type)
-        yield cls(source=self.session.current_input)
+        yield self._output_cls(source=self.session.current_input)
 
     def has_finished(self) -> bool:
         """
