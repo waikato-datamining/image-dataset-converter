@@ -87,6 +87,39 @@ class ImageSegmentationData(ImageData):
 
         return result
 
+    def new_layer(self, label: str) -> np.ndarray:
+        """
+        Adds an empty layer with the specified label.
+
+        :param label: the label of the layer
+        :type label: str
+        :return: the generated layer
+        :rtype: np.ndarray
+        """
+        if self.image_size is None:
+            raise Exception("No image dimensions available, cannot create empty layer ''%s!" % label)
+        if self.annotation is None:
+            self.annotation = ImageSegmentationAnnotations(labels=[], layers={})
+        width, height = self.image_size
+        layer = np.zeros((height, width), dtype=np.uint8)
+        if label not in self.annotation.labels:
+            self.annotation.labels.append(label)
+        self.annotation.layers[label] = layer
+        return layer
+
+    def has_layer(self, label: str) -> bool:
+        """
+        Checks whether the layer is present.
+
+        :param label: the layer to check
+        :type label: str
+        :return: true if present (may be empty though)
+        :rtype: bool
+        """
+        if not self.has_annotation():
+            return False
+        return label in self.annotation.layers
+
 
 def combine_layers(item: ImageSegmentationData, dtype=np.int32) -> np.ndarray:
     """
@@ -153,6 +186,7 @@ def from_indexedpng(img: Image.Image, labels: List[str], label_mapping: Dict[int
         if index == 0:
             continue
         index = int(index)
+        label_index = index - 1
         if index not in label_mapping:
             msg = "Index not covered by labels, skipping: %d" % index
             if logger is not None:
@@ -161,7 +195,7 @@ def from_indexedpng(img: Image.Image, labels: List[str], label_mapping: Dict[int
                 print(msg)
             continue
         sub_arr = np.where(arr == index, 255, 0).astype(np.uint8)
-        layers[label_mapping[index]] = sub_arr
+        layers[label_mapping[label_index]] = sub_arr
     return ImageSegmentationAnnotations(labels, layers)
 
 
