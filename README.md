@@ -137,7 +137,7 @@ optional arguments:
 ### Generating help screens for plugins
 
 ```
-usage: idc-help [-h] [-m [PACKAGE [PACKAGE ...]]] [-e EXCLUDED_MODULES]
+usage: idc-help [-h] [-c [PACKAGE [PACKAGE ...]]] [-e EXCLUDED_CLASS_LISTERS]
                 [-p NAME] [-f FORMAT] [-L INT] [-o PATH] [-i FILE] [-t TITLE]
                 [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
 
@@ -145,11 +145,11 @@ Tool for outputting help for plugins in various formats.
 
 optional arguments:
   -h, --help            show this help message and exit
-  -m [PACKAGE [PACKAGE ...]], --modules [PACKAGE [PACKAGE ...]]
-                        The names of the module packages, uses the default
-                        ones if not provided. (default: None)
-  -e EXCLUDED_MODULES, --excluded_modules EXCLUDED_MODULES
-                        The comma-separated list of modules to excluded.
+  -c [PACKAGE [PACKAGE ...]], --class_listers [PACKAGE [PACKAGE ...]]
+                        The custom class listers to use, uses the default ones
+                        if not provided. (default: None)
+  -e EXCLUDED_CLASS_LISTERS, --excluded_class_listers EXCLUDED_CLASS_LISTERS
+                        The comma-separated list of class listers to exclude.
                         (default: None)
   -p NAME, --plugin_name NAME
                         The name of the plugin to generate the help for,
@@ -179,20 +179,20 @@ optional arguments:
 ### Plugin registry
 
 ```
-usage: idc-registry [-h] [-m CUSTOM_MODULES] [-e EXCLUDED_MODULES]
-                    [-l {plugins,custom-modules,env-modules,readers,filters,writers}]
+usage: idc-registry [-h] [-c CUSTOM_CLASS_LISTERS] [-e EXCLUDED_CLASS_LISTERS]
+                    [-l {plugins,custom-class-listers,env-class-listers,readers,filters,writers}]
 
 For inspecting/querying the registry.
 
 optional arguments:
   -h, --help            show this help message and exit
-  -m CUSTOM_MODULES, --custom_modules CUSTOM_MODULES
-                        The comma-separated list of custom modules to use.
+  -c CUSTOM_CLASS_LISTERS, --custom_class_listers CUSTOM_CLASS_LISTERS
+                        The comma-separated list of custom class listers to
+                        use. (default: None)
+  -e EXCLUDED_CLASS_LISTERS, --excluded_class_listers EXCLUDED_CLASS_LISTERS
+                        The comma-separated list of class listers to exclude.
                         (default: None)
-  -e EXCLUDED_MODULES, --excluded_modules EXCLUDED_MODULES
-                        The comma-separated list of modules to excluded.
-                        (default: None)
-  -l {plugins,custom-modules,env-modules,readers,filters,writers}, --list {plugins,custom-modules,env-modules,readers,filters,writers}
+  -l {plugins,custom-class-listers,env-class-listers,readers,filters,writers}, --list {plugins,custom-class-listers,env-class-listers,readers,filters,writers}
                         For outputting various lists on stdout. (default:
                         None)
 ```
@@ -216,3 +216,52 @@ website.
 * [Image visualizations](https://github.com/waikato-datamining/image-dataset-converter-imgvis)
 * [Redis](https://github.com/waikato-datamining/image-dataset-converter-redis)
 * [Video](https://github.com/waikato-datamining/image-dataset-converter-video)
+
+
+## Class listers
+
+The *llm-dataset-converter* uses the *class lister registry* provided 
+by the [seppl](https://github.com/waikato-datamining/seppl) library.
+
+Each module defines a function, typically called `list_classes` that returns
+a dictionary of names of superclasses associated with a list of modules that
+should be scanned for derived classes. Here is an example:
+
+```python
+from typing import List, Dict
+
+
+def list_classes() -> Dict[str, List[str]]:
+    return {
+        "seppl.io.Reader": [
+            "mod.ule1",
+            "mod.ule2",
+        ],
+        "seppl.io.Filter": [
+            "mod.ule3",
+            "mod.ule4",
+        ],
+        "seppl.io.Writer": [
+            "mod.ule5",
+        ],
+    }
+```
+
+Such a class lister gets referenced in the `entry_points` section of the `setup.py` file:
+
+```python
+    entry_points={
+        "class_lister": [
+            "unique_string=module_name:function_name",
+        ],
+    },
+```
+
+`:function_name` can be omitted if `:list_classes`.
+
+The following environment variables can be used to influence the class listers:
+
+* `IDC_CLASS_LISTERS`
+* `IDC_CLASS_LISTERS_EXCL`
+
+Each variable is a comma-separated list of `module_name:function_name`, defining the class listers.

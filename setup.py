@@ -31,7 +31,7 @@ setup(
     },
     packages=find_namespace_packages(where='src'),
     install_requires=[
-        "seppl>=0.1.3",
+        "seppl>=0.2.0",
         "wai.logging",
         "wai.common>=0.0.44",
         "pillow",
@@ -52,23 +52,8 @@ setup(
             "idc-help=idc.tool.help:sys_main",
             "idc-registry=idc.registry:sys_main",
         ],
-        "idc.readers": [
-            "idc_readers1=idc.reader:seppl.io.Reader",
-            "idc_readers_imgcls1=idc.reader.imgcls:seppl.io.Reader",
-            "idc_readers_imgseg1=idc.reader.imgseg:seppl.io.Reader",
-            "idc_readers_objdet1=idc.reader.objdet:seppl.io.Reader",
+        "class_lister": [
+            "idc=idc.class_lister",
         ],
-        "idc.filters": [
-            "idc_filters1=idc.filter:seppl.io.Filter",
-            "idc_filters_imgcls1=idc.filter.imgcls:seppl.io.Filter",
-            "idc_filters_imgseg1=idc.filter.imgseg:seppl.io.Filter",
-            "idc_filters_objdet1=idc.filter.objdet:seppl.io.Filter",
-        ],
-        "idc.writers": [
-            "idc_writers1=idc.writer:seppl.io.Writer",
-            "idc_writers_imgcls1=idc.writer.imgcls:seppl.io.Writer",
-            "idc_writers_imgseg1=idc.writer.imgseg:seppl.io.Writer",
-            "idc_writers_objdet1=idc.writer.objdet:seppl.io.Writer",
-        ]
     },
 )
