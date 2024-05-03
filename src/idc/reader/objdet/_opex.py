@@ -134,6 +134,8 @@ class OPEXObjectDetectionReader(Reader):
             for k, v in preds.meta.items():
                 meta[k] = v
 
+        self._current_input = None
+
         yield ObjectDetectionData(source=img, annotation=lobjs, metadata=meta)
 
     def has_finished(self) -> bool:

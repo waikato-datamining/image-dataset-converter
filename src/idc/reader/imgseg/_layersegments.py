@@ -131,6 +131,7 @@ class LayerSegmentsImageSegmentationReader(Reader):
         anns = glob.glob(prefix + self.label_separator + "*.png")
         if len(anns) == 0:
             self.logger().warning("No associated layers found for: %s" % self.session.current_input)
+            self._current_input = None
             yield None
 
         # read annotations
@@ -158,6 +159,8 @@ class LayerSegmentsImageSegmentationReader(Reader):
                 layers[label] = arr
             else:
                 self.logger().warning("Skipping unknown label: %s" % label)
+
+        self._current_input = None
 
         annotations = ImageSegmentationAnnotations(self.labels, layers)
         yield ImageSegmentationData(source=self.session.current_input, annotation=annotations)

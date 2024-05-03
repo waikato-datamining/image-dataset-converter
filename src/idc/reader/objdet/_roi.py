@@ -160,6 +160,8 @@ class ROIObjectDetectionReader(Reader):
             if len(annotations) == 0:
                 annotations = None
 
+        self._current_input = None
+
         yield ObjectDetectionData(source=image, annotation=annotations)
 
     def has_finished(self) -> bool:

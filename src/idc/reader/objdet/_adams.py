@@ -119,7 +119,10 @@ class AdamsObjectDetectionReader(Reader):
         image = locate_image(self._current_input)
         if image is None:
             self.logger().warning("No associated image found: %s" % self._current_input)
+            self._current_input = None
             yield None
+
+        self._current_input = None
         yield ObjectDetectionData(source=image, annotation=annotations, metadata=meta)
 
     def has_finished(self) -> bool:

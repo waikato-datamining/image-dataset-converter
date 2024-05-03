@@ -115,7 +115,11 @@ class AdamsImageClassificationReader(Reader):
         image = locate_image(self._current_input)
         if image is None:
             self.logger().warning("No associated image found: %s" % self._current_input)
+            self._current_input = None
             yield None
+
+        self._current_input = None
+
         if report.has_value(self.class_field):
             yield ImageClassificationData(source=image, annotation=report.get_string_value(self.class_field), metadata=meta)
         else:

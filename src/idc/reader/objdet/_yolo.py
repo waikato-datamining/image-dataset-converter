@@ -169,7 +169,10 @@ class YoloObjectDetectionReader(Reader):
         image = locate_image(self._current_input, rel_path=self.image_path_rel)
         if image is None:
             self.logger().warning("No associated image found: %s" % self._current_input)
+            self._current_input = None
             yield None
+
+        self._current_input = None
         yield ObjectDetectionData(source=image, annotation=annotations)
 
     def has_finished(self) -> bool:

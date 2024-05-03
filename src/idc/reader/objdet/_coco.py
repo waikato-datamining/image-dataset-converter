@@ -184,6 +184,8 @@ class COCOObjectDetectionReader(Reader):
                             # we only process one
                             break
 
+            self._current_input = None
+
             yield ObjectDetectionData(source=str(img), annotation=lobjs, metadata=file_meta)
 
     def has_finished(self) -> bool:

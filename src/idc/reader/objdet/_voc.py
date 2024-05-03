@@ -111,6 +111,7 @@ class VOCObjectDetectionReader(Reader):
             img = locate_image(self.session.current_input)
             if img is None:
                 self.logger().warning("No corresponding image found for: %s" % self.session.current_input)
+                self._current_input = None
                 yield None
 
         lobjs = LocatedObjects()
@@ -130,6 +131,8 @@ class VOCObjectDetectionReader(Reader):
             meta["type"] = label
             lobj = LocatedObject(x_min, y_min, x_max - x_min + 1, y_max - y_min + 1, **meta)
             lobjs.append(lobj)
+
+        self._current_input = None
 
         yield ObjectDetectionData(source=str(img), annotation=lobjs)
 

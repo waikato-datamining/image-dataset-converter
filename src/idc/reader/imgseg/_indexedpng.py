@@ -126,6 +126,8 @@ class IndexedPngImageSegmentationReader(Reader):
         ann = load_image_from_file(self.session.current_input)
         annotations = from_indexedpng(ann, self.labels, self._label_mapping, self.logger())
 
+        self._current_input = None
+
         # associated image
         if len(imgs) > 1:
             self.logger().warning("Found more than one image associated with annotation, using first: %s" % imgs[0])
