@@ -110,8 +110,6 @@ class GrayscaleImageSegmentationReader(Reader):
         :return: the data
         :rtype: Iterable
         """
-        self.finalize()
-
         self._current_input = self._inputs.pop(0)
         self.session.current_input = self._current_input
 
@@ -125,8 +123,6 @@ class GrayscaleImageSegmentationReader(Reader):
         self.logger().info("Reading from: " + str(self.session.current_input))
         ann = load_image_from_file(self.session.current_input)
         annotations = from_grayscale(ann, self.labels, self._label_mapping, self.logger())
-
-        self._current_input = None
 
         # associated image
         if len(imgs) > 1:
@@ -143,11 +139,3 @@ class GrayscaleImageSegmentationReader(Reader):
         :rtype: bool
         """
         return len(self._inputs) == 0
-
-    def finalize(self):
-        """
-        Finishes the reading, e.g., for closing files or databases.
-        """
-        if self._current_input is not None:
-            super().finalize()
-            self._current_input = None

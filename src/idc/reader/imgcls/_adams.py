@@ -99,8 +99,6 @@ class AdamsImageClassificationReader(Reader):
         :return: the data
         :rtype: Iterable
         """
-        self.finalize()
-
         self._current_input = self._inputs.pop(0)
         self.session.current_input = self._current_input
         self.logger().info("Reading from: " + str(self.session.current_input))
@@ -115,10 +113,7 @@ class AdamsImageClassificationReader(Reader):
         image = locate_image(self._current_input)
         if image is None:
             self.logger().warning("No associated image found: %s" % self._current_input)
-            self._current_input = None
             yield None
-
-        self._current_input = None
 
         if report.has_value(self.class_field):
             yield ImageClassificationData(source=image, annotation=report.get_string_value(self.class_field), metadata=meta)
@@ -133,11 +128,3 @@ class AdamsImageClassificationReader(Reader):
         :rtype: bool
         """
         return len(self._inputs) == 0
-
-    def finalize(self):
-        """
-        Finishes the reading, e.g., for closing files or databases.
-        """
-        if self._current_input is not None:
-            super().finalize()
-            self._current_input = None

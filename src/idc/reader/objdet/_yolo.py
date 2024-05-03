@@ -114,8 +114,6 @@ class YoloObjectDetectionReader(Reader):
         :return: the data
         :rtype: Iterable
         """
-        self.finalize()
-
         self._current_input = self._inputs.pop(0)
         self.session.current_input = self._current_input
         self.logger().info("Reading from: " + str(self.session.current_input))
@@ -169,10 +167,8 @@ class YoloObjectDetectionReader(Reader):
         image = locate_image(self._current_input, rel_path=self.image_path_rel)
         if image is None:
             self.logger().warning("No associated image found: %s" % self._current_input)
-            self._current_input = None
             yield None
 
-        self._current_input = None
         yield ObjectDetectionData(source=image, annotation=annotations)
 
     def has_finished(self) -> bool:
@@ -183,11 +179,3 @@ class YoloObjectDetectionReader(Reader):
         :rtype: bool
         """
         return len(self._inputs) == 0
-
-    def finalize(self):
-        """
-        Finishes the reading, e.g., for closing files or databases.
-        """
-        if self._current_input is not None:
-            super().finalize()
-            self._current_input = None

@@ -104,12 +104,9 @@ class DataReader(Reader):
         :return: the data
         :rtype: Iterable
         """
-        self.finalize()
-
         self._current_input = self._inputs.pop(0)
         self.session.current_input = self._current_input
         self.logger().info("Reading from: " + str(self.session.current_input))
-
         yield self._output_cls(source=self.session.current_input)
 
     def has_finished(self) -> bool:
@@ -120,11 +117,3 @@ class DataReader(Reader):
         :rtype: bool
         """
         return len(self._inputs) == 0
-
-    def finalize(self):
-        """
-        Finishes the reading, e.g., for closing files or databases.
-        """
-        if self._current_input is not None:
-            super().finalize()
-            self._current_input = None
