@@ -39,3 +39,4 @@ Docker
 * link to new version from [docker/README.md](docker/README.md)
 * update version in `bash.bashrc`
 * update versions of additional image-dataset-converter libraries if necessary
+* push out to in-house registry and docker hub
