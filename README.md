@@ -138,14 +138,14 @@ optional arguments:
 
 ```
 usage: idc-help [-h] [-c [PACKAGE [PACKAGE ...]]] [-e EXCLUDED_CLASS_LISTERS]
-                [-p NAME] [-f FORMAT] [-L INT] [-o PATH] [-i FILE] [-t TITLE]
-                [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
+                [-p NAME] [-f {text,markdown}] [-L INT] [-o PATH] [-i FILE]
+                [-t TITLE] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
 
 Tool for outputting help for plugins in various formats.
 
 optional arguments:
   -h, --help            show this help message and exit
-  -c [PACKAGE [PACKAGE ...]], --class_listers [PACKAGE [PACKAGE ...]]
+  -c [PACKAGE [PACKAGE ...]], --custom_class_listers [PACKAGE [PACKAGE ...]]
                         The custom class listers to use, uses the default ones
                         if not provided. (default: None)
   -e EXCLUDED_CLASS_LISTERS, --excluded_class_listers EXCLUDED_CLASS_LISTERS
@@ -154,7 +154,7 @@ optional arguments:
   -p NAME, --plugin_name NAME
                         The name of the plugin to generate the help for,
                         generates it for all if not specified (default: None)
-  -f FORMAT, --help_format FORMAT
+  -f {text,markdown}, --help_format {text,markdown}
                         The output format to generate (default: text)
   -L INT, --heading_level INT
                         The level to use for the heading (default: 1)

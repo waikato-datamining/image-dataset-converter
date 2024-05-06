@@ -123,10 +123,10 @@ def main(args=None):
         description="Tool for outputting help for plugins in various formats.",
         prog=HELP,
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument("-c", "--class_listers", metavar="PACKAGE", help="The custom class listers to use, uses the default ones if not provided.", default=None, type=str, required=False, nargs="*")
+    parser.add_argument("-c", "--custom_class_listers", metavar="PACKAGE", help="The custom class listers to use, uses the default ones if not provided.", default=None, type=str, required=False, nargs="*")
     parser.add_argument("-e", "--excluded_class_listers", type=str, default=None, help="The comma-separated list of class listers to exclude.", required=False)
     parser.add_argument("-p", "--plugin_name", metavar="NAME", help="The name of the plugin to generate the help for, generates it for all if not specified", default=None, type=str, required=False)
-    parser.add_argument("-f", "--help_format", metavar="FORMAT", help="The output format to generate", choices=HELP_FORMATS, default=HELP_FORMAT_TEXT, required=False)
+    parser.add_argument("-f", "--help_format", help="The output format to generate", choices=HELP_FORMATS, default=HELP_FORMAT_TEXT, required=False)
     parser.add_argument("-L", "--heading_level", metavar="INT", help="The level to use for the heading", default=1, type=int, required=False)
     parser.add_argument("-o", "--output", metavar="PATH", help="The directory or file to store the help in; outputs it to stdout if not supplied; if pointing to a directory, automatically generates file name from plugin name and help format", type=str, default=None, required=False)
     parser.add_argument("-i", "--index_file", metavar="FILE", help="The file in the output directory to generate with an overview of all plugins, grouped by type (in markdown format, links them to the other generated files)", type=str, default=None, required=False)
