@@ -209,15 +209,6 @@ Examples can be found on the [image-dataset-converter-examples](https://waikato-
 website.
 
 
-## Additional libraries
-
-* [Image augmentation](https://github.com/waikato-datamining/image-dataset-converter-imgaug)
-* [Image statistics](https://github.com/waikato-datamining/image-dataset-converter-imgstats)
-* [Image visualizations](https://github.com/waikato-datamining/image-dataset-converter-imgvis)
-* [Redis](https://github.com/waikato-datamining/image-dataset-converter-redis)
-* [Video](https://github.com/waikato-datamining/image-dataset-converter-video)
-
-
 ## Class listers
 
 The *llm-dataset-converter* uses the *class lister registry* provided 
@@ -265,3 +256,12 @@ The following environment variables can be used to influence the class listers:
 * `IDC_CLASS_LISTERS_EXCL`
 
 Each variable is a comma-separated list of `module_name:function_name`, defining the class listers.
+
+
+## Additional libraries
+
+* [Image augmentation](https://github.com/waikato-datamining/image-dataset-converter-imgaug)
+* [Image statistics](https://github.com/waikato-datamining/image-dataset-converter-imgstats)
+* [Image visualizations](https://github.com/waikato-datamining/image-dataset-converter-imgvis)
+* [Redis](https://github.com/waikato-datamining/image-dataset-converter-redis)
+* [Video](https://github.com/waikato-datamining/image-dataset-converter-video)
