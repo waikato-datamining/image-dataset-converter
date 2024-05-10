@@ -11,6 +11,7 @@ from ._metadata_from_name import MetaDataFromName
 from ._od_to_is import ObjectDetectionToImageSegmentation
 from ._od_to_ic import ObjectDetectionToImageClassification, MULTIPLICITY, MULTIPLICITY_ERROR, MULTIPLICITY_SKIP, MULTIPLICITY_SINGLE, MULTIPLICITY_MAJORITY
 from ._passthrough import PassThrough
+from ._pyfunc_filter import PythonFunctionFilter
 from ._randomize_records import RandomizeRecords
 from ._record_window import RecordWindow
 from ._remove_classes import RemoveClasses

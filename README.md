@@ -62,20 +62,20 @@ Tool for converting between image annotation dataset formats.
 readers:
    from-adams-ic, from-adams-od, from-blue-channel-is, from-coco-od, 
    from-data, from-grayscale-is, from-indexed-png-is, 
-   from-layer-segments-is, from-opex-od, from-roicsv-od, from-subdir-ic, 
-   from-voc-od, from-yolo-od, poll-dir
+   from-layer-segments-is, from-opex-od, from-pyfunc, from-roicsv-od, 
+   from-subdir-ic, from-voc-od, from-yolo-od, poll-dir
 filters:
    check-duplicate-filenames, coerce-box, coerce-mask, 
    convert-image-format, dimension-discarder, discard-invalid-images, 
    discard-negatives, filter-labels, inspect, label-from-name, 
    label-present, map-labels, max-records, metadata, metadata-from-name, 
-   od-to-ic, od-to-is, passthrough, polygon-discarder, 
+   od-to-ic, od-to-is, passthrough, polygon-discarder, pyfunc-filter, 
    randomize-records, record-window, remove-classes, rename, sample, 
    split, strip-annotations, tee, write-labels
 writers:
    to-adams-ic, to-adams-od, to-blue-channel-is, to-coco-od, to-data, 
    to-grayscale-is, to-indexed-png-is, to-layer-segments-is, to-opex-od, 
-   to-roicsv-od, to-subdir-ic, to-voc-od, to-yolo-od
+   to-pyfunc, to-roicsv-od, to-subdir-ic, to-voc-od, to-yolo-od
 
 optional arguments:
   -h, --help            show basic help message and exit

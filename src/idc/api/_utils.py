@@ -1,8 +1,10 @@
 import csv
+import importlib
+import inspect
 import io
 import logging
 import os
-from typing import Optional, Union, List, Dict, Tuple
+from typing import Optional, Union, List, Dict, Tuple, Callable
 
 from PIL import Image
 
@@ -160,3 +162,33 @@ def save_labels_csv(path: str, labels: Dict[int, str], logger: logging.Logger = 
     with open(path, "w") as fp:
         writer = csv.writer(fp)
         writer.writerows(rows)
+
+
+def load_function(function: str) -> Callable:
+    """
+    Parses the function definition and returns the function.
+    The default format is "module_name:function_name".
+    Raises exceptions if wrong format, missing or not an actual function.
+
+    :param function: the function definition to parse
+    :type function: str
+    :return: the parsed function
+    """
+    if ":" not in function:
+        raise Exception("Expected format 'module_name:function_name' but got: %s" % function)
+    else:
+        module_name, func_name = function.split(":")
+
+    try:
+        module = importlib.import_module(module_name)
+    except:
+        raise Exception("Failed to import class lister module: %s" % module_name)
+
+    if hasattr(module, func_name):
+        func = getattr(module, func_name)
+        if inspect.isfunction(func):
+            return func
+        else:
+            raise Exception("Not an actual function: %s" % function)
+    else:
+        raise Exception("Function '%s' not found in module '%s'!" % (func_name, module_name))
