@@ -30,13 +30,3 @@ Steps:
 * enter release notes, i.e., significant changes since last release
 * upload `image-dataset-converter-X.Y.Z.tar.gz` previously generated with `setup.py`
 * publish
-
-
-Docker
-======
-
-* create copy of [docker/latest](docker/latest) and rename it to just released version
-* link to new version from [docker/README.md](docker/README.md)
-* update version in `bash.bashrc`
-* update versions of additional image-dataset-converter libraries if necessary
-* push out to in-house registry and docker hub
