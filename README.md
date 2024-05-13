@@ -18,6 +18,13 @@ pip install git+https://github.com/waikato-datamining/image-dataset-converter.gi
 ```
 
 
+## Docker
+
+Docker images are available as well. Please see the following page por more information:
+
+https://github.com/waikato-datamining/image-dataset-converter-all/tree/main/docker
+
+
 ## Dataset formats
 
 The following dataset formats are supported:
