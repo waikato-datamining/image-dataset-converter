@@ -17,14 +17,6 @@ The latest code straight from the repository:
 pip install git+https://github.com/waikato-datamining/image-dataset-converter.git
 ```
 
-## Docker
-
-[Docker](docker) images are available from:
-
-* Docker hub: [waikatodatamining/image-dataset-converter](https://hub.docker.com/r/waikatodatamining/image-dataset-converter)
-* In-house registry: `public.aml-repo.cms.waikato.ac.nz:443/tools/image-dataset-converter`
-
-
 
 ## Dataset formats
 

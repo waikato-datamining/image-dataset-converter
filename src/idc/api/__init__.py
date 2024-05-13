@@ -2,6 +2,7 @@ from ._colors import X11_COLORS, LIGHT_COLORS, DARK_COLORS, COLORBLIND24_COLORS,
 from ._colors import create_palette, fill_palette, default_palette, PALETTE_AUTO, PALETTE_GRAYSCALE, PALETTE_X11, PALETTE_LIGHT, PALETTE_DARK, PALETTE_COLORBLIND8, PALETTE_COLORBLIND12, PALETTE_COLORBLIND15, PALETTE_COLORBLIND24, PALETTES
 from ._fonts import DEFAULT_FONT_FAMILY, load_font, text_size
 from ._data import ImageData, make_list, flatten_list, FORMATS, FORMAT_JPEG, FORMAT_PNG, FORMAT_BMP, FORMAT_EXTENSIONS
+from ._generator import Generator, SingleVariableGenerator
 from ._imgcls import ImageClassificationData
 from ._imgseg import ImageSegmentationData, ImageSegmentationAnnotations, from_indexedpng, from_bluechannel, from_grayscale, combine_layers, split_layers
 from ._objdet import ObjectDetectionData, get_object_label, set_object_label, DEFAULT_LABEL, LABEL_KEY
