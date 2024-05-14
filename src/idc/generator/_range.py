@@ -68,7 +68,7 @@ class RangeGenerator(SingleVariableGenerator):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-f", "--from", name="from_", type=int, metavar="START", default=None, help="The starting value", required=True)
+        parser.add_argument("-f", "--from", type=int, metavar="START", default=None, help="The starting value", required=True)
         parser.add_argument("-t", "--to", type=int, metavar="END", default=None, help="The end value (excluded)", required=True)
         parser.add_argument("-s", "--step", type=int, metavar="STEP", default=1, help="The increment between values", required=False)
         return parser
@@ -81,7 +81,7 @@ class RangeGenerator(SingleVariableGenerator):
         :type ns: argparse.Namespace
         """
         super()._apply_args(ns)
-        self.from_ = ns.from_
+        self.from_ = getattr(ns, "from")
         self.to = ns.to
         self.step = ns.step
 
