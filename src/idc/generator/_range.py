@@ -51,6 +51,15 @@ class RangeGenerator(SingleVariableGenerator):
         """
         return "Iterates over a range of values."
 
+    def _default_var_name(self) -> str:
+        """
+        Returns the default variable name.
+
+        :return: the default name
+        :rtype: str
+        """
+        return "i"
+
     def _create_argparser(self) -> argparse.ArgumentParser:
         """
         Creates an argument parser. Derived classes need to fill in the options.

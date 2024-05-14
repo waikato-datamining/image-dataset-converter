@@ -89,7 +89,7 @@ class SingleVariableGenerator(Generator):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-v", "--var_name", type=str, metavar="NAME", default=self._default_var_name(), help="The name of the variable", required=(self._default_var_name() is None))
+        parser.add_argument("-n", "--var_name", type=str, metavar="NAME", default=self._default_var_name(), help="The name of the variable", required=(self._default_var_name() is None))
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):

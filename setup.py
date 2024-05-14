@@ -48,6 +48,7 @@ setup(
     entry_points={
         "console_scripts": [
             "idc-convert=idc.tool.convert:sys_main",
+            "idc-exec=idc.tool.exec:sys_main",
             "idc-find=idc.tool.find:sys_main",
             "idc-help=idc.tool.help:sys_main",
             "idc-registry=idc.registry:sys_main",

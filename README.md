@@ -87,6 +87,27 @@ optional arguments:
   -b, --force_batch     processes the data in batches
 ```
 
+### Executing a pipeline multiple times
+
+```
+usage: idc-exec [-h] -p PIPELINE -g GENERATOR
+                [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
+
+Tool for executing a pipeline multiple times, each time with a different set
+of variables expanded. A variable is surrounded by curly quotes (e.g.,
+variable 'i' gets referenced with '{i}').
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -p PIPELINE, --pipeline PIPELINE
+                        The pipeline template with variables to expand and
+                        then execute. (default: None)
+  -g GENERATOR, --generator GENERATOR
+                        The generator plugin to use. (default: None)
+  -l {DEBUG,INFO,WARNING,ERROR,CRITICAL}, --logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
+                        The logging level to use. (default: WARN)
+```
+
 
 ### Locating files
 
