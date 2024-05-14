@@ -32,6 +32,7 @@ LIST_PLUGINS = "plugins"
 LIST_READERS = "readers"
 LIST_FILTERS = "filters"
 LIST_WRITERS = "writers"
+LIST_GENERATORS = "generators"
 LIST_CUSTOM_CLASS_LISTERS = "custom-class-listers"
 LIST_ENV_CLASS_LISTERS = "env-class-listers"
 LIST_TYPES = [
@@ -41,6 +42,7 @@ LIST_TYPES = [
     LIST_READERS,
     LIST_FILTERS,
     LIST_WRITERS,
+    LIST_GENERATORS,
 ]
 
 
@@ -87,6 +89,16 @@ def available_filters() -> Dict[str, Plugin]:
     return REGISTRY.plugins("seppl.io.Filter", fail_if_empty=False)
 
 
+def available_generators() -> Dict[str, Plugin]:
+    """
+    Returns all available generators.
+
+    :return: the dict of generator objects
+    :rtype: dict
+    """
+    return REGISTRY.plugins("idc.api._generator.Generator", fail_if_empty=False)
+
+
 def available_plugins() -> Dict[str, Plugin]:
     """
     Returns all available plugins.
@@ -98,6 +110,7 @@ def available_plugins() -> Dict[str, Plugin]:
     result.update(available_readers())
     result.update(available_filters())
     result.update(available_writers())
+    result.update(available_generators())
     return result
 
 
@@ -128,7 +141,7 @@ def _list(list_type: str, custom_class_listers: Optional[List[str]] = None, excl
     """
     register_plugins(custom_class_listers=custom_class_listers, excluded_class_listers=excluded_class_listers)
 
-    if list_type in [LIST_PLUGINS, LIST_READERS, LIST_FILTERS, LIST_WRITERS]:
+    if list_type in [LIST_PLUGINS, LIST_READERS, LIST_FILTERS, LIST_WRITERS, LIST_GENERATORS]:
         if list_type == LIST_PLUGINS:
             plugins = available_plugins()
         elif list_type == LIST_READERS:
@@ -137,6 +150,8 @@ def _list(list_type: str, custom_class_listers: Optional[List[str]] = None, excl
             plugins = available_filters()
         elif list_type == LIST_WRITERS:
             plugins = available_readers()
+        elif list_type == LIST_GENERATORS:
+            plugins = available_generators()
         else:
             raise Exception("Unhandled type: %s" % list_type)
         print("name: class")

@@ -101,3 +101,17 @@ class SingleVariableGenerator(Generator):
         """
         super()._apply_args(ns)
         self.var_name = ns.var_name
+
+    def _check(self) -> Optional[str]:
+        """
+        Hook method for performing checks.
+
+        :return: None if checks successful, otherwise error message
+        :rtype: str
+        """
+        result = super()._check()
+
+        if self.var_name is None:
+            result = "No variable name provided!"
+
+        return result
