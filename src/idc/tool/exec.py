@@ -70,8 +70,9 @@ def main(args=None):
     :type args: list
     """
     init_logging(env_var=ENV_IDC_LOGLEVEL)
+    generators = sorted(list(available_generators().keys()))
     parser = argparse.ArgumentParser(
-        description="Tool for executing a pipeline multiple times, each time with a different set of variables expanded. A variable is surrounded by curly quotes (e.g., variable 'i' gets referenced with '{i}').",
+        description="Tool for executing a pipeline multiple times, each time with a different set of variables expanded. A variable is surrounded by curly quotes (e.g., variable 'i' gets referenced with '{i}'). Available generators: " + ", ".join(generators),
         prog=EXEC,
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("-p", "--pipeline", help="The pipeline template with variables to expand and then execute.", default=None, type=str, required=True)

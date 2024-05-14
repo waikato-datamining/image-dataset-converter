@@ -3,8 +3,9 @@ PyPi
 
 Preparation:
 
-* update all help files (`img-help -f markdown -o plugins -i README.md -l INFO`)
-* update the help screen of `img-convert` in `README.md` to have the latest list of plugins
+* update all help files (`idc-help -f markdown -o plugins -i README.md -l INFO`)
+* update the help screen of `idc-convert` in `README.md` to have the latest list of plugins
+* update the help screen of `idc-exec` in `README.md` to have the latest list of generators
 * increment version in `setup.py`
 * add new changelog section in `CHANGES.rst`
 * align `DESCRIPTION.rst` with `README.md`  
