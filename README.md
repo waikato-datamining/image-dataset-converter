@@ -164,8 +164,9 @@ optional arguments:
 
 ```
 usage: idc-help [-h] [-c [PACKAGE [PACKAGE ...]]] [-e EXCLUDED_CLASS_LISTERS]
-                [-p NAME] [-f {text,markdown}] [-L INT] [-o PATH] [-i FILE]
-                [-t TITLE] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
+                [-T {pipeline,generator}] [-p NAME] [-f {text,markdown}]
+                [-L INT] [-o PATH] [-i FILE] [-t TITLE]
+                [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
 
 Tool for outputting help for plugins in various formats.
 
@@ -177,6 +178,9 @@ optional arguments:
   -e EXCLUDED_CLASS_LISTERS, --excluded_class_listers EXCLUDED_CLASS_LISTERS
                         The comma-separated list of class listers to exclude.
                         (default: None)
+  -T {pipeline,generator}, --plugin_type {pipeline,generator}
+                        The types of plugins to generate the help for.
+                        (default: pipeline)
   -p NAME, --plugin_name NAME
                         The name of the plugin to generate the help for,
                         generates it for all if not specified (default: None)
@@ -206,7 +210,7 @@ optional arguments:
 
 ```
 usage: idc-registry [-h] [-c CUSTOM_CLASS_LISTERS] [-e EXCLUDED_CLASS_LISTERS]
-                    [-l {plugins,custom-class-listers,env-class-listers,readers,filters,writers}]
+                    [-l {plugins,pipeline,custom-class-listers,env-class-listers,readers,filters,writers,generators}]
 
 For inspecting/querying the registry.
 
@@ -218,7 +222,7 @@ optional arguments:
   -e EXCLUDED_CLASS_LISTERS, --excluded_class_listers EXCLUDED_CLASS_LISTERS
                         The comma-separated list of class listers to exclude.
                         (default: None)
-  -l {plugins,custom-class-listers,env-class-listers,readers,filters,writers}, --list {plugins,custom-class-listers,env-class-listers,readers,filters,writers}
+  -l {plugins,pipeline,custom-class-listers,env-class-listers,readers,filters,writers,generators}, --list {plugins,pipeline,custom-class-listers,env-class-listers,readers,filters,writers,generators}
                         For outputting various lists on stdout. (default:
                         None)
 ```
@@ -226,7 +230,10 @@ optional arguments:
 
 ## Plugins
 
-See [here](plugins/README.md) for an overview of all plugins.
+You can find help screens for the plugins here:
+
+* [Pipeline plugins](plugins/README.md) (reades/filters/writers)
+* [Generator plugins](generators/README.md) (used by `idc-exec`)
 
 
 ## Command-line examples

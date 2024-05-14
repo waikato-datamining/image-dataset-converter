@@ -8,14 +8,22 @@ from typing import List, Optional
 from wai.logging import init_logging, set_logging_level, add_logging_level
 from idc.core import ENV_IDC_LOGLEVEL
 from idc.help import generate_plugin_usage, HELP_FORMATS, HELP_FORMAT_TEXT, HELP_FORMAT_MARKDOWN
-from idc.registry import register_plugins, available_plugins
-from idc.registry import available_readers, available_filters, available_writers
+from idc.registry import register_plugins, available_plugins, available_pipeline_plugins
+from idc.registry import available_readers, available_filters, available_writers, available_generators
 
 HELP = "idc-help"
 
 _logger = logging.getLogger(HELP)
 
 INDEX_TITLE_DEFAULT = "image-dataset-converter plugins"
+
+
+PLUGIN_TYPE_PIPELINE = "pipeline"
+PLUGIN_TYPE_GENERATOR = "generator"
+PLUGIN_TYPES = [
+    PLUGIN_TYPE_PIPELINE,
+    PLUGIN_TYPE_GENERATOR,
+]
 
 
 def _add_plugins_to_index(heading: str, plugins: dict, help_format: str, lines: list):
@@ -49,7 +57,8 @@ def _add_plugins_to_index(heading: str, plugins: dict, help_format: str, lines: 
         raise Exception("Unsupported format for index: %s" % help_format)
 
 
-def output_help(custom_class_listers: List[str] = None, excluded_class_listers: Optional[List[str]] = None, plugin_name: str = None,
+def output_help(custom_class_listers: List[str] = None, excluded_class_listers: Optional[List[str]] = None,
+                plugin_type: str = None, plugin_name: str = None,
                 help_format: str = HELP_FORMAT_TEXT, heading_level: int = 1, output: str = None, index_file: str = None,
                 index_title: str = INDEX_TITLE_DEFAULT):
     """
@@ -59,6 +68,8 @@ def output_help(custom_class_listers: List[str] = None, excluded_class_listers: 
     :type custom_class_listers: list
     :param excluded_class_listers: the list of class listers to exclude
     :type excluded_class_listers: list
+    :param plugin_type: the type of plugin to generate the help for
+    :type plugin_type: str
     :param plugin_name: the plugin to generate the help for, None if for all
     :type plugin_name: str
     :param help_format: the format to output
@@ -73,12 +84,26 @@ def output_help(custom_class_listers: List[str] = None, excluded_class_listers: 
     :type index_title: str
     """
     register_plugins(custom_class_listers=custom_class_listers, excluded_class_listers=excluded_class_listers)
+
     if help_format not in HELP_FORMATS:
         raise Exception("Unknown help format: %s" % help_format)
+
+    if plugin_type is None:
+        plugin_type = PLUGIN_TYPE_PIPELINE
+    if plugin_type not in PLUGIN_TYPES:
+        raise Exception("Invalid plugin type: %s" % plugin_type)
+    available = None
+    if plugin_type == PLUGIN_TYPE_PIPELINE:
+        available = available_pipeline_plugins()
+    elif plugin_type == PLUGIN_TYPE_GENERATOR:
+        available = available_generators()
+    else:
+        raise Exception("Unhandled plugin type: %s" % plugin_type)
+
     if (plugin_name is None) and ((output is None) or (not os.path.isdir(output))):
         raise Exception("When generating the help for all plugins, the output must be a directory: %s" % output)
     if plugin_name is None:
-        plugin_names = available_plugins().keys()
+        plugin_names = available.keys()
     else:
         plugin_names = [plugin_name]
     for p in plugin_names:
@@ -97,10 +122,17 @@ def output_help(custom_class_listers: List[str] = None, excluded_class_listers: 
             header_lines.append("")
         else:
             raise Exception("Unsupported format for index: %s" % help_format)
+
         plugin_lines = []
-        _add_plugins_to_index("Readers", available_readers(), help_format, plugin_lines)
-        _add_plugins_to_index("Filters", available_filters(), help_format, plugin_lines)
-        _add_plugins_to_index("Writers", available_writers(), help_format, plugin_lines)
+        if plugin_type == PLUGIN_TYPE_PIPELINE:
+            _add_plugins_to_index("Readers", available_readers(), help_format, plugin_lines)
+            _add_plugins_to_index("Filters", available_filters(), help_format, plugin_lines)
+            _add_plugins_to_index("Writers", available_writers(), help_format, plugin_lines)
+        elif plugin_type == PLUGIN_TYPE_GENERATOR:
+            _add_plugins_to_index("Generators", available_generators(), help_format, plugin_lines)
+        else:
+            raise Exception("Unhandled plugin type: %s" % plugin_type)
+
         if len(plugin_lines) < 0:
             print("No plugins listed, skipping output of index file.")
         else:
@@ -125,6 +157,7 @@ def main(args=None):
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("-c", "--custom_class_listers", metavar="PACKAGE", help="The custom class listers to use, uses the default ones if not provided.", default=None, type=str, required=False, nargs="*")
     parser.add_argument("-e", "--excluded_class_listers", type=str, default=None, help="The comma-separated list of class listers to exclude.", required=False)
+    parser.add_argument("-T", "--plugin_type", choices=PLUGIN_TYPES, help="The types of plugins to generate the help for.", default=PLUGIN_TYPE_PIPELINE, type=str, required=False)
     parser.add_argument("-p", "--plugin_name", metavar="NAME", help="The name of the plugin to generate the help for, generates it for all if not specified", default=None, type=str, required=False)
     parser.add_argument("-f", "--help_format", help="The output format to generate", choices=HELP_FORMATS, default=HELP_FORMAT_TEXT, required=False)
     parser.add_argument("-L", "--heading_level", metavar="INT", help="The level to use for the heading", default=1, type=int, required=False)
@@ -135,7 +168,7 @@ def main(args=None):
     parsed = parser.parse_args(args=args)
     set_logging_level(_logger, parsed.logging_level)
     output_help(custom_class_listers=parsed.custom_class_listers, excluded_class_listers=parsed.excluded_class_listers,
-                plugin_name=parsed.plugin_name, help_format=parsed.help_format,
+                plugin_type=parsed.plugin_type, plugin_name=parsed.plugin_name, help_format=parsed.help_format,
                 heading_level=parsed.heading_level, output=parsed.output,
                 index_file=parsed.index_file, index_title=parsed.index_title)
 

@@ -3,7 +3,11 @@ PyPi
 
 Preparation:
 
-* update all help files (`idc-help -f markdown -o plugins -i README.md -l INFO`)
+* update all help screens
+
+  * `idc-help -f markdown -o plugins -T pipeline -i README.md -l INFO`
+  * `idc-help -f markdown -o generators -T generator -i README.md -l INFO`
+  
 * update the help screen of `idc-convert` in `README.md` to have the latest list of plugins
 * update the help screen of `idc-exec` in `README.md` to have the latest list of generators
 * increment version in `setup.py`

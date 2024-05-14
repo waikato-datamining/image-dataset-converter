@@ -29,6 +29,7 @@ _logger = None
 
 
 LIST_PLUGINS = "plugins"
+LIST_PIPELINE = "pipeline"
 LIST_READERS = "readers"
 LIST_FILTERS = "filters"
 LIST_WRITERS = "writers"
@@ -37,6 +38,7 @@ LIST_CUSTOM_CLASS_LISTERS = "custom-class-listers"
 LIST_ENV_CLASS_LISTERS = "env-class-listers"
 LIST_TYPES = [
     LIST_PLUGINS,
+    LIST_PIPELINE,
     LIST_CUSTOM_CLASS_LISTERS,
     LIST_ENV_CLASS_LISTERS,
     LIST_READERS,
@@ -89,6 +91,20 @@ def available_filters() -> Dict[str, Plugin]:
     return REGISTRY.plugins("seppl.io.Filter", fail_if_empty=False)
 
 
+def available_pipeline_plugins() -> Dict[str, Plugin]:
+    """
+    Returns all available plugins for building pipelines.
+
+    :return: the dict of plugin objects
+    :rtype: dict
+    """
+    result = dict()
+    result.update(available_readers())
+    result.update(available_filters())
+    result.update(available_writers())
+    return result
+
+
 def available_generators() -> Dict[str, Plugin]:
     """
     Returns all available generators.
@@ -101,7 +117,7 @@ def available_generators() -> Dict[str, Plugin]:
 
 def available_plugins() -> Dict[str, Plugin]:
     """
-    Returns all available plugins.
+    Returns all available plugins (pipeline and generators).
 
     :return: the dict of plugin objects
     :rtype: dict
@@ -141,9 +157,11 @@ def _list(list_type: str, custom_class_listers: Optional[List[str]] = None, excl
     """
     register_plugins(custom_class_listers=custom_class_listers, excluded_class_listers=excluded_class_listers)
 
-    if list_type in [LIST_PLUGINS, LIST_READERS, LIST_FILTERS, LIST_WRITERS, LIST_GENERATORS]:
+    if list_type in [LIST_PLUGINS, LIST_PIPELINE, LIST_READERS, LIST_FILTERS, LIST_WRITERS, LIST_GENERATORS]:
         if list_type == LIST_PLUGINS:
             plugins = available_plugins()
+        elif list_type == LIST_PIPELINE:
+            plugins = available_pipeline_plugins()
         elif list_type == LIST_READERS:
             plugins = available_readers()
         elif list_type == LIST_FILTERS:
