@@ -96,7 +96,7 @@ def available_generators() -> Dict[str, Plugin]:
     :return: the dict of generator objects
     :rtype: dict
     """
-    return REGISTRY.plugins("idc.api._generator.Generator", fail_if_empty=False)
+    return REGISTRY.plugins("idc.api.Generator", fail_if_empty=False)
 
 
 def available_plugins() -> Dict[str, Plugin]:

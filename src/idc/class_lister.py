@@ -21,7 +21,7 @@ def list_classes() -> Dict[str, List[str]]:
             "idc.writer.imgseg",
             "idc.writer.objdet",
         ],
-        "idc.api._generator.Generator": [
+        "idc.api.Generator": [
             "idc.generator",
         ],
     }
