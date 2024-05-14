@@ -13,7 +13,7 @@ EXEC = "idc-exec"
 _logger = logging.getLogger(EXEC)
 
 
-def execute_pipeline(pipeline: str, generator: str):
+def execute_pipeline(pipeline: str, generator: str, dry_run: bool = False, prefix: str = False):
     """
     Executes the specified pipeline as many times as the generators produce variables.
 
@@ -21,6 +21,10 @@ def execute_pipeline(pipeline: str, generator: str):
     :type pipeline: str
     :param generator: the generator command-line to use for generating variable values to be expanded in the pipeline template
     :type generator: str
+    :param dry_run: whether to only expand/output but not execute the pipeline
+    :type dry_run: bool
+    :param prefix: the prefix to use when in dry-run mode
+    :type prefix: str
     """
     # remove whitespaces, idc-convert from pipeline
     pipeline = pipeline.strip()
@@ -41,8 +45,15 @@ def execute_pipeline(pipeline: str, generator: str):
         for var in vars_:
             pipeline_exp = pipeline_exp.replace("{%s}" % var, vars_[var])
         _logger.info("%s\n--> %s" % (pipeline, pipeline_exp))
-        pipeline_args = split_cmdline(pipeline_exp)
-        convert_main(pipeline_args)
+        if dry_run:
+            if prefix is not None:
+                if not prefix.endswith(" "):
+                    prefix = prefix + " "
+                pipeline_exp = prefix + pipeline_exp
+            print(pipeline_exp)
+        else:
+            pipeline_args = split_cmdline(pipeline_exp)
+            convert_main(pipeline_args)
 
 
 def main(args=None):
@@ -65,10 +76,13 @@ def main(args=None):
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("-p", "--pipeline", help="The pipeline template with variables to expand and then execute.", default=None, type=str, required=True)
     parser.add_argument("-g", "--generator", help="The generator plugin to use.", default=None, type=str, required=True)
+    parser.add_argument("-n", "--dry_run", action="store_true", help="Applies the generator to the pipeline template and only outputs it on stdout.", required=False)
+    parser.add_argument("-P", "--prefix", help="The string to prefix the pipeline with when in dry-run mode.", required=False, default=None, type=str)
     add_logging_level(parser)
     parsed = parser.parse_args(args=args)
     set_logging_level(_logger, parsed.logging_level)
-    execute_pipeline(parsed.pipeline, parsed.generator)
+    execute_pipeline(parsed.pipeline, parsed.generator,
+                     dry_run=parsed.dry_run, prefix=parsed.prefix)
 
 
 def sys_main() -> int:
