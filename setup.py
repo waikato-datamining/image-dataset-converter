@@ -52,6 +52,7 @@ setup(
             "idc-find=idc.tool.find:sys_main",
             "idc-help=idc.tool.help:sys_main",
             "idc-registry=idc.registry:sys_main",
+            "idc-test-generator=idc.tool.test_generator:sys_main",
         ],
         "class_lister": [
             "idc=idc.class_lister",
