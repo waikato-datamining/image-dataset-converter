@@ -95,8 +95,8 @@ usage: idc-exec [-h] -p PIPELINE -g GENERATOR [-n] [-P PREFIX]
 
 Tool for executing a pipeline multiple times, each time with a different set
 of variables expanded. A variable is surrounded by curly quotes (e.g.,
-variable 'i' gets referenced with '{i}'). Available generators: list, null,
-range
+variable 'i' gets referenced with '{i}'). Available generators: dirs, list,
+null, range
 
 optional arguments:
   -h, --help            show this help message and exit
