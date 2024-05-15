@@ -3,7 +3,7 @@ import argparse
 from typing import List, Dict, Optional
 
 from wai.logging import LOGGING_WARNING
-from seppl import PluginWithLogging, Initializable
+from seppl import Plugin, PluginWithLogging, Initializable, split_cmdline, split_args, args_to_objects
 
 
 class Generator(PluginWithLogging, Initializable, abc.ABC):
@@ -51,6 +51,35 @@ class Generator(PluginWithLogging, Initializable, abc.ABC):
         if msg is not None:
             raise Exception(msg)
         return self._do_generate()
+
+    @classmethod
+    def parse_generator(cls, cmdline: str) -> 'Generator':
+        """
+        Parses the commandline and returns the generator plugin.
+
+        :param cmdline: the command-line to parse
+        :type cmdline: str
+        :return: the generator plugin
+        :rtype: Generator
+        """
+        result = cls.parse_generators(cmdline)
+        if len(result) != 1:
+            raise Exception("Expected a single generator, but got: %d" % len(result))
+        return result[0]
+
+    @classmethod
+    def parse_generators(cls, cmdline: str) -> List['Generator']:
+        """
+        Parses the commandline and returns the list of generator plugins.
+
+        :param cmdline: the command-line to parse
+        :type cmdline: str
+        :return: the list of generator plugins
+        :rtype: list
+        """
+        from idc.registry import available_generators
+        generator_args = split_args(split_cmdline(cmdline), list(available_generators().keys()))
+        return args_to_objects(generator_args, available_generators())
 
 
 class SingleVariableGenerator(Generator):

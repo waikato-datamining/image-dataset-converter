@@ -2,10 +2,12 @@ import argparse
 import logging
 import traceback
 
+from seppl import split_cmdline
 from wai.logging import init_logging, set_logging_level, add_logging_level
+
+from idc.api import Generator
 from idc.core import ENV_IDC_LOGLEVEL
 from idc.registry import available_generators
-from seppl import split_cmdline, split_args, args_to_objects
 from idc.tool.convert import main as convert_main, CONVERT
 
 EXEC = "idc-exec"
@@ -32,11 +34,7 @@ def execute_pipeline(pipeline: str, generator: str, dry_run: bool = False, prefi
         pipeline = pipeline[len(CONVERT):].strip()
 
     # parse generator
-    generator_args = split_args(split_cmdline(generator), list(available_generators().keys()))
-    generator_objs = args_to_objects(generator_args, available_generators())
-    if len(generator_objs) != 1:
-        raise Exception("Expected a single generator, but got: %d" % len(generator_objs))
-    generator_obj = generator_objs[0]
+    generator_obj = Generator.parse_generator(generator)
 
     # apply generator to pipeline template and execute it
     vars_list = generator_obj.generate()
