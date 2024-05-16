@@ -7,7 +7,7 @@ from shapely.geometry import Polygon
 from wai.common.adams.imaging.locateobjects import LocatedObjects, LocatedObject
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ObjectDetectionData, to_polygon, intersect_over_union, get_object_label, flatten_list, make_list
+from idc.api import ObjectDetectionData, locatedobject_polygon_to_shapely, intersect_over_union, get_object_label, flatten_list, make_list
 
 
 class LabelPresent(Filter):
@@ -200,7 +200,7 @@ class LabelPresent(Filter):
             region_polys = self._polygons[key]
 
         # overlap with any region?
-        object_poly = to_polygon(located_object)
+        object_poly = locatedobject_polygon_to_shapely(located_object)
         match = False
         for region_poly in region_polys:
             iou = intersect_over_union(object_poly, region_poly)

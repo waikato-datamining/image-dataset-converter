@@ -8,7 +8,7 @@ from wai.common.adams.imaging.locateobjects import LocatedObjects, LocatedObject
 from wai.common.geometry import Point as WaiPoint, Polygon as WaiPolygon
 
 from seppl.io import Filter
-from idc.api import ObjectDetectionData, flatten_list, make_list, to_polygon
+from idc.api import ObjectDetectionData, flatten_list, make_list, locatedobject_polygon_to_shapely
 
 
 class PolygonSimplifier(Filter):
@@ -100,7 +100,7 @@ class PolygonSimplifier(Filter):
         result = False
 
         if obj.has_polygon():
-            spoly = to_polygon(obj)
+            spoly = locatedobject_polygon_to_shapely(obj)
             spoly_new = simplify(spoly, self.tolerance)
             if isinstance(spoly_new, Polygon) and (len(spoly_new.exterior.coords) < len(spoly.exterior.coords)):
                 result = True

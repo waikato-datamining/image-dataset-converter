@@ -16,7 +16,7 @@ COMBINATIONS = [
 ]
 
 
-def bbox_to_shapely(lobj: LocatedObject) -> Polygon:
+def locatedobject_bbox_to_shapely(lobj: LocatedObject) -> Polygon:
     """
     Converts the located object rectangle into a shapely Polygon.
 
@@ -33,7 +33,7 @@ def bbox_to_shapely(lobj: LocatedObject) -> Polygon:
     return Polygon(coords)
 
 
-def polygon_to_shapely(lobj: LocatedObject) -> Polygon:
+def locatedobject_polygon_to_shapely(lobj: LocatedObject) -> Polygon:
     """
     Converts the located object polygon into a shapely Polygon.
 
@@ -41,7 +41,7 @@ def polygon_to_shapely(lobj: LocatedObject) -> Polygon:
     :return: the Polygon
     """
     if not lobj.has_polygon():
-        return bbox_to_shapely(lobj)
+        return locatedobject_bbox_to_shapely(lobj)
     x_list = lobj.get_polygon_x()
     y_list = lobj.get_polygon_y()
     coords = []
@@ -82,10 +82,7 @@ def shapely_to_locatedobject(geometry: BaseGeometry, label: str = None) -> Locat
     return result
 
 
-to_polygon = polygon_to_shapely
-
-
-def to_polygons(located_objects: LocatedObjects) -> List[Polygon]:
+def locatedobjects_to_shapely(located_objects: LocatedObjects) -> List[Polygon]:
     """
     Turns the located objects into shapely polygons.
 
@@ -96,7 +93,7 @@ def to_polygons(located_objects: LocatedObjects) -> List[Polygon]:
     """
     result = []
     for obj in located_objects:
-        result.append(polygon_to_shapely(obj))
+        result.append(locatedobject_polygon_to_shapely(obj))
     return result
 
 

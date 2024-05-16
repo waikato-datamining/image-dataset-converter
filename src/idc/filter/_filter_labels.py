@@ -9,7 +9,7 @@ from wai.logging import LOGGING_WARNING
 from wai.common.adams.imaging.locateobjects import LocatedObjects, LocatedObject, normalized_to_absolute, \
     NormalizedLocatedObjects
 from seppl.io import Filter
-from idc.api import ObjectDetectionData, ImageClassificationData, ImageSegmentationData, to_polygon, \
+from idc.api import ObjectDetectionData, ImageClassificationData, ImageSegmentationData, locatedobject_polygon_to_shapely, \
     intersect_over_union, get_object_label, flatten_list, make_list
 
 
@@ -213,7 +213,7 @@ class FilterLabels(Filter):
             w = self._region[2]
             h = self._region[3]
 
-        object_poly = to_polygon(located_object)
+        object_poly = locatedobject_polygon_to_shapely(located_object)
         region_poly = Polygon([(x, y), (x+w-1, y), (x+w-1, y+h-1), (x, y+h-1)])
         iou = intersect_over_union(object_poly, region_poly)
 
