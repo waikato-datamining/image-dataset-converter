@@ -1,9 +1,12 @@
 import base64
 import io
 import logging
-import numpy as np
 from typing import Tuple, Dict, List
+
+import numpy as np
 from PIL import Image
+from wai.common.adams.imaging.locateobjects import LocatedObject
+
 from ._data import ImageData
 
 
