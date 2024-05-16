@@ -3,6 +3,7 @@ import importlib
 import inspect
 import io
 import logging
+import numpy as np
 import os
 from typing import Optional, Union, List, Dict, Tuple, Callable
 
@@ -192,3 +193,83 @@ def load_function(function: str) -> Callable:
             raise Exception("Not an actual function: %s" % function)
     else:
         raise Exception("Function '%s' not found in module '%s'!" % (func_name, module_name))
+
+
+def pad_image(img: Union[Image.Image, np.ndarray], pad_width: Optional[int] = None, pad_height: Optional[int] = None) -> Image:
+    """
+    Pads the image/layer if necessary (on the right/bottom).
+
+    :param img: the image to pad
+    :type img: Image.Image/np.ndarray
+    :param pad_width: the width to pad to, return as is if None
+    :type pad_width: int
+    :param pad_height: the height to pad to, return as is if None
+    :type pad_height: int
+    :return: the (potentially) padded image
+    :rtype: Image.Image/np.ndarray
+    """
+    result = img
+    if isinstance(img, Image.Image):
+        width, height = img.size
+    else:
+        height = img.shape[0]
+        width = img.shape[1]
+    pad = False
+
+    if (pad_width is not None) and (pad_height is not None):
+        pad = (width != pad_width) or (height != pad_height)
+    elif pad_width is not None:
+        pad = width != pad_width
+        pad_height = height
+    elif pad_height is not None:
+        pad = height != pad_height
+        pad_width = width
+
+    if pad:
+        if isinstance(img, Image.Image):
+            result = Image.new(img.mode, (pad_width, pad_height))
+            result.paste(img)
+        else:
+            result = np.zeros((pad_height, pad_width), dtype=img.dtype)
+            result[0:height, 0:width] = img
+
+    return result
+
+
+def crop_image(img: Union[Image.Image, np.ndarray], crop_width: Optional[int] = None, crop_height: Optional[int] = None) -> Image:
+    """
+    Crops the image/layer if necessary (removes on the right/bottom).
+
+    :param img: the image to pad
+    :type img: Image.Image/np.ndarray
+    :param crop_width: the width to crop to, return as is if None
+    :type crop_width: int
+    :param crop_height: the height to crop to, return as is if None
+    :type crop_height: int
+    :return: the (potentially) cropped image
+    :rtype: Image.Image/np.ndarray
+    """
+    result = img
+    if isinstance(img, Image.Image):
+        width, height = img.size
+    else:
+        height = img.shape[0]
+        width = img.shape[1]
+    crop = False
+
+    if (crop_width is not None) and (crop_height is not None):
+        crop = (width != crop_width) or (height != crop_height)
+    elif crop_width is not None:
+        crop = width != crop_width
+        crop_height = height
+    elif crop_height is not None:
+        crop = height != crop_height
+        crop_width = width
+
+    if crop:
+        if isinstance(img, Image.Image):
+            result = img.crop((0, 0, crop_width, crop_height))
+        else:
+            result = img[0:crop_height, 0:crop_width]
+
+    return result
