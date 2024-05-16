@@ -1,5 +1,8 @@
+from typing import List
+
 from shapely.geometry import Polygon
 from shapely.ops import unary_union
+from wai.common.adams.imaging.locateobjects import LocatedObjects, LocatedObject
 
 UNION = "union"
 INTERSECT = "intersect"
@@ -9,7 +12,7 @@ COMBINATIONS = [
 ]
 
 
-def to_polygon(located_object):
+def to_polygon(located_object: LocatedObject) -> Polygon:
     """
     Turns the located object into a shapely polygon.
 
@@ -24,7 +27,7 @@ def to_polygon(located_object):
     return Polygon(coords)
 
 
-def to_polygons(located_objects):
+def to_polygons(located_objects: LocatedObjects) -> List[Polygon]:
     """
     Turns the located objects into shapely polygons.
 
@@ -39,7 +42,7 @@ def to_polygons(located_objects):
     return result
 
 
-def intersect_over_union(poly1, poly2):
+def intersect_over_union(poly1: Polygon, poly2: Polygon) -> float:
     """
     Calculates the IoU (intersect over union) for the two polygons.
 
