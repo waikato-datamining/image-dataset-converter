@@ -1,12 +1,16 @@
 import copy
-
-from PIL import Image
+import logging
 from typing import Tuple, Dict, Union, Optional
 
-from ._data import ImageData
-from wai.common.adams.imaging.locateobjects import LocatedObjects, LocatedObject, NormalizedLocatedObjects, NormalizedLocatedObject
+from PIL import Image
+from shapely import Polygon, GeometryCollection, MultiPolygon
+from wai.common.adams.imaging.locateobjects import LocatedObject, LocatedObjects
+from wai.common.adams.imaging.locateobjects import NormalizedLocatedObjects, NormalizedLocatedObject
 from wai.common.adams.imaging.locateobjects import absolute_to_normalized, normalized_to_absolute
+from wai.common.geometry import Point as WaiPoint, Polygon as WaiPolygon
 
+from ._data import ImageData
+from ._geometry import locatedobject_polygon_to_shapely, locatedobject_bbox_to_shapely
 
 DEFAULT_LABEL = "object"
 
@@ -147,3 +151,69 @@ class ObjectDetectionData(ImageData):
         result["normalized"] = self.is_normalized()
 
         return result
+
+
+def fit_located_object(index: int, region: LocatedObject, annotation: LocatedObject, logger: Optional[logging.Logger]) -> LocatedObject:
+    """
+    Fits the annotation into the specified region, adjusts size if necessary.
+
+    :param index: the index of the current region, gets added to meta-data if >=0
+    :type index: int
+    :param region: the region object to fit the annotation in
+    :type region: LocatedObject
+    :param annotation: the annotation to fit
+    :type annotation: LocatedObject
+    :param logger: the logger to use, can be None
+    :type logger: logging.Logger
+    :return: the adjusted annotation
+    :rtype: LocatedObject
+    """
+    sregion = locatedobject_bbox_to_shapely(region)
+    sbbox = locatedobject_bbox_to_shapely(annotation)
+    sintersect = sbbox.intersection(sregion)
+    minx, miny, maxx, maxy = [int(x) for x in sintersect.bounds]
+    result = LocatedObject(x=minx-region.x, y=miny-region.y, width=maxx-minx+1, height=maxy-miny+1, **annotation.metadata)
+    if index > -1:
+        result.metadata["region_index"] = index
+        result.metadata["region_xywh"] = "%d,%d,%d,%d" % (region.x, region.y, region.width, region.height)
+
+    if annotation.has_polygon():
+        spolygon = locatedobject_polygon_to_shapely(annotation)
+    else:
+        spolygon = locatedobject_bbox_to_shapely(annotation)
+
+    try:
+        sintersect = spolygon.intersection(sregion)
+    except:
+        msg = "Failed to compute intersection!"
+        if logger is None:
+            print(msg)
+        else:
+            logger.warning(msg)
+        sintersect = None
+
+    if isinstance(sintersect, GeometryCollection):
+        for x in sintersect.geoms:
+            if isinstance(x, Polygon):
+                sintersect = x
+                break
+    elif isinstance(sintersect, MultiPolygon):
+        for x in sintersect.geoms:
+            if isinstance(x, Polygon):
+                sintersect = x
+                break
+
+    if isinstance(sintersect, Polygon):
+        x_list, y_list = sintersect.exterior.coords.xy
+        points = []
+        for i in range(len(x_list)):
+            points.append(WaiPoint(x=x_list[i]-region.x, y=y_list[i]-region.y))
+        result.set_polygon(WaiPolygon(*points))
+    else:
+        msg = "Unhandled geometry type returned from intersection, skipping: %s" % str(type(sintersect))
+        if logger is None:
+            print(msg)
+        else:
+            logger.warning(msg)
+
+    return result
