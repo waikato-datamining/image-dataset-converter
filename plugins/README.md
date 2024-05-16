@@ -36,6 +36,7 @@
 * [od-to-is](od-to-is.md)
 * [passthrough](passthrough.md)
 * [polygon-discarder](polygon-discarder.md)
+* [polygon-simplifier](polygon-simplifier.md)
 * [pyfunc-filter](pyfunc-filter.md)
 * [randomize-records](randomize-records.md)
 * [record-window](record-window.md)
