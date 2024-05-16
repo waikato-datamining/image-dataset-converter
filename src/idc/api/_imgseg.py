@@ -5,7 +5,6 @@ from typing import Tuple, Dict, List
 
 import numpy as np
 from PIL import Image
-from wai.common.adams.imaging.locateobjects import LocatedObject
 
 from ._data import ImageData
 
@@ -275,30 +274,3 @@ def from_grayscale(img: Image.Image, labels: List[str], label_mapping: Dict[int,
         sub_arr = np.where(arr == index, 255, 0).astype(np.uint8)
         layers[label_mapping[label_index]] = sub_arr
     return ImageSegmentationAnnotations(labels, layers)
-
-
-def fit_layers(region: LocatedObject, annotations: ImageSegmentationAnnotations, suppress_empty: bool) -> ImageSegmentationAnnotations:
-    """
-    Crops the layers to the region.
-
-    :param region: the region to crop the layers to
-    :type region: LocatedObject
-    :param annotations: the annotations to crop
-    :type annotations: ImageSegmentationAnnotations
-    :param suppress_empty: whether to suppress empty annotations
-    :type suppress_empty: bool
-    :return: the updated annotations
-    :rtype: ImageSegmentationAnnotations
-    """
-    layers = dict()
-    for label in annotations.layers:
-        layer = annotations.layers[label][region.y:region.y+region.height, region.x:region.x+region.width]
-        add = True
-        if suppress_empty:
-            unique = np.unique(layer)
-            # only background? -> skip
-            if (len(unique) == 1) and (unique[0] == 0):
-                add = False
-        if add:
-            layers[label] = layer
-    return ImageSegmentationAnnotations(annotations.labels[:], layers)

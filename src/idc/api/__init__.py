@@ -4,13 +4,15 @@ from ._fonts import DEFAULT_FONT_FAMILY, load_font, text_size
 from ._data import ImageData, make_list, flatten_list, FORMATS, FORMAT_JPEG, FORMAT_PNG, FORMAT_BMP, FORMAT_EXTENSIONS
 from ._generator import Generator, SingleVariableGenerator
 from ._imgcls import ImageClassificationData
-from ._imgseg import ImageSegmentationData, ImageSegmentationAnnotations, from_indexedpng, from_bluechannel, from_grayscale, combine_layers, split_layers, fit_layers
-from ._objdet import ObjectDetectionData, get_object_label, set_object_label, fit_located_object, DEFAULT_LABEL, LABEL_KEY
+from ._imgseg import ImageSegmentationData, ImageSegmentationAnnotations, from_indexedpng, from_bluechannel, from_grayscale, combine_layers, split_layers
+from ._objdet import ObjectDetectionData, get_object_label, set_object_label, DEFAULT_LABEL, LABEL_KEY
 from ._utils import locate_file, locate_image, load_image_from_bytes, load_image_from_file, load_function
 from ._utils import load_labels, save_labels, save_labels_csv
 from ._utils import crop_image, pad_image
 from ._data_types import DATATYPE_IMGCLS, DATATYPE_OBJDET, DATATYPE_IMGSEG, DATATYPES, data_type_to_class
-from ._geometry import locatedobjects_to_shapely, intersect_over_union, shapely_to_locatedobject, locatedobject_polygon_to_shapely, locatedobject_bbox_to_shapely, merge_polygons, COMBINATIONS, INTERSECT, UNION
+from ._geometry import locatedobjects_to_shapely, shapely_to_locatedobject, locatedobject_polygon_to_shapely, locatedobject_bbox_to_shapely
+from ._geometry import intersect_over_union, COMBINATIONS, INTERSECT, UNION
+from ._geometry import merge_polygons, fit_located_object, fit_layers
 from ._reader import Reader, parse_reader
 from ._filter import parse_filter
 from ._writer import parse_writer
