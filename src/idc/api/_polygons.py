@@ -1,8 +1,12 @@
 from typing import List
 
-from shapely.geometry import Polygon
+from shapely import Polygon, MultiPolygon
+from shapely.geometry.base import BaseGeometry
 from shapely.ops import unary_union
 from wai.common.adams.imaging.locateobjects import LocatedObjects, LocatedObject
+from wai.common.geometry import Point as WaiPoint, Polygon as WaiPolygon
+
+from ._objdet import LABEL_KEY
 
 UNION = "union"
 INTERSECT = "intersect"
@@ -12,19 +16,73 @@ COMBINATIONS = [
 ]
 
 
-def to_polygon(located_object: LocatedObject) -> Polygon:
+def bbox_to_shapely(lobj: LocatedObject) -> Polygon:
     """
-    Turns the located object into a shapely polygon.
+    Converts the located object rectangle into a shapely Polygon.
 
-    :param located_object: the object to convert
-    :type located_object: LocatedObject
-    :return: the generated polygon object
-    :rtype: Polygon
+    :param lobj: the bbox to convert
+    :return: the Polygon
     """
-    coords = []
-    for point in located_object.get_polygon().points:
-        coords.append((point.x, point.y))
+    coords = [
+        (lobj.x, lobj.y),
+        (lobj.x + lobj.width - 1, lobj.y),
+        (lobj.x + lobj.width - 1, lobj.y + lobj.height - 1),
+        (lobj.x, lobj.y + lobj.height - 1),
+        (lobj.x, lobj.y),
+    ]
     return Polygon(coords)
+
+
+def polygon_to_shapely(lobj: LocatedObject) -> Polygon:
+    """
+    Converts the located object polygon into a shapely Polygon.
+
+    :param lobj: the polygon to convert
+    :return: the Polygon
+    """
+    if not lobj.has_polygon():
+        return bbox_to_shapely(lobj)
+    x_list = lobj.get_polygon_x()
+    y_list = lobj.get_polygon_y()
+    coords = []
+    for x, y in zip(x_list, y_list):
+        coords.append((x, y))
+    coords.append((x_list[0], y_list[0]))
+    return Polygon(coords)
+
+
+def shapely_to_locatedobject(geometry: BaseGeometry, label: str = None) -> LocatedObject:
+    """
+    Turns the shapely geometry back into a located object.
+    Assumes absolute coordinates.
+
+    :param geometry: the geometry to convert
+    :type geometry: BaseGeometry
+    :param label: the label to set (when not None)
+    :type label: str
+    :return: the generated object
+    :rtype: LocatedObject
+    """
+    # use convex hull in case of MultiPolygon
+    if isinstance(geometry, MultiPolygon):
+        geometry = geometry.convex_hull
+
+    minx, miny, maxx, maxy = geometry.bounds
+    result = LocatedObject(minx, miny, maxx-minx+1, maxy-miny+1)
+    if label is not None:
+        result.metadata[LABEL_KEY] = label
+
+    if isinstance(geometry, Polygon):
+        x_list, y_list = geometry.exterior.coords.xy
+        points = []
+        for i in range(len(x_list)):
+            points.append(WaiPoint(x=x_list[i], y=y_list[i]))
+        result.set_polygon(WaiPolygon(*points))
+
+    return result
+
+
+to_polygon = polygon_to_shapely
 
 
 def to_polygons(located_objects: LocatedObjects) -> List[Polygon]:
@@ -38,7 +96,7 @@ def to_polygons(located_objects: LocatedObjects) -> List[Polygon]:
     """
     result = []
     for obj in located_objects:
-        result.append(to_polygon(obj))
+        result.append(polygon_to_shapely(obj))
     return result
 
 
