@@ -117,7 +117,7 @@ optional arguments:
 
 ### Locating files
 
-Readers tend to support input via file lists. The `img-find` tool can generate
+Readers tend to support input via file lists. The `idc-find` tool can generate
 these.
 
 ```
@@ -249,7 +249,7 @@ optional arguments:
 
 You can find help screens for the plugins here:
 
-* [Pipeline plugins](plugins/README.md) (reades/filters/writers)
+* [Pipeline plugins](plugins/README.md) (readers/filters/writers)
 * [Generator plugins](generators/README.md) (used by `idc-exec`)
 
 
