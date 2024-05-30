@@ -261,7 +261,7 @@ website.
 
 ## Class listers
 
-The *llm-dataset-converter* uses the *class lister registry* provided 
+The *image-dataset-converter* uses the *class lister registry* provided 
 by the [seppl](https://github.com/waikato-datamining/seppl) library.
 
 Each module defines a function, typically called `list_classes` that returns
