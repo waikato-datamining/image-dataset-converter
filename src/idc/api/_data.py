@@ -8,6 +8,9 @@ from typing import Dict, Optional, Tuple, List
 
 import imagesize
 from PIL import Image
+from image_complete.bmp import is_bmp
+from image_complete.jpg import is_jpg
+from image_complete.png import is_png
 from seppl import MetaDataHandler, LoggingHandler
 from ._utils import load_image_from_bytes
 
@@ -137,6 +140,18 @@ class ImageData(MetaDataHandler, LoggingHandler):
         :return: the image format, can be None
         :rtype: str
         """
+        if self._image_format is None:
+            if self.source is not None:
+                to_check = self.source
+            else:
+                to_check = self.data
+            if to_check is not None:
+                if is_jpg(to_check):
+                    self._image_format = FORMAT_JPEG
+                elif is_png(to_check):
+                    self._image_format = FORMAT_PNG
+                elif is_bmp(to_check):
+                    self._image_format = FORMAT_BMP
         if self._image_format is None:
             if self.image is None:
                 return None

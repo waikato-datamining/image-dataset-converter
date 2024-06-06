@@ -41,6 +41,7 @@ setup(
         "defusedxml",
         "numpy",
         "shapely",
+        "python-image-complete",
     ],
     version="0.0.1",
     author='Peter Reutemann',

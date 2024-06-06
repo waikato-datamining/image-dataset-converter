@@ -9,6 +9,9 @@ Changelog
   the provided pipeline template which then gets executed
 - added `polygon-simplifier` filter for reducing number of points in polygons
 - moved several geometry/image related functions from imgaug library into core library to avoid duplication
+- added python-image-complete as dependency
+- the `ImageData` class now uses the python-image-complete library to determine the file format rather than
+  loading the image into memory in order to determine that
 
 
 0.0.1 (2024-05-06)
