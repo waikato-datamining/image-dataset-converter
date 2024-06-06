@@ -107,6 +107,7 @@ class ConvertImageFormat(Filter):
 
         for item in make_list(data):
             if item.image_format != self.image_format:
+                self.logger().info("Converting %s to %s: %s" % (item.image_format, self.image_format, item.image_name))
                 # convert format
                 img = item.image
                 output_io = io.BytesIO()
