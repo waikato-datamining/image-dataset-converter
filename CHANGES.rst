@@ -12,6 +12,7 @@ Changelog
 - added python-image-complete as dependency
 - the `ImageData` class now uses the python-image-complete library to determine the file format rather than
   loading the image into memory in order to determine that
+- the `convert-image-format` filter now correctly creates a new container with the converted image data
 
 
 0.0.1 (2024-05-06)

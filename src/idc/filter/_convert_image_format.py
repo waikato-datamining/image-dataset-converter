@@ -114,11 +114,10 @@ class ConvertImageFormat(Filter):
                 if img.mode in ['RGBA', 'ARGB']:
                     img = img.convert('RGB')
                 img.save(output_io, format=self.image_format)
-                data = output_io.getvalue()
-                # update container
-                item = item.duplicate(
-                    data=data,
-                    name=os.path.splitext(item.image_name)[0] + FORMAT_EXTENSIONS[self.image_format])
+                # new container
+                item = type(item)(image_name=os.path.splitext(item.image_name)[0] + FORMAT_EXTENSIONS[self.image_format],
+                                  data=output_io.getvalue(),
+                                  metadata=item.get_metadata(), annotation=item.annotation)
 
             result.append(item)
 
