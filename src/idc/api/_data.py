@@ -300,14 +300,18 @@ class ImageData(MetaDataHandler, LoggingHandler):
         """
         self._metadata = metadata
 
-    def duplicate(self, source: str = None, name: str = None, data: bytes = None,
-                  image: Image.Image = None, image_format: str = None, size: Tuple[int, int] = None,
+    def duplicate(self, source: str = None, force_no_source: bool = None,
+                  name: str = None, data: bytes = None,
+                  image: Image.Image = None, image_format: str = None,
+                  size: Tuple[int, int] = None,
                   metadata: Dict = None, annotation=None):
         """
         Duplicates the container overwriting existing data with any provided data.
 
         :param source: the source to use
         :type source: str
+        :param force_no_source: if True, then source is set to None
+        :type force_no_source: bool
         :param name: the name to use
         :type name: str
         :param data: the data to use
@@ -323,8 +327,11 @@ class ImageData(MetaDataHandler, LoggingHandler):
         :param annotation: the annotations
         :return: the duplicated container
         """
-        if source is None:
-            source = self._source
+        if (force_no_source is not None) and force_no_source:
+            source = None
+        else:
+            if source is None:
+                source = self._source
         if name is None:
             name = self._image_name
         if (data is None) and (self._data is not None):
