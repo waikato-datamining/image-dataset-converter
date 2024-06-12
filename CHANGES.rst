@@ -14,6 +14,7 @@ Changelog
   loading the image into memory in order to determine that
 - the `convert-image-format` filter now correctly creates a new container with the converted image data
 - the `to-coco-od` writer only allows sorting of categories when using predefined categories now
+- the `from-opex-od` reader now handles absent meta-data correctly
 
 
 0.0.1 (2024-05-06)

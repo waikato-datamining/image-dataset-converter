@@ -111,7 +111,7 @@ class OPEXObjectDetectionReader(Reader):
                 meta["score"] = obj.score
             if obj.label is not None:
                 meta["type"] = obj.label
-            if obj.meta is not None:
+            if isinstance(obj.meta, dict):
                 for k, v in obj.meta.items():
                     meta[k] = v
             lobj = LocatedObject(obj.bbox.left, obj.bbox.top, obj.bbox.right - obj.bbox.left + 1, obj.bbox.bottom - obj.bbox.top + 1, **meta)
