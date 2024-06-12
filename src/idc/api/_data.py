@@ -254,6 +254,7 @@ class ImageData(MetaDataHandler, LoggingHandler):
         if make_dirs:
             parent_dir = os.path.dirname(path)
             if not os.path.exists(parent_dir):
+                self.logger().info("Creating dir: %s" % parent_dir)
                 os.makedirs(parent_dir)
         if (self._data is None) and (self._source is not None) and (os.path.exists(self._source)):
             shutil.copy(self._source, path)
