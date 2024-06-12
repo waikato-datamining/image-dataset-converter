@@ -133,8 +133,15 @@ class COCOObjectDetectionWriter(SplittableBatchWriter):
 
         self._category_lookup = dict()
         if self.categories is not None:
-            for i, category in enumerate(self.categories, start=1):
+            cats = self.categories
+            if self.sort_categories:
+                cats = sorted(cats)
+            for i, category in enumerate(cats, start=1):
                 self._category_lookup[category] = i
+        else:
+            if self.sort_categories:
+                self.logger().warning("Sorting of categories is only supported when using predefined categories!")
+                self.sort_categories = False
 
         self._splits = dict()
         self._image_lookup = dict()
