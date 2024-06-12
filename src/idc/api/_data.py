@@ -248,6 +248,9 @@ class ImageData(MetaDataHandler, LoggingHandler):
         :return: whether the file was saved
         :rtype: bool
         """
+        if os.path.samefile(path, self._source):
+            self.logger().warning("Input/output image are the same, skipping!")
+            return False
         if make_dirs:
             parent_dir = os.path.dirname(path)
             if not os.path.exists(parent_dir):
