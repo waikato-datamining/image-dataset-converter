@@ -15,6 +15,7 @@ Changelog
 - the `convert-image-format` filter now correctly creates a new container with the converted image data
 - the `to-coco-od` writer only allows sorting of categories when using predefined categories now
 - the `from-opex-od` reader now handles absent meta-data correctly
+- added the `AnnotationsOnlyWriter` mixin for writers that can skip the base image and just output the annotations
 
 
 0.0.1 (2024-05-06)

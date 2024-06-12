@@ -10,6 +10,7 @@ usage: to-layer-segments-is [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                             [-r SPLIT_RATIOS [SPLIT_RATIOS ...]]
                             [-n SPLIT_NAMES [SPLIT_NAMES ...]] -o OUTPUT
                             [--label_separator LABEL_SEPARATOR]
+                            [--annotations_only]
 
 Saves the annotations as binary mask PNG files, one image per layer/label.
 
@@ -33,4 +34,6 @@ optional arguments:
   --label_separator LABEL_SEPARATOR
                         The separator between name and label used by the mask
                         images. (default: -)
+  --annotations_only    Outputs only the annotations and skips the base image.
+                        (default: False)
 ```

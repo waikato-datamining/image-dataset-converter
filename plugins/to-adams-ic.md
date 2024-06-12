@@ -8,6 +8,7 @@ Saves the classification label in an ADAMS .report file alongside the image.
 usage: to-adams-ic [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                    [-N LOGGER_NAME] [-r SPLIT_RATIOS [SPLIT_RATIOS ...]]
                    [-n SPLIT_NAMES [SPLIT_NAMES ...]] -o OUTPUT -c FIELD
+                   [--annotations_only]
 
 Saves the classification label in an ADAMS .report file alongside the image.
 
@@ -31,4 +32,6 @@ optional arguments:
   -c FIELD, --class_field FIELD
                         The report field containing the image classification
                         label (default: None)
+  --annotations_only    Outputs only the annotations and skips the base image.
+                        (default: False)
 ```

@@ -8,6 +8,7 @@ Saves the bounding box/polygon definitions in an ADAMS .report file alongside th
 usage: to-adams-od [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                    [-N LOGGER_NAME] [-r SPLIT_RATIOS [SPLIT_RATIOS ...]]
                    [-n SPLIT_NAMES [SPLIT_NAMES ...]] -o OUTPUT [-p PREFIX]
+                   [--annotations_only]
 
 Saves the bounding box/polygon definitions in an ADAMS .report file alongside
 the image.
@@ -33,4 +34,6 @@ optional arguments:
                         The field prefix to use in the .report files for
                         identifying bbox/polygon object definitions (default:
                         Object.)
+  --annotations_only    Outputs only the annotations and skips the base image.
+                        (default: False)
 ```

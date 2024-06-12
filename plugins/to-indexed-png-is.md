@@ -9,6 +9,7 @@ usage: to-indexed-png-is [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                          [-N LOGGER_NAME] [-r SPLIT_RATIOS [SPLIT_RATIOS ...]]
                          [-n SPLIT_NAMES [SPLIT_NAMES ...]] -o OUTPUT
                          [--image_path_rel PATH] [-p PALETTE]
+                         [--annotations_only]
 
 Saves the annotations as indexed PNG files. The associated JPG images can be
 placed in folder relative to the annotation.
@@ -38,4 +39,6 @@ optional arguments:
                         e|x11|light|dark|colorblind8|colorblind12|colorblind15
                         |colorblind24) or comma-separated list of R,G,B
                         values. (default: auto)
+  --annotations_only    Outputs only the annotations and skips the base image.
+                        (default: False)
 ```

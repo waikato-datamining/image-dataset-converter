@@ -4,14 +4,15 @@ from collections import OrderedDict
 from typing import List
 
 from wai.logging import LOGGING_WARNING
-from idc.api import ObjectDetectionData, SplittableStreamWriter, save_labels, save_labels_csv, make_list
+from idc.api import ObjectDetectionData, SplittableStreamWriter, save_labels, save_labels_csv, make_list, AnnotationsOnlyWriter, add_annotations_only_param
 
 
-class YoloObjectDetectionWriter(SplittableStreamWriter):
+class YoloObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter):
 
     def __init__(self, output_dir: str = None,
                  image_subdir: str = None, labels_subdir: str = None,
                  use_polygon_format: bool = False, labels: str = None, labels_csv: str = None,
+                 annotations_only: bool = None,
                  split_names: List[str] = None, split_ratios: List[int] = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
@@ -29,6 +30,8 @@ class YoloObjectDetectionWriter(SplittableStreamWriter):
         :type labels: str
         :param labels_csv: the CSV file to write the label mapping to (index and label)
         :type labels_csv: str
+        :param annotations_only: whether to output only the annotations and not the images
+        :type annotations_only: bool
         :param split_names: the names of the splits, no splitting if None
         :type split_names: list
         :param split_ratios: the integer ratios of the splits (must sum up to 100)
@@ -45,6 +48,7 @@ class YoloObjectDetectionWriter(SplittableStreamWriter):
         self.use_polygon_format = use_polygon_format
         self.labels = labels
         self.labels_csv = labels_csv
+        self.annotations_only = annotations_only
         self._label_mapping = None  # label -> index
 
     def name(self) -> str:
@@ -79,6 +83,7 @@ class YoloObjectDetectionWriter(SplittableStreamWriter):
         parser.add_argument("-p", "--use_polygon_format", action="store_true", help="Whether to read the annotations in polygon format rather than bbox format", required=False)
         parser.add_argument("--labels", metavar="FILE", type=str, default=None, help="The text file with the comma-separated list of labels", required=False)
         parser.add_argument("--labels_csv", metavar="FILE", type=str, default=None, help="The CSV file to write the label mapping to (index and label)", required=False)
+        add_annotations_only_param(parser)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
@@ -95,6 +100,7 @@ class YoloObjectDetectionWriter(SplittableStreamWriter):
         self.use_polygon_format = ns.use_polygon_format
         self.labels = ns.labels
         self.labels_csv = ns.labels_csv
+        self.annotations_only = ns.annotations_only
 
     def accepts(self) -> List:
         """
@@ -119,6 +125,8 @@ class YoloObjectDetectionWriter(SplittableStreamWriter):
             self.image_subdir = "images"
         if self.labels_subdir is None:
             self.labels_subdir = "labels"
+        if self.annotations_only is None:
+            self.annotations_only = False
         self._label_mapping = OrderedDict()
 
     def write_stream(self, data):
@@ -146,8 +154,9 @@ class YoloObjectDetectionWriter(SplittableStreamWriter):
                 path = os.path.join(path, self.image_subdir)
             os.makedirs(path, exist_ok=True)
             path = os.path.join(path, item.image_name)
-            self.logger().info("Writing image to: %s" % path)
-            item.save_image(path)
+            if not self.annotations_only:
+                self.logger().info("Writing image to: %s" % path)
+                item.save_image(path)
 
             # annotations
             if normalized is not None:

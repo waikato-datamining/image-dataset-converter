@@ -6,13 +6,13 @@ import numpy as np
 from PIL import Image
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ImageSegmentationData, SplittableStreamWriter, make_list, default_palette, fill_palette, PALETTE_AUTO, PALETTES
+from idc.api import ImageSegmentationData, SplittableStreamWriter, make_list, default_palette, fill_palette, PALETTE_AUTO, PALETTES, AnnotationsOnlyWriter, add_annotations_only_param
 
 
-class IndexedPngImageSegmentationWriter(SplittableStreamWriter):
+class IndexedPngImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnlyWriter):
 
     def __init__(self, output_dir: str = None,
-                 image_path_rel: str = None, palette: str = None,
+                 image_path_rel: str = None, palette: str = None, annotations_only: bool = None,
                  split_names: List[str] = None, split_ratios: List[int] = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
@@ -24,6 +24,8 @@ class IndexedPngImageSegmentationWriter(SplittableStreamWriter):
         :type image_path_rel: str
         :param palette: the palette to use, either a supported palette name (auto|x11|light|dark) or comma-separated list of R,G,B values
         :type palette: str
+        :param annotations_only: whether to output only the annotations and not the images
+        :type annotations_only: bool
         :param split_names: the names of the splits, no splitting if None
         :type split_names: list
         :param split_ratios: the integer ratios of the splits (must sum up to 100)
@@ -37,6 +39,7 @@ class IndexedPngImageSegmentationWriter(SplittableStreamWriter):
         self.output_dir = output_dir
         self.image_path_rel = image_path_rel
         self.palette = palette
+        self.annotations_only = annotations_only
         self._palette_list = None
 
     def name(self) -> str:
@@ -68,6 +71,7 @@ class IndexedPngImageSegmentationWriter(SplittableStreamWriter):
         parser.add_argument("-o", "--output", type=str, help="The directory to store the images files in. Any defined splits get added beneath there.", required=True)
         parser.add_argument("--image_path_rel", metavar="PATH", type=str, default=None, help="The relative path from the annotations to the images directory", required=False)
         parser.add_argument("-p", "--palette", metavar="PALETTE", type=str, default=PALETTE_AUTO, help="The palette to use; either palette name (%s) or comma-separated list of R,G,B values." % "|".join(PALETTES), required=False)
+        add_annotations_only_param(parser)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
@@ -81,6 +85,7 @@ class IndexedPngImageSegmentationWriter(SplittableStreamWriter):
         self.output_dir = ns.output
         self.image_path_rel = ns.image_path_rel
         self.palette = ns.palette
+        self.annotations_only = ns.annotations_only
 
     def accepts(self) -> List:
         """
@@ -111,6 +116,8 @@ class IndexedPngImageSegmentationWriter(SplittableStreamWriter):
                 raise Exception("Unknown palette: %s" % self.palette)
         else:
             self._palette_list = default_palette(palette=self.palette)
+        if self.annotations_only is None:
+            self.annotations_only = False
 
     def write_stream(self, data):
         """
@@ -133,8 +140,9 @@ class IndexedPngImageSegmentationWriter(SplittableStreamWriter):
                 path = os.path.join(path, self.image_path_rel)
             os.makedirs(path, exist_ok=True)
             path = os.path.join(path, item.image_name)
-            self.logger().info("Writing image to: %s" % path)
-            item.save_image(path)
+            if not self.annotations_only:
+                self.logger().info("Writing image to: %s" % path)
+                item.save_image(path)
 
             # annotations
             if item.has_annotation():

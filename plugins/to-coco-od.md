@@ -14,6 +14,7 @@ usage: to-coco-od [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                   [--default_supercategory DEFAULT_SUPERCATEGORY]
                   [--sort_categories]
                   [--category_output_file CATEGORY_OUTPUT_FILE]
+                  [--annotations_only]
 
 Saves the bounding box/polygon definitions in MS COCO .json format.
 
@@ -50,4 +51,6 @@ optional arguments:
   --category_output_file CATEGORY_OUTPUT_FILE
                         The name of the file (no path) to store the categories
                         in as comma-separated list. (default: None)
+  --annotations_only    Outputs only the annotations and skips the base image.
+                        (default: False)
 ```

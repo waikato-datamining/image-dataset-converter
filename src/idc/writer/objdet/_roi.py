@@ -6,12 +6,13 @@ from typing import List
 from wai.common.adams.imaging.locateobjects import absolute_to_normalized
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ObjectDetectionData, SplittableStreamWriter, make_list
+from idc.api import ObjectDetectionData, SplittableStreamWriter, make_list, AnnotationsOnlyWriter, add_annotations_only_param
 
 
-class ROIObjectDetectionWriter(SplittableStreamWriter):
+class ROIObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter):
 
     def __init__(self, output_dir: str = None, suffix: str = "-rois.csv", size_mode: bool = False,
+                 annotations_only: bool = None,
                  split_names: List[str] = None, split_ratios: List[int] = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
@@ -23,6 +24,8 @@ class ROIObjectDetectionWriter(SplittableStreamWriter):
         :type suffix: str
         :param size_mode: whether to output w/h rather than x1/y1
         :type size_mode: bool
+        :param annotations_only: whether to output only the annotations and not the images
+        :type annotations_only: bool
         :param split_names: the names of the splits, no splitting if None
         :type split_names: list
         :param split_ratios: the integer ratios of the splits (must sum up to 100)
@@ -36,6 +39,7 @@ class ROIObjectDetectionWriter(SplittableStreamWriter):
         self.output_dir = output_dir
         self.suffix = suffix
         self.size_mode = size_mode
+        self.annotations_only = annotations_only
         self._label_mapping = None
 
     def name(self) -> str:
@@ -67,6 +71,7 @@ class ROIObjectDetectionWriter(SplittableStreamWriter):
         parser.add_argument("-o", "--output", type=str, help="The directory to store the images/.csv files in. Any defined splits get added beneath there.", required=True)
         parser.add_argument("-s", "--suffix", metavar="SUFFIX", type=str, default="-rois.csv", help="The suffix used by the ROI CSV files.", required=False)
         parser.add_argument("--size_mode", action="store_true", help="Whether to output w/h rather than x1/y1.", required=False)
+        add_annotations_only_param(parser)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
@@ -80,6 +85,7 @@ class ROIObjectDetectionWriter(SplittableStreamWriter):
         self.output_dir = ns.output
         self.suffix = ns.suffix
         self.size_mode = ns.size_mode
+        self.annotations_only = ns.annotations_only
 
     def accepts(self) -> List:
         """
@@ -98,6 +104,8 @@ class ROIObjectDetectionWriter(SplittableStreamWriter):
         if not os.path.exists(self.output_dir):
             self.logger().info("Creating output dir: %s" % self.output_dir)
             os.makedirs(self.output_dir)
+        if self.annotations_only is None:
+            self.annotations_only = False
         self._label_mapping = dict()
 
     def write_stream(self, data):
@@ -116,8 +124,9 @@ class ROIObjectDetectionWriter(SplittableStreamWriter):
                 os.makedirs(sub_dir)
 
             path = os.path.join(sub_dir, item.image_name)
-            self.logger().info("Writing image to: %s" % path)
-            item.save_image(path)
+            if not self.annotations_only:
+                self.logger().info("Writing image to: %s" % path)
+                item.save_image(path)
 
             if item.has_annotation():
                 path = os.path.splitext(path)[0] + self.suffix

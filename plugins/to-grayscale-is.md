@@ -8,7 +8,7 @@ Saves the annotations as grayscale PNG files. The associated JPG images can be p
 usage: to-grayscale-is [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                        [-N LOGGER_NAME] [-r SPLIT_RATIOS [SPLIT_RATIOS ...]]
                        [-n SPLIT_NAMES [SPLIT_NAMES ...]] -o OUTPUT
-                       [--image_path_rel PATH]
+                       [--image_path_rel PATH] [--annotations_only]
 
 Saves the annotations as grayscale PNG files. The associated JPG images can be
 placed in folder relative to the annotation.
@@ -33,4 +33,6 @@ optional arguments:
   --image_path_rel PATH
                         The relative path from the annotations to the images
                         directory (default: None)
+  --annotations_only    Outputs only the annotations and skips the base image.
+                        (default: False)
 ```

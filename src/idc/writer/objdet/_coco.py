@@ -6,16 +6,16 @@ from typing import List, Iterable, Dict
 
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ObjectDetectionData, SplittableBatchWriter, get_object_label
+from idc.api import ObjectDetectionData, SplittableBatchWriter, get_object_label, AnnotationsOnlyWriter, add_annotations_only_param
 
 
-class COCOObjectDetectionWriter(SplittableBatchWriter):
+class COCOObjectDetectionWriter(SplittableBatchWriter, AnnotationsOnlyWriter):
 
     def __init__(self, output_dir: str = None,
                  license_name: str = "default", license_url: str = "",
                  categories: List[str] = None, error_on_new_category: bool = False,
                  default_supercategory: str = "Object", sort_categories: bool = False,
-                 category_output_file: str = None,
+                 category_output_file: str = None, annotations_only: bool = None,
                  split_names: List[str] = None, split_ratios: List[int] = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
@@ -37,6 +37,8 @@ class COCOObjectDetectionWriter(SplittableBatchWriter):
         :type sort_categories: bool
         :param category_output_file: the file to store the categories in (comma-separated list)
         :type category_output_file: str
+        :param annotations_only: whether to output only the annotations and not the images
+        :type annotations_only: bool
         :param split_names: the names of the splits, no splitting if None
         :type split_names: list
         :param split_ratios: the integer ratios of the splits (must sum up to 100)
@@ -55,6 +57,7 @@ class COCOObjectDetectionWriter(SplittableBatchWriter):
         self.default_supercategory = default_supercategory
         self.sort_categories = sort_categories
         self.category_output_file = category_output_file
+        self.annotations_only = annotations_only
         self._category_lookup = None
         self._image_lookup = None
         self._splits = None
@@ -93,6 +96,7 @@ class COCOObjectDetectionWriter(SplittableBatchWriter):
         parser.add_argument("--default_supercategory", type=str, help="The default super category to use, e.g., 'Object'.", required=False, default="Object")
         parser.add_argument("--sort_categories", action="store_true", help="Whether to sort the categories.", required=False)
         parser.add_argument("--category_output_file", type=str, help="The name of the file (no path) to store the categories in as comma-separated list.", required=False, default=None)
+        add_annotations_only_param(parser)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
@@ -111,6 +115,7 @@ class COCOObjectDetectionWriter(SplittableBatchWriter):
         self.default_supercategory = ns.default_supercategory
         self.sort_categories = ns.sort_categories
         self.category_output_file = ns.category_output_file
+        self.annotations_only = ns.annotations_only
 
     def accepts(self) -> List:
         """
@@ -130,6 +135,9 @@ class COCOObjectDetectionWriter(SplittableBatchWriter):
         if not os.path.exists(self.output_dir):
             self.logger().info("Creating output dir: %s" % self.output_dir)
             os.makedirs(self.output_dir)
+
+        if self.annotations_only is None:
+            self.annotations_only = False
 
         self._category_lookup = dict()
         if self.categories is not None:
@@ -279,8 +287,9 @@ class COCOObjectDetectionWriter(SplittableBatchWriter):
 
             # write image
             path = os.path.join(sub_dir, item.image_name)
-            self.logger().info("Writing image to: %s" % path)
-            item.save_image(path)
+            if not self.annotations_only:
+                self.logger().info("Writing image to: %s" % path)
+                item.save_image(path)
 
             # append annotations
             if sub_dir not in self._splits:

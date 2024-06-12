@@ -5,13 +5,13 @@ from typing import List
 from PIL import Image
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ImageSegmentationData, SplittableStreamWriter, make_list
+from idc.api import ImageSegmentationData, SplittableStreamWriter, make_list, AnnotationsOnlyWriter, add_annotations_only_param
 
 
-class LayerSegmentsImageSegmentationWriter(SplittableStreamWriter):
+class LayerSegmentsImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnlyWriter):
 
     def __init__(self, output_dir: str = None,
-                 label_separator: str = "-",
+                 label_separator: str = "-", annotations_only: bool = None,
                  split_names: List[str] = None, split_ratios: List[int] = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
@@ -21,6 +21,8 @@ class LayerSegmentsImageSegmentationWriter(SplittableStreamWriter):
         :type output_dir: str
         :param label_separator: the separator between name and label for the masks
         :type label_separator: str
+        :param annotations_only: whether to output only the annotations and not the images
+        :type annotations_only: bool
         :param split_names: the names of the splits, no splitting if None
         :type split_names: list
         :param split_ratios: the integer ratios of the splits (must sum up to 100)
@@ -33,6 +35,7 @@ class LayerSegmentsImageSegmentationWriter(SplittableStreamWriter):
         super().__init__(split_names=split_names, split_ratios=split_ratios, logger_name=logger_name, logging_level=logging_level)
         self.output_dir = output_dir
         self.label_separator = label_separator
+        self.annotations_only = annotations_only
 
     def name(self) -> str:
         """
@@ -62,6 +65,7 @@ class LayerSegmentsImageSegmentationWriter(SplittableStreamWriter):
         parser = super()._create_argparser()
         parser.add_argument("-o", "--output", type=str, help="The directory to store the images files in. Any defined splits get added beneath there.", required=True)
         parser.add_argument("--label_separator", type=str, help="The separator between name and label used by the mask images.", required=False, default="-")
+        add_annotations_only_param(parser)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
@@ -74,6 +78,7 @@ class LayerSegmentsImageSegmentationWriter(SplittableStreamWriter):
         super()._apply_args(ns)
         self.output_dir = ns.output
         self.label_separator = ns.label_separator
+        self.annotations_only = ns.annotations_only
 
     def accepts(self) -> List:
         """
@@ -94,6 +99,8 @@ class LayerSegmentsImageSegmentationWriter(SplittableStreamWriter):
             os.makedirs(self.output_dir)
         if self.label_separator is None:
             self.label_separator = ""
+        if self.annotations_only is None:
+            self.annotations_only = False
 
     def write_stream(self, data):
         """
@@ -114,8 +121,9 @@ class LayerSegmentsImageSegmentationWriter(SplittableStreamWriter):
             path = sub_dir
             os.makedirs(path, exist_ok=True)
             path = os.path.join(path, item.image_name)
-            self.logger().info("Writing image to: %s" % path)
-            item.save_image(path)
+            if not self.annotations_only:
+                self.logger().info("Writing image to: %s" % path)
+                item.save_image(path)
 
             # annotations
             if item.has_annotation():

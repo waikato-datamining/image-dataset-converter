@@ -175,3 +175,20 @@ def parse_writer(writer: str) -> seppl.io.Writer:
     else:
         raise Exception("Expected to obtain one writer from '%s' but got %d instead!" % (writer, len(objs)))
     return result
+
+
+def add_annotations_only_param(parser: argparse.ArgumentParser):
+    """
+    Adds the --annotations_only parameter to the parser, as used by writers of type AnnotationOnlyWriter.
+
+    :param parser: the parser
+    :type parser: argparse.ArgumentParser
+    """
+    parser.add_argument("--annotations_only", action="store_true", help="Outputs only the annotations and skips the base image.")
+
+
+class AnnotationsOnlyWriter:
+    """
+    Mixin for writers that can output the annotations by itself.
+    """
+    pass

@@ -8,6 +8,7 @@ Saves the bounding box/polygon definitions in OPEX .json format.
 usage: to-opex-od [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                   [-N LOGGER_NAME] [-r SPLIT_RATIOS [SPLIT_RATIOS ...]]
                   [-n SPLIT_NAMES [SPLIT_NAMES ...]] -o OUTPUT
+                  [--annotations_only]
 
 Saves the bounding box/polygon definitions in OPEX .json format.
 
@@ -28,4 +29,6 @@ optional arguments:
                         The directory to store the images/.json files in. Any
                         defined splits get added beneath there. (default:
                         None)
+  --annotations_only    Outputs only the annotations and skips the base image.
+                        (default: False)
 ```

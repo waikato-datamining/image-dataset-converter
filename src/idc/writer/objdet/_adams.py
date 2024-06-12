@@ -4,12 +4,12 @@ from typing import List
 
 from wai.logging import LOGGING_WARNING
 from wai.common.file.report import Report, Field, save
-from idc.api import ObjectDetectionData, SplittableStreamWriter, make_list
+from idc.api import ObjectDetectionData, SplittableStreamWriter, make_list, AnnotationsOnlyWriter, add_annotations_only_param
 
 
-class AdamsObjectDetectionWriter(SplittableStreamWriter):
+class AdamsObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter):
 
-    def __init__(self, output_dir: str = None, prefix: str = "Object.",
+    def __init__(self, output_dir: str = None, prefix: str = "Object.", annotations_only: bool = None,
                  split_names: List[str] = None, split_ratios: List[int] = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
@@ -19,6 +19,8 @@ class AdamsObjectDetectionWriter(SplittableStreamWriter):
         :type output_dir: str
         :param prefix: the field name prefix to use for storing bbox/polygon definitions in the report files
         :type prefix: str
+        :param annotations_only: whether to output only the annotations and not the images
+        :type annotations_only: bool
         :param split_names: the names of the splits, no splitting if None
         :type split_names: list
         :param split_ratios: the integer ratios of the splits (must sum up to 100)
@@ -31,6 +33,7 @@ class AdamsObjectDetectionWriter(SplittableStreamWriter):
         super().__init__(split_names=split_names, split_ratios=split_ratios, logger_name=logger_name, logging_level=logging_level)
         self.output_dir = output_dir
         self.prefix = prefix
+        self.annotations_only = annotations_only
 
     def name(self) -> str:
         """
@@ -60,6 +63,7 @@ class AdamsObjectDetectionWriter(SplittableStreamWriter):
         parser = super()._create_argparser()
         parser.add_argument("-o", "--output", type=str, help="The directory to store the images/.report files in. Any defined splits get added beneath there.", required=True)
         parser.add_argument("-p", "--prefix", metavar="PREFIX", type=str, default="Object.", help="The field prefix to use in the .report files for identifying bbox/polygon object definitions", required=False)
+        add_annotations_only_param(parser)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
@@ -72,6 +76,7 @@ class AdamsObjectDetectionWriter(SplittableStreamWriter):
         super()._apply_args(ns)
         self.output_dir = ns.output
         self.prefix = ns.prefix
+        self.annotations_only = ns.annotations_only
 
     def accepts(self) -> List:
         """
@@ -90,6 +95,8 @@ class AdamsObjectDetectionWriter(SplittableStreamWriter):
         if not os.path.exists(self.output_dir):
             self.logger().info("Creating output dir: %s" % self.output_dir)
             os.makedirs(self.output_dir)
+        if self.annotations_only is None:
+            self.annotations_only = False
 
     def write_stream(self, data):
         """
@@ -117,8 +124,9 @@ class AdamsObjectDetectionWriter(SplittableStreamWriter):
                     report.set_value(Field.parse_field(k), item.get_metadata()[k])
 
             path = os.path.join(sub_dir, item.image_name)
-            self.logger().info("Writing image to: %s" % path)
-            item.save_image(path)
+            if not self.annotations_only:
+                self.logger().info("Writing image to: %s" % path)
+                item.save_image(path)
 
             if not empty:
                 path = os.path.splitext(path)[0] + ".report"
