@@ -37,7 +37,7 @@ setup(
         "pillow",
         "matplotlib",
         "imagesize",
-        "opex",
+        "fast-opex",
         "defusedxml",
         "numpy",
         "shapely",
