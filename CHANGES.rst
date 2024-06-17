@@ -5,6 +5,7 @@ Changelog
 ------------------
 
 - switched to the `fast-opex` library
+- helper method `from_indexedpng` was using incorrect label index (off by 1)
 
 
 0.0.2 (2024-06-13)

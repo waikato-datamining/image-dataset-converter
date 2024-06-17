@@ -189,7 +189,7 @@ def from_indexedpng(img: Image.Image, labels: List[str], label_mapping: Dict[int
             continue
         index = int(index)
         label_index = index - 1
-        if index not in label_mapping:
+        if label_index not in label_mapping:
             msg = "Index not covered by labels, skipping: %d" % index
             if logger is not None:
                 logger.warning(msg)
