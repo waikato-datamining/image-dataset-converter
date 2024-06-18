@@ -21,10 +21,10 @@ optional arguments:
                         The custom name to use for the logger, uses the plugin
                         name by default (default: None)
   -i [INPUT [INPUT ...]], --input [INPUT [INPUT ...]]
-                        Path to the report file(s) to read; glob syntax is
+                        Path to the PNG file(s) to read; glob syntax is
                         supported (default: None)
   -I [INPUT_LIST [INPUT_LIST ...]], --input_list [INPUT_LIST [INPUT_LIST ...]]
-                        Path to the text file(s) listing the text files to use
+                        Path to the text file(s) listing the text PNG to use
                         (default: None)
   --image_path_rel PATH
                         The relative path from the annotations to the images

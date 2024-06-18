@@ -59,7 +59,7 @@ class ROIObjectDetectionReader(Reader):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-i", "--input", type=str, help="Path to the report file(s) to read; glob syntax is supported", required=False, nargs="*")
+        parser.add_argument("-i", "--input", type=str, help="Path to the CSV file(s) to read; glob syntax is supported", required=False, nargs="*")
         parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the CSV files to use", required=False, nargs="*")
         parser.add_argument("-s", "--suffix", metavar="SUFFIX", type=str, default="-rois.csv", help="The suffix used by the ROI CSV files.", required=False)
         return parser
@@ -92,8 +92,7 @@ class ROIObjectDetectionReader(Reader):
         super().initialize()
         if self.suffix is None:
             raise Exception("No suffix defined!")
-        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True)
-        self._reader = None
+        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.csv")
 
     def read(self) -> Iterable:
         """

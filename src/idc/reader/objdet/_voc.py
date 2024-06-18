@@ -56,7 +56,7 @@ class VOCObjectDetectionReader(Reader):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-i", "--input", type=str, help="Path to the report file(s) to read; glob syntax is supported", required=False, nargs="*")
+        parser.add_argument("-i", "--input", type=str, help="Path to the XML file(s) to read; glob syntax is supported", required=False, nargs="*")
         parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the XML files to use", required=False, nargs="*")
         return parser
 
@@ -85,7 +85,7 @@ class VOCObjectDetectionReader(Reader):
         Initializes the processing, e.g., for opening files or databases.
         """
         super().initialize()
-        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True)
+        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.xml")
 
     def read(self) -> Iterable:
         """

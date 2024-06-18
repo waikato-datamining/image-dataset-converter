@@ -62,8 +62,8 @@ class BlueChannelImageSegmentationReader(Reader):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-i", "--input", type=str, help="Path to the report file(s) to read; glob syntax is supported", required=False, nargs="*")
-        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the text files to use", required=False, nargs="*")
+        parser.add_argument("-i", "--input", type=str, help="Path to the PNG file(s) to read; glob syntax is supported", required=False, nargs="*")
+        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the text PNG to use", required=False, nargs="*")
         parser.add_argument("--image_path_rel", metavar="PATH", type=str, default=None, help="The relative path from the annotations to the images directory", required=False)
         parser.add_argument("--labels", metavar="LABEL", type=str, default=None, help="The labels that the indices represent.", nargs="+")
         return parser
@@ -97,7 +97,7 @@ class BlueChannelImageSegmentationReader(Reader):
         super().initialize()
         if self.labels is None:
             raise Exception("No labels defined!")
-        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True)
+        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.png")
         self._label_mapping = dict()
         for i, label in enumerate(self.labels):
             self._label_mapping[i] = label

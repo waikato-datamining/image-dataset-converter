@@ -7,6 +7,9 @@ Changelog
 - switched to the `fast-opex` library
 - helper method `from_indexedpng` was using incorrect label index (off by 1)
 - `Data.save_image` method now ensures that source/target files exist before calling `os.path.samefile`
+- requiring seppl>=0.2.5 now
+- readers now support default globs, allowing the user to just specify directories as input
+  (and the default glob gets appended)
 
 
 0.0.2 (2024-06-13)

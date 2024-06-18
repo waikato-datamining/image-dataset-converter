@@ -73,8 +73,8 @@ class LayerSegmentsImageSegmentationReader(Reader):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-i", "--input", type=str, help="Path to the report file(s) to read; glob syntax is supported", required=False, nargs="*")
-        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the text files to use", required=False, nargs="*")
+        parser.add_argument("-i", "--input", type=str, help="Path to the JPG file(s) to read; glob syntax is supported", required=False, nargs="*")
+        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the JPG files to use", required=False, nargs="*")
         parser.add_argument("--labels", metavar="LABEL", type=str, default=None, help="The labels that the indices represent.", nargs="+")
         parser.add_argument("--label_separator", type=str, help="The separator between name and label used by the mask images.", required=False, default="-")
         parser.add_argument("--lenient", action="store_true", help="Will convert non-binary masks with just two unique color values quietly to binary without raising an exception.")
@@ -112,7 +112,7 @@ class LayerSegmentsImageSegmentationReader(Reader):
         super().initialize()
         if self.labels is None:
             raise Exception("No labels defined!")
-        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True)
+        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.jpg")
 
     def read(self) -> Iterable:
         """

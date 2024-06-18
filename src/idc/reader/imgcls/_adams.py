@@ -90,7 +90,7 @@ class AdamsImageClassificationReader(Reader):
         super().initialize()
         if self.class_field is None:
             raise Exception("No class field defined!")
-        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True)
+        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.report")
 
     def read(self) -> Iterable:
         """
