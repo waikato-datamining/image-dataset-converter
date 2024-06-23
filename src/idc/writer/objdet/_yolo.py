@@ -135,7 +135,7 @@ class YoloObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter):
             self.annotations_only = False
         self._label_mapping = OrderedDict()
         if self.categories is not None:
-            for i, category in enumerate(self.categories, start=1):
+            for i, category in enumerate(self.categories):
                 self._label_mapping[category] = i
         self._output_dirs = []
 
