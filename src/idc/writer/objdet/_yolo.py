@@ -80,7 +80,7 @@ class YoloObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter):
         parser.add_argument("-o", "--output", type=str, help="The directory to store the images/.txt files in. Any defined splits get added beneath there.", required=True)
         parser.add_argument("--image_subdir", metavar="DIR", type=str, default=None, help="The name of the sub-dir to use for storing the images in.", required=False)
         parser.add_argument("--labels_subdir", metavar="DIR", type=str, default=None, help="The name of the sub-dir to use for storing the annotations in.", required=False)
-        parser.add_argument("-p", "--use_polygon_format", action="store_true", help="Whether to read the annotations in polygon format rather than bbox format", required=False)
+        parser.add_argument("-p", "--use_polygon_format", action="store_true", help="Whether to write the annotations in polygon format rather than bbox format", required=False)
         parser.add_argument("--labels", metavar="FILE", type=str, default=None, help="The text file with the comma-separated list of labels", required=False)
         parser.add_argument("--labels_csv", metavar="FILE", type=str, default=None, help="The CSV file to write the label mapping to (index and label)", required=False)
         add_annotations_only_param(parser)

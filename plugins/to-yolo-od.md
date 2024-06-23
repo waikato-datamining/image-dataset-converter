@@ -36,7 +36,7 @@ optional arguments:
   --labels_subdir DIR   The name of the sub-dir to use for storing the
                         annotations in. (default: None)
   -p, --use_polygon_format
-                        Whether to read the annotations in polygon format
+                        Whether to write the annotations in polygon format
                         rather than bbox format (default: False)
   --labels FILE         The text file with the comma-separated list of labels
                         (default: None)
