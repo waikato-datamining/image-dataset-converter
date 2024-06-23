@@ -10,6 +10,7 @@ Changelog
 - requiring seppl>=0.2.5 now
 - readers now support default globs, allowing the user to just specify directories as input
   (and the default glob gets appended)
+- the `to-yolo-od` writer now has an option for predefined labels (for enforcing label order)
 
 
 0.0.2 (2024-06-13)
