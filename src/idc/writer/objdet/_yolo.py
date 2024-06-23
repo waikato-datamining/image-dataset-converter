@@ -53,6 +53,7 @@ class YoloObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter):
         self.labels_csv = labels_csv
         self.annotations_only = annotations_only
         self._label_mapping = None  # label -> index
+        self._output_dirs = None
 
     def name(self) -> str:
         """
@@ -85,8 +86,8 @@ class YoloObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter):
         parser.add_argument("--labels_subdir", metavar="DIR", type=str, default=None, help="The name of the sub-dir to use for storing the annotations in.", required=False)
         parser.add_argument("-p", "--use_polygon_format", action="store_true", help="Whether to write the annotations in polygon format rather than bbox format", required=False)
         parser.add_argument("--categories", type=str, help="The predefined order of categories.", required=False, nargs="*")
-        parser.add_argument("--labels", metavar="FILE", type=str, default=None, help="The text file with the comma-separated list of labels", required=False)
-        parser.add_argument("--labels_csv", metavar="FILE", type=str, default=None, help="The CSV file to write the label mapping to (index and label)", required=False)
+        parser.add_argument("--labels", type=str, default=None, help="The text file (no path) with the comma-separated list of labels", required=False)
+        parser.add_argument("--labels_csv", type=str, default=None, help="The CSV file (no path) to write the label mapping to (index and label)", required=False)
         add_annotations_only_param(parser)
         return parser
 
@@ -136,6 +137,7 @@ class YoloObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter):
         if self.categories is not None:
             for i, category in enumerate(self.categories, start=1):
                 self._label_mapping[category] = i
+        self._output_dirs = []
 
     def write_stream(self, data):
         """
@@ -151,6 +153,8 @@ class YoloObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter):
             if not os.path.exists(sub_dir):
                 self.logger().info("Creating sub dir: %s" % sub_dir)
                 os.makedirs(sub_dir)
+            if sub_dir not in self._output_dirs:
+                self._output_dirs.append(sub_dir)
 
             normalized = None
             if item.has_annotation():
@@ -207,9 +211,10 @@ class YoloObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter):
         """
         super().finalize()
 
-        # labels
-        save_labels(self.labels, self._label_mapping.keys(), logger=self.logger())
+        for sub_dir in self._output_dirs:
+            # labels
+            save_labels(os.path.join(sub_dir, self.labels), self._label_mapping.keys(), logger=self.logger())
 
-        # labels csv
-        if self.labels_csv is not None:
-            save_labels_csv(self.labels_csv, self._label_mapping, logger=self.logger())
+            # labels csv
+            if self.labels_csv is not None:
+                save_labels_csv(os.path.join(sub_dir, self.labels_csv), self._label_mapping, logger=self.logger())

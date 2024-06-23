@@ -9,8 +9,9 @@ usage: to-yolo-od [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                   [-N LOGGER_NAME] [-r SPLIT_RATIOS [SPLIT_RATIOS ...]]
                   [-n SPLIT_NAMES [SPLIT_NAMES ...]] -o OUTPUT
                   [--image_subdir DIR] [--labels_subdir DIR] [-p]
-                  [--categories [CATEGORIES [CATEGORIES ...]]] [--labels FILE]
-                  [--labels_csv FILE] [--annotations_only]
+                  [--categories [CATEGORIES [CATEGORIES ...]]]
+                  [--labels LABELS] [--labels_csv LABELS_CSV]
+                  [--annotations_only]
 
 Saves the bounding box/polygon definitions in YOLO .txt format. By default,
 places images in the 'images' subdir and the annotations in 'labels'.
@@ -41,10 +42,11 @@ optional arguments:
                         rather than bbox format (default: False)
   --categories [CATEGORIES [CATEGORIES ...]]
                         The predefined order of categories. (default: None)
-  --labels FILE         The text file with the comma-separated list of labels
-                        (default: None)
-  --labels_csv FILE     The CSV file to write the label mapping to (index and
-                        label) (default: None)
+  --labels LABELS       The text file (no path) with the comma-separated list
+                        of labels (default: None)
+  --labels_csv LABELS_CSV
+                        The CSV file (no path) to write the label mapping to
+                        (index and label) (default: None)
   --annotations_only    Outputs only the annotations and skips the base image.
                         (default: False)
 ```

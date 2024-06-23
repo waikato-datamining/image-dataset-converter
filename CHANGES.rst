@@ -11,6 +11,8 @@ Changelog
 - readers now support default globs, allowing the user to just specify directories as input
   (and the default glob gets appended)
 - the `to-yolo-od` writer now has an option for predefined labels (for enforcing label order)
+- the `to-yolo-od` writer now stores the labels/labels_cvs files in the respective output folders
+  rather than using an absolute file name
 
 
 0.0.2 (2024-06-13)
