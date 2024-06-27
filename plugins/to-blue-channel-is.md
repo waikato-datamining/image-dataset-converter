@@ -9,7 +9,8 @@ usage: to-blue-channel-is [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                           [-N LOGGER_NAME]
                           [-r SPLIT_RATIOS [SPLIT_RATIOS ...]]
                           [-n SPLIT_NAMES [SPLIT_NAMES ...]] -o OUTPUT
-                          [--image_path_rel PATH] [--annotations_only]
+                          [--image_path_rel PATH] [--background BACKGROUND]
+                          [--annotations_only]
 
 Saves the annotations as blue channel PNG files. The associated JPG images can
 be placed in folder relative to the annotation.
@@ -34,6 +35,9 @@ optional arguments:
   --image_path_rel PATH
                         The relative path from the annotations to the images
                         directory (default: None)
+  --background BACKGROUND
+                        The index (0-255) to use for the background (default:
+                        0)
   --annotations_only    Outputs only the annotations and skips the base image.
                         (default: False)
 ```

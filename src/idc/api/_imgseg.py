@@ -165,7 +165,7 @@ def split_layers(array: np.ndarray, labels: List[str]) -> ImageSegmentationAnnot
 
 
 def from_indexedpng(img: Image.Image, labels: List[str], label_mapping: Dict[int, str],
-                    logger: logging.Logger) -> ImageSegmentationAnnotations:
+                    logger: logging.Logger, background: int = 0) -> ImageSegmentationAnnotations:
     """
     Loads the annotations from the indexed png.
 
@@ -177,6 +177,8 @@ def from_indexedpng(img: Image.Image, labels: List[str], label_mapping: Dict[int
     :type label_mapping: dict
     :param logger: the (optional) logger for logging messages
     :type logger: logging.Logger
+    :param background: the index (0-255) of the background, default 0
+    :type background: int
     :return: the generated annotations
     :rtype: ImageSegmentationAnnotations
     """
@@ -185,10 +187,13 @@ def from_indexedpng(img: Image.Image, labels: List[str], label_mapping: Dict[int
     layers = dict()
     for index in list(unique):
         # skip background
-        if index == 0:
+        if index == background:
             continue
         index = int(index)
-        label_index = index - 1
+        if background < index:
+            label_index = index - 1
+        else:
+            label_index = index
         if label_index not in label_mapping:
             msg = "Index not covered by labels, skipping: %d" % index
             if logger is not None:
@@ -202,7 +207,7 @@ def from_indexedpng(img: Image.Image, labels: List[str], label_mapping: Dict[int
 
 
 def from_bluechannel(img: Image.Image, labels: List[str], label_mapping: Dict[int, str],
-                     logger: logging.Logger) -> ImageSegmentationAnnotations:
+                     logger: logging.Logger, background: int = 0) -> ImageSegmentationAnnotations:
     """
     Loads the annotations from the blue channel.
 
@@ -214,6 +219,8 @@ def from_bluechannel(img: Image.Image, labels: List[str], label_mapping: Dict[in
     :type label_mapping: dict
     :param logger: the (optional) logger for logging messages
     :type logger: logging.Logger
+    :param background: the index (0-255) of the background, default 0
+    :type background: int
     :return: the generated annotations
     :rtype: ImageSegmentationAnnotations
     """
@@ -223,10 +230,13 @@ def from_bluechannel(img: Image.Image, labels: List[str], label_mapping: Dict[in
     layers = dict()
     for index in list(unique):
         # skip background
-        if index == 0:
+        if index == background:
             continue
         index = int(index)
-        label_index = index - 1
+        if background < index:
+            label_index = index - 1
+        else:
+            label_index = index
         if label_index not in label_mapping:
             msg = "Blue channel value not covered by labels, skipping: %d" % index
             if logger is not None:
@@ -240,7 +250,7 @@ def from_bluechannel(img: Image.Image, labels: List[str], label_mapping: Dict[in
 
 
 def from_grayscale(img: Image.Image, labels: List[str], label_mapping: Dict[int, str],
-                   logger: logging.Logger) -> ImageSegmentationAnnotations:
+                   logger: logging.Logger, background: int = 0) -> ImageSegmentationAnnotations:
     """
     Loads the annotations from the grayscale image.
 
@@ -252,6 +262,8 @@ def from_grayscale(img: Image.Image, labels: List[str], label_mapping: Dict[int,
     :type label_mapping: dict
     :param logger: the (optional) logger for logging messages
     :type logger: logging.Logger
+    :param background: the index (0-255) of the background, default 0
+    :type background: int
     :return: the generated annotations
     :rtype: ImageSegmentationAnnotations
     """
@@ -260,10 +272,13 @@ def from_grayscale(img: Image.Image, labels: List[str], label_mapping: Dict[int,
     layers = dict()
     for index in list(unique):
         # skip background
-        if index == 0:
+        if index == background:
             continue
         index = int(index)
-        label_index = index - 1
+        if background < index:
+            label_index = index - 1
+        else:
+            label_index = index
         if label_index not in label_mapping:
             msg = "Grayscale value not covered by labels, skipping: %d" % index
             if logger is not None:

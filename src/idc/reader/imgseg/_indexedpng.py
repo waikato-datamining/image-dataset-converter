@@ -11,7 +11,7 @@ from idc.api import Reader
 class IndexedPngImageSegmentationReader(Reader):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
-                 image_path_rel: str = None, labels: List[str] = None,
+                 image_path_rel: str = None, labels: List[str] = None, background: int = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
         Initializes the reader.
@@ -22,6 +22,8 @@ class IndexedPngImageSegmentationReader(Reader):
         :type image_path_rel: str
         :param labels: the list of labels
         :type labels: list
+        :param background: the index (0-255) that is used as background
+        :type background: int
         :param logger_name: the name to use for the logger
         :type logger_name: str
         :param logging_level: the logging level to use
@@ -32,6 +34,7 @@ class IndexedPngImageSegmentationReader(Reader):
         self.source_list = source_list
         self.image_path_rel = image_path_rel
         self.labels = labels
+        self.background = background
         self._label_mapping = None
         self._inputs = None
         self._current_input = None
@@ -66,6 +69,7 @@ class IndexedPngImageSegmentationReader(Reader):
         parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the PNG files to use", required=False, nargs="*")
         parser.add_argument("--image_path_rel", metavar="PATH", type=str, default=None, help="The relative path from the annotations to the images directory", required=False)
         parser.add_argument("--labels", metavar="LABEL", type=str, default=None, help="The labels that the indices represent.", nargs="+")
+        parser.add_argument("--background", type=int, help="The index (0-255) that is used for the background", required=False, default=0)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
@@ -80,6 +84,7 @@ class IndexedPngImageSegmentationReader(Reader):
         self.source_list = ns.input_list
         self.image_path_rel = ns.image_path_rel
         self.labels = ns.labels
+        self.background = ns.background
 
     def generates(self) -> List:
         """
@@ -97,6 +102,8 @@ class IndexedPngImageSegmentationReader(Reader):
         super().initialize()
         if self.labels is None:
             raise Exception("No labels defined!")
+        if self.background is None:
+            self.background = 0
         self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.png")
         self._label_mapping = dict()
         for i, label in enumerate(self.labels):
@@ -122,7 +129,7 @@ class IndexedPngImageSegmentationReader(Reader):
         # read annotations
         self.logger().info("Reading from: " + str(self.session.current_input))
         ann = load_image_from_file(self.session.current_input)
-        annotations = from_indexedpng(ann, self.labels, self._label_mapping, self.logger())
+        annotations = from_indexedpng(ann, self.labels, self._label_mapping, self.logger(), background=self.background)
 
         # associated image
         if len(imgs) > 1:

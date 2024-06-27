@@ -9,6 +9,7 @@ usage: from-grayscale-is [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                          [-N LOGGER_NAME] [-i [INPUT [INPUT ...]]]
                          [-I [INPUT_LIST [INPUT_LIST ...]]]
                          [--image_path_rel PATH] [--labels LABEL [LABEL ...]]
+                         [--background BACKGROUND]
 
 Loads the annotations from associated grayscale PNG files.
 
@@ -30,4 +31,7 @@ optional arguments:
                         directory (default: None)
   --labels LABEL [LABEL ...]
                         The labels that the indices represent. (default: None)
+  --background BACKGROUND
+                        The index (0-255) that is used for the background
+                        (default: 0)
 ```

@@ -12,7 +12,7 @@ from idc.api import ImageSegmentationData, SplittableStreamWriter, make_list, An
 class BlueChannelImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnlyWriter):
 
     def __init__(self, output_dir: str = None,
-                 image_path_rel: str = None, annotations_only: bool = None,
+                 image_path_rel: str = None, annotations_only: bool = None, background: int = None,
                  split_names: List[str] = None, split_ratios: List[int] = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
@@ -24,6 +24,8 @@ class BlueChannelImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnly
         :type image_path_rel: str
         :param annotations_only: whether to output only the annotations and not the images
         :type annotations_only: bool
+        :param background: the index (0-255) to use as background
+        :type background: int
         :param split_names: the names of the splits, no splitting if None
         :type split_names: list
         :param split_ratios: the integer ratios of the splits (must sum up to 100)
@@ -37,6 +39,7 @@ class BlueChannelImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnly
         self.output_dir = output_dir
         self.image_path_rel = image_path_rel
         self.annotations_only = annotations_only
+        self.background = background
 
     def name(self) -> str:
         """
@@ -66,6 +69,7 @@ class BlueChannelImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnly
         parser = super()._create_argparser()
         parser.add_argument("-o", "--output", type=str, help="The directory to store the images files in. Any defined splits get added beneath there.", required=True)
         parser.add_argument("--image_path_rel", metavar="PATH", type=str, default=None, help="The relative path from the annotations to the images directory", required=False)
+        parser.add_argument("--background", type=int, help="The index (0-255) to use for the background", required=False, default=0)
         add_annotations_only_param(parser)
         return parser
 
@@ -80,6 +84,7 @@ class BlueChannelImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnly
         self.output_dir = ns.output
         self.image_path_rel = ns.image_path_rel
         self.annotations_only = ns.annotations_only
+        self.background = ns.background
 
     def accepts(self) -> List:
         """
@@ -137,6 +142,8 @@ class BlueChannelImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnly
                         sub_arr = item.annotation.layers[label]
                         sub_arr = np.where(sub_arr == 255, index, 0).astype(np.uint8)
                         arr += sub_arr
+                if self.background > 0:
+                    arr = np.where(arr == 0, self.background, arr)
                 blue = np.zeros((*arr.shape, 3), np.uint8)
                 blue[:, :, 2] = arr
                 ann = Image.fromarray(blue, "RGB")

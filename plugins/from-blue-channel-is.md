@@ -10,6 +10,7 @@ usage: from-blue-channel-is [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                             [-I [INPUT_LIST [INPUT_LIST ...]]]
                             [--image_path_rel PATH]
                             [--labels LABEL [LABEL ...]]
+                            [--background BACKGROUND]
 
 Loads the annotations from associated blue channel JPG/PNG files.
 
@@ -31,4 +32,7 @@ optional arguments:
                         directory (default: None)
   --labels LABEL [LABEL ...]
                         The labels that the indices represent. (default: None)
+  --background BACKGROUND
+                        The index (0-255) that is used for the background
+                        (default: 0)
 ```

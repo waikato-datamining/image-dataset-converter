@@ -13,6 +13,8 @@ Changelog
 - the `to-yolo-od` writer now has an option for predefined labels (for enforcing label order)
 - the `to-yolo-od` writer now stores the labels/labels_cvs files in the respective output folders
   rather than using an absolute file name
+- the bluechannel/grayscale/indexed-png image segmentation readers/writers can use a value other
+  than 0 now for the background
 
 
 0.0.2 (2024-06-13)
