@@ -15,6 +15,7 @@ Changelog
   rather than using an absolute file name
 - the bluechannel/grayscale/indexed-png image segmentation readers/writers can use a value other
   than 0 now for the background
+- `split` filter has been renamed to `split-records`
 
 
 0.0.2 (2024-06-13)

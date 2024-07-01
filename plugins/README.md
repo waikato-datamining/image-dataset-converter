@@ -43,7 +43,7 @@
 * [remove-classes](remove-classes.md)
 * [rename](rename.md)
 * [sample](sample.md)
-* [split](split.md)
+* [split-records](split-records.md)
 * [strip-annotations](strip-annotations.md)
 * [tee](tee.md)
 * [write-labels](write-labels.md)

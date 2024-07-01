@@ -70,8 +70,8 @@ filters (30):
    label-present, map-labels, max-records, metadata, metadata-from-name, 
    od-to-ic, od-to-is, passthrough, polygon-discarder, 
    polygon-simplifier, pyfunc-filter, randomize-records, record-window, 
-   remove-classes, rename, sample, split, strip-annotations, tee, 
-   write-labels
+   remove-classes, rename, sample, split-records, strip-annotations, 
+   tee, write-labels
 writers (14):
    to-adams-ic, to-adams-od, to-blue-channel-is, to-coco-od, to-data, 
    to-grayscale-is, to-indexed-png-is, to-layer-segments-is, to-opex-od, 

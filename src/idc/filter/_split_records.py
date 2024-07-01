@@ -10,7 +10,7 @@ META_SPLIT = "split"
 """ the key for storing the split name in the meta-data. """
 
 
-class Split(Filter):
+class SplitRecords(Filter):
     """
     Splits the incoming records into the specified split ratios by setting the 'split' meta-data value. Also stores the split names in the current session.
     """
@@ -41,7 +41,7 @@ class Split(Filter):
         :return: the name
         :rtype: str
         """
-        return "split"
+        return "split-records"
 
     def description(self) -> str:
         """
