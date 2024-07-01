@@ -35,3 +35,9 @@ Steps:
 * enter release notes, i.e., significant changes since last release
 * upload `image-dataset-converter-X.Y.Z.tar.gz` previously generated with `setup.py`
 * publish
+
+
+image-dataset-converter-all
+===========================
+
+* increment minimum version to newly released one in `setup.py`
