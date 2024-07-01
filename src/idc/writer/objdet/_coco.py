@@ -308,6 +308,7 @@ class COCOObjectDetectionWriter(SplittableBatchWriter, AnnotationsOnlyWriter):
             # save annotations
             annotations["categories"] = self._create_categories()
             path = os.path.join(sub_dir, "annotations.json")
+            self.logger().info("Writing annotations to: %s" % path)
             with open(path, "w") as fp:
                 json.dump(annotations, fp)
 
@@ -317,5 +318,6 @@ class COCOObjectDetectionWriter(SplittableBatchWriter, AnnotationsOnlyWriter):
                 if self.sort_categories:
                     categories = sorted(categories)
                 path = os.path.join(sub_dir, self.category_output_file)
+                self.logger().info("Writing categories to: %s" % path)
                 with open(path, "w") as fp:
                     fp.write(",".join(categories))
