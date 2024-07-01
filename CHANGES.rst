@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.0.3 (????-??-??)
+0.0.3 (2024-07-02)
 ------------------
 
 - switched to the `fast-opex` library
