@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.0.4 (????-??-??)
+0.0.4 (2024-07-16)
 ------------------
 
 - limiting numpy to <2.0.0 due to problems with imgaug library
