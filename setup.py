@@ -39,7 +39,7 @@ setup(
         "imagesize",
         "fast-opex>=0.0.2",
         "defusedxml",
-        "numpy",
+        "numpy<2.0.0",
         "shapely",
         "python-image-complete",
     ],
