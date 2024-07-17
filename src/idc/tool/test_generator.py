@@ -36,12 +36,6 @@ def main(args=None):
     :param args: the commandline arguments, uses sys.argv if not supplied
     :type args: list
     """
-    """
-    The main method for parsing command-line arguments.
-
-    :param args: the commandline arguments, uses sys.argv if not supplied
-    :type args: list
-    """
     init_logging(env_var=ENV_IDC_LOGLEVEL)
     generators = sorted(list(available_generators().keys()))
     parser = argparse.ArgumentParser(
