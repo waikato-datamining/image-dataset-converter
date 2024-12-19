@@ -314,5 +314,7 @@ Each variable is a comma-separated list of `module_name:function_name`, defining
 * [Image augmentation](https://github.com/waikato-datamining/image-dataset-converter-imgaug)
 * [Image statistics](https://github.com/waikato-datamining/image-dataset-converter-imgstats)
 * [Image visualizations](https://github.com/waikato-datamining/image-dataset-converter-imgvis)
+* [Paddle](https://github.com/waikato-datamining/image-dataset-converter-paddle)
+* [PDF](https://github.com/waikato-datamining/image-dataset-converter-pdf)
 * [Redis](https://github.com/waikato-datamining/image-dataset-converter-redis)
 * [Video](https://github.com/waikato-datamining/image-dataset-converter-video)
