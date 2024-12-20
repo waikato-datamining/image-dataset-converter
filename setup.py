@@ -13,7 +13,7 @@ def _read(f):
 
 
 setup(
-    name="image-dataset-converter",
+    name="image_dataset_converter",
     description="Python3 library for converting between various image annotation dataset formats.",
     long_description=(
             _read('DESCRIPTION.rst') + b'\n' +

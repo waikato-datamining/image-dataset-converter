@@ -5,6 +5,7 @@ Changelog
 ------------------
 
 - added `setuptools` as dependency
+- switched to underscores in project name
 
 
 0.0.4 (2024-07-16)
