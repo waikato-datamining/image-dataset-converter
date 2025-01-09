@@ -74,13 +74,13 @@ def jpeg_quality() -> int:
     return JPEG_QUALITY
 
 
-def save_image(img: Image, path: str):
+def save_image(img: Image.Image, path: str):
     """
     Saves the image in the specified location.
     For JPEG images, takes the quality into account.
 
     :param img: the image to save
-    :type img: Image
+    :type img: Image.Image
     :param path: the path to save the image to
     :type path: str
     """
@@ -90,14 +90,14 @@ def save_image(img: Image, path: str):
         img.save(path)
 
 
-def array_to_image(array: Union[np.ndarray, Image], image_format: str) -> Tuple[Image, io.BytesIO]:
+def array_to_image(array: Union[np.ndarray, Image.Image], image_format: str) -> Tuple[Image.Image, io.BytesIO]:
     """
     Turns the numpy array back into an image of the specified format.
     Returns the image data structure and the bytes representing it.
     For JPEG images, takes the quality into account.
 
     :param array: the Image/array to convert
-    :type array: np.ndarray or Image
+    :type array: np.ndarray or Image.Image
     :param image_format: the image format to generate
     :type image_format: str
     :return: the generated image data structure
@@ -112,7 +112,7 @@ def array_to_image(array: Union[np.ndarray, Image], image_format: str) -> Tuple[
     return img, img_bytes
 
 
-def empty_image(mode: str, width: int, height: int, image_format: str) -> Tuple[Image, io.BytesIO]:
+def empty_image(mode: str, width: int, height: int, image_format: str) -> Tuple[Image.Image, io.BytesIO]:
     """
     Creates an empty image and returns the image and the bytes representation.
 
