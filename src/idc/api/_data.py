@@ -66,6 +66,7 @@ def jpeg_quality() -> int:
     global JPEG_QUALITY
     if JPEG_QUALITY is None:
         try:
+            JPEG_QUALITY = DEFAULT_JPEG_QUALITY
             if IDC_JPEG_QUALITY in os.environ:
                 JPEG_QUALITY = int(os.getenv(IDC_JPEG_QUALITY, str(DEFAULT_JPEG_QUALITY)))
                 logger().info("Using JPEG quality: %d%%" % JPEG_QUALITY)
