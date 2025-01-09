@@ -4,15 +4,19 @@ import io
 import logging
 import os.path
 import shutil
-from typing import Dict, Optional, Tuple, List
+from typing import Dict, Optional, Tuple, List, Union
 
 import imagesize
+import numpy as np
 from PIL import Image
 from image_complete.bmp import is_bmp
 from image_complete.jpg import is_jpg
 from image_complete.png import is_png
 from seppl import MetaDataHandler, LoggingHandler
 from ._utils import load_image_from_bytes
+from wai.logging import set_logging_level, LOGGING_INFO
+
+_logger = None
 
 FORMAT_JPEG = "JPEG"
 FORMAT_PNG = "PNG"
@@ -27,6 +31,109 @@ FORMAT_EXTENSIONS = {
     FORMAT_PNG: ".png",
     FORMAT_BMP: ".bmp",
 }
+
+IDC_JPEG_QUALITY = "IDC_JPEG_QUALITY"
+""" the environment variable to overriding the default JPEG quality. """
+
+DEFAULT_JPEG_QUALITY = 90
+""" the default quality to use when saving jpg/jpeg files. """
+
+JPEG_QUALITY = None
+""" the quality to use when writing JPEG files. """
+
+
+def logger() -> logging.Logger:
+    """
+    Returns the logger instance to use, initializes it if necessary.
+
+    :return: the logger instance
+    :rtype: logging.Logger
+    """
+    global _logger
+    if _logger is None:
+        _logger = logging.getLogger("idc.api.data")
+        set_logging_level(_logger, LOGGING_INFO)
+    return _logger
+
+
+def jpeg_quality() -> int:
+    """
+    Returns the quality to use for jpeg images.
+
+    :return: the quality
+    :rtype: int
+    """
+    global JPEG_QUALITY
+    if JPEG_QUALITY is None:
+        try:
+            if IDC_JPEG_QUALITY in os.environ:
+                JPEG_QUALITY = int(os.getenv(IDC_JPEG_QUALITY, str(DEFAULT_JPEG_QUALITY)))
+                logger().info("Using JPEG quality: %d%%" % JPEG_QUALITY)
+        except:
+            JPEG_QUALITY = DEFAULT_JPEG_QUALITY
+    return JPEG_QUALITY
+
+
+def save_image(img: Image, path: str):
+    """
+    Saves the image in the specified location.
+    For JPEG images, takes the quality into account.
+
+    :param img: the image to save
+    :type img: Image
+    :param path: the path to save the image to
+    :type path: str
+    """
+    if img.format == "JPEG":
+        img.save(path, quality=jpeg_quality())
+    else:
+        img.save(path)
+
+
+def array_to_image(array: Union[np.ndarray, Image], image_format: str) -> Tuple[Image, io.BytesIO]:
+    """
+    Turns the numpy array back into an image of the specified format.
+    Returns the image data structure and the bytes representing it.
+    For JPEG images, takes the quality into account.
+
+    :param array: the Image/array to convert
+    :type array: np.ndarray or Image
+    :param image_format: the image format to generate
+    :type image_format: str
+    :return: the generated image data structure
+    :rtype: tuple
+    """
+    img = Image.fromarray(np.uint8(array))
+    img_bytes = io.BytesIO()
+    if image_format == "JPEG":
+        img.save(img_bytes, format=image_format, quality=jpeg_quality())
+    else:
+        img.save(img_bytes, format=image_format)
+    return img, img_bytes
+
+
+def empty_image(mode: str, width: int, height: int, image_format: str) -> Tuple[Image, io.BytesIO]:
+    """
+    Creates an empty image and returns the image and the bytes representation.
+
+    :param mode: the image mode, e.g., RGB
+    :type mode: str
+    :param width: the width of the image
+    :type width: int
+    :param height: the height of the image
+    :type height: int
+    :param image_format: the image format to use, e.g., JPEG
+    :type image_format: str
+    :return: the tuple of image and bytes
+    :rtype: tuple
+    """
+    img = Image.new(mode, (width, height))
+    img_bytes = io.BytesIO()
+    if image_format == "JPEG":
+        img.save(img_bytes, format=image_format, quality=jpeg_quality())
+    else:
+        img.save(img_bytes, format=image_format)
+    return img, img_bytes
 
 
 class ImageData(MetaDataHandler, LoggingHandler):
@@ -261,7 +368,7 @@ class ImageData(MetaDataHandler, LoggingHandler):
             shutil.copy(self._source, path)
             return True
         if self._image is not None:
-            self._image.save(path)
+            save_image(self._image, path)
             return True
         if self._data is not None:
             with open(path, "wb") as fp:

@@ -309,6 +309,26 @@ The following environment variables can be used to influence the class listers:
 Each variable is a comma-separated list of `module_name:function_name`, defining the class listers.
 
 
+## JPEG quality
+
+Whenever possible, images get copied rather than read and then rewritten, 
+to avoid loss of quality by subsequent read/write operations.
+To minimize introduction of artifacts in JPEG images, a default quality of 90% 
+is used, which is a good compromise between size and quality. 
+
+However, this quality parameter can be overridden globally with the following 
+environment variable:
+
+```
+IDC_JPEG_QUALITY
+```
+
+For instance, the following setting would use a quality of 100%: 
+
+```
+IDC_JPEG_QUALITY=100
+```
+
 ## Additional libraries
 
 * [Image augmentation](https://github.com/waikato-datamining/image-dataset-converter-imgaug)

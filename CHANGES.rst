@@ -6,6 +6,8 @@ Changelog
 
 - added `setuptools` as dependency
 - switched to underscores in project name
+- using 90% as default quality for JPEG images now, can be overridden with environment variable `IDC_JPEG_QUALITY`
+- added methods to idc.api module: `jpeg_quality()`, `array_to_image(...)`, `empty_image(...)`
 
 
 0.0.4 (2024-07-16)
