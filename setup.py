@@ -44,7 +44,7 @@ setup(
         "shapely",
         "python-image-complete",
     ],
-    version="0.0.4",
+    version="0.0.5",
     author='Peter Reutemann',
     author_email='fracpete@waikato.ac.nz',
     entry_points={
