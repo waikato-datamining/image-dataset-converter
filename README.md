@@ -8,7 +8,7 @@ Filters can be supplied as well, e.g., for cleaning up the data.
 Via PyPI:
 
 ```bash
-pip install image-dataset-converter
+pip install image_dataset_converter
 ```
 
 The latest code straight from the repository:
