@@ -149,7 +149,7 @@ class LayerSegmentsImageSegmentationReader(Reader):
                             arr = np.where(arr == unique[i], i*255, arr)
                         img = Image.fromarray(arr, "L").convert("1")
                     else:
-                        raise Exception("Layer mask is not binary: %s" % ann)
+                        raise Exception("Layer mask is not binary: %s! Try using --lenient flag to attempt loading file(s)." % ann)
                 if self.invert:
                     img = ImageOps.invert(img)
                 arr = np.asarray(img).astype(np.uint8)

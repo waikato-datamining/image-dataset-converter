@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.0.6 (????-??-??)
+------------------
+
+- `LayerSegmentsImageSegmentationReader` now suggest using `--lenient` flag in exception in case image not binary
+
+
 0.0.5 (2025-01-13)
 ------------------
 
