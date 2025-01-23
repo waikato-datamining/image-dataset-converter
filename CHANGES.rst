@@ -8,6 +8,7 @@ Changelog
 - added the `discard-by-name` filter that allows user to discard images based on name, either exact match of regexp
   (matching sense can be inverted)
 - requiring seppl>=0.2.9 now
+- added support for aliases
 
 
 0.0.5 (2025-01-13)
