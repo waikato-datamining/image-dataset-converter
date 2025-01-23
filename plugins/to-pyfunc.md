@@ -13,7 +13,7 @@ Processes the images of the specified data type via the declared Python
 function. The function must take an image container as input (matching the
 data type class) and an optional 'split' string parameter.
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   -l {DEBUG,INFO,WARNING,ERROR,CRITICAL}, --logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
                         The logging level to use. (default: WARN)

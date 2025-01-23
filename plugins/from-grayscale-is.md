@@ -6,24 +6,24 @@ Loads the annotations from associated grayscale PNG files.
 
 ```
 usage: from-grayscale-is [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                         [-N LOGGER_NAME] [-i [INPUT [INPUT ...]]]
-                         [-I [INPUT_LIST [INPUT_LIST ...]]]
-                         [--image_path_rel PATH] [--labels LABEL [LABEL ...]]
+                         [-N LOGGER_NAME] [-i [INPUT ...]]
+                         [-I [INPUT_LIST ...]] [--image_path_rel PATH]
+                         [--labels LABEL [LABEL ...]]
                          [--background BACKGROUND]
 
 Loads the annotations from associated grayscale PNG files.
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   -l {DEBUG,INFO,WARNING,ERROR,CRITICAL}, --logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
                         The logging level to use. (default: WARN)
   -N LOGGER_NAME, --logger_name LOGGER_NAME
                         The custom name to use for the logger, uses the plugin
                         name by default (default: None)
-  -i [INPUT [INPUT ...]], --input [INPUT [INPUT ...]]
+  -i [INPUT ...], --input [INPUT ...]
                         Path to the PNG file(s) to read; glob syntax is
                         supported (default: None)
-  -I [INPUT_LIST [INPUT_LIST ...]], --input_list [INPUT_LIST [INPUT_LIST ...]]
+  -I [INPUT_LIST ...], --input_list [INPUT_LIST ...]
                         Path to the text file(s) listing the text PNG to use
                         (default: None)
   --image_path_rel PATH

@@ -11,7 +11,7 @@ usage: metadata-from-name [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
 
 Extracts a sub-string from the image name and stores them in the meta-data.
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   -l {DEBUG,INFO,WARNING,ERROR,CRITICAL}, --logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
                         The logging level to use. (default: WARN)

@@ -11,7 +11,7 @@ usage: convert-image-format [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
 
 Converts the image format to the specified type.
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   -l {DEBUG,INFO,WARNING,ERROR,CRITICAL}, --logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
                         The logging level to use. (default: WARN)

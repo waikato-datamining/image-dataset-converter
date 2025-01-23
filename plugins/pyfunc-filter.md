@@ -14,7 +14,7 @@ type and generates ones of the specified output type. The function must handle
 a single image container or an iterable of image containers and return a
 single image container or an iterable of image containers.
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   -l {DEBUG,INFO,WARNING,ERROR,CRITICAL}, --logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
                         The logging level to use. (default: WARN)

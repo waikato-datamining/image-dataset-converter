@@ -9,8 +9,7 @@ usage: to-coco-od [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                   [-N LOGGER_NAME] [-r SPLIT_RATIOS [SPLIT_RATIOS ...]]
                   [-n SPLIT_NAMES [SPLIT_NAMES ...]] -o OUTPUT
                   [--license_name LICENSE_NAME] [--license_url LICENSE_URL]
-                  [--categories [CATEGORIES [CATEGORIES ...]]]
-                  [--error_on_new_category]
+                  [--categories [CATEGORIES ...]] [--error_on_new_category]
                   [--default_supercategory DEFAULT_SUPERCATEGORY]
                   [--sort_categories]
                   [--category_output_file CATEGORY_OUTPUT_FILE]
@@ -18,7 +17,7 @@ usage: to-coco-od [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
 
 Saves the bounding box/polygon definitions in MS COCO .json format.
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   -l {DEBUG,INFO,WARNING,ERROR,CRITICAL}, --logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
                         The logging level to use. (default: WARN)
@@ -39,7 +38,7 @@ optional arguments:
                         The name of the license to use. (default: default)
   --license_url LICENSE_URL
                         The URL of the license to use. (default: )
-  --categories [CATEGORIES [CATEGORIES ...]]
+  --categories [CATEGORIES ...]
                         The predefined order of categories. (default: None)
   --error_on_new_category
                         Whether to raise an exception if an unknown category

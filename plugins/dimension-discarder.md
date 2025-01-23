@@ -14,7 +14,7 @@ usage: dimension-discarder [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
 
 Removes annotations which fall outside certain dimensional limits.
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   -l {DEBUG,INFO,WARNING,ERROR,CRITICAL}, --logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
                         The logging level to use. (default: WARN)

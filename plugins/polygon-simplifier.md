@@ -12,7 +12,7 @@ usage: polygon-simplifier [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
 Simplifies polygons according to the tolerance parameter: the smaller the
 tolerance, the closer to the original.
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   -l {DEBUG,INFO,WARNING,ERROR,CRITICAL}, --logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
                         The logging level to use. (default: WARN)

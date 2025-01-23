@@ -22,6 +22,7 @@
 * [coerce-mask](coerce-mask.md)
 * [convert-image-format](convert-image-format.md)
 * [dimension-discarder](dimension-discarder.md)
+* [discard-by-name](discard-by-name.md)
 * [discard-invalid-images](discard-invalid-images.md)
 * [discard-negatives](discard-negatives.md)
 * [filter-labels](filter-labels.md)

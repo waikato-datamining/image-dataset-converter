@@ -13,7 +13,7 @@ Coerces the bounds of the annotations to all be polygon-masks. Annotations
 which already have polygons keep theirs, but those without are given a
 rectangular polygon in the shape of their bounding box.
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   -l {DEBUG,INFO,WARNING,ERROR,CRITICAL}, --logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
                         The logging level to use. (default: WARN)

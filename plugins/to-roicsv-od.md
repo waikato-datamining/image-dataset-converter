@@ -13,7 +13,7 @@ usage: to-roicsv-od [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
 Saves the bounding box/polygon definitions in a ROI .csv file alongside the
 image.
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   -l {DEBUG,INFO,WARNING,ERROR,CRITICAL}, --logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
                         The logging level to use. (default: WARN)

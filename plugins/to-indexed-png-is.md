@@ -14,7 +14,7 @@ usage: to-indexed-png-is [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
 Saves the annotations as indexed PNG files. The associated JPG images can be
 placed in folder relative to the annotation.
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   -l {DEBUG,INFO,WARNING,ERROR,CRITICAL}, --logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
                         The logging level to use. (default: WARN)

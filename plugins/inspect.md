@@ -9,11 +9,11 @@ Allows inspecting the data flowing through the pipeline.
 usage: inspect [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-N LOGGER_NAME]
                [-m {interactive,non-interactive}]
                [-o {stdout,stderr,logger,file}] [--output_file OUTPUT_FILE]
-               [-k [KEY [KEY ...]]] [-i]
+               [-k [KEY ...]] [-i]
 
 Allows inspecting the data flowing through the pipeline.
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   -l {DEBUG,INFO,WARNING,ERROR,CRITICAL}, --logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
                         The logging level to use. (default: WARN)
@@ -27,7 +27,7 @@ optional arguments:
   --output_file OUTPUT_FILE
                         The file to store the data in, in case of output
                         'file'. (default: None)
-  -k [KEY [KEY ...]], --meta-data-key [KEY [KEY ...]]
+  -k [KEY ...], --meta-data-key [KEY ...]
                         The meta-data value to output (default: None)
   -i, --show_image      Whether to display the image. (default: False)
 ```

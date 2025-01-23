@@ -12,7 +12,7 @@ usage: polygon-discarder [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
 Removes polygons that fall outside the specified point limits (skips
 annotations with no polygons).
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   -l {DEBUG,INFO,WARNING,ERROR,CRITICAL}, --logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
                         The logging level to use. (default: WARN)
