@@ -75,7 +75,7 @@ def jpeg_quality() -> int:
     return JPEG_QUALITY
 
 
-def save_image(img: Image.Image, path: str):
+def save_image(img: Image.Image, path: str, make_dirs: bool = False):
     """
     Saves the image in the specified location.
     For JPEG images, takes the quality into account.
@@ -84,7 +84,13 @@ def save_image(img: Image.Image, path: str):
     :type img: Image.Image
     :param path: the path to save the image to
     :type path: str
+    :param make_dirs: whether to create parent dirs if necessary
+    :type make_dirs: bool
     """
+    if make_dirs:
+        parent_dir = os.path.dirname(path)
+        if not os.path.exists(parent_dir):
+            os.makedirs(parent_dir)
     if img.format == "JPEG":
         img.save(path, quality=jpeg_quality())
     else:
