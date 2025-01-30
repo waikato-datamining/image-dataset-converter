@@ -256,7 +256,7 @@ You can find help screens for the plugins here:
 
 ## Command-line examples
 
-Examples can be found on the [image-dataset-converter-examples](https://waikato-datamining.github.io/image-dataset-converter-examples/)
+Examples can be found on the [image-dataset-converter-examples](https://www.data-mining.co.nz/image-dataset-converter-examples/)
 website.
 
 
