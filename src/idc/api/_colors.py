@@ -449,3 +449,24 @@ def default_palette(palette: str = None) -> List[int]:
 
     result = fill_palette(result)
     return result
+
+
+def generate_palette_list(palette: str = None) -> List[int]:
+    """
+    Generates a flat integer list of RGB values from the palette name or the comma-separated list of RGB values
+
+    :param palette: the palette name (uses PALETTE_AUTO if None) or the comma-separated list of RGB values
+    :type palette: str
+    :return: the list of RGB values for the palette
+    """
+    if palette is None:
+        palette = PALETTE_AUTO
+    if palette not in PALETTES:
+        if "," in palette:
+            result = [int(x) for x in palette.split(",")]
+            result = fill_palette(result)
+        else:
+            raise Exception("Unknown palette: %s" % palette)
+    else:
+        result = default_palette(palette=palette)
+    return result
