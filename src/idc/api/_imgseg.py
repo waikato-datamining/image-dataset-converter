@@ -206,6 +206,37 @@ def from_indexedpng(img: Image.Image, labels: List[str], label_mapping: Dict[int
     return ImageSegmentationAnnotations(labels, layers)
 
 
+def to_indexedpng(width: int, height: int, ann: ImageSegmentationAnnotations, palette_list: List[int], background: int = 0) -> Image.Image:
+    """
+    Turns the annotations into an indexed image.
+
+    :param width: the width of the image
+    :type width: int
+    :param height: the height of the image
+    :type height: int
+    :param ann: the annotations to convert
+    :type ann: ImageSegmentationAnnotations
+    :param palette_list: the flat list of int RGB values to use for the palette (len = 3 * #labels)
+    :type palette_list: list
+    :param background: the background index
+    :type background: int
+    :return: the generated indexed image
+    :rtype: Image.Image
+    """
+    # combine layers
+    arr = np.zeros((height, width)).astype(dtype=np.uint8)
+    for index, label in enumerate(ann.labels, start=1):
+        if label in ann.layers:
+            sub_arr = ann.layers[label]
+            sub_arr = np.where(sub_arr == 255, index, 0).astype(np.uint8)
+            arr += sub_arr
+    if background > 0:
+        arr = np.where(arr == 0, background, arr)
+    result = Image.fromarray(arr, "P")
+    result.putpalette(palette_list)
+    return result
+
+
 def from_bluechannel(img: Image.Image, labels: List[str], label_mapping: Dict[int, str],
                      logger: logging.Logger, background: int = 0) -> ImageSegmentationAnnotations:
     """
@@ -249,6 +280,35 @@ def from_bluechannel(img: Image.Image, labels: List[str], label_mapping: Dict[in
     return ImageSegmentationAnnotations(labels, layers)
 
 
+def to_bluechannel(width: int, height: int, ann: ImageSegmentationAnnotations, background: int = 0) -> Image.Image:
+    """
+    Turns the annotations into a RGB image with the layers in the blue channel.
+
+    :param width: the width of the image
+    :type width: int
+    :param height: the height of the image
+    :type height: int
+    :param ann: the annotations to convert
+    :type ann: ImageSegmentationAnnotations
+    :param background: the background index
+    :type background: int
+    :return: the generated RGB image with the layers in the blue channel
+    :rtype: Image.Image
+    """
+    arr = np.zeros((height, width)).astype(dtype=np.uint8)
+    for index, label in enumerate(ann.labels, start=1):
+        if label in ann.layers:
+            sub_arr = ann.layers[label]
+            sub_arr = np.where(sub_arr == 255, index, 0).astype(np.uint8)
+            arr += sub_arr
+    if background > 0:
+        arr = np.where(arr == 0, background, arr)
+    blue = np.zeros((*arr.shape, 3), np.uint8)
+    blue[:, :, 2] = arr
+    result = Image.fromarray(blue, "RGB")
+    return result
+
+
 def from_grayscale(img: Image.Image, labels: List[str], label_mapping: Dict[int, str],
                    logger: logging.Logger, background: int = 0) -> ImageSegmentationAnnotations:
     """
@@ -289,3 +349,30 @@ def from_grayscale(img: Image.Image, labels: List[str], label_mapping: Dict[int,
         sub_arr = np.where(arr == index, 255, 0).astype(np.uint8)
         layers[label_mapping[label_index]] = sub_arr
     return ImageSegmentationAnnotations(labels, layers)
+
+
+def to_grayscale(width: int, height: int, ann: ImageSegmentationAnnotations, background: int = 0) -> Image.Image:
+    """
+    Turns the annotations into a grayscale image.
+
+    :param width: the width of the image
+    :type width: int
+    :param height: the height of the image
+    :type height: int
+    :param ann: the annotations to convert
+    :type ann: ImageSegmentationAnnotations
+    :param background: the background index
+    :type background: int
+    :return: the generated grayscale image
+    :rtype: Image.Image
+    """
+    arr = np.zeros((height, width)).astype(dtype=np.uint8)
+    for index, label in enumerate(ann.labels, start=1):
+        if label in ann.layers:
+            sub_arr = ann.layers[label]
+            sub_arr = np.where(sub_arr == 255, index, 0).astype(np.uint8)
+            arr += sub_arr
+    if background > 0:
+        arr = np.where(arr == 0, background, arr)
+    result = Image.fromarray(arr, "L")
+    return result

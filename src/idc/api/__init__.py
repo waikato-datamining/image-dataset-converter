@@ -1,10 +1,11 @@
 from ._colors import X11_COLORS, LIGHT_COLORS, DARK_COLORS, COLORBLIND24_COLORS, default_colors, rgb2yiq, text_color
-from ._colors import create_palette, fill_palette, default_palette, PALETTE_AUTO, PALETTE_GRAYSCALE, PALETTE_X11, PALETTE_LIGHT, PALETTE_DARK, PALETTE_COLORBLIND8, PALETTE_COLORBLIND12, PALETTE_COLORBLIND15, PALETTE_COLORBLIND24, PALETTES
+from ._colors import create_palette, fill_palette, default_palette, PALETTE_AUTO, PALETTE_GRAYSCALE, PALETTE_X11, PALETTE_LIGHT, PALETTE_DARK, PALETTE_COLORBLIND8, PALETTE_COLORBLIND12, PALETTE_COLORBLIND15, PALETTE_COLORBLIND24, PALETTES, generate_palette_list
 from ._fonts import DEFAULT_FONT_FAMILY, load_font, text_size
-from ._data import ImageData, make_list, flatten_list, jpeg_quality, array_to_image, empty_image, FORMATS, FORMAT_JPEG, FORMAT_PNG, FORMAT_BMP, FORMAT_EXTENSIONS
+from ._data import ImageData, make_list, flatten_list, jpeg_quality, array_to_image, empty_image, save_image, FORMATS, FORMAT_JPEG, FORMAT_PNG, FORMAT_BMP, FORMAT_EXTENSIONS
 from ._generator import Generator, SingleVariableGenerator
 from ._imgcls import ImageClassificationData
-from ._imgseg import ImageSegmentationData, ImageSegmentationAnnotations, from_indexedpng, from_bluechannel, from_grayscale, combine_layers, split_layers
+from ._imgseg import ImageSegmentationData, ImageSegmentationAnnotations, combine_layers, split_layers
+from ._imgseg import from_indexedpng, from_bluechannel, from_grayscale, to_indexedpng, to_grayscale, to_bluechannel
 from ._objdet import ObjectDetectionData, get_object_label, set_object_label, DEFAULT_LABEL, LABEL_KEY
 from ._utils import locate_file, locate_image, load_image_from_bytes, load_image_from_file, load_function
 from ._utils import load_labels, save_labels, save_labels_csv

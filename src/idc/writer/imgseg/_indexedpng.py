@@ -2,11 +2,10 @@ import argparse
 import os
 from typing import List
 
-import numpy as np
-from PIL import Image
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ImageSegmentationData, SplittableStreamWriter, make_list, default_palette, fill_palette, PALETTE_AUTO, PALETTES, AnnotationsOnlyWriter, add_annotations_only_param
+from idc.api import ImageSegmentationData, SplittableStreamWriter, make_list, PALETTE_AUTO, PALETTES, \
+    AnnotationsOnlyWriter, add_annotations_only_param, to_indexedpng, generate_palette_list
 
 
 class IndexedPngImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnlyWriter):
@@ -111,16 +110,7 @@ class IndexedPngImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnlyW
             os.makedirs(self.output_dir)
         if self.image_path_rel is None:
             self.image_path_rel = ""
-        if self.palette is None:
-            self.palette = PALETTE_AUTO
-        if self.palette not in PALETTES:
-            if "," in self.palette:
-                self._palette_list = [int(x) for x in self.palette.split(",")]
-                self._palette_list = fill_palette(self._palette_list)
-            else:
-                raise Exception("Unknown palette: %s" % self.palette)
-        else:
-            self._palette_list = default_palette(palette=self.palette)
+        self._palette_list = generate_palette_list(self.palette)
         if self.annotations_only is None:
             self.annotations_only = False
 
@@ -151,17 +141,7 @@ class IndexedPngImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnlyW
 
             # annotations
             if item.has_annotation():
-                # combine layers
-                arr = np.zeros((item.image_height, item.image_width)).astype(dtype=np.uint8)
-                for index, label in enumerate(item.annotation.labels, start=1):
-                    if label in item.annotation.layers:
-                        sub_arr = item.annotation.layers[label]
-                        sub_arr = np.where(sub_arr == 255, index, 0).astype(np.uint8)
-                        arr += sub_arr
-                if self.background > 0:
-                    arr = np.where(arr == 0, self.background, arr)
-                ann = Image.fromarray(arr, "P")
-                ann.putpalette(self._palette_list)
+                ann = to_indexedpng(item.image_width, item.image_height, item.annotation, self._palette_list, background=self.background)
                 path = sub_dir
                 os.makedirs(path, exist_ok=True)
                 path = os.path.join(path, item.image_name)

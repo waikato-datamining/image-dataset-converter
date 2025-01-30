@@ -9,6 +9,10 @@ Changelog
   (matching sense can be inverted)
 - requiring seppl>=0.2.9 now
 - added support for aliases
+- added `to_bluechannel`, `to_grayscale` and `to_indexedpng` image segmentation methods to `idc.api`
+- added the `generate_palette_list` method to `idc.api` which turns a predefined palette name or comma-separated
+  list of RGB values into a flat list of int values, e.g., used for indexed PNG files
+- exposed method `save_image` through `idc.api`
 
 
 0.0.5 (2025-01-13)

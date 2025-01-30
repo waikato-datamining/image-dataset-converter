@@ -2,11 +2,10 @@ import argparse
 import os
 from typing import List
 
-import numpy as np
-from PIL import Image
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ImageSegmentationData, SplittableStreamWriter, make_list, AnnotationsOnlyWriter, add_annotations_only_param
+from idc.api import ImageSegmentationData, SplittableStreamWriter, make_list, AnnotationsOnlyWriter, \
+    add_annotations_only_param, to_bluechannel
 
 
 class BlueChannelImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnlyWriter):
@@ -135,18 +134,7 @@ class BlueChannelImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnly
 
             # annotations
             if item.has_annotation():
-                # combine layers
-                arr = np.zeros((item.image_height, item.image_width)).astype(dtype=np.uint8)
-                for index, label in enumerate(item.annotation.labels, start=1):
-                    if label in item.annotation.layers:
-                        sub_arr = item.annotation.layers[label]
-                        sub_arr = np.where(sub_arr == 255, index, 0).astype(np.uint8)
-                        arr += sub_arr
-                if self.background > 0:
-                    arr = np.where(arr == 0, self.background, arr)
-                blue = np.zeros((*arr.shape, 3), np.uint8)
-                blue[:, :, 2] = arr
-                ann = Image.fromarray(blue, "RGB")
+                ann = to_bluechannel(item.image_width, item.image_height, item.annotation, background=self.background)
                 path = sub_dir
                 os.makedirs(path, exist_ok=True)
                 path = os.path.join(path, item.image_name)
