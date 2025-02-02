@@ -114,6 +114,10 @@ class FilterLabels(Filter):
         Initializes the processing, e.g., for opening files or databases.
         """
         super().initialize()
+
+        if self.labels is None:
+            self.labels = []
+
         self._pattern = re.compile(self.regexp) if (self.regexp is not None) else None
 
         if self.region is None:
