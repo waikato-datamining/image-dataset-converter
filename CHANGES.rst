@@ -15,6 +15,7 @@ Changelog
 - exposed method `save_image` through `idc.api`
 - `filter-labels` now handles not specifying any labels and only regexp
 - `write-labels` filter now allows specification of custom separator
+- using `simple_palette_utils` dependency now
 
 
 0.0.5 (2025-01-13)

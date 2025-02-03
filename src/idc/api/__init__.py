@@ -1,5 +1,4 @@
-from ._colors import X11_COLORS, LIGHT_COLORS, DARK_COLORS, COLORBLIND24_COLORS, default_colors, rgb2yiq, text_color
-from ._colors import create_palette, fill_palette, default_palette, PALETTE_AUTO, PALETTE_GRAYSCALE, PALETTE_X11, PALETTE_LIGHT, PALETTE_DARK, PALETTE_COLORBLIND8, PALETTE_COLORBLIND12, PALETTE_COLORBLIND15, PALETTE_COLORBLIND24, PALETTES, generate_palette_list
+from ._colors import rgb2yiq, text_color
 from ._fonts import DEFAULT_FONT_FAMILY, load_font, text_size
 from ._data import ImageData, make_list, flatten_list, jpeg_quality, array_to_image, empty_image, save_image, FORMATS, FORMAT_JPEG, FORMAT_PNG, FORMAT_BMP, FORMAT_EXTENSIONS
 from ._generator import Generator, SingleVariableGenerator

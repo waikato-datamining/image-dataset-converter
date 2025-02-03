@@ -43,6 +43,7 @@ setup(
         "numpy<2.0.0",
         "shapely",
         "python-image-complete",
+        "simple_palette_utils",
     ],
     version="0.0.5",
     author='Peter Reutemann',

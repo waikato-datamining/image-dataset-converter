@@ -4,8 +4,9 @@ from typing import List
 
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ImageSegmentationData, SplittableStreamWriter, make_list, PALETTE_AUTO, PALETTES, \
-    AnnotationsOnlyWriter, add_annotations_only_param, to_indexedpng, generate_palette_list
+from idc.api import ImageSegmentationData, SplittableStreamWriter, make_list, \
+    AnnotationsOnlyWriter, add_annotations_only_param, to_indexedpng
+from simple_palette_utils import generate_palette_list, PALETTE_AUTO, PALETTES
 
 
 class IndexedPngImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnlyWriter):
