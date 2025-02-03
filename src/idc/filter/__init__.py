@@ -21,4 +21,4 @@ from ._sample import Sample
 from ._split_records import SplitRecords
 from ._strip_annotations import StripAnnotations
 from ._tee import Tee
-from ._write_labels import WriteLabels
+from ._write_labels import WriteLabels, OUTPUT_FORMATS, OUTPUT_FORMAT_TEXT, OUTPUT_FORMAT_COMMASEP, OUTPUT_FORMAT_CUSTOMSEP
