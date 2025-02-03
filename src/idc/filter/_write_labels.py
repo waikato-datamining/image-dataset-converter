@@ -9,9 +9,11 @@ from idc.api import ObjectDetectionData, ImageClassificationData, ImageSegmentat
 
 OUTPUT_FORMAT_TEXT = "text"
 OUTPUT_FORMAT_COMMASEP = "comma-separated"
+OUTPUT_FORMAT_CUSTOMSEP = "custom-separator"
 OUTPUT_FORMATS = [
     OUTPUT_FORMAT_TEXT,
     OUTPUT_FORMAT_COMMASEP,
+    OUTPUT_FORMAT_CUSTOMSEP,
 ]
 
 
@@ -20,7 +22,7 @@ class WriteLabels(Filter):
     Collects labels passing through and writes them to the specified file (stdout if not provided).
     """
 
-    def __init__(self, output_file: str = None, output_format: str = OUTPUT_FORMAT_TEXT,
+    def __init__(self, output_file: str = None, output_format: str = OUTPUT_FORMAT_TEXT, custom_sep: str = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
         Initializes the filter.
@@ -29,6 +31,8 @@ class WriteLabels(Filter):
         :type output_file: str
         :param output_format: the format to use
         :type output_format: str
+        :param custom_sep: the custom separator to use (if OUTPUT_FORMAT_CUSTOMSEP)
+        :type custom_sep: str
         :param logger_name: the name to use for the logger
         :type logger_name: str
         :param logging_level: the logging level to use
@@ -37,6 +41,7 @@ class WriteLabels(Filter):
         super().__init__(logger_name=logger_name, logging_level=logging_level)
         self.output_file = output_file
         self.output_format = output_format
+        self.custom_sep = custom_sep
         self._labels = None
 
     def name(self) -> str:
@@ -85,6 +90,7 @@ class WriteLabels(Filter):
         parser = super()._create_argparser()
         parser.add_argument("-o", "--output_file", type=str, default=None, help="The file to write the labels to; uses stdout if not provided", required=False)
         parser.add_argument("-f", "--output_format", choices=OUTPUT_FORMATS, default=OUTPUT_FORMAT_TEXT, help="The format to use for the labels", required=False)
+        parser.add_argument("-s", "--custom_sep", default=None, help="The custom separator to use; use \\t, \\n or \\r for tab, new line or carriage return", required=False)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
@@ -97,6 +103,7 @@ class WriteLabels(Filter):
         super()._apply_args(ns)
         self.output_file = ns.output_file
         self.output_format = ns.output_format
+        self.custom_sep = ns.custom_sep
 
     def initialize(self):
         """
@@ -104,6 +111,12 @@ class WriteLabels(Filter):
         """
         super().initialize()
         self._labels = set()
+        if self.output_format is None:
+            self.output_format = OUTPUT_FORMAT_TEXT
+        if self.output_format == OUTPUT_FORMAT_CUSTOMSEP:
+            if self.custom_sep is None:
+                raise Exception("No custom separator specified!")
+            self.custom_sep = self.custom_sep.replace("\\t", "\t").replace("\\n", "\n").replace("\\r", "\r")
 
     def _do_process(self, data):
         """
@@ -137,11 +150,14 @@ class WriteLabels(Filter):
 
         labels = sorted(self._labels)
         if self.output_format == OUTPUT_FORMAT_TEXT:
-            text = "\n".join(labels)
+            sep = "\n"
         elif self.output_format == OUTPUT_FORMAT_COMMASEP:
-            text = ",".join(labels)
+            sep = ","
+        elif self.output_format == OUTPUT_FORMAT_CUSTOMSEP:
+            sep = self.custom_sep
         else:
             raise Exception("Unhandled output format: %s" % self.output_format)
+        text = sep.join(labels)
 
         if (self.output_file is None) or os.path.isdir(self.output_file):
             print(text)

@@ -14,6 +14,7 @@ Changelog
   list of RGB values into a flat list of int values, e.g., used for indexed PNG files
 - exposed method `save_image` through `idc.api`
 - `filter-labels` now handles not specifying any labels and only regexp
+- `write-labels` filter now allows specification of custom separator
 
 
 0.0.5 (2025-01-13)

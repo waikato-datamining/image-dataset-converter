@@ -8,7 +8,8 @@ Collects labels passing through and writes them to the specified file (stdout if
 ```
 usage: write-labels [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                     [-N LOGGER_NAME] [-o OUTPUT_FILE]
-                    [-f {text,comma-separated}]
+                    [-f {text,comma-separated,custom-separator}]
+                    [-s CUSTOM_SEP]
 
 Collects labels passing through and writes them to the specified file (stdout
 if not provided).
@@ -23,6 +24,9 @@ options:
   -o OUTPUT_FILE, --output_file OUTPUT_FILE
                         The file to write the labels to; uses stdout if not
                         provided (default: None)
-  -f {text,comma-separated}, --output_format {text,comma-separated}
+  -f {text,comma-separated,custom-separator}, --output_format {text,comma-separated,custom-separator}
                         The format to use for the labels (default: text)
+  -s CUSTOM_SEP, --custom_sep CUSTOM_SEP
+                        The custom separator to use; use \t, \n or \r for tab,
+                        new line or carriage return (default: None)
 ```
