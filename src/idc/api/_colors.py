@@ -17,13 +17,15 @@ def rgb2yiq(r: int, g: int, b: int) -> float:
     return ((r * 299) + (g * 587) + (b * 114)) / 1000
 
 
-def text_color(color: Tuple[int, int, int], threshold=128) -> Tuple[int, int, int]:
+def text_color(color: Tuple[int, int, int], threshold: int = 128) -> Tuple[int, int, int]:
     """
     Computes the text color to use for the given RGB color.
 
-    :param color: the RGB tuple
+    :param color: the RGB tuple (R/G/B)
+    :type color: tuple
     :param threshold: the threshold to use
-    :return: the text color tuple
+    :type threshold: int
+    :return: the text color tuple (R/G/B)
     :rtype: tuple
     """
     r, g, b = color
