@@ -35,9 +35,9 @@ options:
                         The relative path from the annotations to the images
                         directory (default: None)
   -p PALETTE, --palette PALETTE
-                        The palette to use; either palette name (auto|grayscal
-                        e|x11|light|dark|colorblind8|colorblind12|colorblind15
-                        |colorblind24) or comma-separated list of R,G,B
+                        The palette to use; either palette name (auto|colorbli
+                        nd12|colorblind15|colorblind24|colorblind8|dark|graysc
+                        ale|light|x11) or comma-separated list of R,G,B
                         values. (default: auto)
   --background BACKGROUND
                         The index (0-255) to use for the background (default:
