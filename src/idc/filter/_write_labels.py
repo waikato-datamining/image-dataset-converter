@@ -136,7 +136,7 @@ class WriteLabels(Filter):
                     label = get_object_label(obj)
                     if label is not None:
                         self._labels.add(label)
-            elif isinstance(item, ImageClassificationData):
+            elif isinstance(item, ImageSegmentationData):
                 for label in item.annotation.layers:
                     self._labels.add(label)
 

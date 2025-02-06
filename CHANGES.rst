@@ -15,6 +15,7 @@ Changelog
 - exposed method `save_image` through `idc.api`
 - `filter-labels` now handles not specifying any labels and only regexp
 - `write-labels` filter now allows specification of custom separator
+- `write-labels`: fixed retrieval of image-segmentation labels
 - using `simple_palette_utils` dependency now
 
 
