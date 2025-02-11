@@ -17,6 +17,7 @@ Changelog
 - `write-labels` filter now allows specification of custom separator
 - `write-labels`: fixed retrieval of image-segmentation labels
 - using `simple_palette_utils` dependency now
+- `idc-convert` tool now flags aliases on the help screen with `*`
 
 
 0.0.5 (2025-01-13)
