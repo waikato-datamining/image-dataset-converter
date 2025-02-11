@@ -7,7 +7,7 @@ Changelog
 - `LayerSegmentsImageSegmentationReader` now suggest using `--lenient` flag in exception in case image not binary
 - added the `discard-by-name` filter that allows user to discard images based on name, either exact match of regexp
   (matching sense can be inverted)
-- requiring seppl>=0.2.9 now
+- requiring seppl>=0.2.10 now
 - added support for aliases
 - added `to_bluechannel`, `to_grayscale` and `to_indexedpng` image segmentation methods to `idc.api`
 - added the `generate_palette_list` method to `idc.api` which turns a predefined palette name or comma-separated
