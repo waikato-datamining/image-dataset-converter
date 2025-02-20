@@ -13,12 +13,14 @@ from idc.api import Reader
 class VOCObjectDetectionReader(Reader):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
-                 logger_name: str = None, logging_level: str = LOGGING_WARNING):
+                 image_rel_path: str = None, logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
         Initializes the reader.
 
         :param source: the filename(s)
         :param source_list: the file(s) with filename(s)
+        :param image_rel_path: the relative path to apply to "folder" for locating the images
+        :type image_rel_path: str
         :param logger_name: the name to use for the logger
         :type logger_name: str
         :param logging_level: the logging level to use
@@ -27,6 +29,7 @@ class VOCObjectDetectionReader(Reader):
         super().__init__(logger_name=logger_name, logging_level=logging_level)
         self.source = source
         self.source_list = source_list
+        self.image_rel_path = image_rel_path
         self._inputs = None
         self._current_input = None
 
@@ -58,6 +61,7 @@ class VOCObjectDetectionReader(Reader):
         parser = super()._create_argparser()
         parser.add_argument("-i", "--input", type=str, help="Path to the XML file(s) to read; glob syntax is supported", required=False, nargs="*")
         parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the XML files to use", required=False, nargs="*")
+        parser.add_argument("-r", "--image_rel_path", type=str, help="The relative path to use for the 'folder' property to locate the images.", required=False)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
@@ -70,6 +74,7 @@ class VOCObjectDetectionReader(Reader):
         super()._apply_args(ns)
         self.source = ns.input
         self.source_list = ns.input_list
+        self.image_rel_path = ns.image_rel_path
 
     def generates(self) -> List:
         """
@@ -85,6 +90,8 @@ class VOCObjectDetectionReader(Reader):
         Initializes the processing, e.g., for opening files or databases.
         """
         super().initialize()
+        if self.image_rel_path is None:
+            self.image_rel_path = ""
         self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.xml")
 
     def read(self) -> Iterable:
@@ -99,11 +106,19 @@ class VOCObjectDetectionReader(Reader):
         self.logger().info("Reading from: " + str(self.session.current_input))
 
         xml = ElementTree.parse(self.session.current_input)
-        img = os.path.join(
-            os.path.dirname(self.session.current_input),
-            xml.findtext("folder"),
-            xml.findtext("filename")
-        )
+        if len(self.image_rel_path) > 0:
+            img = os.path.join(
+                os.path.dirname(self.session.current_input),
+                self.image_rel_path,
+                xml.findtext("folder"),
+                xml.findtext("filename")
+            )
+        else:
+            img = os.path.join(
+                os.path.dirname(self.session.current_input),
+                xml.findtext("folder"),
+                xml.findtext("filename")
+            )
         if not os.path.exists(img):
             self.logger().warning("Failed to locate image based on information in XML.")
             img = locate_image(self.session.current_input)

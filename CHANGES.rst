@@ -18,6 +18,8 @@ Changelog
 - `write-labels`: fixed retrieval of image-segmentation labels
 - using `simple_palette_utils` dependency now
 - `idc-convert` tool now flags aliases on the help screen with `*`
+- the `from-voc-od` reader now has the `-r/--image_rel_path` option which gets injected before the `folder` property
+  from the XML file
 
 
 0.0.5 (2025-01-13)
