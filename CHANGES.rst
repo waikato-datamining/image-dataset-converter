@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.0.6 (????-??-??)
+0.0.6 (2025-02-26)
 ------------------
 
 - `LayerSegmentsImageSegmentationReader` now suggest using `--lenient` flag in exception in case image not binary
