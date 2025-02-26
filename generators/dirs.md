@@ -10,7 +10,7 @@ Iterates over directories that it finds. Available variables:
 absdir|reldir|dirname. absdir: the absolute directory, reldir: the relative
 directory to the search path, dirname: the directory name (no parent path).
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   -l {DEBUG,INFO,WARNING,ERROR,CRITICAL}, --logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
                         The logging level to use. (default: WARN)
