@@ -99,7 +99,7 @@ of variables expanded. A variable is surrounded by curly quotes (e.g.,
 variable 'i' gets referenced with '{i}'). Available generators: dirs, list,
 null, range
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   -p PIPELINE, --pipeline PIPELINE
                         The pipeline template with variables to expand and
@@ -122,17 +122,16 @@ Readers tend to support input via file lists. The `idc-find` tool can generate
 these.
 
 ```
-usage: idc-find [-h] -i DIR [DIR ...] [-r] -o FILE [-m [REGEXP [REGEXP ...]]]
-                [-n [REGEXP [REGEXP ...]]]
-                [--split_ratios [SPLIT_RATIOS [SPLIT_RATIOS ...]]]
-                [--split_names [SPLIT_NAMES [SPLIT_NAMES ...]]]
+usage: idc-find [-h] -i DIR [DIR ...] [-r] -o FILE [-m [REGEXP ...]]
+                [-n [REGEXP ...]] [--split_ratios [SPLIT_RATIOS ...]]
+                [--split_names [SPLIT_NAMES ...]]
                 [--split_name_separator SPLIT_NAME_SEPARATOR]
                 [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
 
 Tool for locating files in directories that match certain patterns and store
 them in files.
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   -i DIR [DIR ...], --input DIR [DIR ...]
                         The dir(s) to scan for files. (default: None)
@@ -141,16 +140,16 @@ optional arguments:
   -o FILE, --output FILE
                         The file to store the located file names in (default:
                         None)
-  -m [REGEXP [REGEXP ...]], --match [REGEXP [REGEXP ...]]
+  -m [REGEXP ...], --match [REGEXP ...]
                         The regular expression that the (full) file names must
                         match to be included (default: None)
-  -n [REGEXP [REGEXP ...]], --not-match [REGEXP [REGEXP ...]]
+  -n [REGEXP ...], --not-match [REGEXP ...]
                         The regular expression that the (full) file names must
                         match to be excluded (default: None)
-  --split_ratios [SPLIT_RATIOS [SPLIT_RATIOS ...]]
+  --split_ratios [SPLIT_RATIOS ...]
                         The split ratios to use for generating the splits
                         (int; must sum up to 100) (default: None)
-  --split_names [SPLIT_NAMES [SPLIT_NAMES ...]]
+  --split_names [SPLIT_NAMES ...]
                         The split names to use as filename suffixes for the
                         generated splits (before .ext) (default: None)
   --split_name_separator SPLIT_NAME_SEPARATOR
@@ -164,16 +163,16 @@ optional arguments:
 ### Generating help screens for plugins
 
 ```
-usage: idc-help [-h] [-c [PACKAGE [PACKAGE ...]]] [-e EXCLUDED_CLASS_LISTERS]
+usage: idc-help [-h] [-c [PACKAGE ...]] [-e EXCLUDED_CLASS_LISTERS]
                 [-T {pipeline,generator}] [-p NAME] [-f {text,markdown}]
                 [-L INT] [-o PATH] [-i FILE] [-t TITLE]
                 [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
 
 Tool for outputting help for plugins in various formats.
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
-  -c [PACKAGE [PACKAGE ...]], --custom_class_listers [PACKAGE [PACKAGE ...]]
+  -c [PACKAGE ...], --custom_class_listers [PACKAGE ...]
                         The custom class listers to use, uses the default ones
                         if not provided. (default: None)
   -e EXCLUDED_CLASS_LISTERS, --excluded_class_listers EXCLUDED_CLASS_LISTERS
@@ -215,7 +214,7 @@ usage: idc-registry [-h] [-c CUSTOM_CLASS_LISTERS] [-e EXCLUDED_CLASS_LISTERS]
 
 For inspecting/querying the registry.
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   -c CUSTOM_CLASS_LISTERS, --custom_class_listers CUSTOM_CLASS_LISTERS
                         The comma-separated list of custom class listers to
@@ -237,7 +236,7 @@ usage: idc-test-generator [-h] -g GENERATOR
 Tool for testing generators by outputting the generated variables and their
 associatd values. Available generators: dirs, list, null, range
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   -g GENERATOR, --generator GENERATOR
                         The generator plugin to use. (default: None)
