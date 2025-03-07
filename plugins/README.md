@@ -43,6 +43,8 @@
 * [record-window](record-window.md)
 * [remove-classes](remove-classes.md)
 * [rename](rename.md)
+* [rgb-to-grayscale](rgb-to-grayscale.md)
+* [rgb-to-greyscale](rgb-to-greyscale.md)
 * [sample](sample.md)
 * [split-records](split-records.md)
 * [strip-annotations](strip-annotations.md)
