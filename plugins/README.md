@@ -46,6 +46,7 @@
 * [rgb-to-grayscale](rgb-to-grayscale.md)
 * [rgb-to-greyscale](rgb-to-greyscale.md)
 * [sample](sample.md)
+* [sort-pixels](sort-pixels.md)
 * [split-records](split-records.md)
 * [strip-annotations](strip-annotations.md)
 * [tee](tee.md)

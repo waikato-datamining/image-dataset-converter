@@ -6,6 +6,7 @@ Changelog
 
 - added `safe_deepcopy` method to idc.api._utils which creates a deep copy of an object if not None
 - added `rgb-to-grayscale` filter
+- added `sort-pixels` filter
 
 
 0.0.6 (2025-02-26)
