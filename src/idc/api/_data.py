@@ -13,7 +13,7 @@ from image_complete.bmp import is_bmp
 from image_complete.jpg import is_jpg
 from image_complete.png import is_png
 from seppl import MetaDataHandler, LoggingHandler
-from ._utils import load_image_from_bytes
+from ._utils import load_image_from_bytes, safe_deepcopy
 from wai.logging import set_logging_level, LOGGING_INFO
 
 _logger = None
@@ -453,19 +453,19 @@ class ImageData(MetaDataHandler, LoggingHandler):
                 source = self._source
         if name is None:
             name = self._image_name
-        if (data is None) and (self._data is not None):
-            data = copy.deepcopy(self._data)
+        if data is None:
+            data = safe_deepcopy(self._data)
         # if the source changes, we need to force loading the image
         if ((image is None) and (self._image is not None)) or (source != self._source):
             image = copy.deepcopy(self.image)
         if image_format is None:
             image_format = self._image_format
-        if (size is None) and (self._image_size is not None):
-            size = copy.deepcopy(self._image_size)
-        if (metadata is None) and (self._metadata is not None):
-            metadata = copy.deepcopy(self._metadata)
-        if (annotation is None) and (self.annotation is not None):
-            annotation = copy.deepcopy(self.annotation)
+        if size is None:
+            size = safe_deepcopy(self._image_size)
+        if metadata is None:
+            metadata = safe_deepcopy(self._metadata)
+        if annotation is None:
+            annotation = safe_deepcopy(self.annotation)
 
         return type(self)(source=source, image_name=name, data=data,
                           image=image, image_format=image_format, image_size=size,
