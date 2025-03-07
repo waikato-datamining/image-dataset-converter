@@ -1,3 +1,4 @@
+import copy
 import csv
 import importlib
 import inspect
@@ -5,7 +6,7 @@ import io
 import logging
 import numpy as np
 import os
-from typing import Optional, Union, List, Dict, Tuple, Callable
+from typing import Optional, Union, List, Dict, Tuple, Callable, Any
 
 from PIL import Image
 
@@ -273,3 +274,16 @@ def crop_image(img: Union[Image.Image, np.ndarray], crop_width: Optional[int] = 
             result = img[0:crop_height, 0:crop_width]
 
     return result
+
+
+def safe_deepcopy(obj: Optional[Any]) -> Optional[Any]:
+    """
+    Creates a deep copy of the object. Skips None objects.
+
+    :param obj: the object to copy, can be None
+    :return: the copy or None
+    """
+    if obj is None:
+        return None
+    else:
+        return copy.deepcopy(obj)
