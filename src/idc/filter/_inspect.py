@@ -6,6 +6,7 @@ from typing import List
 from seppl import get_metadata, AnyData
 from seppl.io import Filter
 from wai.logging import LOGGING_WARNING
+from idc.api import make_list, flatten_list
 
 MODE_INTERACTIVE = "interactive"
 MODE_NONINTERACTIVE = "non-interactive"
@@ -181,27 +182,33 @@ class Inspect(Filter):
         :param data: the record(s) to process
         :return: the potentially updated record(s)
         """
-        self._output_data(self._assemble_data(data))
+        result = []
 
-        if self.show_image:
-            img = data.image
-            if img is None:
-                self.logger().error("Failed to obtain image for display!")
-            else:
-                img.show()
+        for item in make_list(data):
+            self._output_data(self._assemble_data(item))
 
-        if self.mode == MODE_INTERACTIVE:
-            while True:
-                print("Continue (yes/no/skip)? ")
-                answer = input()
-                answer = answer.lower()
-                if (answer == "no") or (answer == "n"):
-                    sys.exit(0)
-                elif (answer == "skip") or (answer == "s"):
-                    return None
-                elif (answer == "yes") or (answer == "y"):
-                    return data
+            if self.show_image:
+                img = item.image
+                if img is None:
+                    self.logger().error("Failed to obtain image for display!")
                 else:
-                    print("Invalid choice!")
-        else:
-            return data
+                    img.show()
+
+            if self.mode == MODE_INTERACTIVE:
+                while True:
+                    print("Continue (yes/no/skip)? ")
+                    answer = input()
+                    answer = answer.lower()
+                    if (answer == "no") or (answer == "n"):
+                        sys.exit(0)
+                    elif (answer == "skip") or (answer == "s"):
+                        break
+                    elif (answer == "yes") or (answer == "y"):
+                        result.append(item)
+                        break
+                    else:
+                        print("Invalid choice!")
+            else:
+                result.append(item)
+
+        return flatten_list(result)
