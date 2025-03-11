@@ -217,7 +217,7 @@ class MetaData(Filter):
                 result.append(result_item)
 
             info = "keeping" if (result_item is not None) else "discarding"
-            comp = str(meta[self.field] + " " + self.comparison + " " + str(self.value) + " = " + str(comp_result))
+            comp = str(meta[self.field]) + " " + self.comparison + " " + str(self.value) + " = " + str(comp_result)
             self.logger().debug("Comparison result '%s': %s" % (comp, info))
 
         return flatten_list(result)
