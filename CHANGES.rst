@@ -8,6 +8,8 @@ Changelog
 - added `rgb-to-grayscale` filter to convert color images into gray scale ones
 - added `sort-pixels` filter for grayscale images
 - the following filters can operate on lists of records now as well: `inspec`, `metadata`, `metadata-from-name`
+- added `metadata-od` filter for filtering object-detection annotations based on their meta-data
+  (e.g., scores from model predictions)
 
 
 0.0.6 (2025-02-26)
