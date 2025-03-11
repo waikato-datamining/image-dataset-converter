@@ -6,6 +6,7 @@ from seppl import MetaDataHandler, AnyData
 from seppl.io import Filter, FILTER_ACTIONS, FILTER_ACTION_DISCARD, FILTER_ACTION_KEEP
 from wai.logging import LOGGING_WARNING
 
+from idc.api import make_list, flatten_list
 from idc.core import COMPARISONS_EXT, COMPARISON_LESSTHAN, COMPARISON_LESSOREQUAL, COMPARISON_EQUAL, \
     COMPARISON_NOTEQUAL, \
     COMPARISON_GREATEROREQUAL, COMPARISON_GREATERTHAN, COMPARISON_CONTAINS, COMPARISON_MATCHES, COMPARISON_EXT_HELP
@@ -150,73 +151,76 @@ class MetaData(Filter):
         :param data: the record(s) to process
         :return: the potentially updated record(s)
         """
-        result = data
+        result = []
 
-        if isinstance(data, MetaDataHandler):
-            meta = None
-            if data.has_metadata():
-                meta = data.get_metadata()
-        else:
-            raise Exception("Unhandled type of data: %s" % str(type(data)))
+        for item in make_list(data):
+            result_item = item
+            if isinstance(item, MetaDataHandler):
+                meta = None
+                if item.has_metadata():
+                    meta = item.get_metadata()
+            else:
+                raise Exception("Unhandled type of data: %s" % str(type(item)))
 
-        # no meta-data -> reject
-        if meta is None:
-            self.logger().info("No meta-data, discarded")
-            self.discarded += 1
-            return None
+            # no meta-data -> reject
+            if meta is None:
+                self.logger().info("No meta-data, discarded")
+                self.discarded += 1
+                continue
 
-        # key not present -> reject
-        if self.field not in meta:
-            self.logger().info("Field '%s' not meta-data, discarded" % self.field)
-            self.discarded += 1
-            return None
+            # key not present -> reject
+            if self.field not in meta:
+                self.logger().info("Field '%s' not meta-data, discarded" % self.field)
+                self.discarded += 1
+                continue
 
-        v1 = meta[self.field]
-        v2 = self.value
-        if self.comparison in [COMPARISON_CONTAINS, COMPARISON_MATCHES]:
-            v1 = str(v1)
-        else:
-            v1, v2 = self._ensure_same_type(v1, v2)
+            v1 = meta[self.field]
+            v2 = self.value
+            if self.comparison in [COMPARISON_CONTAINS, COMPARISON_MATCHES]:
+                v1 = str(v1)
+            else:
+                v1, v2 = self._ensure_same_type(v1, v2)
 
-        # compare
-        if self.comparison == COMPARISON_LESSTHAN:
-            comp_result = v1 < v2
-        elif self.comparison == COMPARISON_LESSOREQUAL:
-            comp_result = v1 <= v2
-        elif self.comparison == COMPARISON_EQUAL:
-            comp_result = v1 == v2
-        elif self.comparison == COMPARISON_NOTEQUAL:
-            comp_result = v1 != v2
-        elif self.comparison == COMPARISON_GREATERTHAN:
-            comp_result = v1 > v2
-        elif self.comparison == COMPARISON_GREATEROREQUAL:
-            comp_result = v1 >= v2
-        elif self.comparison == COMPARISON_CONTAINS:
-            comp_result = v2 in v1
-        elif self.comparison == COMPARISON_MATCHES:
-            comp_result = re.search(v2, v1) is not None
-        else:
-            raise Exception("Unhandled comparison: %s" % self.comparison)
+            # compare
+            if self.comparison == COMPARISON_LESSTHAN:
+                comp_result = v1 < v2
+            elif self.comparison == COMPARISON_LESSOREQUAL:
+                comp_result = v1 <= v2
+            elif self.comparison == COMPARISON_EQUAL:
+                comp_result = v1 == v2
+            elif self.comparison == COMPARISON_NOTEQUAL:
+                comp_result = v1 != v2
+            elif self.comparison == COMPARISON_GREATERTHAN:
+                comp_result = v1 > v2
+            elif self.comparison == COMPARISON_GREATEROREQUAL:
+                comp_result = v1 >= v2
+            elif self.comparison == COMPARISON_CONTAINS:
+                comp_result = v2 in v1
+            elif self.comparison == COMPARISON_MATCHES:
+                comp_result = re.search(v2, v1) is not None
+            else:
+                raise Exception("Unhandled comparison: %s" % self.comparison)
 
-        if self.action == FILTER_ACTION_KEEP:
-            if not comp_result:
-                result = None
-        elif self.action == FILTER_ACTION_DISCARD:
-            if comp_result:
-                result = None
-        else:
-            raise Exception("Unhandled action: %s" % self.action)
+            if self.action == FILTER_ACTION_KEEP:
+                if not comp_result:
+                    result_item = None
+            elif self.action == FILTER_ACTION_DISCARD:
+                if comp_result:
+                    result_item = None
+            else:
+                raise Exception("Unhandled action: %s" % self.action)
 
-        if result is None:
-            self.discarded += 1
-        else:
-            self.kept += 1
+            if result_item is None:
+                self.discarded += 1
+            else:
+                self.kept += 1
+                result.append(result_item)
 
-        info = "keeping" if (result is not None) else "discarding"
-        comp = str(meta[self.field] + " " + self.comparison + " " + str(self.value) + " = " + str(comp_result))
-        self.logger().debug("Comparison result '%s': %s" % (comp, info))
+            info = "keeping" if (result_item is not None) else "discarding"
+            comp = str(meta[self.field] + " " + self.comparison + " " + str(self.value) + " = " + str(comp_result))
+            self.logger().debug("Comparison result '%s': %s" % (comp, info))
 
-        return result
+        return flatten_list(result)
 
     def finalize(self):
         """

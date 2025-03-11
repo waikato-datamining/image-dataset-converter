@@ -6,6 +6,7 @@ from typing import List
 from seppl import AnyData
 from seppl.io import Filter
 from wai.logging import LOGGING_WARNING
+from idc.api import make_list, flatten_list
 
 
 class MetaDataFromName(Filter):
@@ -132,11 +133,9 @@ class MetaDataFromName(Filter):
         :param data: the record(s) to process
         :return: the potentially updated record(s)
         """
-        if isinstance(data, list):
-            result = list(data)
-            for i, item in enumerate(data):
-                result[i] = self._update(item)
-        else:
-            result = self._update(data)
+        result = []
 
-        return result
+        for item in make_list(data):
+            result.append(self._update(item))
+
+        return flatten_list(result)
