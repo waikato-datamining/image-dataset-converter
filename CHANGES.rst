@@ -10,6 +10,8 @@ Changelog
 - the following filters can operate on lists of records now as well: `inspec`, `metadata`, `metadata-from-name`
 - added `metadata-od` filter for filtering object-detection annotations based on their meta-data
   (e.g., scores from model predictions)
+- the filters `discard-negatives` and `discard-invalid-images` now output how many were discarded/kept
+  when processing finishes
 
 
 0.0.6 (2025-02-26)

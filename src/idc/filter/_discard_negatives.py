@@ -22,6 +22,8 @@ class DiscardNegatives(Filter):
         :type logging_level: str
         """
         super().__init__(logger_name=logger_name, logging_level=logging_level)
+        self.kept = 0
+        self.discarded = 0
 
     def name(self) -> str:
         """
@@ -59,6 +61,14 @@ class DiscardNegatives(Filter):
         """
         return [AnyData]
 
+    def initialize(self):
+        """
+        Initializes the processing, e.g., for opening files or databases.
+        """
+        super().initialize()
+        self.kept = 0
+        self.discarded = 0
+
     def _do_process(self, data):
         """
         Processes the data record(s).
@@ -70,8 +80,18 @@ class DiscardNegatives(Filter):
 
         for item in make_list(data):
             if item.has_annotation():
+                self.kept += 1
                 result.append(item)
             else:
+                self.discarded += 1
                 self.logger().info("Discarding image: %s" % item.image_name)
 
         return flatten_list(result)
+
+    def finalize(self):
+        """
+        Finishes the processing, e.g., for closing files or databases.
+        """
+        super().finalize()
+        self.logger().info("# kept: %d" % self.kept)
+        self.logger().info("# discarded: %d" % self.discarded)
