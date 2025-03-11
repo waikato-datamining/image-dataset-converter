@@ -7,6 +7,7 @@ Changelog
 - added `safe_deepcopy` method to idc.api._utils which creates a deep copy of an object if not None
 - added `rgb-to-grayscale` filter to convert color images into gray scale ones
 - added `sort-pixels` filter for grayscale images
+- the filters `metadata` and `metadata-from-name` can operate on lists of records now
 
 
 0.0.6 (2025-02-26)
