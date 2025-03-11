@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.0.7 (????-??-??)
+0.0.7 (2025-03-12)
 ------------------
 
 - added `safe_deepcopy` method to idc.api._utils which creates a deep copy of an object if not None
