@@ -8,7 +8,7 @@ from typing import List, Optional
 from wai.logging import init_logging, set_logging_level, add_logging_level
 from idc.core import ENV_IDC_LOGLEVEL
 from idc.help import generate_plugin_usage, HELP_FORMATS, HELP_FORMAT_TEXT, HELP_FORMAT_MARKDOWN
-from idc.registry import register_plugins, available_plugins, available_pipeline_plugins
+from idc.registry import register_plugins, available_pipeline_plugins
 from idc.registry import available_readers, available_filters, available_writers, available_generators
 
 HELP = "idc-help"
