@@ -1,8 +1,11 @@
 import os
 
 from seppl import OutputProducer, InputConsumer, classes_to_str, get_aliases, has_aliases
+from seppl import PlaceholderSupporter, placeholder_help, load_user_defined_placeholders
 
 from idc.registry import available_plugins
+
+load_user_defined_placeholders("/home/fracpete/development/projects/waikato-datamining/seppl/placeholders.txt")
 
 
 HELP_FORMAT_TEXT = "text"
@@ -45,6 +48,8 @@ def generate_plugin_usage(plugin_name: str, help_format: str = HELP_FORMAT_TEXT,
         result = result.strip()
         result += "\n\n"
         result += plugin.format_help() + "\n"
+        if isinstance(plugin, PlaceholderSupporter):
+            result += "\n" + placeholder_help(markdown=False, obj=plugin) + "\n"
     elif help_format == HELP_FORMAT_MARKDOWN:
         suffix = ".md"
         result += "#"*heading_level + " " + plugin_name + "\n"
@@ -62,6 +67,8 @@ def generate_plugin_usage(plugin_name: str, help_format: str = HELP_FORMAT_TEXT,
         result += "```\n"
         result += plugin.format_help()
         result += "```\n"
+        if isinstance(plugin, PlaceholderSupporter):
+            result += "\n" + placeholder_help(markdown=True, obj=plugin) + "\n"
     else:
         raise Exception("Unhandled help format: %s" % help_format)
 
