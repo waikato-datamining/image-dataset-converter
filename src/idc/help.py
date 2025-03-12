@@ -1,11 +1,9 @@
 import os
 
 from seppl import OutputProducer, InputConsumer, classes_to_str, get_aliases, has_aliases
-from seppl import PlaceholderSupporter, placeholder_help, load_user_defined_placeholders
+from seppl import PlaceholderSupporter, placeholder_help
 
 from idc.registry import available_plugins
-
-load_user_defined_placeholders("/home/fracpete/development/projects/waikato-datamining/seppl/placeholders.txt")
 
 
 HELP_FORMAT_TEXT = "text"
