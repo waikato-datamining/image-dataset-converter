@@ -39,7 +39,7 @@ def main(args=None):
     init_logging(env_var=ENV_IDC_LOGLEVEL)
     generators = sorted(list(available_generators().keys()))
     parser = argparse.ArgumentParser(
-        description="Tool for testing generators by outputting the generated variables and their associatd values. Available generators: " + ", ".join(generators),
+        description="Tool for testing generators by outputting the generated variables and their associated values. Available generators: " + ", ".join(generators),
         prog=TEST_GENERATOR,
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("-g", "--generator", help="The generator plugin to use.", default=None, type=str, required=True)
