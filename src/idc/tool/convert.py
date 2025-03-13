@@ -44,7 +44,7 @@ def _print_usage(plugin_details: bool = False):
     cmd = "usage: " + CONVERT
     prefix = " " * (len(cmd) + 1)
     logging_levels = ",".join(LOGGING_LEVELS)
-    print(cmd + " [-h|--help|--help-all|--help-plugin NAME] [-u INTERVAL]")
+    print(cmd + " [-h|--help|--help-all|--help-plugin NAME] [-u INTERVAL] [-b|--force_batch]")
     print(prefix + "[-l {%s}]" % logging_levels)
     print(prefix + "reader")
     print(prefix + "[filter [filter [...]]]")
