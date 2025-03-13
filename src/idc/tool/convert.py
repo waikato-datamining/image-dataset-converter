@@ -6,11 +6,11 @@ import traceback
 
 from typing import List, Tuple, Optional, Dict
 
-from seppl import enumerate_plugins, is_help_requested, split_args, args_to_objects, Plugin, check_compatibility, load_user_defined_placeholders
+from seppl import enumerate_plugins, is_help_requested, split_args, args_to_objects, Plugin, check_compatibility
+from seppl.placeholders import load_user_defined_placeholders
 from seppl.io import execute, Reader, Filter, MultiFilter, Writer
 from wai.logging import init_logging, set_logging_level, add_logging_level, LOGGING_LEVELS
 
-from build.lib.idc.registry import logger
 from idc.core import Session, ENV_IDC_LOGLEVEL
 from idc.help import generate_plugin_usage
 from idc.registry import available_readers, available_filters, available_writers, REGISTRY
