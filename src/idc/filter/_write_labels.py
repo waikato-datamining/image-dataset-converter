@@ -2,7 +2,7 @@ import argparse
 import os
 from typing import List
 
-from seppl.placeholders import PlaceholderSupporter, placeholder_list
+from seppl.placeholders import PlaceholderSupporter, placeholder_list, expand_placeholders
 from seppl.io import Filter
 from wai.logging import LOGGING_WARNING
 
@@ -162,7 +162,7 @@ class WriteLabels(Filter, PlaceholderSupporter):
 
         output_file = None
         if self.output_file is not None:
-            output_file = self.session.expand_placeholders(self.output_file)
+            output_file = expand_placeholders(self.output_file)
         if (output_file is None) or os.path.isdir(output_file):
             print(text)
         else:
