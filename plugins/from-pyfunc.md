@@ -22,13 +22,21 @@ options:
                         name by default (default: None)
   -i [INPUT ...], --input [INPUT ...]
                         Path to the image file(s) to read; glob syntax is
-                        supported (default: None)
+                        supported; Supported placeholders: {HOME}, {CWD},
+                        {TMP} (default: None)
   -I [INPUT_LIST ...], --input_list [INPUT_LIST ...]
                         Path to the text file(s) listing the image files to
-                        use (default: None)
+                        use; Supported placeholders: {HOME}, {CWD}, {TMP}
+                        (default: None)
   -f FUNCTION, --function FUNCTION
                         The Python function to use, format:
                         module_name:function_name (default: None)
   -t {ic,is,od}, --data_type {ic,is,od}
                         The type of data to forward (default: None)
 ```
+
+Available placeholders:
+
+* `{HOME}`: The home directory of the current user.
+* `{CWD}`: The current working directory.
+* `{TMP}`: The temp directory.

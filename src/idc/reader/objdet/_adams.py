@@ -4,12 +4,13 @@ from typing import List, Iterable, Union
 from wai.logging import LOGGING_WARNING
 from wai.common.adams.imaging.locateobjects import LocatedObjects
 from wai.common.file.report import loadf
+from seppl.placeholders import PlaceholderSupporter, placeholder_list
 from seppl.io import locate_files
 from idc.api import ObjectDetectionData, locate_image
 from idc.api import Reader
 
 
-class AdamsObjectDetectionReader(Reader):
+class AdamsObjectDetectionReader(Reader, PlaceholderSupporter):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
                  prefix: str = "Object.", logger_name: str = None, logging_level: str = LOGGING_WARNING):
@@ -58,8 +59,8 @@ class AdamsObjectDetectionReader(Reader):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-i", "--input", type=str, help="Path to the report file(s) to read; glob syntax is supported", required=False, nargs="*")
-        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the report files to use", required=False, nargs="*")
+        parser.add_argument("-i", "--input", type=str, help="Path to the report file(s) to read; glob syntax is supported; " + placeholder_list(obj=self), required=False, nargs="*")
+        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the report files to use; " + placeholder_list(obj=self), required=False, nargs="*")
         parser.add_argument("-p", "--prefix", metavar="PREFIX", type=str, default="Object.", help="The field prefix in the .report files that identifies bbox/polygon object definitions", required=False)
         return parser
 

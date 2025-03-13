@@ -4,11 +4,12 @@ from typing import List, Iterable, Union
 from wai.logging import LOGGING_WARNING
 from wai.common.geometry import NormalizedPoint, NormalizedPolygon
 from wai.common.adams.imaging.locateobjects import NormalizedLocatedObjects, NormalizedLocatedObject
+from seppl.placeholders import PlaceholderSupporter, placeholder_list
 from seppl.io import locate_files
 from idc.api import ObjectDetectionData, locate_image, Reader, load_labels
 
 
-class YoloObjectDetectionReader(Reader):
+class YoloObjectDetectionReader(Reader, PlaceholderSupporter):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
                  image_path_rel: str = None, use_polygon_format: bool = False, labels: str = None,
@@ -65,8 +66,8 @@ class YoloObjectDetectionReader(Reader):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-i", "--input", type=str, help="Path to the text file(s) to read; glob syntax is supported", required=False, nargs="*")
-        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the text files to use", required=False, nargs="*")
+        parser.add_argument("-i", "--input", type=str, help="Path to the text file(s) to read; glob syntax is supported; " + placeholder_list(obj=self), required=False, nargs="*")
+        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the text files to use; " + placeholder_list(obj=self), required=False, nargs="*")
         parser.add_argument("--image_path_rel", metavar="PATH", type=str, default=None, help="The relative path from the annotations to the images directory", required=False)
         parser.add_argument("-p", "--use_polygon_format", action="store_true", help="Whether to read the annotations in polygon format rather than bbox format", required=False)
         parser.add_argument("--labels", metavar="FILE", type=str, default=None, help="The text file with the comma-separated list of labels", required=False)

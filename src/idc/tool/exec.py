@@ -1,8 +1,9 @@
 import argparse
 import logging
+import os
 import traceback
 
-from seppl import split_cmdline
+from seppl import split_cmdline, load_user_defined_placeholders
 from wai.logging import init_logging, set_logging_level, add_logging_level
 
 from idc.api import Generator
@@ -71,9 +72,16 @@ def main(args=None):
     parser.add_argument("-g", "--generator", help="The generator plugin to use.", default=None, type=str, required=True)
     parser.add_argument("-n", "--dry_run", action="store_true", help="Applies the generator to the pipeline template and only outputs it on stdout.", required=False)
     parser.add_argument("-P", "--prefix", help="The string to prefix the pipeline with when in dry-run mode.", required=False, default=None, type=str)
+    parser.add_argument("--placeholders", metavar="FILE", help="The file with custom placeholders to load (format: key=value).", required=False, default=None, type=str)
     add_logging_level(parser)
     parsed = parser.parse_args(args=args)
     set_logging_level(_logger, parsed.logging_level)
+    if parsed.placeholders is not None:
+        if not os.path.exists(parsed.placeholders):
+            _logger.error("Placeholder file not found: %s" % parsed.placeholders)
+        else:
+            _logger.info("Loading custom placeholders from: %s" % parsed.placeholders)
+            load_user_defined_placeholders(parsed.placeholders)
     execute_pipeline(parsed.pipeline, parsed.generator,
                      dry_run=parsed.dry_run, prefix=parsed.prefix)
 

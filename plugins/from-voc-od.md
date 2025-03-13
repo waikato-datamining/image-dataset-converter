@@ -20,11 +20,19 @@ options:
                         name by default (default: None)
   -i [INPUT ...], --input [INPUT ...]
                         Path to the XML file(s) to read; glob syntax is
-                        supported (default: None)
+                        supported; Supported placeholders: {HOME}, {CWD},
+                        {TMP} (default: None)
   -I [INPUT_LIST ...], --input_list [INPUT_LIST ...]
-                        Path to the text file(s) listing the XML files to use
-                        (default: None)
+                        Path to the text file(s) listing the XML files to use;
+                        Supported placeholders: {HOME}, {CWD}, {TMP} (default:
+                        None)
   -r IMAGE_REL_PATH, --image_rel_path IMAGE_REL_PATH
                         The relative path to use for the 'folder' property to
                         locate the images. (default: None)
 ```
+
+Available placeholders:
+
+* `{HOME}`: The home directory of the current user.
+* `{CWD}`: The current working directory.
+* `{TMP}`: The temp directory.

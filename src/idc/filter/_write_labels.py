@@ -2,6 +2,7 @@ import argparse
 import os
 from typing import List
 
+from seppl.placeholders import PlaceholderSupporter, placeholder_list
 from seppl.io import Filter
 from wai.logging import LOGGING_WARNING
 
@@ -17,7 +18,7 @@ OUTPUT_FORMATS = [
 ]
 
 
-class WriteLabels(Filter):
+class WriteLabels(Filter, PlaceholderSupporter):
     """
     Collects labels passing through and writes them to the specified file (stdout if not provided).
     """
@@ -88,7 +89,7 @@ class WriteLabels(Filter):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-o", "--output_file", type=str, default=None, help="The file to write the labels to; uses stdout if not provided", required=False)
+        parser.add_argument("-o", "--output_file", type=str, default=None, help="The file to write the labels to; uses stdout if not provided; " + placeholder_list(obj=self), required=False)
         parser.add_argument("-f", "--output_format", choices=OUTPUT_FORMATS, default=OUTPUT_FORMAT_TEXT, help="The format to use for the labels", required=False)
         parser.add_argument("-s", "--custom_sep", default=None, help="The custom separator to use; use \\t, \\n or \\r for tab, new line or carriage return", required=False)
         return parser
@@ -159,10 +160,13 @@ class WriteLabels(Filter):
             raise Exception("Unhandled output format: %s" % self.output_format)
         text = sep.join(labels)
 
-        if (self.output_file is None) or os.path.isdir(self.output_file):
+        output_file = None
+        if self.output_file is not None:
+            output_file = self.session.expand_placeholders(self.output_file)
+        if (output_file is None) or os.path.isdir(output_file):
             print(text)
         else:
-            self.logger().info("Writing labels to: %s" % self.output_file)
-            with open(self.output_file, "w") as fp:
+            self.logger().info("Writing labels to: %s" % output_file)
+            with open(output_file, "w") as fp:
                 fp.write(text)
                 fp.write("\n")

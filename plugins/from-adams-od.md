@@ -21,11 +21,19 @@ options:
                         name by default (default: None)
   -i [INPUT ...], --input [INPUT ...]
                         Path to the report file(s) to read; glob syntax is
-                        supported (default: None)
+                        supported; Supported placeholders: {HOME}, {CWD},
+                        {TMP} (default: None)
   -I [INPUT_LIST ...], --input_list [INPUT_LIST ...]
                         Path to the text file(s) listing the report files to
-                        use (default: None)
+                        use; Supported placeholders: {HOME}, {CWD}, {TMP}
+                        (default: None)
   -p PREFIX, --prefix PREFIX
                         The field prefix in the .report files that identifies
                         bbox/polygon object definitions (default: Object.)
 ```
+
+Available placeholders:
+
+* `{HOME}`: The home directory of the current user.
+* `{CWD}`: The current working directory.
+* `{TMP}`: The temp directory.

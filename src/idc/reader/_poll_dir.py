@@ -4,6 +4,7 @@ import os
 from time import sleep
 from typing import List, Iterable
 
+from seppl.placeholders import PlaceholderSupporter, placeholder_list
 from seppl import Initializable, init_initializable
 from wai.logging import LOGGING_WARNING
 
@@ -13,7 +14,7 @@ GLOB_NAME_PLACEHOLDER = "{NAME}"
 """ The glob placeholder for identifying other input files. """
 
 
-class PollDir(Reader):
+class PollDir(Reader, PlaceholderSupporter):
 
     def __init__(self, dir_in: str = None, dir_out: str = None, poll_wait: float = None, process_wait: float = None,
                  delete_input: bool = False, extensions: List[str] = None,
@@ -58,6 +59,8 @@ class PollDir(Reader):
         self._inputs = None
         self._current_input = None
         self._base_reader = None
+        self._actual_dir_in = None
+        self._actual_dir_out = None
 
     def name(self) -> str:
         """
@@ -85,8 +88,8 @@ class PollDir(Reader):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-i", "--dir_in", type=str, help="The directory to poll", required=True)
-        parser.add_argument("-o", "--dir_out", type=str, help="The directory to move the files to", required=True)
+        parser.add_argument("-i", "--dir_in", type=str, help="The directory to poll; " + placeholder_list(obj=self), required=True)
+        parser.add_argument("-o", "--dir_out", type=str, help="The directory to move the files to; " + placeholder_list(obj=self), required=True)
         parser.add_argument("-w", "--poll_wait", type=float, help="The poll interval in seconds", required=False, default=1.0)
         parser.add_argument("-W", "--process_wait", type=float, help="The number of seconds to wait before processing the polled files (e.g., waiting for files to be fully written)", required=False, default=0.0)
         parser.add_argument("-d", "--delete_input", action="store_true", help="Whether to delete the input files rather than move them to --dir_out directory", required=False, default=False)
@@ -164,8 +167,10 @@ class PollDir(Reader):
             raise Exception("No base reader defined!")
 
         # check dirs
-        self._check_dir(self.dir_in, "input")
-        self._check_dir(self.dir_out, "output")
+        self._actual_dir_in = self.session.expand_placeholders(self.dir_in)
+        self._check_dir(self._actual_dir_in, "input")
+        self._actual_dir_out = self.session.expand_placeholders(self.dir_out)
+        self._check_dir(self._actual_dir_out, "output")
 
         # configure base reader
         self._base_reader = parse_reader(self.base_reader)
@@ -182,11 +187,11 @@ class PollDir(Reader):
         """
 
         file_list = []
-        self.logger().debug("Start listing files: %s" % self.dir_in)
+        self.logger().debug("Start listing files: %s" % self._actual_dir_in)
 
         try:
-            for file_name in os.listdir(self.dir_in):
-                file_path = os.path.join(self.dir_in, file_name)
+            for file_name in os.listdir(self._actual_dir_in):
+                file_path = os.path.join(self._actual_dir_in, file_name)
 
                 if os.path.isdir(file_path):
                     continue
@@ -244,21 +249,21 @@ class PollDir(Reader):
                 self.logger().debug("Deleting input: %s" % file_path)
                 os.remove(file_path)
             else:
-                self.logger().debug("Moving input: %s -> %s" % (file_path, self.dir_out))
-                os.rename(file_path, os.path.join(self.dir_out, os.path.basename(file_path)))
+                self.logger().debug("Moving input: %s -> %s" % (file_path, self._actual_dir_out))
+                os.rename(file_path, os.path.join(self._actual_dir_out, os.path.basename(file_path)))
 
             # other input files?
             if self.other_input_files is not None:
                 for other_input_file in self.other_input_files:
-                    other_files = glob.glob(os.path.join(self.dir_in, other_input_file.replace(GLOB_NAME_PLACEHOLDER, os.path.splitext(file_path)[0])))
+                    other_files = glob.glob(os.path.join(self._actual_dir_in, other_input_file.replace(GLOB_NAME_PLACEHOLDER, os.path.splitext(file_path)[0])))
                     for other_file in other_files:
-                        other_path = os.path.join(self.dir_in, other_file)
+                        other_path = os.path.join(self._actual_dir_in, other_file)
                         if self.delete_input:
                             self.logger().debug("Deleting other input: %s" % other_path)
                             os.remove(other_path)
                         else:
-                            self.logger().debug("Moving other input: %s -> %s" % (other_path, self.dir_out))
-                            os.rename(other_path, os.path.join(self.dir_out, os.path.basename(other_path)))
+                            self.logger().debug("Moving other input: %s -> %s" % (other_path, self._actual_dir_out))
+                            os.rename(other_path, os.path.join(self._actual_dir_out, os.path.basename(other_path)))
 
         for item in result:
             yield item

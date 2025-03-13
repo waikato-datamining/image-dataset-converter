@@ -5,6 +5,7 @@ from xml.etree.ElementTree import Element, ElementTree
 
 from wai.logging import LOGGING_WARNING
 from idc.api import ObjectDetectionData, SplittableStreamWriter, get_object_label, make_list, AnnotationsOnlyWriter, add_annotations_only_param
+from seppl.placeholders import placeholder_list, InputBasedPlaceholderSupporter
 
 
 def append_element(to: Element, tag: str, value):
@@ -20,7 +21,7 @@ def append_element(to: Element, tag: str, value):
     to.append(element)
 
 
-class VOCObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter):
+class VOCObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter, InputBasedPlaceholderSupporter):
 
     def __init__(self, output_dir: str = None, annotations_only: bool = None,
                  split_names: List[str] = None, split_ratios: List[int] = None,
@@ -71,7 +72,7 @@ class VOCObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-o", "--output", type=str, help="The directory to store the images/.xml files in. Any defined splits get added beneath there.", required=True)
+        parser.add_argument("-o", "--output", type=str, help="The directory to store the images/.xml files in. Any defined splits get added beneath there. " + placeholder_list(obj=self), required=True)
         add_annotations_only_param(parser)
         return parser
 
@@ -100,9 +101,6 @@ class VOCObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter):
         Initializes the processing, e.g., for opening files or databases.
         """
         super().initialize()
-        if not os.path.exists(self.output_dir):
-            self.logger().info("Creating output dir: %s" % self.output_dir)
-            os.makedirs(self.output_dir)
         if self.annotations_only is None:
             self.annotations_only = False
 
@@ -125,12 +123,12 @@ class VOCObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter):
         :param data: the data to write (single record or iterable of records)
         """
         for item in make_list(data):
-            sub_dir = self.output_dir
+            sub_dir = self.session.expand_placeholders(self.output_dir)
             if self.splitter is not None:
                 split = self.splitter.next()
                 sub_dir = os.path.join(sub_dir, split)
             if not os.path.exists(sub_dir):
-                self.logger().info("Creating sub dir: %s" % sub_dir)
+                self.logger().info("Creating dir: %s" % sub_dir)
                 os.makedirs(sub_dir)
 
             absolute = None

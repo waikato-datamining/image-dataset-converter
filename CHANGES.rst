@@ -4,7 +4,15 @@ Changelog
 0.0.8 (????-??-??)
 ------------------
 
-- requiring seppl>=0.2.11 now for placeholder support
+- requiring seppl>=0.2.12 now for placeholder support
+- added placeholder support to tools: `idc-convert`, `idc-exec`
+- added placeholder support to readers: `from-adams-ic`, `from-subdir-ic`, `from-blue-channel-is`, `from-grayscale-is`,
+  `from-indexed-png-is`, `from-layer-segments-is`, `from-adams-od`, `from-coco-od`, `from-opex-od`, `from-roicsv-od`,
+  `from-voc-od`, `from-yolo-od`, `from-data`, `from-pyfunc`, `poll-dir`
+- added placeholder support to filters: `write-labels`
+- added placeholder support to writers: `to-adams-ic`, `to-subdir-ic`, `to-blue-channel-is`, `to-grayscale-is`,
+  `to-indexed-png-is`, `to-layer-segments-is`, `to-adams-od`, `to-coco-od`, `to-opex-od`, `to-roicsv-od`,
+  `to-voc-od`, `to-yolo-od`, `to-data`
 
 
 0.0.7 (2025-03-12)

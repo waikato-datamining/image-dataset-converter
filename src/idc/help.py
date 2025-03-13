@@ -1,7 +1,7 @@
 import os
 
 from seppl import OutputProducer, InputConsumer, classes_to_str, get_aliases, has_aliases
-from seppl import PlaceholderSupporter, placeholder_help
+from seppl.placeholders import PlaceholderSupporter, placeholder_help
 
 from idc.registry import available_plugins
 

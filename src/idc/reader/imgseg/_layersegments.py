@@ -5,6 +5,7 @@ from typing import List, Iterable, Union
 
 import numpy as np
 from PIL import Image, ImageOps
+from seppl.placeholders import PlaceholderSupporter, placeholder_list
 from seppl.io import locate_files
 from wai.logging import LOGGING_WARNING
 
@@ -12,7 +13,7 @@ from idc.api import ImageSegmentationData, ImageSegmentationAnnotations
 from idc.api import Reader
 
 
-class LayerSegmentsImageSegmentationReader(Reader):
+class LayerSegmentsImageSegmentationReader(Reader, PlaceholderSupporter):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
                  label_separator: str = "-", labels: List[str] = None,
@@ -73,8 +74,8 @@ class LayerSegmentsImageSegmentationReader(Reader):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-i", "--input", type=str, help="Path to the JPG file(s) to read; glob syntax is supported", required=False, nargs="*")
-        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the JPG files to use", required=False, nargs="*")
+        parser.add_argument("-i", "--input", type=str, help="Path to the JPG file(s) to read; glob syntax is supported; " + placeholder_list(obj=self), required=False, nargs="*")
+        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the JPG files to use; " + placeholder_list(obj=self), required=False, nargs="*")
         parser.add_argument("--labels", metavar="LABEL", type=str, default=None, help="The labels that the indices represent.", nargs="+")
         parser.add_argument("--label_separator", type=str, help="The separator between name and label used by the mask images.", required=False, default="-")
         parser.add_argument("--lenient", action="store_true", help="Will convert non-binary masks with just two unique color values quietly to binary without raising an exception.")

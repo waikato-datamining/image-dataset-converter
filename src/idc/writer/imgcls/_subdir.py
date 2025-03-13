@@ -4,9 +4,10 @@ from typing import List
 
 from wai.logging import LOGGING_WARNING
 from idc.api import ImageClassificationData, SplittableStreamWriter, make_list
+from seppl.placeholders import placeholder_list, InputBasedPlaceholderSupporter
 
 
-class SubDirWriter(SplittableStreamWriter):
+class SubDirWriter(SplittableStreamWriter, InputBasedPlaceholderSupporter):
 
     def __init__(self, output_dir: str = None,
                  split_names: List[str] = None, split_ratios: List[int] = None,
@@ -54,7 +55,7 @@ class SubDirWriter(SplittableStreamWriter):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-o", "--output", type=str, help="The directory to create the sub-directories in according to the image labels. Any defined splits get added beneath there.", required=True)
+        parser.add_argument("-o", "--output", type=str, help="The directory to create the sub-directories in according to the image labels. Any defined splits get added beneath there. " + placeholder_list(obj=self), required=True)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
@@ -76,15 +77,6 @@ class SubDirWriter(SplittableStreamWriter):
         """
         return [ImageClassificationData]
 
-    def initialize(self):
-        """
-        Initializes the processing, e.g., for opening files or databases.
-        """
-        super().initialize()
-        if not os.path.exists(self.output_dir):
-            self.logger().info("Creating output dir: %s" % self.output_dir)
-            os.makedirs(self.output_dir)
-
     def write_stream(self, data):
         """
         Saves the data one by one.
@@ -92,14 +84,14 @@ class SubDirWriter(SplittableStreamWriter):
         :param data: the data to write (single record or iterable of records)
         """
         for item in make_list(data):
-            sub_dir = self.output_dir
+            sub_dir = self.session.expand_placeholders(self.output_dir)
             if self.splitter is not None:
                 split = self.splitter.next()
                 sub_dir = os.path.join(sub_dir, split)
             if item.has_annotation():
                 sub_dir = os.path.join(sub_dir, item.annotation)
             if not os.path.exists(sub_dir):
-                self.logger().info("Creating sub dir: %s" % sub_dir)
+                self.logger().info("Creating dir: %s" % sub_dir)
                 os.makedirs(sub_dir)
             path = os.path.join(sub_dir, item.image_name)
             self.logger().info("Writing image to: %s" % path)

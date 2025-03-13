@@ -1,13 +1,14 @@
 import argparse
 from typing import List, Iterable, Union
 
+from seppl.placeholders import PlaceholderSupporter, placeholder_list
 from seppl.io import locate_files
 from wai.logging import LOGGING_WARNING
 
 from idc.api import DATATYPES, data_type_to_class, ImageData, Reader, load_function
 
 
-class PythonFunctionReader(Reader):
+class PythonFunctionReader(Reader, PlaceholderSupporter):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
                  function: str = None, data_type: str = None,
@@ -62,8 +63,8 @@ class PythonFunctionReader(Reader):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-i", "--input", type=str, help="Path to the image file(s) to read; glob syntax is supported", required=False, nargs="*")
-        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the image files to use", required=False, nargs="*")
+        parser.add_argument("-i", "--input", type=str, help="Path to the image file(s) to read; glob syntax is supported; " + placeholder_list(obj=self), required=False, nargs="*")
+        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the image files to use; " + placeholder_list(obj=self), required=False, nargs="*")
         parser.add_argument("-f", "--function", type=str, default=None, help="The Python function to use, format: module_name:function_name", required=True)
         parser.add_argument("-t", "--data_type", choices=DATATYPES, type=str, default=None, help="The type of data to forward", required=True)
         return parser

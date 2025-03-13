@@ -6,9 +6,10 @@ from wai.logging import LOGGING_WARNING
 
 from idc.api import ImageSegmentationData, SplittableStreamWriter, make_list, AnnotationsOnlyWriter, \
     add_annotations_only_param, to_grayscale
+from seppl.placeholders import placeholder_list, InputBasedPlaceholderSupporter
 
 
-class GrayscaleImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnlyWriter):
+class GrayscaleImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnlyWriter, InputBasedPlaceholderSupporter):
 
     def __init__(self, output_dir: str = None,
                  image_path_rel: str = None, annotations_only: bool = None, background: int = None,
@@ -66,7 +67,7 @@ class GrayscaleImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnlyWr
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-o", "--output", type=str, help="The directory to store the images files in. Any defined splits get added beneath there.", required=True)
+        parser.add_argument("-o", "--output", type=str, help="The directory to store the images files in. Any defined splits get added beneath there. " + placeholder_list(obj=self), required=True)
         parser.add_argument("--image_path_rel", metavar="PATH", type=str, default=None, help="The relative path from the annotations to the images directory", required=False)
         parser.add_argument("--background", type=int, help="The index (0-255) to use for the background", required=False, default=0)
         add_annotations_only_param(parser)
@@ -99,9 +100,6 @@ class GrayscaleImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnlyWr
         Initializes the processing, e.g., for opening files or databases.
         """
         super().initialize()
-        if not os.path.exists(self.output_dir):
-            self.logger().info("Creating output dir: %s" % self.output_dir)
-            os.makedirs(self.output_dir)
         if self.image_path_rel is None:
             self.image_path_rel = ""
         if self.annotations_only is None:
@@ -114,12 +112,12 @@ class GrayscaleImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnlyWr
         :param data: the data to write (single record or iterable of records)
         """
         for item in make_list(data):
-            sub_dir = self.output_dir
+            sub_dir = self.session.expand_placeholders(self.output_dir)
             if self.splitter is not None:
                 split = self.splitter.next()
                 sub_dir = os.path.join(sub_dir, split)
             if not os.path.exists(sub_dir):
-                self.logger().info("Creating sub dir: %s" % sub_dir)
+                self.logger().info("Creating dir: %s" % sub_dir)
                 os.makedirs(sub_dir)
 
             # image

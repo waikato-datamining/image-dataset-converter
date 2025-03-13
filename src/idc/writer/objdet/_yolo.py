@@ -5,9 +5,10 @@ from typing import List
 
 from wai.logging import LOGGING_WARNING
 from idc.api import ObjectDetectionData, SplittableStreamWriter, save_labels, save_labels_csv, make_list, AnnotationsOnlyWriter, add_annotations_only_param
+from seppl.placeholders import placeholder_list, InputBasedPlaceholderSupporter
 
 
-class YoloObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter):
+class YoloObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter, InputBasedPlaceholderSupporter):
 
     def __init__(self, output_dir: str = None,
                  image_subdir: str = None, labels_subdir: str = None, categories: List[str] = None,
@@ -81,7 +82,7 @@ class YoloObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-o", "--output", type=str, help="The directory to store the images/.txt files in. Any defined splits get added beneath there.", required=True)
+        parser.add_argument("-o", "--output", type=str, help="The directory to store the images/.txt files in. Any defined splits get added beneath there. " + placeholder_list(obj=self), required=True)
         parser.add_argument("--image_subdir", metavar="DIR", type=str, default=None, help="The name of the sub-dir to use for storing the images in.", required=False)
         parser.add_argument("--labels_subdir", metavar="DIR", type=str, default=None, help="The name of the sub-dir to use for storing the annotations in.", required=False)
         parser.add_argument("-p", "--use_polygon_format", action="store_true", help="Whether to write the annotations in polygon format rather than bbox format", required=False)
@@ -124,9 +125,6 @@ class YoloObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter):
         super().initialize()
         if self.labels is None:
             raise Exception("No output file for labels provided!")
-        if not os.path.exists(self.output_dir):
-            self.logger().info("Creating output dir: %s" % self.output_dir)
-            os.makedirs(self.output_dir)
         if self.image_subdir is None:
             self.image_subdir = "images"
         if self.labels_subdir is None:
@@ -146,12 +144,12 @@ class YoloObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter):
         :param data: the data to write (single record or iterable of records)
         """
         for item in make_list(data):
-            sub_dir = self.output_dir
+            sub_dir = self.session.expand_placeholders(self.output_dir)
             if self.splitter is not None:
                 split = self.splitter.next()
                 sub_dir = os.path.join(sub_dir, split)
             if not os.path.exists(sub_dir):
-                self.logger().info("Creating sub dir: %s" % sub_dir)
+                self.logger().info("Creating dir: %s" % sub_dir)
                 os.makedirs(sub_dir)
             if sub_dir not in self._output_dirs:
                 self._output_dirs.append(sub_dir)

@@ -4,11 +4,12 @@ from typing import List, Iterable, Union
 from seppl.io import locate_files
 from wai.logging import LOGGING_WARNING
 
+from seppl.placeholders import PlaceholderSupporter, placeholder_list
 from idc.api import DATATYPES, data_type_to_class, ImageData
 from idc.api import Reader
 
 
-class DataReader(Reader):
+class DataReader(Reader, PlaceholderSupporter):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
                  data_type: str = None, logger_name: str = None, logging_level: str = LOGGING_WARNING):
@@ -58,8 +59,8 @@ class DataReader(Reader):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-i", "--input", type=str, help="Path to the image file(s) to read; glob syntax is supported", required=False, nargs="*")
-        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the image files to use", required=False, nargs="*")
+        parser.add_argument("-i", "--input", type=str, help="Path to the image file(s) to read; glob syntax is supported; " + placeholder_list(obj=self), required=False, nargs="*")
+        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the image files to use; " + placeholder_list(obj=self), required=False, nargs="*")
         parser.add_argument("-t", "--data_type", choices=DATATYPES, type=str, default=None, help="The type of data to forward", required=True)
         return parser
 

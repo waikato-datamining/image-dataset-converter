@@ -3,11 +3,12 @@ import os
 from typing import List, Iterable, Union
 
 from wai.logging import LOGGING_WARNING
+from seppl.placeholders import PlaceholderSupporter, placeholder_list
 from idc.api import ImageClassificationData
 from idc.api import Reader
 
 
-class SubDirReader(Reader):
+class SubDirReader(Reader, PlaceholderSupporter):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
@@ -52,8 +53,8 @@ class SubDirReader(Reader):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-i", "--input", type=str, help="Path to the directory with the sub-directories containing the images", required=False, nargs="*")
-        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the directories to use", required=False, nargs="*")
+        parser.add_argument("-i", "--input", type=str, help="Path to the directory with the sub-directories containing the images; " + placeholder_list(obj=self), required=False, nargs="*")
+        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the directories to use; " + placeholder_list(obj=self), required=False, nargs="*")
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
@@ -108,6 +109,7 @@ class SubDirReader(Reader):
         # find all subdirs
         self._sub_dirs = dict()
         for input_dir in all_dirs:
+            input_dir = self.session.expand_placeholders(input_dir)
             if not os.path.exists(input_dir):
                 self.logger().warning("Directory does not exist: %s" % input_dir)
                 continue

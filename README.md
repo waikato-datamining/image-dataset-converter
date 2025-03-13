@@ -50,7 +50,8 @@ The following dataset formats are supported:
 ### Dataset conversion
 
 ```
-usage: idc-convert [-h|--help|--help-all|--help-plugin NAME] [-u INTERVAL]
+usage: idc-convert [-h|--help|--help-all|--help-plugin NAME]
+                   [-u INTERVAL] [-b|--force_batch] [--placeholders FILE]
                    [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                    reader
                    [filter [filter [...]]]
@@ -87,13 +88,15 @@ optional arguments:
   -l {DEBUG,INFO,WARNING,ERROR,CRITICAL}, --logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
                         the logging level to use (default: WARN)
   -b, --force_batch     processes the data in batches
+  --placeholders FILE
+                        The file with custom placeholders to load (format: key=value).
 ```
 
 ### Executing pipeline multiple times
 
 ```
 usage: idc-exec [-h] -p PIPELINE -g GENERATOR [-n] [-P PREFIX]
-                [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
+                [--placeholders FILE] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
 
 Tool for executing a pipeline multiple times, each time with a different set
 of variables expanded. A variable is surrounded by curly quotes (e.g.,
@@ -112,6 +115,8 @@ options:
   -P PREFIX, --prefix PREFIX
                         The string to prefix the pipeline with when in dry-run
                         mode. (default: None)
+  --placeholders FILE   The file with custom placeholders to load (format:
+                        key=value). (default: None)
   -l {DEBUG,INFO,WARNING,ERROR,CRITICAL}, --logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
                         The logging level to use. (default: WARN)
 ```

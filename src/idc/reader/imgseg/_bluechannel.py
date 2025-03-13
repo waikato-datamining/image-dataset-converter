@@ -1,6 +1,7 @@
 import argparse
 from typing import List, Iterable, Union
 
+from seppl.placeholders import PlaceholderSupporter, placeholder_list
 from seppl.io import locate_files
 from wai.logging import LOGGING_WARNING
 
@@ -8,7 +9,7 @@ from idc.api import ImageSegmentationData, locate_file, load_image_from_file, fr
 from idc.api import Reader
 
 
-class BlueChannelImageSegmentationReader(Reader):
+class BlueChannelImageSegmentationReader(Reader, PlaceholderSupporter):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
                  image_path_rel: str = None, labels: List[str] = None, background: int = None,
@@ -65,8 +66,8 @@ class BlueChannelImageSegmentationReader(Reader):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-i", "--input", type=str, help="Path to the PNG file(s) to read; glob syntax is supported", required=False, nargs="*")
-        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the text PNG to use", required=False, nargs="*")
+        parser.add_argument("-i", "--input", type=str, help="Path to the PNG file(s) to read; glob syntax is supported; " + placeholder_list(obj=self), required=False, nargs="*")
+        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the text PNG to use; " + placeholder_list(obj=self), required=False, nargs="*")
         parser.add_argument("--image_path_rel", metavar="PATH", type=str, default=None, help="The relative path from the annotations to the images directory", required=False)
         parser.add_argument("--labels", metavar="LABEL", type=str, default=None, help="The labels that the indices represent.", nargs="+")
         parser.add_argument("--background", type=int, help="The index (0-255) that is used for the background", required=False, default=0)

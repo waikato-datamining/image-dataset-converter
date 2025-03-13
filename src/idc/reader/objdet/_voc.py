@@ -5,12 +5,13 @@ from typing import List, Iterable, Union
 from defusedxml import ElementTree
 from wai.logging import LOGGING_WARNING
 from wai.common.adams.imaging.locateobjects import LocatedObjects, LocatedObject
+from seppl.placeholders import PlaceholderSupporter, placeholder_list
 from seppl.io import locate_files
 from idc.api import ObjectDetectionData, locate_image
 from idc.api import Reader
 
 
-class VOCObjectDetectionReader(Reader):
+class VOCObjectDetectionReader(Reader, PlaceholderSupporter):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
                  image_rel_path: str = None, logger_name: str = None, logging_level: str = LOGGING_WARNING):
@@ -59,8 +60,8 @@ class VOCObjectDetectionReader(Reader):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-i", "--input", type=str, help="Path to the XML file(s) to read; glob syntax is supported", required=False, nargs="*")
-        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the XML files to use", required=False, nargs="*")
+        parser.add_argument("-i", "--input", type=str, help="Path to the XML file(s) to read; glob syntax is supported; " + placeholder_list(obj=self), required=False, nargs="*")
+        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the XML files to use; " + placeholder_list(obj=self), required=False, nargs="*")
         parser.add_argument("-r", "--image_rel_path", type=str, help="The relative path to use for the 'folder' property to locate the images.", required=False)
         return parser
 

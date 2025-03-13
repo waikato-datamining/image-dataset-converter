@@ -3,6 +3,7 @@ import json
 import os.path
 from typing import List, Iterable, Union, Dict
 
+from seppl.placeholders import PlaceholderSupporter, placeholder_list
 from seppl.io import locate_files
 from wai.common.adams.imaging.locateobjects import LocatedObjects, LocatedObject
 from wai.common.geometry import Point, Polygon
@@ -12,7 +13,7 @@ from idc.api import ObjectDetectionData
 from idc.api import Reader
 
 
-class COCOObjectDetectionReader(Reader):
+class COCOObjectDetectionReader(Reader, PlaceholderSupporter):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
@@ -58,8 +59,8 @@ class COCOObjectDetectionReader(Reader):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-i", "--input", type=str, help="Path to the JSON file(s) to read; glob syntax is supported", required=False, nargs="*")
-        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the JSON files to use", required=False, nargs="*")
+        parser.add_argument("-i", "--input", type=str, help="Path to the JSON file(s) to read; glob syntax is supported; " + placeholder_list(obj=self), required=False, nargs="*")
+        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the JSON files to use; " + placeholder_list(obj=self), required=False, nargs="*")
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
