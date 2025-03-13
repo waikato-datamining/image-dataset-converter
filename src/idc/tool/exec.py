@@ -3,7 +3,8 @@ import logging
 import os
 import traceback
 
-from seppl import split_cmdline, load_user_defined_placeholders
+from seppl import split_cmdline
+from seppl.placeholders import load_user_defined_placeholders
 from wai.logging import init_logging, set_logging_level, add_logging_level
 
 from idc.api import Generator
