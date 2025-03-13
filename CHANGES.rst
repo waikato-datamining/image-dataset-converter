@@ -4,7 +4,7 @@ Changelog
 0.0.8 (????-??-??)
 ------------------
 
-- requiring seppl>=0.2.12 now for placeholder support
+- requiring seppl>=0.2.13 now for placeholder support
 - added placeholder support to tools: `idc-convert`, `idc-exec`
 - added placeholder support to readers: `from-adams-ic`, `from-subdir-ic`, `from-blue-channel-is`, `from-grayscale-is`,
   `from-indexed-png-is`, `from-layer-segments-is`, `from-adams-od`, `from-coco-od`, `from-opex-od`, `from-roicsv-od`,
