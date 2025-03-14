@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.0.8 (????-??-??)
+0.0.8 (2025-03-14)
 ------------------
 
 - requiring seppl>=0.2.13 now for placeholder support
