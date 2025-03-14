@@ -33,7 +33,7 @@ setup(
     install_requires=[
         "setuptools",
         "seppl>=0.2.13",
-        "wai.logging",
+        "wai_logging",
         "wai.common>=0.0.44",
         "pillow",
         "matplotlib",
@@ -45,7 +45,7 @@ setup(
         "python-image-complete",
         "simple_palette_utils",
     ],
-    version="0.0.8",
+    version="0.0.9",
     author='Peter Reutemann',
     author_email='fracpete@waikato.ac.nz',
     entry_points={

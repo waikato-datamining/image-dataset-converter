@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.0.9 (2025-03-14)
+------------------
+
+- using `wai_logging` instead of `wai.logging` as dependency now
+
+
 0.0.8 (2025-03-14)
 ------------------
 
