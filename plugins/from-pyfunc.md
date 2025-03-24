@@ -6,8 +6,8 @@ Loads the images via the declared function and forwards them as the specified da
 
 ```
 usage: from-pyfunc [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                   [-N LOGGER_NAME] [-i [INPUT ...]] [-I [INPUT_LIST ...]] -f
-                   FUNCTION -t {ic,is,od}
+                   [-N LOGGER_NAME] [-i [INPUT ...]] [-I [INPUT_LIST ...]]
+                   [--resume_from RESUME_FROM] -f FUNCTION -t {ic,is,od}
 
 Loads the images via the declared function and forwards them as the specified
 data type. The function must take a string as input and output an iterable of
@@ -28,6 +28,9 @@ options:
                         Path to the text file(s) listing the image files to
                         use; Supported placeholders: {HOME}, {CWD}, {TMP}
                         (default: None)
+  --resume_from RESUME_FROM
+                        Glob expression matching the file to resume from,
+                        e.g., '*/012345.jpg' (default: None)
   -f FUNCTION, --function FUNCTION
                         The Python function to use, format:
                         module_name:function_name (default: None)

@@ -12,7 +12,8 @@ from idc.api import Reader
 class AdamsImageClassificationReader(Reader, PlaceholderSupporter):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
-                 class_field: str = None, logger_name: str = None, logging_level: str = LOGGING_WARNING):
+                 class_field: str = None, resume_from: str = None,
+                 logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
         Initializes the reader.
 
@@ -20,6 +21,8 @@ class AdamsImageClassificationReader(Reader, PlaceholderSupporter):
         :param source_list: the file(s) with filename(s)
         :param class_field: the name of the field containing the classification label
         :type class_field: str
+        :param resume_from: the file to resume from (glob)
+        :type resume_from: str
         :param logger_name: the name to use for the logger
         :type logger_name: str
         :param logging_level: the logging level to use
@@ -29,6 +32,7 @@ class AdamsImageClassificationReader(Reader, PlaceholderSupporter):
         self.source = source
         self.source_list = source_list
         self.class_field = class_field
+        self.resume_from = resume_from
         self._inputs = None
         self._current_input = None
 
@@ -60,6 +64,7 @@ class AdamsImageClassificationReader(Reader, PlaceholderSupporter):
         parser = super()._create_argparser()
         parser.add_argument("-i", "--input", type=str, help="Path to the report file(s) to read; glob syntax is supported; " + placeholder_list(obj=self), required=False, nargs="*")
         parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the report files to use; " + placeholder_list(obj=self), required=False, nargs="*")
+        parser.add_argument("--resume_from", type=str, help="Glob expression matching the file to resume from, e.g., '*/012345.report'", required=False)
         parser.add_argument("-c", "--class_field", metavar="FIELD", type=str, default=None, help="The report field containing the image classification label", required=True)
         return parser
 
@@ -74,6 +79,7 @@ class AdamsImageClassificationReader(Reader, PlaceholderSupporter):
         self.source = ns.input
         self.source_list = ns.input_list
         self.class_field = ns.class_field
+        self.resume_from = ns.resume_from
 
     def generates(self) -> List:
         """
@@ -91,7 +97,7 @@ class AdamsImageClassificationReader(Reader, PlaceholderSupporter):
         super().initialize()
         if self.class_field is None:
             raise Exception("No class field defined!")
-        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.report")
+        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.report", resume_from=self.resume_from)
 
     def read(self) -> Iterable:
         """

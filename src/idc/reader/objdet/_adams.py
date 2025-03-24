@@ -13,7 +13,8 @@ from idc.api import Reader
 class AdamsObjectDetectionReader(Reader, PlaceholderSupporter):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
-                 prefix: str = "Object.", logger_name: str = None, logging_level: str = LOGGING_WARNING):
+                 prefix: str = "Object.", resume_from: str = None,
+                 logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
         Initializes the reader.
 
@@ -21,6 +22,8 @@ class AdamsObjectDetectionReader(Reader, PlaceholderSupporter):
         :param source_list: the file(s) with filename(s)
         :param prefix: the field name prefix to use for locating bbox/polygon definitions in the report files
         :type prefix: str
+        :param resume_from: the file to resume from (glob)
+        :type resume_from: str
         :param logger_name: the name to use for the logger
         :type logger_name: str
         :param logging_level: the logging level to use
@@ -30,6 +33,7 @@ class AdamsObjectDetectionReader(Reader, PlaceholderSupporter):
         self.source = source
         self.source_list = source_list
         self.prefix = prefix
+        self.resume_from = resume_from
         self._inputs = None
         self._current_input = None
 
@@ -61,6 +65,7 @@ class AdamsObjectDetectionReader(Reader, PlaceholderSupporter):
         parser = super()._create_argparser()
         parser.add_argument("-i", "--input", type=str, help="Path to the report file(s) to read; glob syntax is supported; " + placeholder_list(obj=self), required=False, nargs="*")
         parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the report files to use; " + placeholder_list(obj=self), required=False, nargs="*")
+        parser.add_argument("--resume_from", type=str, help="Glob expression matching the file to resume from, e.g., '*/012345.report'", required=False)
         parser.add_argument("-p", "--prefix", metavar="PREFIX", type=str, default="Object.", help="The field prefix in the .report files that identifies bbox/polygon object definitions", required=False)
         return parser
 
@@ -75,6 +80,7 @@ class AdamsObjectDetectionReader(Reader, PlaceholderSupporter):
         self.source = ns.input
         self.source_list = ns.input_list
         self.prefix = ns.prefix
+        self.resume_from = ns.resume_from
 
     def generates(self) -> List:
         """
@@ -92,7 +98,7 @@ class AdamsObjectDetectionReader(Reader, PlaceholderSupporter):
         super().initialize()
         if self.prefix is None:
             raise Exception("No prefix defined!")
-        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.report")
+        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.report", resume_from=self.resume_from)
 
     def read(self) -> Iterable:
         """

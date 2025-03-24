@@ -5,6 +5,9 @@ Changelog
 -------------------
 
 - added `set-placeholder` filter for dynamically setting (temporary) placeholders at runtime
+- added `--resume_from` option to relevant readers that allows resuming the data processing
+  from the first file that matches this glob expression (e.g., `*/012345.png`)
+- requiring seppl>=0.2.14 now for resume support
 
 
 0.0.9 (2025-03-14)

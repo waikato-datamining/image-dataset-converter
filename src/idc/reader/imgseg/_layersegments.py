@@ -17,7 +17,7 @@ class LayerSegmentsImageSegmentationReader(Reader, PlaceholderSupporter):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
                  label_separator: str = "-", labels: List[str] = None,
-                 lenient: bool = False, invert: bool = False,
+                 lenient: bool = False, invert: bool = False, resume_from: str = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
         Initializes the reader.
@@ -32,6 +32,8 @@ class LayerSegmentsImageSegmentationReader(Reader, PlaceholderSupporter):
         :type lenient: bool
         :param invert: whether to invert the binary images (b/w <-> w/b)
         :type invert: bool
+        :param resume_from: the file to resume from (glob)
+        :type resume_from: str
         :param logger_name: the name to use for the logger
         :type logger_name: str
         :param logging_level: the logging level to use
@@ -44,6 +46,7 @@ class LayerSegmentsImageSegmentationReader(Reader, PlaceholderSupporter):
         self.labels = labels
         self.lenient = lenient
         self.invert = invert
+        self.resume_from = resume_from
         self._label_mapping = None
         self._inputs = None
         self._current_input = None
@@ -76,6 +79,7 @@ class LayerSegmentsImageSegmentationReader(Reader, PlaceholderSupporter):
         parser = super()._create_argparser()
         parser.add_argument("-i", "--input", type=str, help="Path to the JPG file(s) to read; glob syntax is supported; " + placeholder_list(obj=self), required=False, nargs="*")
         parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the JPG files to use; " + placeholder_list(obj=self), required=False, nargs="*")
+        parser.add_argument("--resume_from", type=str, help="Glob expression matching the file to resume from, e.g., '*/012345.jpg'", required=False)
         parser.add_argument("--labels", metavar="LABEL", type=str, default=None, help="The labels that the indices represent.", nargs="+")
         parser.add_argument("--label_separator", type=str, help="The separator between name and label used by the mask images.", required=False, default="-")
         parser.add_argument("--lenient", action="store_true", help="Will convert non-binary masks with just two unique color values quietly to binary without raising an exception.")
@@ -96,6 +100,7 @@ class LayerSegmentsImageSegmentationReader(Reader, PlaceholderSupporter):
         self.label_separator = ns.label_separator
         self.lenient = ns.lenient
         self.invert = ns.invert
+        self.resume_from = ns.resume_from
 
     def generates(self) -> List:
         """
@@ -113,7 +118,7 @@ class LayerSegmentsImageSegmentationReader(Reader, PlaceholderSupporter):
         super().initialize()
         if self.labels is None:
             raise Exception("No labels defined!")
-        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.jpg")
+        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.jpg", resume_from=self.resume_from)
 
     def read(self) -> Iterable:
         """

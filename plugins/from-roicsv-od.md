@@ -7,7 +7,7 @@ Loads the bounding box and/or polygon definitions from the associated ROI .csv f
 ```
 usage: from-roicsv-od [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                       [-N LOGGER_NAME] [-i [INPUT ...]] [-I [INPUT_LIST ...]]
-                      [-s SUFFIX]
+                      [--resume_from RESUME_FROM] [-s SUFFIX]
 
 Loads the bounding box and/or polygon definitions from the associated ROI .csv
 file.
@@ -27,6 +27,9 @@ options:
                         Path to the text file(s) listing the CSV files to use;
                         Supported placeholders: {HOME}, {CWD}, {TMP} (default:
                         None)
+  --resume_from RESUME_FROM
+                        Glob expression matching the file to resume from,
+                        e.g., '*/012345-rois.csv' (default: None)
   -s SUFFIX, --suffix SUFFIX
                         The suffix used by the ROI CSV files. (default:
                         -rois.csv)

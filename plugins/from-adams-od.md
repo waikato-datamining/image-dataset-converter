@@ -7,7 +7,7 @@ Loads the bounding box and/or polygon definitions from the associated .report fi
 ```
 usage: from-adams-od [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                      [-N LOGGER_NAME] [-i [INPUT ...]] [-I [INPUT_LIST ...]]
-                     [-p PREFIX]
+                     [--resume_from RESUME_FROM] [-p PREFIX]
 
 Loads the bounding box and/or polygon definitions from the associated .report
 file.
@@ -27,6 +27,9 @@ options:
                         Path to the text file(s) listing the report files to
                         use; Supported placeholders: {HOME}, {CWD}, {TMP}
                         (default: None)
+  --resume_from RESUME_FROM
+                        Glob expression matching the file to resume from,
+                        e.g., '*/012345.report' (default: None)
   -p PREFIX, --prefix PREFIX
                         The field prefix in the .report files that identifies
                         bbox/polygon object definitions (default: Object.)

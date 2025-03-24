@@ -13,7 +13,7 @@ class YoloObjectDetectionReader(Reader, PlaceholderSupporter):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
                  image_path_rel: str = None, use_polygon_format: bool = False, labels: str = None,
-                 logger_name: str = None, logging_level: str = LOGGING_WARNING):
+                 resume_from: str = None, logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
         Initializes the reader.
 
@@ -25,6 +25,8 @@ class YoloObjectDetectionReader(Reader, PlaceholderSupporter):
         :type use_polygon_format: bool
         :param labels: the text file with the comma-separated list of labels
         :type labels: str
+        :param resume_from: the file to resume from (glob)
+        :type resume_from: str
         :param logger_name: the name to use for the logger
         :type logger_name: str
         :param logging_level: the logging level to use
@@ -36,6 +38,7 @@ class YoloObjectDetectionReader(Reader, PlaceholderSupporter):
         self.image_path_rel = image_path_rel
         self.use_polygon_format = use_polygon_format
         self.labels = labels
+        self.resume_from = resume_from
         self._label_mapping = None
         self._inputs = None
         self._current_input = None
@@ -68,6 +71,7 @@ class YoloObjectDetectionReader(Reader, PlaceholderSupporter):
         parser = super()._create_argparser()
         parser.add_argument("-i", "--input", type=str, help="Path to the text file(s) to read; glob syntax is supported; " + placeholder_list(obj=self), required=False, nargs="*")
         parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the text files to use; " + placeholder_list(obj=self), required=False, nargs="*")
+        parser.add_argument("--resume_from", type=str, help="Glob expression matching the file to resume from, e.g., '*/012345.txt'", required=False)
         parser.add_argument("--image_path_rel", metavar="PATH", type=str, default=None, help="The relative path from the annotations to the images directory", required=False)
         parser.add_argument("-p", "--use_polygon_format", action="store_true", help="Whether to read the annotations in polygon format rather than bbox format", required=False)
         parser.add_argument("--labels", metavar="FILE", type=str, default=None, help="The text file with the comma-separated list of labels", required=False)
@@ -86,6 +90,7 @@ class YoloObjectDetectionReader(Reader, PlaceholderSupporter):
         self.image_path_rel = ns.image_path_rel
         self.use_polygon_format = ns.use_polygon_format
         self.labels = ns.labels
+        self.resume_from = ns.resume_from
 
     def generates(self) -> List:
         """
@@ -105,7 +110,7 @@ class YoloObjectDetectionReader(Reader, PlaceholderSupporter):
             self.image_path_rel = "../images"
         if self.labels is None:
             raise Exception("No labels file defined!")
-        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.txt")
+        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.txt", resume_from=self.resume_from)
         _, self._label_mapping = load_labels(self.labels, logger=self.logger())
 
     def read(self) -> Iterable:

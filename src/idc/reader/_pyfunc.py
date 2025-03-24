@@ -11,7 +11,7 @@ from idc.api import DATATYPES, data_type_to_class, ImageData, Reader, load_funct
 class PythonFunctionReader(Reader, PlaceholderSupporter):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
-                 function: str = None, data_type: str = None,
+                 function: str = None, data_type: str = None, resume_from: str = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
         Initializes the reader.
@@ -22,6 +22,8 @@ class PythonFunctionReader(Reader, PlaceholderSupporter):
         :type function: str
         :param data_type: the type of output to generate from the images
         :type data_type: str
+        :param resume_from: the file to resume from (glob)
+        :type resume_from: str
         :param logger_name: the name to use for the logger
         :type logger_name: str
         :param logging_level: the logging level to use
@@ -32,6 +34,7 @@ class PythonFunctionReader(Reader, PlaceholderSupporter):
         self.source_list = source_list
         self.function = function
         self.data_type = data_type
+        self.resume_from = resume_from
         self._inputs = None
         self._current_input = None
         self._output_cls = None
@@ -65,6 +68,7 @@ class PythonFunctionReader(Reader, PlaceholderSupporter):
         parser = super()._create_argparser()
         parser.add_argument("-i", "--input", type=str, help="Path to the image file(s) to read; glob syntax is supported; " + placeholder_list(obj=self), required=False, nargs="*")
         parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the image files to use; " + placeholder_list(obj=self), required=False, nargs="*")
+        parser.add_argument("--resume_from", type=str, help="Glob expression matching the file to resume from, e.g., '*/012345.jpg'", required=False)
         parser.add_argument("-f", "--function", type=str, default=None, help="The Python function to use, format: module_name:function_name", required=True)
         parser.add_argument("-t", "--data_type", choices=DATATYPES, type=str, default=None, help="The type of data to forward", required=True)
         return parser
@@ -81,6 +85,7 @@ class PythonFunctionReader(Reader, PlaceholderSupporter):
         self.source_list = ns.input_list
         self.function = ns.function
         self.data_type = ns.data_type
+        self.resume_from = ns.resume_from
 
     def generates(self) -> List:
         """
@@ -101,7 +106,7 @@ class PythonFunctionReader(Reader, PlaceholderSupporter):
         super().initialize()
         if self.data_type is None:
             raise Exception("No data type defined!")
-        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True)
+        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, resume_from=self.resume_from)
         self._output_cls = data_type_to_class(self.data_type)
         self._function = load_function(self.function)
 

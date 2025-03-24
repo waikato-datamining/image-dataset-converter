@@ -64,7 +64,7 @@ readers (15):
    from-data, from-grayscale-is, from-indexed-png-is, 
    from-layer-segments-is, from-opex-od, from-pyfunc, from-roicsv-od, 
    from-subdir-ic, from-voc-od, from-yolo-od, poll-dir
-filters (35):
+filters (36):
    check-duplicate-filenames, coerce-box, coerce-mask, 
    convert-image-format, dimension-discarder, discard-by-name, 
    discard-invalid-images, discard-negatives, filter-labels, inspect, 
@@ -72,8 +72,8 @@ filters (35):
    metadata-from-name, metadata-od, od-to-ic, od-to-is, passthrough, 
    polygon-discarder, polygon-simplifier, pyfunc-filter, 
    randomize-records, record-window, remove-classes, rename, 
-   rgb-to-grayscale, rgb-to-greyscale*, sample, sort-pixels, 
-   split-records, strip-annotations, tee, write-labels
+   rgb-to-grayscale, rgb-to-greyscale*, sample, set-placeholder, 
+   sort-pixels, split-records, strip-annotations, tee, write-labels
 writers (14):
    to-adams-ic, to-adams-od, to-blue-channel-is, to-coco-od, to-data, 
    to-grayscale-is, to-indexed-png-is, to-layer-segments-is, to-opex-od, 

@@ -8,6 +8,7 @@ Loads the annotations from associated mask PNG image files, with one binary mask
 usage: from-layer-segments-is [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                               [-N LOGGER_NAME] [-i [INPUT ...]]
                               [-I [INPUT_LIST ...]]
+                              [--resume_from RESUME_FROM]
                               [--labels LABEL [LABEL ...]]
                               [--label_separator LABEL_SEPARATOR] [--lenient]
                               [--invert]
@@ -30,6 +31,9 @@ options:
                         Path to the text file(s) listing the JPG files to use;
                         Supported placeholders: {HOME}, {CWD}, {TMP} (default:
                         None)
+  --resume_from RESUME_FROM
+                        Glob expression matching the file to resume from,
+                        e.g., '*/012345.jpg' (default: None)
   --labels LABEL [LABEL ...]
                         The labels that the indices represent. (default: None)
   --label_separator LABEL_SEPARATOR

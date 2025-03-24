@@ -7,7 +7,8 @@ Loads the bounding box and/or polygon definitions from the associated .txt file 
 ```
 usage: from-yolo-od [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                     [-N LOGGER_NAME] [-i [INPUT ...]] [-I [INPUT_LIST ...]]
-                    [--image_path_rel PATH] [-p] [--labels FILE]
+                    [--resume_from RESUME_FROM] [--image_path_rel PATH] [-p]
+                    [--labels FILE]
 
 Loads the bounding box and/or polygon definitions from the associated .txt
 file in YOLO format.
@@ -27,6 +28,9 @@ options:
                         Path to the text file(s) listing the text files to
                         use; Supported placeholders: {HOME}, {CWD}, {TMP}
                         (default: None)
+  --resume_from RESUME_FROM
+                        Glob expression matching the file to resume from,
+                        e.g., '*/012345.txt' (default: None)
   --image_path_rel PATH
                         The relative path from the annotations to the images
                         directory (default: None)

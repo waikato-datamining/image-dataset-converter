@@ -12,7 +12,7 @@ from idc.api import Reader
 class GrayscaleImageSegmentationReader(Reader, PlaceholderSupporter):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
-                 image_path_rel: str = None, labels: List[str] = None, background: int = None,
+                 image_path_rel: str = None, labels: List[str] = None, background: int = None, resume_from: str = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
         Initializes the reader.
@@ -25,6 +25,8 @@ class GrayscaleImageSegmentationReader(Reader, PlaceholderSupporter):
         :type labels: list
         :param background: the index (0-255) that is used as background
         :type background: int
+        :param resume_from: the file to resume from (glob)
+        :type resume_from: str
         :param logger_name: the name to use for the logger
         :type logger_name: str
         :param logging_level: the logging level to use
@@ -36,6 +38,7 @@ class GrayscaleImageSegmentationReader(Reader, PlaceholderSupporter):
         self.image_path_rel = image_path_rel
         self.labels = labels
         self.background = background
+        self.resume_from = resume_from
         self._label_mapping = None
         self._inputs = None
         self._current_input = None
@@ -68,6 +71,7 @@ class GrayscaleImageSegmentationReader(Reader, PlaceholderSupporter):
         parser = super()._create_argparser()
         parser.add_argument("-i", "--input", type=str, help="Path to the PNG file(s) to read; glob syntax is supported; " + placeholder_list(obj=self), required=False, nargs="*")
         parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the text PNG to use; " + placeholder_list(obj=self), required=False, nargs="*")
+        parser.add_argument("--resume_from", type=str, help="Glob expression matching the file to resume from, e.g., '*/012345.png'", required=False)
         parser.add_argument("--image_path_rel", metavar="PATH", type=str, default=None, help="The relative path from the annotations to the images directory", required=False)
         parser.add_argument("--labels", metavar="LABEL", type=str, default=None, help="The labels that the indices represent.", nargs="+")
         parser.add_argument("--background", type=int, help="The index (0-255) that is used for the background", required=False, default=0)
@@ -86,6 +90,7 @@ class GrayscaleImageSegmentationReader(Reader, PlaceholderSupporter):
         self.image_path_rel = ns.image_path_rel
         self.labels = ns.labels
         self.background = ns.background
+        self.resume_from = ns.resume_from
 
     def generates(self) -> List:
         """
@@ -103,7 +108,7 @@ class GrayscaleImageSegmentationReader(Reader, PlaceholderSupporter):
         super().initialize()
         if self.labels is None:
             raise Exception("No labels defined!")
-        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.png")
+        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.png", resume_from=self.resume_from)
         self._label_mapping = dict()
         for i, label in enumerate(self.labels):
             self._label_mapping[i] = label
