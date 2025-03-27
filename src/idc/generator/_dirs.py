@@ -23,7 +23,7 @@ class DirectoryGenerator(Generator):
     Iterates over directories that it finds.
     """
 
-    def __init__(self, path: str = None, recursive: bool = False, regexp: str = None,
+    def __init__(self, path: str = None, recursive: bool = False, regexp: str = None, file_regexp: str = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
         Initializes the generator.
@@ -34,6 +34,8 @@ class DirectoryGenerator(Generator):
         :type recursive: bool
         :param regexp: the regular expression for matching directories
         :type regexp: str
+        :param file_regexp: the regular expression that at least one file must match in a directory (path is excluded from test), ignored if None
+        :param file_regexp: str
         :param logger_name: the name to use for the logger
         :type logger_name: str
         :param logging_level: the logging level to use
@@ -43,6 +45,7 @@ class DirectoryGenerator(Generator):
         self.path = path
         self.recursive = recursive
         self.regexp = regexp
+        self.file_regexp = file_regexp
 
     def name(self) -> str:
         """
@@ -60,7 +63,7 @@ class DirectoryGenerator(Generator):
         :return: the description
         :rtype: str
         """
-        return "Iterates over directories that it finds. " \
+        return "Iterates over directories that it finds. Can be limited to directories that contain certain files. " \
             + "Available variables: " + "|".join(VARS) + ". " \
             + VAR_ABSDIR + ": the absolute directory, " \
             + VAR_RELDIR + ": the relative directory to the search path, " \
@@ -77,6 +80,7 @@ class DirectoryGenerator(Generator):
         parser.add_argument("-p", "--path", type=str, metavar="DIR", default=None, help="The directory/directories to serarch", required=True, nargs="+")
         parser.add_argument("-r", "--recursive", action="store_true", help="Whether to search for directories recursively.", required=False)
         parser.add_argument("--regexp", type=str, metavar="REGEXP", default=None, help="The regular expression to use for matching directories; matches all if not provided.", required=False)
+        parser.add_argument("--file_regexp", type=str, metavar="REGEXP", default=None, help="Only directories that have at least one file matching this regexp are returned (path is excluded from test); all directories are turned if not provided.", required=False)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
@@ -90,6 +94,7 @@ class DirectoryGenerator(Generator):
         self.path = ns.path
         self.recursive = ns.recursive
         self.regexp = ns.regexp
+        self.file_regexp = ns.file_regexp
 
     def _check(self) -> Optional[str]:
         """
@@ -110,6 +115,13 @@ class DirectoryGenerator(Generator):
                     result = "Invalid regular expression: %s\n%s" % (self.regexp, traceback.format_exc())
 
         if result is None:
+            if self.file_regexp is not None:
+                try:
+                    re.compile(self.file_regexp)
+                except:
+                    result = "Invalid regular expression for files: %s\n%s" % (self.file_regexp, traceback.format_exc())
+
+        if result is None:
             for p in self.path:
                 if not os.path.exists(p):
                     result = "Directory does not exist: %s" % p
@@ -117,6 +129,23 @@ class DirectoryGenerator(Generator):
                     result = "Not a directory: %s" % p
 
         return result
+
+    def _has_file_matches(self, path: str) -> bool:
+        """
+        Checks whether the path has any matching files (if the regexp for files is specified).
+
+        :param path: the path to check
+        :type path: str
+        :return: True if matching files or no regexp for files
+        :rtype: bool
+        """
+        if self.file_regexp is None:
+            return True
+        for f in os.listdir(path):
+            m = re.match(self.file_regexp, f)
+            if m is not None:
+                return True
+        return False
 
     def _locate(self, start: str, current: str, recursive: bool, paths: List[Tuple[str, str]]):
         """
@@ -136,10 +165,11 @@ class DirectoryGenerator(Generator):
             if os.path.isdir(full):
                 if self.regexp is not None:
                     m = re.match(self.regexp, f)
-                    if m is not None:
+                    if (m is not None) and self._has_file_matches(full):
                         paths.append((start, full))
                 else:
-                    paths.append((start, full))
+                    if self._has_file_matches(full):
+                        paths.append((start, full))
                 if recursive:
                     self._locate(start, full, recursive, paths)
 

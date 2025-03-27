@@ -1,14 +1,15 @@
 # dirs
 
-Iterates over directories that it finds. Available variables: absdir|reldir|dirname. absdir: the absolute directory, reldir: the relative directory to the search path, dirname: the directory name (no parent path).
+Iterates over directories that it finds. Can be limited to directories that contain certain files. Available variables: absdir|reldir|dirname. absdir: the absolute directory, reldir: the relative directory to the search path, dirname: the directory name (no parent path).
 
 ```
 usage: dirs [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-N LOGGER_NAME] -p
-            DIR [DIR ...] [-r] [--regexp REGEXP]
+            DIR [DIR ...] [-r] [--regexp REGEXP] [--file_regexp REGEXP]
 
-Iterates over directories that it finds. Available variables:
-absdir|reldir|dirname. absdir: the absolute directory, reldir: the relative
-directory to the search path, dirname: the directory name (no parent path).
+Iterates over directories that it finds. Can be limited to directories that
+contain certain files. Available variables: absdir|reldir|dirname. absdir: the
+absolute directory, reldir: the relative directory to the search path,
+dirname: the directory name (no parent path).
 
 options:
   -h, --help            show this help message and exit
@@ -23,5 +24,9 @@ options:
                         (default: False)
   --regexp REGEXP       The regular expression to use for matching
                         directories; matches all if not provided. (default:
+                        None)
+  --file_regexp REGEXP  Only directories that have at least one file matching
+                        this regexp are returned (path is excluded from test);
+                        all directories are turned if not provided. (default:
                         None)
 ```

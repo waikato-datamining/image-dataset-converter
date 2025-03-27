@@ -10,6 +10,8 @@ Changelog
 - requiring seppl>=0.2.14 now for resume support
 - using underscores now instead of dashes in dependencies (`setup.py`)
 - the `array_to_image` method no longer performs unnecessary conversions of Image objects
+- the `dirs` generator can limit directories npw to ones that have files matching a specific
+  regexp (`--file_regexp`), to avoid the `Failed to locate any files using: ...` error message
 
 
 0.0.9 (2025-03-14)
