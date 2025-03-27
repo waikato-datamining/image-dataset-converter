@@ -12,6 +12,7 @@ Changelog
 - the `array_to_image` method no longer performs unnecessary conversions of Image objects
 - the `dirs` generator can limit directories npw to ones that have files matching a specific
   regexp (`--file_regexp`), to avoid the `Failed to locate any files using: ...` error message
+- requiring seppl>=0.2.15 now for new `--split_group` support
 
 
 0.0.9 (2025-03-14)

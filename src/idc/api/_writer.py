@@ -4,7 +4,6 @@ from typing import List
 from wai.logging import LOGGING_WARNING
 from seppl import Initializable
 import seppl.io
-from ._splitting import init_splitting_params, add_splitting_params, transfer_splitting_params, initialize_splitting
 
 
 class BatchWriter(seppl.io.BatchWriter, Initializable):
@@ -29,7 +28,7 @@ class SplittableBatchWriter(BatchWriter):
     Ancestor for dataset batch writers.
     """
 
-    def __init__(self, split_names: List[str] = None, split_ratios: List[int] = None,
+    def __init__(self, split_names: List[str] = None, split_ratios: List[int] = None, split_group: str = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
         Initializes the reader.
@@ -46,8 +45,9 @@ class SplittableBatchWriter(BatchWriter):
         super().__init__(logger_name=logger_name, logging_level=logging_level)
         self.split_names = None
         self.split_ratios = None
+        self.split_group = None
         self.splitter = None
-        init_splitting_params(self, split_names=split_names, split_ratios=split_ratios)
+        seppl.io.init_splitting_params(self, split_names=split_names, split_ratios=split_ratios)
 
     def _create_argparser(self) -> argparse.ArgumentParser:
         """
@@ -57,7 +57,7 @@ class SplittableBatchWriter(BatchWriter):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        add_splitting_params(parser)
+        seppl.io.add_splitting_params(parser)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
@@ -68,14 +68,14 @@ class SplittableBatchWriter(BatchWriter):
         :type ns: argparse.Namespace
         """
         super()._apply_args(ns)
-        transfer_splitting_params(ns, self)
+        seppl.io.transfer_splitting_params(ns, self)
 
     def initialize(self):
         """
         Initializes the processing, e.g., for opening files or databases.
         """
         super().initialize()
-        initialize_splitting(self)
+        seppl.io.initialize_splitting(self)
 
 
 class StreamWriter(seppl.io.StreamWriter, Initializable):
@@ -100,7 +100,7 @@ class SplittableStreamWriter(StreamWriter):
     Ancestor for dataset stream writers.
     """
 
-    def __init__(self, split_names: List[str] = None, split_ratios: List[int] = None,
+    def __init__(self, split_names: List[str] = None, split_ratios: List[int] = None, split_group: str = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
         Initializes the reader.
@@ -117,8 +117,9 @@ class SplittableStreamWriter(StreamWriter):
         super().__init__(logger_name=logger_name, logging_level=logging_level)
         self.split_names = None
         self.split_ratios = None
+        self.split_group = None
         self.splitter = None
-        init_splitting_params(self, split_names=split_names, split_ratios=split_ratios)
+        seppl.io.init_splitting_params(self, split_names=split_names, split_ratios=split_ratios)
 
     def _create_argparser(self) -> argparse.ArgumentParser:
         """
@@ -128,7 +129,7 @@ class SplittableStreamWriter(StreamWriter):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        add_splitting_params(parser)
+        seppl.io.add_splitting_params(parser)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
@@ -139,14 +140,14 @@ class SplittableStreamWriter(StreamWriter):
         :type ns: argparse.Namespace
         """
         super()._apply_args(ns)
-        transfer_splitting_params(ns, self)
+        seppl.io.transfer_splitting_params(ns, self)
 
     def initialize(self):
         """
         Initializes the processing, e.g., for opening files or databases.
         """
         super().initialize()
-        initialize_splitting(self)
+        seppl.io.initialize_splitting(self)
 
 
 def parse_writer(writer: str) -> seppl.io.Writer:

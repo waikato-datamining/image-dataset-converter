@@ -32,7 +32,7 @@ setup(
     packages=find_namespace_packages(where='src'),
     install_requires=[
         "setuptools",
-        "seppl>=0.2.14",
+        "seppl>=0.2.15",
         "wai_logging",
         "wai.common>=0.0.44",
         "pillow",

@@ -20,4 +20,3 @@ from ._writer import parse_writer
 from ._writer import BatchWriter, SplittableBatchWriter
 from ._writer import StreamWriter, SplittableStreamWriter
 from ._writer import AnnotationsOnlyWriter, add_annotations_only_param
-from ._splitting import init_splitting_params, add_splitting_params, transfer_splitting_params, initialize_splitting
