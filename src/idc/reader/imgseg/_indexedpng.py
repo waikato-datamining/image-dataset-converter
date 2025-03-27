@@ -5,7 +5,7 @@ from seppl.placeholders import PlaceholderSupporter, placeholder_list
 from seppl.io import locate_files
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ImageSegmentationData, locate_file, load_image_from_file, from_indexedpng
+from idc.api import ImageSegmentationData, locate_file, load_image_from_file, from_indexedpng, JPEG_EXTENSIONS
 from idc.api import Reader
 
 
@@ -127,7 +127,7 @@ class IndexedPngImageSegmentationReader(Reader, PlaceholderSupporter):
         self.session.current_input = self._current_input
 
         # associated images?
-        imgs = locate_file(self.session.current_input, [".jpg", ".jpeg", ".JPG", ".JPEG"], rel_path=self.image_path_rel)
+        imgs = locate_file(self.session.current_input, JPEG_EXTENSIONS, rel_path=self.image_path_rel)
         if len(imgs) == 0:
             self.logger().warning("Failed to locate associated image for: %s" % self.session.current_input)
             yield None

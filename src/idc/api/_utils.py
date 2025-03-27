@@ -11,6 +11,9 @@ from typing import Optional, Union, List, Dict, Tuple, Callable, Any
 from PIL import Image
 
 
+JPEG_EXTENSIONS = [".jpg", ".jpeg", ".JPG", ".JPEG"]
+
+
 def strip_suffix(path: str, suffix: str) -> str:
     """
     Removes the suffix from the file, if possible.
