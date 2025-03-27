@@ -9,6 +9,7 @@ Changelog
   from the first file that matches this glob expression (e.g., `*/012345.png`)
 - requiring seppl>=0.2.14 now for resume support
 - using underscores now instead of dashes in dependencies (`setup.py`)
+- the `array_to_image` method no longer performs unnecessary conversions of Image objects
 
 
 0.0.9 (2025-03-14)

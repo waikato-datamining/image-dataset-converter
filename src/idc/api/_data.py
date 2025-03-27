@@ -110,7 +110,10 @@ def array_to_image(array: Union[np.ndarray, Image.Image], image_format: str) -> 
     :return: the generated image data structure
     :rtype: tuple
     """
-    img = Image.fromarray(np.uint8(array))
+    if isinstance(array, Image.Image):
+        img = array
+    else:
+        img = Image.fromarray(np.uint8(array))
     img_bytes = io.BytesIO()
     if image_format == "JPEG":
         img.save(img_bytes, format=image_format, quality=jpeg_quality())
