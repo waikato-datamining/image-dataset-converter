@@ -13,6 +13,8 @@ Changelog
 - the `dirs` generator can limit directories npw to ones that have files matching a specific
   regexp (`--file_regexp`), to avoid the `Failed to locate any files using: ...` error message
 - requiring seppl>=0.2.15 now for new `--split_group` support
+- added the `from-multi` meta-reader that combines multiple base readers and returns their output
+- added the `to-multi` meta-writer that forwards the data to multiple base writers
 
 
 0.0.9 (2025-03-14)
