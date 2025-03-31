@@ -152,13 +152,15 @@ class MultiReader(Reader):
             readers = self._readers[:]
             for reader in readers:
                 while not reader.has_finished():
-                    yield reader.read()
+                    for data in reader.read():
+                        yield data
                 self._finalize.append(self._readers.pop(0))
         elif self.read_order == READ_ORDER_INTERLEAVED:
             while len(self._readers) > 0:
                 for reader in self._readers:
                     if not reader.has_finished():
-                        yield reader.read()
+                        for data in reader.read():
+                            yield data
                     if reader.has_finished():
                         self._readers.remove(reader)
                         self._finalize.append(reader)
