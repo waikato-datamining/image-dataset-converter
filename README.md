@@ -59,12 +59,12 @@ usage: idc-convert [-h|--help|--help-all|--help-plugin NAME]
 
 Tool for converting between image annotation dataset formats.
 
-readers (15):
+readers (16):
    from-adams-ic, from-adams-od, from-blue-channel-is, from-coco-od, 
    from-data, from-grayscale-is, from-indexed-png-is, 
-   from-layer-segments-is, from-opex-od, from-pyfunc, from-roicsv-od, 
-   from-subdir-ic, from-voc-od, from-yolo-od, poll-dir
-filters (36):
+   from-layer-segments-is, from-multi, from-opex-od, from-pyfunc, 
+   from-roicsv-od, from-subdir-ic, from-voc-od, from-yolo-od, poll-dir
+filters (37):
    check-duplicate-filenames, coerce-box, coerce-mask, 
    convert-image-format, dimension-discarder, discard-by-name, 
    discard-invalid-images, discard-negatives, filter-labels, inspect, 
@@ -73,11 +73,13 @@ filters (36):
    polygon-discarder, polygon-simplifier, pyfunc-filter, 
    randomize-records, record-window, remove-classes, rename, 
    rgb-to-grayscale, rgb-to-greyscale*, sample, set-placeholder, 
-   sort-pixels, split-records, strip-annotations, tee, write-labels
-writers (14):
+   sort-pixels, split-records, strip-annotations, tee, use-mask, 
+   write-labels
+writers (15):
    to-adams-ic, to-adams-od, to-blue-channel-is, to-coco-od, to-data, 
-   to-grayscale-is, to-indexed-png-is, to-layer-segments-is, to-opex-od, 
-   to-pyfunc, to-roicsv-od, to-subdir-ic, to-voc-od, to-yolo-od
+   to-grayscale-is, to-indexed-png-is, to-layer-segments-is, to-multi, 
+   to-opex-od, to-pyfunc, to-roicsv-od, to-subdir-ic, to-voc-od, 
+   to-yolo-od
 
 optional arguments:
   -h, --help            show basic help message and exit
