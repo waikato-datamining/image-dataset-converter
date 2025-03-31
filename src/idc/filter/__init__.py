@@ -25,4 +25,5 @@ from ._sort_pixels import SortPixels
 from ._split_records import SplitRecords
 from ._strip_annotations import StripAnnotations
 from ._tee import Tee
+from ._use_mask import UseMask
 from ._write_labels import WriteLabels, OUTPUT_FORMATS, OUTPUT_FORMAT_TEXT, OUTPUT_FORMAT_COMMASEP, OUTPUT_FORMAT_CUSTOMSEP

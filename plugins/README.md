@@ -53,6 +53,7 @@
 * [split-records](split-records.md)
 * [strip-annotations](strip-annotations.md)
 * [tee](tee.md)
+* [use-mask](use-mask.md)
 * [write-labels](write-labels.md)
 
 ## Writers

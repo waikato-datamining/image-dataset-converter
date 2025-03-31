@@ -15,6 +15,7 @@ Changelog
 - requiring seppl>=0.2.15 now for new `--split_group` support
 - added the `from-multi` meta-reader that combines multiple base readers and returns their output
 - added the `to-multi` meta-writer that forwards the data to multiple base writers
+- added the `use-mask` filter for using the image segmentation annotations (= mask) as the new base image
 
 
 0.0.9 (2025-03-14)
