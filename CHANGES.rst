@@ -10,8 +10,9 @@ Changelog
 - requiring seppl>=0.2.14 now for resume support
 - using underscores now instead of dashes in dependencies (`setup.py`)
 - the `array_to_image` method no longer performs unnecessary conversions of Image objects
-- the `dirs` generator can limit directories npw to ones that have files matching a specific
+- the `dirs` generator can limit directories now to ones that have files matching a specific
   regexp (`--file_regexp`), to avoid the `Failed to locate any files using: ...` error message
+  when a reader doesn't find any matching files
 - requiring seppl>=0.2.15 now for new `--split_group` support
 - added the `from-multi` meta-reader that combines multiple base readers and returns their output
 - added the `to-multi` meta-writer that forwards the data to multiple base writers
