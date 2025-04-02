@@ -40,7 +40,7 @@ setup(
         "imagesize",
         "fast_opex>=0.0.2",
         "defusedxml",
-        "numpy<2.0.0",
+        "numpy",
         "shapely",
         "python_image_complete",
         "simple_palette_utils",
