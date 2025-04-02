@@ -167,7 +167,7 @@ def _list(list_type: str, custom_class_listers: Optional[List[str]] = None, excl
         elif list_type == LIST_FILTERS:
             plugins = available_filters()
         elif list_type == LIST_WRITERS:
-            plugins = available_readers()
+            plugins = available_writers()
         elif list_type == LIST_GENERATORS:
             plugins = available_generators()
         else:

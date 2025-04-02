@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.0.11 (2025-04-03)
+-------------------
+
+- fix: `idc-registry --list writers` now returns writer plugins instead of reader ones
+
+
 0.0.10 (2025-04-03)
 -------------------
 
