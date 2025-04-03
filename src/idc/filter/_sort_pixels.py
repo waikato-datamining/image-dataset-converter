@@ -137,7 +137,7 @@ class SortPixels(Filter):
                     raise Exception("Unhandled sorting type: %s" % self.sorting)
                 sorted_img = Image.fromarray(np.uint8(sorted_array), mode='L')
                 sorted_item = type(item)(source=None, image_name=item.image_name,
-                                         data=array_to_image(sorted_array, item.image_format),
+                                         data=array_to_image(sorted_array, item.image_format)[1].getvalue(),
                                          image=sorted_img, image_format=item.image_format,
                                          metadata=safe_deepcopy(item.get_metadata()),
                                          annotation=safe_deepcopy(item.annotation))

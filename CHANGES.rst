@@ -6,6 +6,7 @@ Changelog
 
 - dropped numpy<2.0.0 restriction
 - added `grayscale-to-binary` filter
+- fix: `sort-pixels`, `rgb-to-grayscale` filters
 
 
 0.0.11 (2025-04-03)

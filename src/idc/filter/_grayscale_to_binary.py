@@ -118,7 +118,7 @@ class GrayscaleToBinary(Filter, AliasSupporter):
             # apply threshold
             binary_img = img.point(lambda p: 255 if p > self.threshold else 0, '1')
             binary_item = type(gray_item)(source=None, image_name=gray_item.image_name,
-                                          data=array_to_image(binary_img, gray_item.image_format),
+                                          data=array_to_image(binary_img, gray_item.image_format)[1].getvalue(),
                                           image=binary_img, image_format=gray_item.image_format,
                                           metadata=safe_deepcopy(gray_item.get_metadata()),
                                           annotation=safe_deepcopy(gray_item.annotation))

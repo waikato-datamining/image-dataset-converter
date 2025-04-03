@@ -139,7 +139,7 @@ class RGBToGrayscale(Filter, AliasSupporter):
             gray_array = np.dot(rgb_array[..., :3], CONVERSION_PARAMETERS[self.conversion])
             gray_img = Image.fromarray(np.uint8(gray_array), mode='L')
             gray_item = type(rgb_item)(source=None, image_name=rgb_item.image_name,
-                                       data=array_to_image(gray_array, rgb_item.image_format),
+                                       data=array_to_image(gray_array, rgb_item.image_format)[1].getvalue(),
                                        image=gray_img, image_format=rgb_item.image_format,
                                        metadata=safe_deepcopy(rgb_item.get_metadata()),
                                        annotation=safe_deepcopy(rgb_item.annotation))
