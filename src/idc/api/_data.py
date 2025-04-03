@@ -559,6 +559,6 @@ def ensure_grayscale(image: Image.Image, logger=None) -> Image.Image:
     """
     if image.mode != 'L':
         if logger is not None:
-            logger.warning("Not a grayscale image, converting...")
+            logger.warning("Not a grayscale image, converting... Consider using the 'rgb-to-grayscale' filter explicitly.")
         image = image.convert('L')
     return image
