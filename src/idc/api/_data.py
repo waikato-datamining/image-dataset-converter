@@ -544,3 +544,21 @@ def flatten_list(data: List):
         return data[0]
     else:
         return data
+
+
+def ensure_grayscale(image: Image.Image, logger=None) -> Image.Image:
+    """
+    Ensures that the image is a grayscale one. Converts if necessary.
+    If a logger is suppled, will output a warning in case the conversion occurs.
+
+    :param image: the image to potentially convert
+    :type image: Image.Image
+    :param logger: the optional Logger instance
+    :return: the (potentially) updated image
+    :rtype: Image.Image
+    """
+    if image.mode != 'L':
+        if logger is not None:
+            logger.warning("Not a grayscale image, converting...")
+        image = image.convert('L')
+    return image

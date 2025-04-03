@@ -1,7 +1,7 @@
 import argparse
 from typing import List
 
-from idc.api import ImageData, flatten_list, make_list, array_to_image, safe_deepcopy
+from idc.api import ImageData, flatten_list, make_list, array_to_image, safe_deepcopy, ensure_grayscale
 from seppl import AnyData, AliasSupporter
 from seppl.io import Filter
 from wai.logging import LOGGING_WARNING
@@ -110,11 +110,7 @@ class GrayscaleToBinary(Filter, AliasSupporter):
         """
         result = []
         for gray_item in make_list(data):
-            img = gray_item.image
-            # make sure it is really grayscale!
-            if img.mode != 'L':
-                self.logger().warning("Image not in grayscale, converting...")
-                img = img.convert('L')
+            img = ensure_grayscale(gray_item.image, self.logger())
             # apply threshold
             binary_img = img.point(lambda p: 255 if p > self.threshold else 0, '1')
             binary_item = type(gray_item)(source=None, image_name=gray_item.image_name,
