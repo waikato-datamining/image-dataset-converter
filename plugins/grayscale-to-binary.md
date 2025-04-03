@@ -1,0 +1,24 @@
+# greyscale-to-binary
+
+* accepts: idc.api.ImageData
+* generates: seppl.AnyData
+* alias(es): greyscale-to-binary
+
+Turns grayscale images into binary ones.
+
+```
+usage: grayscale-to-binary [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
+                           [-N LOGGER_NAME] [-t THRESHOLD]
+
+Turns grayscale images into binary ones.
+
+options:
+  -h, --help            show this help message and exit
+  -l {DEBUG,INFO,WARNING,ERROR,CRITICAL}, --logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
+                        The logging level to use. (default: WARN)
+  -N LOGGER_NAME, --logger_name LOGGER_NAME
+                        The custom name to use for the logger, uses the plugin
+                        name by default (default: None)
+  -t THRESHOLD, --threshold THRESHOLD
+                        The threshold to use (0-255). (default: 127)
+```

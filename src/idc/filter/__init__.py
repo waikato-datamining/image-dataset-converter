@@ -4,6 +4,7 @@ from ._discard_invalid_images import DiscardInvalidImages
 from ._discard_negatives import DiscardNegatives
 from ._discard_by_name import DiscardByName
 from ._filter_labels import FilterLabels
+from ._grayscale_to_binary import GrayscaleToBinary
 from ._inspect import Inspect, MODES, MODE_NONINTERACTIVE, MODE_INTERACTIVE, OUTPUTS, OUTPUT_STDOUT, OUTPUT_STDERR, OUTPUT_LOGGER, OUTPUT_FILE
 from ._map_labels import MapLabels
 from ._max_records import MaxRecords

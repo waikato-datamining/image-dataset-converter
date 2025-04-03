@@ -27,6 +27,8 @@
 * [discard-invalid-images](discard-invalid-images.md)
 * [discard-negatives](discard-negatives.md)
 * [filter-labels](filter-labels.md)
+* [grayscale-to-binary](grayscale-to-binary.md)
+* [greyscale-to-binary](greyscale-to-binary.md)
 * [inspect](inspect.md)
 * [label-from-name](label-from-name.md)
 * [label-present](label-present.md)
