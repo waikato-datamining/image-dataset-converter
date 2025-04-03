@@ -7,7 +7,7 @@ Changelog
 - dropped numpy<2.0.0 restriction
 - added `grayscale-to-binary` filter
 - fix: `sort-pixels`, `rgb-to-grayscale` filters
-- added `idc.api.ensure_grayscale` convenience method
+- added `ensure_grayscale` and `grayscale_required_info` convenience methods (package: `idc.api`)
 
 
 0.0.11 (2025-04-03)

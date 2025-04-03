@@ -562,3 +562,13 @@ def ensure_grayscale(image: Image.Image, logger=None) -> Image.Image:
             logger.warning("Not a grayscale image, converting... Consider using the 'rgb-to-grayscale' filter explicitly.")
         image = image.convert('L')
     return image
+
+
+def grayscale_required_info() -> str:
+    """
+    Returns a note about a grayscale image being required and that the 'rgb-to-grayscale' filter can be used.
+
+    :return: the note
+    :rtype: str
+    """
+    return "A grayscale image is required. You can use the 'rgb-to-grayscale' for the conversion."
