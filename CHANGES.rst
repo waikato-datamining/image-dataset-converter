@@ -8,6 +8,7 @@ Changelog
 - added `grayscale-to-binary` filter
 - fix: `sort-pixels`, `rgb-to-grayscale` filters
 - added `ensure_grayscale` and `grayscale_required_info` convenience methods (package: `idc.api`)
+- added `ensure_binary` and `binary_required_info` convenience methods (package: `idc.api`)
 
 
 0.0.11 (2025-04-03)

@@ -549,7 +549,7 @@ def flatten_list(data: List):
 def ensure_grayscale(image: Image.Image, logger=None) -> Image.Image:
     """
     Ensures that the image is a grayscale one. Converts if necessary.
-    If a logger is suppled, will output a warning in case the conversion occurs.
+    If a logger is supplied, will output a warning in case the conversion occurs.
 
     :param image: the image to potentially convert
     :type image: Image.Image
@@ -572,3 +572,31 @@ def grayscale_required_info() -> str:
     :rtype: str
     """
     return "A grayscale image is required. You can use the 'rgb-to-grayscale' for the conversion."
+
+
+def ensure_binary(image: Image.Image, logger=None) -> Image.Image:
+    """
+    Ensures that the image is a binary one. Converts if necessary.
+    If a logger is supplied, will output a warning in case the conversion occurs.
+
+    :param image: the image to potentially convert
+    :type image: Image.Image
+    :param logger: the optional Logger instance
+    :return: the (potentially) updated image
+    :rtype: Image.Image
+    """
+    if image.mode != '1':
+        if logger is not None:
+            logger.warning("Not a binary image, converting... Consider using the 'grayscale-to-binary' filter explicitly.")
+        image = image.convert('1')
+    return image
+
+
+def binary_required_info() -> str:
+    """
+    Returns a note about a binary image being required and that the 'grayscale-to-binary' filter can be used.
+
+    :return: the note
+    :rtype: str
+    """
+    return "A binary image is required. You can use the 'grayscale-to-binary' for the conversion."

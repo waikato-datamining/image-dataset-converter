@@ -2,7 +2,7 @@ from ._colors import rgb2yiq, text_color
 from ._fonts import DEFAULT_FONT_FAMILY, load_font, text_size
 from ._data import ImageData, make_list, flatten_list, jpeg_quality, array_to_image, empty_image, save_image
 from ._data import FORMATS, FORMAT_JPEG, FORMAT_PNG, FORMAT_BMP, FORMAT_EXTENSIONS
-from ._data import ensure_grayscale, grayscale_required_info
+from ._data import ensure_grayscale, grayscale_required_info, ensure_binary, binary_required_info
 from ._generator import Generator, SingleVariableGenerator
 from ._imgcls import ImageClassificationData
 from ._imgseg import ImageSegmentationData, ImageSegmentationAnnotations, combine_layers, split_layers
