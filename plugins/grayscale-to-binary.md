@@ -4,13 +4,14 @@
 * generates: seppl.AnyData
 * alias(es): greyscale-to-binary
 
-Turns grayscale images into binary ones.
+Turns grayscale images into binary ones. A grayscale image is required. You can use the 'rgb-to-grayscale' for the conversion.
 
 ```
 usage: grayscale-to-binary [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                            [-N LOGGER_NAME] [-t THRESHOLD]
 
-Turns grayscale images into binary ones.
+Turns grayscale images into binary ones. A grayscale image is required. You
+can use the 'rgb-to-grayscale' for the conversion.
 
 options:
   -h, --help            show this help message and exit

@@ -1,7 +1,8 @@
 import argparse
 from typing import List
 
-from idc.api import ImageData, flatten_list, make_list, array_to_image, safe_deepcopy, ensure_grayscale
+from idc.api import ImageData, flatten_list, make_list, array_to_image, safe_deepcopy, ensure_grayscale, \
+    grayscale_required_info
 from seppl import AnyData, AliasSupporter
 from seppl.io import Filter
 from wai.logging import LOGGING_WARNING
@@ -52,7 +53,7 @@ class GrayscaleToBinary(Filter, AliasSupporter):
         :return: the description
         :rtype: str
         """
-        return "Turns grayscale images into binary ones."
+        return "Turns grayscale images into binary ones. " + grayscale_required_info()
 
     def accepts(self) -> List:
         """
