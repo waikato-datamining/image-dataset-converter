@@ -344,5 +344,6 @@ IDC_JPEG_QUALITY=100
 * [labelme](https://github.com/waikato-datamining/image-dataset-converter-labelme)
 * [Paddle](https://github.com/waikato-datamining/image-dataset-converter-paddle)
 * [PDF](https://github.com/waikato-datamining/image-dataset-converter-pdf)
+* [PlantCV](https://github.com/waikato-datamining/image-dataset-converter-plantcv)
 * [Redis](https://github.com/waikato-datamining/image-dataset-converter-redis)
 * [Video](https://github.com/waikato-datamining/image-dataset-converter-video)
