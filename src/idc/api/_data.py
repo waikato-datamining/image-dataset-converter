@@ -97,7 +97,7 @@ def save_image(img: Image.Image, path: str, make_dirs: bool = False):
         img.save(path)
 
 
-def array_to_image(array: Union[np.ndarray, Image.Image], image_format: str, mode: str = None) -> Tuple[Image.Image, io.BytesIO]:
+def array_to_image(array: Union[np.ndarray, Image.Image], image_format: str) -> Tuple[Image.Image, io.BytesIO]:
     """
     Turns the numpy array back into an image of the specified format.
     Returns the image data structure and the bytes representing it.
@@ -107,18 +107,13 @@ def array_to_image(array: Union[np.ndarray, Image.Image], image_format: str, mod
     :type array: np.ndarray or Image.Image
     :param image_format: the image format to generate
     :type image_format: str
-    :param mode: the PIL Image mode to force (1=binary, L=grayscale, etc)
-    :type mode: str
     :return: the generated image data structure
     :rtype: tuple
     """
     if isinstance(array, Image.Image):
         img = array
     else:
-        if mode is None:
-            img = Image.fromarray(np.uint8(array))
-        else:
-            img = Image.fromarray(np.uint8(array), mode=mode)
+        img = Image.fromarray(np.uint8(array))
     img_bytes = io.BytesIO()
     if image_format == "JPEG":
         img.save(img_bytes, format=image_format, quality=jpeg_quality())
