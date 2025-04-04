@@ -110,3 +110,4 @@ venv.bak/
 *.iml
 blah*.py
 test/
+venv.sh
