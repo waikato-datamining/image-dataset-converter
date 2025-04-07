@@ -8,7 +8,11 @@ from wai.logging import LOGGING_WARNING
 from idc.api import ImageData, flatten_list, make_list
 
 RENAME_PH_NAME = "{name}"
+RENAME_PH_NAME_LOWERCASE = "{lname}"
+RENAME_PH_NAME_UPPERCASE = "{uname}"
 RENAME_PH_EXT = "{ext}"
+RENAME_PH_EXT_LOWERCASE = "{lext}"
+RENAME_PH_EXT_UPPERCASE = "{uext}"
 RENAME_PH_OCCURRENCES = "{occurrences}"
 RENAME_PH_COUNT = "{count}"
 RENAME_PH_PDIR = "{[p]+dir}"
@@ -16,7 +20,11 @@ RENAME_PH_PDIR_SUFFIX = "pdir}"
 
 RENAME_PLACEHOLDERS = [
     RENAME_PH_NAME,
+    RENAME_PH_NAME_LOWERCASE,
+    RENAME_PH_NAME_UPPERCASE,
     RENAME_PH_EXT,
+    RENAME_PH_EXT_LOWERCASE,
+    RENAME_PH_EXT_UPPERCASE,
     RENAME_PH_OCCURRENCES,
     RENAME_PH_COUNT,
     RENAME_PH_PDIR,
@@ -24,7 +32,11 @@ RENAME_PLACEHOLDERS = [
 
 RENAME_PH_HELP = {
     RENAME_PH_NAME: "the name of the file, without path or extension.",
+    RENAME_PH_NAME_LOWERCASE: "the lower-case name of the file, without path or extension.",
+    RENAME_PH_NAME_UPPERCASE: "the upper-case name of the file, without path or extension.",
     RENAME_PH_EXT: "the extension of the file (incl dot).",
+    RENAME_PH_EXT_LOWERCASE: "the lower-case extension of the file (incl dot).",
+    RENAME_PH_EXT_UPPERCASE: "the upper-case extension of the file (incl dot).",
     RENAME_PH_OCCURRENCES: "the number of times this name (excl extension) has been encountered.",
     RENAME_PH_COUNT: "the number of files encountered so far.",
     RENAME_PH_PDIR: "the parent directory of the file: 'p': immediate parent, the more the p's the higher up in the hierarchy.",
@@ -186,7 +198,11 @@ class Rename(Filter):
             # generate new name
             name_new = self.name_format
             name_new = name_new.replace(RENAME_PH_NAME, name)
+            name_new = name_new.replace(RENAME_PH_NAME_LOWERCASE, name.lower())
+            name_new = name_new.replace(RENAME_PH_NAME_UPPERCASE, name.upper())
             name_new = name_new.replace(RENAME_PH_EXT, ext)
+            name_new = name_new.replace(RENAME_PH_EXT_LOWERCASE, ext.lower())
+            name_new = name_new.replace(RENAME_PH_EXT_UPPERCASE, ext.upper())
             name_new = name_new.replace(RENAME_PH_COUNT, str(self._count))
             name_new = name_new.replace(RENAME_PH_OCCURRENCES, str(self._occurrences[name]))
             while RENAME_PH_PDIR_SUFFIX in name_new:
