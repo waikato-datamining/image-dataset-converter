@@ -7,7 +7,7 @@ import traceback
 from typing import List, Tuple, Optional, Dict
 
 from seppl import enumerate_plugins, is_help_requested, split_args, args_to_objects, Plugin, check_compatibility
-from seppl.placeholders import load_user_defined_placeholders
+from seppl.placeholders import load_user_defined_placeholders, expand_placeholders
 from seppl.io import execute, Reader, Filter, MultiFilter, Writer
 from wai.logging import init_logging, set_logging_level, add_logging_level, LOGGING_LEVELS
 
@@ -48,7 +48,7 @@ def _print_usage(plugin_details: bool = False):
     prefix = " " * (len(cmd) + 1)
     logging_levels = ",".join(LOGGING_LEVELS)
     print(cmd + " [-h|--help|--help-all|--help-plugin NAME]")
-    print(prefix + "[-u INTERVAL] [-b|--force_batch] [--placeholders FILE]")
+    print(prefix + "[-u INTERVAL] [-b|--force_batch] [--placeholders FILE] [--dump_pipeline FILE]")
     print(prefix + "[-l {%s}]" % logging_levels)
     print(prefix + "reader")
     print(prefix + "[filter [filter [...]]]")
@@ -71,6 +71,8 @@ def _print_usage(plugin_details: bool = False):
     print("  -b, --force_batch     processes the data in batches")
     print("  --placeholders FILE")
     print("                        The file with custom placeholders to load (format: key=value).")
+    print("  --dump_pipeline FILE")
+    print("                        The file to dump the pipeline command in.")
     print()
     if plugin_details:
         for plugin in sorted(_available_plugins().keys()):
@@ -151,6 +153,7 @@ def _parse_args(args: List[str], require_reader: bool = True, require_writer: bo
     parser.add_argument("-u", "--update_interval", type=int, default=DEFAULT_UPDATE_INTERVAL)
     parser.add_argument("-b", "--force_batch", action="store_true")
     parser.add_argument("--placeholders")
+    parser.add_argument("--dump_pipeline")
     session = Session(options=parser.parse_args(parsed[""] if ("" in parsed) else []))
     session.logger = logging.getLogger(CONVERT)
     set_logging_level(session.logger, session.options.logging_level)
@@ -160,6 +163,11 @@ def _parse_args(args: List[str], require_reader: bool = True, require_writer: bo
         else:
             session.logger.info("Loading custom placeholders from: %s" % session.options.placeholders)
             load_user_defined_placeholders(session.options.placeholders)
+    if session.options.dump_pipeline is not None:
+        session.logger.info("Dumping pipeline command in: %s" % session.options.dump_pipeline)
+        with open(expand_placeholders(session.options.dump_pipeline), "w") as fp:
+            fp.write(CONVERT + "\n")
+            fp.write("\n".join(args))
 
     return reader, filter_, writer, session
 

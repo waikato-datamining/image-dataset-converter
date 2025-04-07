@@ -51,7 +51,7 @@ The following dataset formats are supported:
 
 ```
 usage: idc-convert [-h|--help|--help-all|--help-plugin NAME]
-                   [-u INTERVAL] [-b|--force_batch] [--placeholders FILE]
+                   [-u INTERVAL] [-b|--force_batch] [--placeholders FILE] [--dump_pipeline FILE]
                    [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                    reader
                    [filter [filter [...]]]
@@ -92,6 +92,8 @@ optional arguments:
   -b, --force_batch     processes the data in batches
   --placeholders FILE
                         The file with custom placeholders to load (format: key=value).
+  --dump_pipeline FILE
+                        The file to dump the pipeline command in.
 ```
 
 ### Executing pipeline multiple times
