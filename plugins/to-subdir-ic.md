@@ -6,7 +6,7 @@ Saves images to sub-directories, using the classification label for the sub-dire
 
 ```
 usage: to-subdir-ic [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                    [-N LOGGER_NAME]
+                    [-N LOGGER_NAME] [--skip]
                     [--split_ratios SPLIT_RATIOS [SPLIT_RATIOS ...]]
                     [--split_names SPLIT_NAMES [SPLIT_NAMES ...]]
                     [--split_group SPLIT_GROUP] -o OUTPUT
@@ -21,6 +21,8 @@ options:
   -N LOGGER_NAME, --logger_name LOGGER_NAME
                         The custom name to use for the logger, uses the plugin
                         name by default (default: None)
+  --skip                Disables the plugin, removing it from the pipeline.
+                        (default: False)
   --split_ratios SPLIT_RATIOS [SPLIT_RATIOS ...]
                         The split ratios to use for generating the splits
                         (must sum up to 100) (default: None)

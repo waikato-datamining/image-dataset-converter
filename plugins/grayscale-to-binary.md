@@ -8,7 +8,7 @@ Turns grayscale images into binary ones. A grayscale image is required. You can 
 
 ```
 usage: grayscale-to-binary [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                           [-N LOGGER_NAME] [-t THRESHOLD]
+                           [-N LOGGER_NAME] [--skip] [-t THRESHOLD]
 
 Turns grayscale images into binary ones. A grayscale image is required. You
 can use the 'rgb-to-grayscale' for the conversion.
@@ -20,6 +20,8 @@ options:
   -N LOGGER_NAME, --logger_name LOGGER_NAME
                         The custom name to use for the logger, uses the plugin
                         name by default (default: None)
+  --skip                Disables the plugin, removing it from the pipeline.
+                        (default: False)
   -t THRESHOLD, --threshold THRESHOLD
                         The threshold to use (0-255). (default: 127)
 ```

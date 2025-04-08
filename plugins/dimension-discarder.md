@@ -7,7 +7,7 @@ Removes annotations which fall outside certain dimensional limits.
 
 ```
 usage: dimension-discarder [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                           [-N LOGGER_NAME] [--min_width MIN_WIDTH]
+                           [-N LOGGER_NAME] [--skip] [--min_width MIN_WIDTH]
                            [--min_height MIN_HEIGHT] [--max_width MAX_WIDTH]
                            [--max_height MAX_HEIGHT] [--min_area MIN_AREA]
                            [--max_area MAX_AREA]
@@ -21,6 +21,8 @@ options:
   -N LOGGER_NAME, --logger_name LOGGER_NAME
                         The custom name to use for the logger, uses the plugin
                         name by default (default: None)
+  --skip                Disables the plugin, removing it from the pipeline.
+                        (default: False)
   --min_width MIN_WIDTH
                         The minimum width for annotations (default: None)
   --min_height MIN_HEIGHT

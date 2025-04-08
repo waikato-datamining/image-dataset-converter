@@ -11,6 +11,7 @@ Changelog
 - added `ensure_binary` and `binary_required_info` convenience methods (package: `idc.api`)
 - added `--dump_pipeline` option to `idc-convert` for saving the pipeline command
 - the `rename` filter now supports lower/upper case placeholders of name and extension as well
+- requiring seppl>=0.2.16 now for skippable plugin support
 
 
 0.0.11 (2025-04-03)

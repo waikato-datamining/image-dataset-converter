@@ -7,7 +7,7 @@ Maps labels from one set to another.
 
 ```
 usage: map-labels [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                  [-N LOGGER_NAME] [-m [old=new ...]]
+                  [-N LOGGER_NAME] [--skip] [-m [old=new ...]]
 
 Maps labels from one set to another.
 
@@ -18,6 +18,8 @@ options:
   -N LOGGER_NAME, --logger_name LOGGER_NAME
                         The custom name to use for the logger, uses the plugin
                         name by default (default: None)
+  --skip                Disables the plugin, removing it from the pipeline.
+                        (default: False)
   -m [old=new ...], --mapping [old=new ...]
                         The labels to use (default: None)
 ```

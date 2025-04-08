@@ -6,7 +6,7 @@ Saves just the images.
 
 ```
 usage: to-data [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-N LOGGER_NAME]
-               [--split_ratios SPLIT_RATIOS [SPLIT_RATIOS ...]]
+               [--skip] [--split_ratios SPLIT_RATIOS [SPLIT_RATIOS ...]]
                [--split_names SPLIT_NAMES [SPLIT_NAMES ...]]
                [--split_group SPLIT_GROUP] -o OUTPUT
 
@@ -19,6 +19,8 @@ options:
   -N LOGGER_NAME, --logger_name LOGGER_NAME
                         The custom name to use for the logger, uses the plugin
                         name by default (default: None)
+  --skip                Disables the plugin, removing it from the pipeline.
+                        (default: False)
   --split_ratios SPLIT_RATIOS [SPLIT_RATIOS ...]
                         The split ratios to use for generating the splits
                         (must sum up to 100) (default: None)

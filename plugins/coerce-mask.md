@@ -7,7 +7,7 @@ Coerces the bounds of the annotations to all be polygon-masks. Annotations which
 
 ```
 usage: coerce-mask [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                   [-N LOGGER_NAME]
+                   [-N LOGGER_NAME] [--skip]
 
 Coerces the bounds of the annotations to all be polygon-masks. Annotations
 which already have polygons keep theirs, but those without are given a
@@ -20,4 +20,6 @@ options:
   -N LOGGER_NAME, --logger_name LOGGER_NAME
                         The custom name to use for the logger, uses the plugin
                         name by default (default: None)
+  --skip                Disables the plugin, removing it from the pipeline.
+                        (default: False)
 ```

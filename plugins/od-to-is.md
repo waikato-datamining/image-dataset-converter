@@ -7,7 +7,7 @@ Converts object detection annotations into image segmentation ones.
 
 ```
 usage: od-to-is [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-N LOGGER_NAME]
-                [--labels [LABELS ...]] [--regexp REGEXP]
+                [--skip] [--labels [LABELS ...]] [--regexp REGEXP]
 
 Converts object detection annotations into image segmentation ones.
 
@@ -18,6 +18,8 @@ options:
   -N LOGGER_NAME, --logger_name LOGGER_NAME
                         The custom name to use for the logger, uses the plugin
                         name by default (default: None)
+  --skip                Disables the plugin, removing it from the pipeline.
+                        (default: False)
   --labels [LABELS ...]
                         The labels to use (default: None)
   --regexp REGEXP       Regular expression for using only a subset of labels

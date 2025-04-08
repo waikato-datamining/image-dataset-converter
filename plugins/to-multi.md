@@ -6,7 +6,7 @@ Forwards the incoming data to all the base writers.
 
 ```
 usage: to-multi [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-N LOGGER_NAME]
-                -w WRITER [WRITER ...] -t {ic,is,od}
+                [--skip] -w WRITER [WRITER ...] -t {ic,is,od}
 
 Forwards the incoming data to all the base writers.
 
@@ -17,6 +17,8 @@ options:
   -N LOGGER_NAME, --logger_name LOGGER_NAME
                         The custom name to use for the logger, uses the plugin
                         name by default (default: None)
+  --skip                Disables the plugin, removing it from the pipeline.
+                        (default: False)
   -w WRITER [WRITER ...], --writer WRITER [WRITER ...]
                         The command-line defining the base writer. (default:
                         None)

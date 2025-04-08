@@ -7,7 +7,7 @@ Collects labels passing through and writes them to the specified file (stdout if
 
 ```
 usage: write-labels [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                    [-N LOGGER_NAME] [-o OUTPUT_FILE]
+                    [-N LOGGER_NAME] [--skip] [-o OUTPUT_FILE]
                     [-f {text,comma-separated,custom-separator}]
                     [-s CUSTOM_SEP]
 
@@ -21,6 +21,8 @@ options:
   -N LOGGER_NAME, --logger_name LOGGER_NAME
                         The custom name to use for the logger, uses the plugin
                         name by default (default: None)
+  --skip                Disables the plugin, removing it from the pipeline.
+                        (default: False)
   -o OUTPUT_FILE, --output_file OUTPUT_FILE
                         The file to write the labels to; uses stdout if not
                         provided; Supported placeholders: {HOME}, {CWD}, {TMP}

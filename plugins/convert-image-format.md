@@ -7,7 +7,7 @@ Converts the image format to the specified type.
 
 ```
 usage: convert-image-format [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                            [-N LOGGER_NAME] -f {JPEG,PNG,BMP}
+                            [-N LOGGER_NAME] [--skip] -f {JPEG,PNG,BMP}
 
 Converts the image format to the specified type.
 
@@ -18,6 +18,8 @@ options:
   -N LOGGER_NAME, --logger_name LOGGER_NAME
                         The custom name to use for the logger, uses the plugin
                         name by default (default: None)
+  --skip                Disables the plugin, removing it from the pipeline.
+                        (default: False)
   -f {JPEG,PNG,BMP}, --image_format {JPEG,PNG,BMP}
                         The image format to use (default: None)
 ```

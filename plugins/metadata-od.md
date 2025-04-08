@@ -7,7 +7,7 @@ Keeps or discards object detection annotations based on meta-data comparisons. P
 
 ```
 usage: metadata-od [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                   [-N LOGGER_NAME] -f FIELD -v VALUE
+                   [-N LOGGER_NAME] [--skip] -f FIELD -v VALUE
                    [-c {lt,le,eq,ne,ge,gt,contains,matches}]
                    [-a {keep,discard}]
 
@@ -22,6 +22,8 @@ options:
   -N LOGGER_NAME, --logger_name LOGGER_NAME
                         The custom name to use for the logger, uses the plugin
                         name by default (default: None)
+  --skip                Disables the plugin, removing it from the pipeline.
+                        (default: False)
   -f FIELD, --field FIELD
                         The meta-data field to use in the comparison (default:
                         None)

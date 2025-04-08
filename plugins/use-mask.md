@@ -7,7 +7,7 @@ Uses the images segmentation annotations (= mask) as the new base image.
 
 ```
 usage: use-mask [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-N LOGGER_NAME]
-                -t {ic,is,od} [-p PALETTE] [--use_rgb]
+                [--skip] -t {ic,is,od} [-p PALETTE] [--use_rgb]
 
 Uses the images segmentation annotations (= mask) as the new base image.
 
@@ -18,6 +18,8 @@ options:
   -N LOGGER_NAME, --logger_name LOGGER_NAME
                         The custom name to use for the logger, uses the plugin
                         name by default (default: None)
+  --skip                Disables the plugin, removing it from the pipeline.
+                        (default: False)
   -t {ic,is,od}, --data_type {ic,is,od}
                         The type of data to forward (default: None)
   -p PALETTE, --palette PALETTE
