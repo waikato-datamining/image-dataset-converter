@@ -7,7 +7,7 @@ from PIL import ImageFont, Image, ImageDraw
 
 DEFAULT_FONT_FAMILY = "sans\\-serif"
 
-TEXT_SIZE_OLD = None
+TEXT_SIZE_OLD = hasattr(ImageDraw, "textsize")
 
 
 def load_font(logger, family, size):
@@ -83,18 +83,7 @@ def text_size(text: str, font) -> Tuple[int, int]:
     :return: the width and height
     :rtype: tuple
     """
-    global TEXT_SIZE_OLD
-
-    if TEXT_SIZE_OLD is None:
-        try:
-            w, h = _text_size_old(text, font)
-            TEXT_SIZE_OLD = True
-        except:
-            w, h = _text_size_new(text, font)
-            TEXT_SIZE_OLD = False
+    if TEXT_SIZE_OLD:
+        return _text_size_old(text, font)
     else:
-        if TEXT_SIZE_OLD:
-            w, h = _text_size_old(text, font)
-        else:
-            w, h = _text_size_new(text, font)
-    return w, h
+        return _text_size_new(text, font)
