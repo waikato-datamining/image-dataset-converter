@@ -18,6 +18,7 @@
 * [poll-dir](poll-dir.md)
 
 ## Filters
+* [any-to-rgb](any-to-rgb.md)
 * [check-duplicate-filenames](check-duplicate-filenames.md)
 * [coerce-box](coerce-box.md)
 * [coerce-mask](coerce-mask.md)

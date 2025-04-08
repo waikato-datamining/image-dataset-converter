@@ -12,6 +12,7 @@ Changelog
 - added `--dump_pipeline` option to `idc-convert` for saving the pipeline command
 - the `rename` filter now supports lower/upper case placeholders of name and extension as well
 - requiring seppl>=0.2.16 now for skippable plugin support
+- added `any-to-rgb` filter for turning binary/grayscale images back into RGB ones
 
 
 0.0.11 (2025-04-03)
