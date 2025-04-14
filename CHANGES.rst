@@ -14,6 +14,7 @@ Changelog
 - requiring seppl>=0.2.16 now for skippable plugin support
 - added `any-to-rgb` filter for turning binary/grayscale images back into RGB ones
 - using `wai_common` instead of `wai.common` now
+- requiring `fast_opex>=0.0.4` now
 
 
 0.0.11 (2025-04-03)
