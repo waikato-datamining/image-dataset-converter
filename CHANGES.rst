@@ -13,6 +13,7 @@ Changelog
 - the `rename` filter now supports lower/upper case placeholders of name and extension as well
 - requiring seppl>=0.2.16 now for skippable plugin support
 - added `any-to-rgb` filter for turning binary/grayscale images back into RGB ones
+- using `wai_common` instead of `wai.common` now
 
 
 0.0.11 (2025-04-03)

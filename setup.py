@@ -34,7 +34,7 @@ setup(
         "setuptools",
         "seppl>=0.2.16",
         "wai_logging",
-        "wai.common>=0.0.44",
+        "wai_common>=0.0.45",
         "pillow",
         "matplotlib",
         "imagesize",
