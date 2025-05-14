@@ -15,6 +15,8 @@ Changelog
 - added `any-to-rgb` filter for turning binary/grayscale images back into RGB ones
 - using `wai_common` instead of `wai.common` now
 - requiring `fast_opex>=0.0.4` now
+- added `label-to-metadata` filter for transferring labels into meta-data
+- added `metadata-to-placeholder` filter for transferring meta-data into placeholders
 
 
 0.0.11 (2025-04-03)

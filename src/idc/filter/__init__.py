@@ -7,11 +7,13 @@ from ._discard_by_name import DiscardByName
 from ._filter_labels import FilterLabels
 from ._grayscale_to_binary import GrayscaleToBinary
 from ._inspect import Inspect, MODES, MODE_NONINTERACTIVE, MODE_INTERACTIVE, OUTPUTS, OUTPUT_STDOUT, OUTPUT_STDERR, OUTPUT_LOGGER, OUTPUT_FILE
+from ._label_to_metadata import LabelToMetaData
 from ._map_labels import MapLabels
 from ._max_records import MaxRecords
 from ._metadata import MetaData
 from ._metadata_from_name import MetaDataFromName
 from ._metadata_objdet import MetaDataObjectDetection
+from ._metadata_to_placeholder import MetaDataToPlaceholder
 from ._od_to_is import ObjectDetectionToImageSegmentation
 from ._od_to_ic import ObjectDetectionToImageClassification, MULTIPLICITY, MULTIPLICITY_ERROR, MULTIPLICITY_SKIP, MULTIPLICITY_SINGLE, MULTIPLICITY_MAJORITY
 from ._passthrough import PassThrough
