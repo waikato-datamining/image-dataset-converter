@@ -7,7 +7,7 @@ Loads the images via the declared function and forwards them as the specified da
 ```
 usage: from-pyfunc [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                    [-N LOGGER_NAME] [-i [INPUT ...]] [-I [INPUT_LIST ...]]
-                   [--resume_from RESUME_FROM] -f FUNCTION -t {ic,is,od}
+                   [--resume_from RESUME_FROM] -f FUNCTION -t {dp,ic,is,od}
 
 Loads the images via the declared function and forwards them as the specified
 data type. The function must take a string as input and output an iterable of
@@ -34,7 +34,7 @@ options:
   -f FUNCTION, --function FUNCTION
                         The Python function to use, format:
                         module_name:function_name (default: None)
-  -t {ic,is,od}, --data_type {ic,is,od}
+  -t {dp,ic,is,od}, --data_type {dp,ic,is,od}
                         The type of data to forward (default: None)
 ```
 

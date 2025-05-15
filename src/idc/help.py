@@ -2,8 +2,8 @@ import os
 
 from seppl import OutputProducer, InputConsumer, classes_to_str, get_aliases, has_aliases
 from seppl.placeholders import PlaceholderSupporter, placeholder_help
-
 from idc.registry import available_plugins
+from idc.api import DataTypeSupporter, data_types_help
 
 
 HELP_FORMAT_TEXT = "text"
@@ -46,6 +46,8 @@ def generate_plugin_usage(plugin_name: str, help_format: str = HELP_FORMAT_TEXT,
         result = result.strip()
         result += "\n\n"
         result += plugin.format_help() + "\n"
+        if isinstance(plugin, DataTypeSupporter):
+            result += "\n" + data_types_help(markdown=False) + "\n"
         if isinstance(plugin, PlaceholderSupporter):
             result += "\n" + placeholder_help(markdown=False, obj=plugin) + "\n"
     elif help_format == HELP_FORMAT_MARKDOWN:
@@ -65,6 +67,8 @@ def generate_plugin_usage(plugin_name: str, help_format: str = HELP_FORMAT_TEXT,
         result += "```\n"
         result += plugin.format_help()
         result += "```\n"
+        if isinstance(plugin, DataTypeSupporter):
+            result += "\n" + data_types_help(markdown=True) + "\n"
         if isinstance(plugin, PlaceholderSupporter):
             result += "\n" + placeholder_help(markdown=True, obj=plugin) + "\n"
     else:

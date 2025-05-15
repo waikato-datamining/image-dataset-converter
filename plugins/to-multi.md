@@ -6,7 +6,7 @@ Forwards the incoming data to all the base writers.
 
 ```
 usage: to-multi [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-N LOGGER_NAME]
-                [--skip] -w WRITER [WRITER ...] -t {ic,is,od}
+                [--skip] -w WRITER [WRITER ...] -t {dp,ic,is,od}
 
 Forwards the incoming data to all the base writers.
 
@@ -22,6 +22,6 @@ options:
   -w WRITER [WRITER ...], --writer WRITER [WRITER ...]
                         The command-line defining the base writer. (default:
                         None)
-  -t {ic,is,od}, --data_type {ic,is,od}
+  -t {dp,ic,is,od}, --data_type {dp,ic,is,od}
                         The type of data to accept (default: None)
 ```

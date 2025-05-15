@@ -11,6 +11,7 @@ def list_classes() -> Dict[str, List[str]]:
         ],
         "seppl.io.Filter": [
             "idc.filter",
+            "idc.filter.depth",
             "idc.filter.imgcls",
             "idc.filter.imgseg",
             "idc.filter.objdet",

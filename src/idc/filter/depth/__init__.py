@@ -1,0 +1,1 @@
+from ._depth_to_grayscale import DepthToGrayscale

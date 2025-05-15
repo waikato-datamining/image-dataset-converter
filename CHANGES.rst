@@ -17,6 +17,8 @@ Changelog
 - requiring `fast_opex>=0.0.4` now
 - added `label-to-metadata` filter for transferring labels into meta-data
 - added `metadata-to-placeholder` filter for transferring meta-data into placeholders
+- added basic support for images with associated depth information: `DepthData`, `DepthInformation`
+- added `depth-to-grayscale` filter for converting depth information to grayscale image
 
 
 0.0.11 (2025-04-03)

@@ -7,8 +7,8 @@ The declared Python function processes image containers of the specified input t
 
 ```
 usage: pyfunc-filter [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                     [-N LOGGER_NAME] [--skip] -i {ic,is,od} -f FUNCTION -o
-                     {ic,is,od}
+                     [-N LOGGER_NAME] [--skip] -i {dp,ic,is,od} -f FUNCTION -o
+                     {dp,ic,is,od}
 
 The declared Python function processes image containers of the specified input
 type and generates ones of the specified output type. The function must handle
@@ -24,11 +24,11 @@ options:
                         name by default (default: None)
   --skip                Disables the plugin, removing it from the pipeline.
                         (default: False)
-  -i {ic,is,od}, --input_data_type {ic,is,od}
+  -i {dp,ic,is,od}, --input_data_type {dp,ic,is,od}
                         The type of data to receive (default: None)
   -f FUNCTION, --function FUNCTION
                         The Python function to use, format:
                         module_name:function_name (default: None)
-  -o {ic,is,od}, --output_data_type {ic,is,od}
+  -o {dp,ic,is,od}, --output_data_type {dp,ic,is,od}
                         The type of data to forward (default: None)
 ```

@@ -7,7 +7,7 @@ Uses the images segmentation annotations (= mask) as the new base image.
 
 ```
 usage: use-mask [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-N LOGGER_NAME]
-                [--skip] -t {ic,is,od} [-p PALETTE] [--use_rgb]
+                [--skip] -t {dp,ic,is,od} [-p PALETTE] [--use_rgb]
 
 Uses the images segmentation annotations (= mask) as the new base image.
 
@@ -20,7 +20,7 @@ options:
                         name by default (default: None)
   --skip                Disables the plugin, removing it from the pipeline.
                         (default: False)
-  -t {ic,is,od}, --data_type {ic,is,od}
+  -t {dp,ic,is,od}, --data_type {dp,ic,is,od}
                         The type of data to forward (default: None)
   -p PALETTE, --palette PALETTE
                         The palette to use; either palette name (auto|colorbli

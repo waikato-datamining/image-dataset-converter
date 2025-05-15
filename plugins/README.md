@@ -23,6 +23,8 @@
 * [coerce-box](coerce-box.md)
 * [coerce-mask](coerce-mask.md)
 * [convert-image-format](convert-image-format.md)
+* [depth-to-grayscale](depth-to-grayscale.md)
+* [depth-to-greyscale](depth-to-greyscale.md)
 * [dimension-discarder](dimension-discarder.md)
 * [discard-by-name](discard-by-name.md)
 * [discard-invalid-images](discard-invalid-images.md)

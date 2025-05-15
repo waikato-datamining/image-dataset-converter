@@ -7,7 +7,7 @@ Loads the images and forwards them as the specified data type.
 ```
 usage: from-data [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                  [-N LOGGER_NAME] [-i [INPUT ...]] [-I [INPUT_LIST ...]]
-                 [--resume_from RESUME_FROM] -t {ic,is,od}
+                 [--resume_from RESUME_FROM] -t {dp,ic,is,od}
 
 Loads the images and forwards them as the specified data type.
 
@@ -29,7 +29,7 @@ options:
   --resume_from RESUME_FROM
                         Glob expression matching the file to resume from,
                         e.g., '*/012345.jpg' (default: None)
-  -t {ic,is,od}, --data_type {ic,is,od}
+  -t {dp,ic,is,od}, --data_type {dp,ic,is,od}
                         The type of data to forward (default: None)
 ```
 

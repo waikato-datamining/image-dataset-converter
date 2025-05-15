@@ -1,0 +1,8 @@
+DEVICE_AUTO = "auto"
+DEVICE_CPU = "cpu"
+DEVICE_CUDA = "cuda"
+DEVICES = [
+    DEVICE_AUTO,
+    DEVICE_CPU,
+    DEVICE_CUDA,
+]

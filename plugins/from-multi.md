@@ -7,7 +7,7 @@ Reads data using the specified base readers and combines their output.
 ```
 usage: from-multi [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                   [-N LOGGER_NAME] -r READER [READER ...]
-                  [-o {sequential,interleaved}] -t {ic,is,od}
+                  [-o {sequential,interleaved}] -t {dp,ic,is,od}
 
 Reads data using the specified base readers and combines their output.
 
@@ -24,6 +24,6 @@ options:
   -o {sequential,interleaved}, --read_order {sequential,interleaved}
                         How to use the output from the readers. (default:
                         sequential)
-  -t {ic,is,od}, --data_type {ic,is,od}
+  -t {dp,ic,is,od}, --data_type {dp,ic,is,od}
                         The type of data to forward (default: None)
 ```

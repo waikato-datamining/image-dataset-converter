@@ -9,7 +9,7 @@ usage: to-pyfunc [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                  [-N LOGGER_NAME] [--skip]
                  [--split_ratios SPLIT_RATIOS [SPLIT_RATIOS ...]]
                  [--split_names SPLIT_NAMES [SPLIT_NAMES ...]]
-                 [--split_group SPLIT_GROUP] -f FUNCTION -t {ic,is,od}
+                 [--split_group SPLIT_GROUP] -f FUNCTION -t {dp,ic,is,od}
 
 Processes the images of the specified data type via the declared Python
 function. The function must take an image container as input (matching the
@@ -38,6 +38,6 @@ options:
   -f FUNCTION, --function FUNCTION
                         The Python function to use, format:
                         module_name:function_name (default: None)
-  -t {ic,is,od}, --data_type {ic,is,od}
+  -t {dp,ic,is,od}, --data_type {dp,ic,is,od}
                         The type of data to forward (default: None)
 ```
