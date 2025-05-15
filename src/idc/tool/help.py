@@ -8,7 +8,7 @@ from typing import List, Optional
 from wai.logging import init_logging, set_logging_level, add_logging_level
 from idc.core import ENV_IDC_LOGLEVEL
 from idc.help import generate_plugin_usage, HELP_FORMATS, HELP_FORMAT_TEXT, HELP_FORMAT_MARKDOWN
-from idc.registry import register_plugins, available_pipeline_plugins
+from idc.registry import register_plugins, available_pipeline_plugins, REGISTRY
 from idc.registry import available_readers, available_filters, available_writers, available_generators
 
 HELP = "idc-help"
@@ -92,7 +92,6 @@ def output_help(custom_class_listers: List[str] = None, excluded_class_listers: 
         plugin_type = PLUGIN_TYPE_PIPELINE
     if plugin_type not in PLUGIN_TYPES:
         raise Exception("Invalid plugin type: %s" % plugin_type)
-    available = None
     if plugin_type == PLUGIN_TYPE_PIPELINE:
         available = available_pipeline_plugins()
     elif plugin_type == PLUGIN_TYPE_GENERATOR:
@@ -107,6 +106,8 @@ def output_help(custom_class_listers: List[str] = None, excluded_class_listers: 
     else:
         plugin_names = [plugin_name]
     for p in plugin_names:
+        if REGISTRY.is_alias(p):
+            continue
         _logger.info("Generating help (%s): %s" % (help_format, p))
         generate_plugin_usage(p, help_format=help_format, heading_level=heading_level, output_path=output)
 
