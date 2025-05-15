@@ -67,7 +67,7 @@ class BlueChannelImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnly
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-o", "--output", type=str, help="The directory to store the images files in. Any defined splits get added beneath there. " + placeholder_list(obj=self), required=True)
+        parser.add_argument("-o", "--output", type=str, help="The directory to store the image files in. Any defined splits get added beneath there. " + placeholder_list(obj=self), required=True)
         parser.add_argument("--image_path_rel", metavar="PATH", type=str, default=None, help="The relative path from the annotations to the images directory", required=False)
         parser.add_argument("--background", type=int, help="The index (0-255) to use for the background", required=False, default=0)
         add_annotations_only_param(parser)

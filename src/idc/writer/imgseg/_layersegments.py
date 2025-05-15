@@ -64,7 +64,7 @@ class LayerSegmentsImageSegmentationWriter(SplittableStreamWriter, AnnotationsOn
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-o", "--output", type=str, help="The directory to store the images files in. Any defined splits get added beneath there. " + placeholder_list(obj=self), required=True)
+        parser.add_argument("-o", "--output", type=str, help="The directory to store the image files in. Any defined splits get added beneath there. " + placeholder_list(obj=self), required=True)
         parser.add_argument("--label_separator", type=str, help="The separator between name and label used by the mask images.", required=False, default="-")
         add_annotations_only_param(parser)
         return parser
