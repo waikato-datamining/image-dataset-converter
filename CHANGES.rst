@@ -20,6 +20,8 @@ Changelog
 - added basic support for images with associated depth information: `DepthData`, `DepthInformation`
 - added `depth-to-grayscale` filter for converting depth information to grayscale image
 - prefixed image segmentation methods like `from_bluechannel` and `to_bluechannel` with `imgseg_`
+- added depth information readers `from-grayscale-dp` and `from-numpy-dp`
+- added depth information writers `to-grayscale-dp` and `to-numpy-dp`
 
 
 0.0.11 (2025-04-03)

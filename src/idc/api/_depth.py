@@ -116,3 +116,32 @@ def depth_to_grayscale(ann: DepthInformation, min_value: float = None, max_value
     # grayscale image
     result = Image.fromarray(array, 'L')
     return result
+
+
+def depth_from_grayscale(img: Image.Image, min_value: float = None, max_value: float = None,
+                         logger: logging.Logger = None) -> DepthInformation:
+    """
+    Loads the depth information from the grayscale image.
+
+    :param img: the grayscale image with the depth information
+    :type img: Image.Image
+    :param min_value: whether to use a lower limit for the depth, ignored if None
+    :type min_value: float
+    :param max_value: whether to use an upper limit for the depth, ignored if None
+    :type max_value: float
+    :param logger: optional logger instance for outputting some info
+    :type logger: logging.Logger
+    :return: the depth information generated from the image
+    :rtype: DepthInformation
+    """
+    arr = np.asarray(img).astype(np.float32)
+    if (min_value is not None) and (max_value is not None):
+        arr /= 255 * (max_value - min_value)
+        arr += min_value
+        if logger is not None:
+            logger.info("New min=%s and max=%s" % (str(np.min(arr)), str(np.max(arr))))
+    elif min_value is not None:
+        arr += min_value
+        if logger is not None:
+            logger.info("New min=%s" % str(np.min(arr)))
+    return DepthInformation(arr)
