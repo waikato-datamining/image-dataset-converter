@@ -33,22 +33,18 @@ The following dataset formats are supported:
 |:-----------------------|:--------------------------------------------------------------------------------|:-----------------------------------------|:-----------------------------------------| 
 | Depth data             | [Grayscale](formats/grayscale.md)                                               | [Y](plugins/from-grayscale-dp.md)        | [Y](plugins/to-grayscale-dp.md)          | 
 | Depth data             | [Numpy](formats/numpy.md)                                                       | [Y](plugins/from-numpy-dp.md)            | [Y](plugins/to-numpy-dp.md)              | 
-| ---------------------- | ------------------------------------------------------------------------------- | ---------------------------------------- | ---------------------------------------- | 
 | Image classification   | [ADAMS](formats/adams.md)                                                       | [Y](plugins/from-adams-ic.md)            | [Y](plugins/to-adams-ic.md)              | 
 | Image classification   | [subdir](formats/subdir.md)                                                     | [Y](plugins/from-subdir-ic.md)           | [Y](plugins/to-subdir-ic.md)             | 
-| ---------------------- | ------------------------------------------------------------------------------- | ---------------------------------------- | ---------------------------------------- | 
 | Image segmentation     | [Blue-channel](formats/bluechannel.md)                                          | [Y](plugins/from-blue-channel-is.md)     | [Y](plugins/to-blue-channel-is.md)       | 
 | Image segmentation     | [Grayscale](formats/grayscale.md)                                               | [Y](plugins/from-grayscale-is.md)        | [Y](plugins/to-grayscale-is.md)          | 
 | Image segmentation     | [Indexed PNG](formats/indexedpng.md)                                            | [Y](plugins/from-indexed-png-is.md)      | [Y](plugins/to-indexed-png-is.md)        | 
 | Image segmentation     | [Layer segments](formats/layersegments.md)                                      | [Y](plugins/from-layer-segments-is.md)   | [Y](plugins/to-layer-segments-is.md)     | 
-| ---------------------- | ------------------------------------------------------------------------------- | ---------------------------------------- | ---------------------------------------- | 
 | Object detection       | [ADAMS](formats/adams.md)                                                       | [Y](plugins/from-adams-od.md)            | [Y](plugins/to-adams-od.md)              | 
 | Object detection       | [COCO](https://cocodataset.org/#format-data)                                    | [Y](plugins/from-coco-od.md)             | [Y](plugins/to-coco-od.md)               | 
 | Object detection       | [OPEX](https://github.com/WaikatoLink2020/objdet-predictions-exchange-format)   | [Y](plugins/from-opex-od.md)             | [Y](plugins/to-opex-od.md)               | 
 | Object detection       | [ROI CSV](formats/roicsv.md)                                                    | [Y](plugins/from-roicsv-od.md)           | [Y](plugins/to-roicsv-od.md)             | 
 | Object detection       | [VOC](formats/voc.md)                                                           | [Y](plugins/from-voc-od.md)              | [Y](plugins/to-voc-od.md)                | 
 | Object detection       | [YOLO](formats/yolo.md)                                                         | [Y](plugins/from-yolo-od.md)             | [Y](plugins/to-yolo-od.md)               | 
-| ---------------------- | ------------------------------------------------------------------------------- | ---------------------------------------- | ---------------------------------------- | 
 
 
 ## Tools
