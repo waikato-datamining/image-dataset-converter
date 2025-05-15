@@ -164,8 +164,8 @@ def split_layers(array: np.ndarray, labels: List[str]) -> ImageSegmentationAnnot
     return ImageSegmentationAnnotations(labels=labels, layers=layers)
 
 
-def from_indexedpng(img: Image.Image, labels: List[str], label_mapping: Dict[int, str],
-                    logger: logging.Logger, background: int = 0) -> ImageSegmentationAnnotations:
+def imgseg_from_indexedpng(img: Image.Image, labels: List[str], label_mapping: Dict[int, str],
+                           logger: logging.Logger, background: int = 0) -> ImageSegmentationAnnotations:
     """
     Loads the annotations from the indexed png.
 
@@ -206,7 +206,7 @@ def from_indexedpng(img: Image.Image, labels: List[str], label_mapping: Dict[int
     return ImageSegmentationAnnotations(labels, layers)
 
 
-def to_indexedpng(width: int, height: int, ann: ImageSegmentationAnnotations, palette_list: List[int], background: int = 0) -> Image.Image:
+def imgseg_to_indexedpng(width: int, height: int, ann: ImageSegmentationAnnotations, palette_list: List[int], background: int = 0) -> Image.Image:
     """
     Turns the annotations into an indexed image.
 
@@ -237,8 +237,8 @@ def to_indexedpng(width: int, height: int, ann: ImageSegmentationAnnotations, pa
     return result
 
 
-def from_bluechannel(img: Image.Image, labels: List[str], label_mapping: Dict[int, str],
-                     logger: logging.Logger, background: int = 0) -> ImageSegmentationAnnotations:
+def imgseg_from_bluechannel(img: Image.Image, labels: List[str], label_mapping: Dict[int, str],
+                            logger: logging.Logger, background: int = 0) -> ImageSegmentationAnnotations:
     """
     Loads the annotations from the blue channel.
 
@@ -280,7 +280,7 @@ def from_bluechannel(img: Image.Image, labels: List[str], label_mapping: Dict[in
     return ImageSegmentationAnnotations(labels, layers)
 
 
-def to_bluechannel(width: int, height: int, ann: ImageSegmentationAnnotations, background: int = 0) -> Image.Image:
+def imgseg_to_bluechannel(width: int, height: int, ann: ImageSegmentationAnnotations, background: int = 0) -> Image.Image:
     """
     Turns the annotations into a RGB image with the layers in the blue channel.
 
@@ -309,8 +309,8 @@ def to_bluechannel(width: int, height: int, ann: ImageSegmentationAnnotations, b
     return result
 
 
-def from_grayscale(img: Image.Image, labels: List[str], label_mapping: Dict[int, str],
-                   logger: logging.Logger, background: int = 0) -> ImageSegmentationAnnotations:
+def imgseg_from_grayscale(img: Image.Image, labels: List[str], label_mapping: Dict[int, str],
+                          logger: logging.Logger, background: int = 0) -> ImageSegmentationAnnotations:
     """
     Loads the annotations from the grayscale image.
 
@@ -351,7 +351,7 @@ def from_grayscale(img: Image.Image, labels: List[str], label_mapping: Dict[int,
     return ImageSegmentationAnnotations(labels, layers)
 
 
-def to_grayscale(width: int, height: int, ann: ImageSegmentationAnnotations, background: int = 0) -> Image.Image:
+def imgseg_to_grayscale(width: int, height: int, ann: ImageSegmentationAnnotations, background: int = 0) -> Image.Image:
     """
     Turns the annotations into a grayscale image.
 
@@ -376,3 +376,12 @@ def to_grayscale(width: int, height: int, ann: ImageSegmentationAnnotations, bac
         arr = np.where(arr == 0, background, arr)
     result = Image.fromarray(arr, "L")
     return result
+
+
+# aliases
+from_bluechannel = imgseg_from_bluechannel
+from_grayscale = imgseg_from_grayscale
+from_indexedpng = imgseg_from_indexedpng
+to_bluechannel = imgseg_to_bluechannel
+to_grayscale = imgseg_to_grayscale
+to_indexedpng = imgseg_to_indexedpng

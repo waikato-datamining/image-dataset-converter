@@ -5,7 +5,7 @@ from seppl.placeholders import PlaceholderSupporter, placeholder_list
 from seppl.io import locate_files
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ImageSegmentationData, locate_file, load_image_from_file, from_bluechannel, JPEG_EXTENSIONS
+from idc.api import ImageSegmentationData, locate_file, load_image_from_file, imgseg_from_bluechannel, JPEG_EXTENSIONS
 from idc.api import Reader
 
 
@@ -133,7 +133,7 @@ class BlueChannelImageSegmentationReader(Reader, PlaceholderSupporter):
         # read annotations
         self.logger().info("Reading from: " + str(self.session.current_input))
         ann = load_image_from_file(self.session.current_input)
-        annotations = from_bluechannel(ann, self.labels, self._label_mapping, self.logger(), background=self.background)
+        annotations = imgseg_from_bluechannel(ann, self.labels, self._label_mapping, self.logger(), background=self.background)
 
         # associated image
         if len(imgs) > 1:

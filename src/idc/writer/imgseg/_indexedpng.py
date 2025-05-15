@@ -5,7 +5,7 @@ from typing import List
 from wai.logging import LOGGING_WARNING
 
 from idc.api import ImageSegmentationData, SplittableStreamWriter, make_list, \
-    AnnotationsOnlyWriter, add_annotations_only_param, to_indexedpng
+    AnnotationsOnlyWriter, add_annotations_only_param, imgseg_to_indexedpng
 from simple_palette_utils import generate_palette_list, PALETTE_AUTO, palettes
 from seppl.placeholders import placeholder_list, InputBasedPlaceholderSupporter
 
@@ -140,7 +140,7 @@ class IndexedPngImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnlyW
 
             # annotations
             if item.has_annotation():
-                ann = to_indexedpng(item.image_width, item.image_height, item.annotation, self._palette_list, background=self.background)
+                ann = imgseg_to_indexedpng(item.image_width, item.image_height, item.annotation, self._palette_list, background=self.background)
                 path = sub_dir
                 os.makedirs(path, exist_ok=True)
                 path = os.path.join(path, item.image_name)

@@ -8,7 +8,8 @@ from ._device import DEVICES, DEVICE_AUTO, DEVICE_CPU, DEVICE_CUDA
 from ._generator import Generator, SingleVariableGenerator
 from ._imgcls import ImageClassificationData
 from ._imgseg import ImageSegmentationData, ImageSegmentationAnnotations, combine_layers, split_layers
-from ._imgseg import from_indexedpng, from_bluechannel, from_grayscale, to_indexedpng, to_grayscale, to_bluechannel
+from ._imgseg import imgseg_from_indexedpng, imgseg_from_bluechannel, imgseg_from_grayscale, imgseg_to_indexedpng, imgseg_to_grayscale, imgseg_to_bluechannel
+from ._imgseg import from_indexedpng, from_bluechannel, from_grayscale, to_indexedpng, to_bluechannel, to_grayscale
 from ._objdet import ObjectDetectionData, get_object_label, set_object_label, DEFAULT_LABEL, LABEL_KEY
 from ._utils import locate_file, locate_image, load_image_from_bytes, load_image_from_file, load_function, JPEG_EXTENSIONS
 from ._utils import load_labels, save_labels, save_labels_csv

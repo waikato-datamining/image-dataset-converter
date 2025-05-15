@@ -6,7 +6,7 @@ from seppl.io import Filter
 from simple_palette_utils import generate_palette_list, PALETTE_AUTO, palettes
 from wai.logging import LOGGING_WARNING
 
-from idc.api import DATATYPES, data_type_to_class, DataTypeSupporter, ImageData, to_indexedpng
+from idc.api import DATATYPES, data_type_to_class, DataTypeSupporter, ImageData, imgseg_to_indexedpng
 from idc.api import ImageSegmentationData, flatten_list, make_list
 
 
@@ -124,7 +124,7 @@ class UseMask(Filter, DataTypeSupporter):
         for item in make_list(data):
             if item.has_annotation():
                 new_image_name = os.path.splitext(item.image_name)[0] + ".png"
-                new_image = to_indexedpng(item.image_width, item.image_height, item.annotation, self._palette_list, background=0)
+                new_image = imgseg_to_indexedpng(item.image_width, item.image_height, item.annotation, self._palette_list, background=0)
                 if self.use_rgb:
                     new_image = new_image.convert("RGB")
                 new_item = self._output_cls(image_name=new_image_name, image=new_image)

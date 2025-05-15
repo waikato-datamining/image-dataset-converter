@@ -19,6 +19,7 @@ Changelog
 - added `metadata-to-placeholder` filter for transferring meta-data into placeholders
 - added basic support for images with associated depth information: `DepthData`, `DepthInformation`
 - added `depth-to-grayscale` filter for converting depth information to grayscale image
+- prefixed image segmentation methods like `from_bluechannel` and `to_bluechannel` with `imgseg_`
 
 
 0.0.11 (2025-04-03)

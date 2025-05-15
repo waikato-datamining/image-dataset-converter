@@ -5,7 +5,7 @@ from typing import List
 from wai.logging import LOGGING_WARNING
 
 from idc.api import ImageSegmentationData, SplittableStreamWriter, make_list, AnnotationsOnlyWriter, \
-    add_annotations_only_param, to_bluechannel
+    add_annotations_only_param, imgseg_to_bluechannel
 from seppl.placeholders import placeholder_list, InputBasedPlaceholderSupporter
 
 
@@ -132,7 +132,7 @@ class BlueChannelImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnly
 
             # annotations
             if item.has_annotation():
-                ann = to_bluechannel(item.image_width, item.image_height, item.annotation, background=self.background)
+                ann = imgseg_to_bluechannel(item.image_width, item.image_height, item.annotation, background=self.background)
                 path = sub_dir
                 os.makedirs(path, exist_ok=True)
                 path = os.path.join(path, item.image_name)
