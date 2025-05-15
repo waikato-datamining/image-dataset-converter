@@ -36,8 +36,8 @@ options:
                         the base name of a file or the sample ID. (default:
                         None)
   -o OUTPUT, --output OUTPUT
-                        The directory to store the images files in. Any
-                        defined splits get added beneath there. Supported
+                        The directory to store the image files in. Any defined
+                        splits get added beneath there. Supported
                         placeholders: {INPUT_PATH}, {INPUT_NAMEEXT},
                         {INPUT_NAMENOEXT}, {INPUT_EXT}, {INPUT_PARENT_PATH},
                         {INPUT_PARENT_NAME} (default: None)
