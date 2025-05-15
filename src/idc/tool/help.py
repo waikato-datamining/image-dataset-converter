@@ -45,12 +45,16 @@ def _add_plugins_to_index(heading: str, plugins: dict, help_format: str, lines: 
     if help_format == HELP_FORMAT_MARKDOWN:
         lines.append("## " + heading)
         for name in plugin_names:
+            if REGISTRY.is_alias(name):
+                continue
             lines.append("* [%s](%s.md)" % (name, name))
         lines.append("")
     elif help_format == HELP_FORMAT_TEXT:
         lines.append(heading)
         lines.append("-" * len(heading))
         for name in plugin_names:
+            if REGISTRY.is_alias(name):
+                continue
             lines.append("- %s" % name)
         lines.append("")
     else:
