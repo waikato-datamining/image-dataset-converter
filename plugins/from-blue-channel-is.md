@@ -26,7 +26,7 @@ options:
                         supported; Supported placeholders: {HOME}, {CWD},
                         {TMP} (default: None)
   -I [INPUT_LIST ...], --input_list [INPUT_LIST ...]
-                        Path to the text file(s) listing the text PNG to use;
+                        Path to the text file(s) listing the PNG files to use;
                         Supported placeholders: {HOME}, {CWD}, {TMP} (default:
                         None)
   --resume_from RESUME_FROM
