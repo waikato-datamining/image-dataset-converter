@@ -1,4 +1,4 @@
-# greyscale-to-binary
+# grayscale-to-binary
 
 * accepts: idc.api.ImageData
 * generates: seppl.AnyData

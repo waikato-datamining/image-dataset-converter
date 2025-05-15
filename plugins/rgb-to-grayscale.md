@@ -1,4 +1,4 @@
-# rgb-to-greyscale
+# rgb-to-grayscale
 
 * accepts: idc.api.ImageData
 * generates: seppl.AnyData

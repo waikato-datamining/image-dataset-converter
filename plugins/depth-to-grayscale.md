@@ -1,4 +1,4 @@
-# depth-to-greyscale
+# depth-to-grayscale
 
 * accepts: idc.api.DepthData
 * generates: idc.api.DepthData
