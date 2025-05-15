@@ -3,10 +3,10 @@ from typing import List
 
 from wai.logging import LOGGING_WARNING
 
-from idc.api import DATATYPES, data_type_to_class, ImageData, SplittableStreamWriter, make_list, load_function
+from idc.api import DATATYPES, data_type_to_class, DataTypeSupporter, ImageData, SplittableStreamWriter, make_list, load_function
 
 
-class PythonFunctionWriter(SplittableStreamWriter):
+class PythonFunctionWriter(SplittableStreamWriter, DataTypeSupporter):
 
     def __init__(self, function: str = None, data_type: str = None,
                  split_names: List[str] = None, split_ratios: List[int] = None,

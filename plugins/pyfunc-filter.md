@@ -32,3 +32,11 @@ options:
   -o {dp,ic,is,od}, --output_data_type {dp,ic,is,od}
                         The type of data to forward (default: None)
 ```
+
+The following data types are available:
+
+* dp: depth
+* ic: image classification
+* is: image segmentation
+* od: object detection
+

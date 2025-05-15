@@ -4,10 +4,10 @@ from typing import List
 from seppl.io import Filter
 from wai.logging import LOGGING_WARNING
 
-from idc.api import flatten_list, make_list, ImageData, DATATYPES, data_type_to_class, load_function
+from idc.api import flatten_list, make_list, ImageData, DATATYPES, data_type_to_class, DataTypeSupporter, load_function
 
 
-class PythonFunctionFilter(Filter):
+class PythonFunctionFilter(Filter, DataTypeSupporter):
     """
     Selects a sub-sample from the stream.
     """

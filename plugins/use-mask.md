@@ -30,3 +30,11 @@ options:
   --use_rgb             Whether to force RGB mode instead of palette mode.
                         (default: False)
 ```
+
+The following data types are available:
+
+* dp: depth
+* ic: image classification
+* is: image segmentation
+* od: object detection
+

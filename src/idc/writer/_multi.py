@@ -4,10 +4,10 @@ from typing import List
 from wai.logging import LOGGING_WARNING
 
 from seppl import Plugin
-from idc.api import ImageData, StreamWriter, DATATYPES, data_type_to_class, BatchWriter, make_list
+from idc.api import ImageData, StreamWriter, DATATYPES, data_type_to_class, DataTypeSupporter, BatchWriter, make_list
 
 
-class MultiWriter(StreamWriter):
+class MultiWriter(StreamWriter, DataTypeSupporter):
 
     def __init__(self, writers: List[str] = None, data_type: str = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):

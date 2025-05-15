@@ -33,6 +33,14 @@ options:
                         The type of data to forward (default: None)
 ```
 
+The following data types are available:
+
+* dp: depth
+* ic: image classification
+* is: image segmentation
+* od: object detection
+
+
 Available placeholders:
 
 * `{HOME}`: The home directory of the current user.

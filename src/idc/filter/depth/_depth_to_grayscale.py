@@ -7,10 +7,10 @@ from PIL import Image
 from wai.logging import LOGGING_WARNING
 from seppl import AliasSupporter
 from seppl.io import Filter
-from idc.api import DepthData, DATATYPES, data_type_to_class, flatten_list, make_list, safe_deepcopy
+from idc.api import DepthData, DATATYPES, data_type_to_class, DataTypeSupporter, flatten_list, make_list, safe_deepcopy
 
 
-class DepthToGrayscale(Filter, AliasSupporter):
+class DepthToGrayscale(Filter, AliasSupporter, DataTypeSupporter):
     """
     Turns the depth information into a grayscale image.
     """

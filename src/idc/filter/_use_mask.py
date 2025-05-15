@@ -6,11 +6,11 @@ from seppl.io import Filter
 from simple_palette_utils import generate_palette_list, PALETTE_AUTO, palettes
 from wai.logging import LOGGING_WARNING
 
-from idc.api import DATATYPES, data_type_to_class, ImageData, to_indexedpng
+from idc.api import DATATYPES, data_type_to_class, DataTypeSupporter, ImageData, to_indexedpng
 from idc.api import ImageSegmentationData, flatten_list, make_list
 
 
-class UseMask(Filter):
+class UseMask(Filter, DataTypeSupporter):
     """
     Uses the images segmentation annotations (= mask) as the new base image.
     """

@@ -25,3 +25,11 @@ options:
   -t {dp,ic,is,od}, --data_type {dp,ic,is,od}
                         The type of data to accept (default: None)
 ```
+
+The following data types are available:
+
+* dp: depth
+* ic: image classification
+* is: image segmentation
+* od: object detection
+

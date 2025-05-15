@@ -4,8 +4,7 @@ from typing import List, Iterable
 from seppl import Plugin
 from wai.logging import LOGGING_WARNING
 
-from idc.api import DATATYPES, data_type_to_class, ImageData
-from idc.api import Reader
+from idc.api import DATATYPES, data_type_to_class, DataTypeSupporter, ImageData, Reader
 
 READ_ORDER_SEQUENTIAL = "sequential"
 READ_ORDER_INTERLEAVED = "interleaved"
@@ -15,7 +14,7 @@ READ_ORDERS = [
 ]
 
 
-class MultiReader(Reader):
+class MultiReader(Reader, DataTypeSupporter):
 
     def __init__(self, readers: List[str] = None, read_order: str = None, data_type: str = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):

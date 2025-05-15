@@ -5,10 +5,10 @@ from seppl.placeholders import PlaceholderSupporter, placeholder_list
 from seppl.io import locate_files
 from wai.logging import LOGGING_WARNING
 
-from idc.api import DATATYPES, data_type_to_class, ImageData, Reader, load_function
+from idc.api import DATATYPES, data_type_to_class, DataTypeSupporter, ImageData, Reader, load_function
 
 
-class PythonFunctionReader(Reader, PlaceholderSupporter):
+class PythonFunctionReader(Reader, PlaceholderSupporter, DataTypeSupporter):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
                  function: str = None, data_type: str = None, resume_from: str = None,
