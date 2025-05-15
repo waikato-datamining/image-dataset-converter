@@ -1,4 +1,5 @@
 import base64
+import logging
 import numpy as np
 from PIL import Image
 from typing import Tuple, Dict
@@ -70,3 +71,48 @@ class DepthData(ImageData):
         return {
             "depth": base64.encodebytes(self.annotation.data.tobytes()).decode("ascii")
         }
+
+
+def depth_to_grayscale(ann: DepthInformation, min_value: float = None, max_value: float = None,
+                       logger: logging.Logger = None) -> Image.Image:
+    """
+    Turns the depth information into a grayscale image.
+
+    :param ann: the depth information
+    :type ann: DepthInformation
+    :param min_value: whether to use a lower limit for the depth, ignored if None
+    :type min_value: float
+    :param max_value: whether to use an upper limit for the depth, ignored if None
+    :type max_value: float
+    :param logger: optional logger instance for outputting some info
+    :type logger: logging.Logger
+    :return: the grayscale image generated from the depth info
+    :rtype: Image.Image
+    """
+    array = ann.data
+
+    # apply min/max
+    if min_value is not None:
+        if logger is not None:
+            logger.info("applying min value: %s" % str(min_value))
+        array = np.where(array < min_value, min_value, array)
+    if max_value is not None:
+        if logger is not None:
+            logger.info("applying max value: %s" % str(max_value))
+        array = np.where(array > max_value, max_value, array)
+
+    # scale to 0-255
+    min_val = np.min(array)
+    if logger is not None:
+        logger.info("min: %s" % str(min_val))
+    max_val = np.max(array)
+    if logger is not None:
+        logger.info("max: %s" % str(max_val))
+    array -= min_val
+    if max_val != 0:
+        array *= 255.0 / max_val
+    array = array.astype(np.uint8)
+
+    # grayscale image
+    result = Image.fromarray(array, 'L')
+    return result

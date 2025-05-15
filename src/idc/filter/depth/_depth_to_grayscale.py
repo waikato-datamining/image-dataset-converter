@@ -1,13 +1,12 @@
 import argparse
-import numpy as np
-
 from typing import List
 
-from PIL import Image
-from wai.logging import LOGGING_WARNING
 from seppl import AliasSupporter
 from seppl.io import Filter
-from idc.api import DepthData, DATATYPES, data_type_to_class, DataTypeSupporter, flatten_list, make_list, safe_deepcopy
+from wai.logging import LOGGING_WARNING
+
+from idc.api import DepthData, depth_to_grayscale, DATATYPES, data_type_to_class, DataTypeSupporter, flatten_list, \
+    make_list, safe_deepcopy
 
 
 class DepthToGrayscale(Filter, AliasSupporter, DataTypeSupporter):
@@ -129,30 +128,7 @@ class DepthToGrayscale(Filter, AliasSupporter, DataTypeSupporter):
         """
         result = []
         for item in make_list(data):
-            array = item.annotation.data
-
-            # apply min/max
-            if self.min_value is not None:
-                self.logger().info("applying min value: %s" % str(self.min_value))
-                array = np.where(array < self.min_value, self.min_value, array)
-            if self.max_value is not None:
-                self.logger().info("applying max value: %s" % str(self.max_value))
-                array = np.where(array > self.max_value, self.max_value, array)
-
-            # scale to 0-255
-            min_val = np.min(array)
-            self.logger().info("min: %s" % str(min_val))
-            max_val = np.max(array)
-            self.logger().info("max: %s" % str(max_val))
-            array -= min_val
-            if max_val != 0:
-                array *= 255.0 / max_val
-            array = array.astype(np.uint8)
-
-            # grayscale image
-            img = Image.fromarray(array, 'L')
-
-            # new container
+            img = depth_to_grayscale(item.annotation, min_value=self.min_value, max_value=self.max_value, logger=self.logger())
             new_item = self._output_cls(image_name=item.image_name, image_format=item.image_format, image=img,
                                         metadata=safe_deepcopy(item.get_metadata()))
             result.append(new_item)
