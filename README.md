@@ -29,22 +29,23 @@ https://github.com/waikato-datamining/image-dataset-converter-all/tree/main/dock
 
 The following dataset formats are supported:
 
-| Domain                 | Format                                                                          | Read                                     | Write                                    | 
-|:-----------------------|:--------------------------------------------------------------------------------|:-----------------------------------------|:-----------------------------------------| 
-| Depth data             | [Grayscale](formats/grayscale.md)                                               | [Y](plugins/from-grayscale-dp.md)        | [Y](plugins/to-grayscale-dp.md)          | 
-| Depth data             | [Numpy](formats/numpy.md)                                                       | [Y](plugins/from-numpy-dp.md)            | [Y](plugins/to-numpy-dp.md)              | 
-| Image classification   | [ADAMS](formats/adams.md)                                                       | [Y](plugins/from-adams-ic.md)            | [Y](plugins/to-adams-ic.md)              | 
-| Image classification   | [subdir](formats/subdir.md)                                                     | [Y](plugins/from-subdir-ic.md)           | [Y](plugins/to-subdir-ic.md)             | 
-| Image segmentation     | [Blue-channel](formats/bluechannel.md)                                          | [Y](plugins/from-blue-channel-is.md)     | [Y](plugins/to-blue-channel-is.md)       | 
-| Image segmentation     | [Grayscale](formats/grayscale.md)                                               | [Y](plugins/from-grayscale-is.md)        | [Y](plugins/to-grayscale-is.md)          | 
-| Image segmentation     | [Indexed PNG](formats/indexedpng.md)                                            | [Y](plugins/from-indexed-png-is.md)      | [Y](plugins/to-indexed-png-is.md)        | 
-| Image segmentation     | [Layer segments](formats/layersegments.md)                                      | [Y](plugins/from-layer-segments-is.md)   | [Y](plugins/to-layer-segments-is.md)     | 
-| Object detection       | [ADAMS](formats/adams.md)                                                       | [Y](plugins/from-adams-od.md)            | [Y](plugins/to-adams-od.md)              | 
-| Object detection       | [COCO](https://cocodataset.org/#format-data)                                    | [Y](plugins/from-coco-od.md)             | [Y](plugins/to-coco-od.md)               | 
-| Object detection       | [OPEX](https://github.com/WaikatoLink2020/objdet-predictions-exchange-format)   | [Y](plugins/from-opex-od.md)             | [Y](plugins/to-opex-od.md)               | 
-| Object detection       | [ROI CSV](formats/roicsv.md)                                                    | [Y](plugins/from-roicsv-od.md)           | [Y](plugins/to-roicsv-od.md)             | 
-| Object detection       | [VOC](formats/voc.md)                                                           | [Y](plugins/from-voc-od.md)              | [Y](plugins/to-voc-od.md)                | 
-| Object detection       | [YOLO](formats/yolo.md)                                                         | [Y](plugins/from-yolo-od.md)             | [Y](plugins/to-yolo-od.md)               | 
+| Domain                 | Format                                                                        | Read                                   | Write                                | 
+|:-----------------------|:------------------------------------------------------------------------------|:---------------------------------------|:-------------------------------------| 
+| Depth data             | [CSV](formats/csv.md)                                                         | [Y](plugins/from-csv-dp.md)            | [Y](plugins/to-csv-dp.md)            | 
+| Depth data             | [Grayscale](formats/grayscale.md)                                             | [Y](plugins/from-grayscale-dp.md)      | [Y](plugins/to-grayscale-dp.md)      | 
+| Depth data             | [Numpy](formats/numpy.md)                                                     | [Y](plugins/from-numpy-dp.md)          | [Y](plugins/to-numpy-dp.md)          | 
+| Image classification   | [ADAMS](formats/adams.md)                                                     | [Y](plugins/from-adams-ic.md)          | [Y](plugins/to-adams-ic.md)          | 
+| Image classification   | [subdir](formats/subdir.md)                                                   | [Y](plugins/from-subdir-ic.md)         | [Y](plugins/to-subdir-ic.md)         | 
+| Image segmentation     | [Blue-channel](formats/bluechannel.md)                                        | [Y](plugins/from-blue-channel-is.md)   | [Y](plugins/to-blue-channel-is.md)   | 
+| Image segmentation     | [Grayscale](formats/grayscale.md)                                             | [Y](plugins/from-grayscale-is.md)      | [Y](plugins/to-grayscale-is.md)      | 
+| Image segmentation     | [Indexed PNG](formats/indexedpng.md)                                          | [Y](plugins/from-indexed-png-is.md)    | [Y](plugins/to-indexed-png-is.md)    | 
+| Image segmentation     | [Layer segments](formats/layersegments.md)                                    | [Y](plugins/from-layer-segments-is.md) | [Y](plugins/to-layer-segments-is.md) | 
+| Object detection       | [ADAMS](formats/adams.md)                                                     | [Y](plugins/from-adams-od.md)          | [Y](plugins/to-adams-od.md)          | 
+| Object detection       | [COCO](https://cocodataset.org/#format-data)                                  | [Y](plugins/from-coco-od.md)           | [Y](plugins/to-coco-od.md)           | 
+| Object detection       | [OPEX](https://github.com/WaikatoLink2020/objdet-predictions-exchange-format) | [Y](plugins/from-opex-od.md)           | [Y](plugins/to-opex-od.md)           | 
+| Object detection       | [ROI CSV](formats/roicsv.md)                                                  | [Y](plugins/from-roicsv-od.md)         | [Y](plugins/to-roicsv-od.md)         | 
+| Object detection       | [VOC](formats/voc.md)                                                         | [Y](plugins/from-voc-od.md)            | [Y](plugins/to-voc-od.md)            | 
+| Object detection       | [YOLO](formats/yolo.md)                                                       | [Y](plugins/from-yolo-od.md)           | [Y](plugins/to-yolo-od.md)           | 
 
 
 ## Tools
@@ -61,28 +62,28 @@ usage: idc-convert [-h|--help|--help-all|--help-plugin NAME]
 
 Tool for converting between image annotation dataset formats.
 
-readers (18):
+readers (19):
    from-adams-ic, from-adams-od, from-blue-channel-is, from-coco-od, 
-   from-data, from-grayscale-dp, from-grayscale-is, from-indexed-png-is, 
-   from-layer-segments-is, from-multi, from-numpy-dp, from-opex-od, 
-   from-pyfunc, from-roicsv-od, from-subdir-ic, from-voc-od, 
-   from-yolo-od, poll-dir
-filters (44):
-   any-to-rgb, check-duplicate-filenames, coerce-box, coerce-mask, 
-   convert-image-format, depth-to-grayscale, depth-to-greyscale*, 
-   dimension-discarder, discard-by-name, discard-invalid-images, 
-   discard-negatives, filter-labels, grayscale-to-binary, 
-   greyscale-to-binary*, inspect, label-from-name, label-present, 
-   label-to-metadata, map-labels, max-records, metadata, 
+   from-csv-dp, from-data, from-grayscale-dp, from-grayscale-is, 
+   from-indexed-png-is, from-layer-segments-is, from-multi, 
+   from-numpy-dp, from-opex-od, from-pyfunc, from-roicsv-od, 
+   from-subdir-ic, from-voc-od, from-yolo-od, poll-dir
+filters (45):
+   any-to-rgb, apply-ext-mask, check-duplicate-filenames, coerce-box, 
+   coerce-mask, convert-image-format, depth-to-grayscale, 
+   depth-to-greyscale*, dimension-discarder, discard-by-name, 
+   discard-invalid-images, discard-negatives, filter-labels, 
+   grayscale-to-binary, greyscale-to-binary*, inspect, label-from-name, 
+   label-present, label-to-metadata, map-labels, max-records, metadata, 
    metadata-from-name, metadata-od, metadata-to-placeholder, od-to-ic, 
    od-to-is, passthrough, polygon-discarder, polygon-simplifier, 
    pyfunc-filter, randomize-records, record-window, remove-classes, 
    rename, rgb-to-grayscale, rgb-to-greyscale*, sample, set-placeholder, 
    sort-pixels, split-records, strip-annotations, tee, use-mask, 
    write-labels
-writers (17):
-   to-adams-ic, to-adams-od, to-blue-channel-is, to-coco-od, to-data, 
-   to-grayscale-dp, to-grayscale-is, to-indexed-png-is, 
+writers (18):
+   to-adams-ic, to-adams-od, to-blue-channel-is, to-coco-od, to-csv-dp, 
+   to-data, to-grayscale-dp, to-grayscale-is, to-indexed-png-is, 
    to-layer-segments-is, to-multi, to-numpy-dp, to-opex-od, to-pyfunc, 
    to-roicsv-od, to-subdir-ic, to-voc-od, to-yolo-od
 
