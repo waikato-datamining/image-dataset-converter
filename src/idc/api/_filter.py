@@ -1,3 +1,4 @@
+import argparse
 from seppl.io import Filter
 
 
@@ -9,6 +10,17 @@ APPLY_TO = [
     APPLY_TO_IMAGE,
     APPLY_TO_ANNOTATIONS
 ]
+
+
+def add_apply_to_param(parser: argparse.ArgumentParser):
+    """
+    Adds the -a/--apply_to parameter to the parser.
+
+    :param parser: the parser to add the option to
+    :type parser: argparse.ArgumentParser
+    """
+    parser.add_argument("-a", "--apply_to", choices=APPLY_TO, help="Where to apply the filter to.",
+                        default=APPLY_TO_IMAGE, required=False)
 
 
 def parse_filter(filter_: str) -> Filter:
