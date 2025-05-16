@@ -124,7 +124,7 @@ class NumpyDepthInfoReader(Reader, PlaceholderSupporter):
             self.logger().warning("Found more than one image associated with annotation, using first: %s" % imgs[0])
             yield None
 
-        yield DepthData(source=imgs[0], annotation=annotations)
+        yield DepthData(source=imgs[0], annotation=DepthInformation(data=annotations))
 
     def has_finished(self) -> bool:
         """
