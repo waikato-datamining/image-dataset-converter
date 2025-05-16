@@ -48,6 +48,16 @@ The following dataset formats are supported:
 | Object detection       | [YOLO](formats/yolo.md)                                                       | [Y](plugins/from-yolo-od.md)           | [Y](plugins/to-yolo-od.md)           | 
 
 
+## Domain suffixes
+
+Readers and writers typically have a suffix that denotes their data domain:
+
+* `-dp` - Depth data
+* `-ic` - Image classification
+* `-is` - Image segmentation 
+* `-od` - Object detection 
+
+
 ## Tools
 
 ### Dataset conversion
