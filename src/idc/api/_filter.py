@@ -1,6 +1,16 @@
 from seppl.io import Filter
 
 
+APPLY_TO_IMAGE = "image"
+APPLY_TO_ANNOTATIONS = "annotations"
+APPLY_TO_BOTH = "both"
+APPLY_TO = [
+    APPLY_TO_BOTH,
+    APPLY_TO_IMAGE,
+    APPLY_TO_ANNOTATIONS
+]
+
+
 def parse_filter(filter_: str) -> Filter:
     """
     Parses the command-line and instantiates the filter.

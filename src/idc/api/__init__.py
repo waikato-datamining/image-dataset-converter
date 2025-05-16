@@ -20,7 +20,7 @@ from ._geometry import locatedobjects_to_shapely, shapely_to_locatedobject, loca
 from ._geometry import intersect_over_union, COMBINATIONS, INTERSECT, UNION
 from ._geometry import merge_polygons, fit_located_object, fit_layers
 from ._reader import Reader, parse_reader
-from ._filter import parse_filter
+from ._filter import parse_filter, APPLY_TO, APPLY_TO_IMAGE, APPLY_TO_ANNOTATIONS, APPLY_TO_BOTH
 from ._writer import parse_writer
 from ._writer import BatchWriter, SplittableBatchWriter
 from ._writer import StreamWriter, SplittableStreamWriter
