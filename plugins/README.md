@@ -21,6 +21,7 @@
 
 ## Filters
 * [any-to-rgb](any-to-rgb.md)
+* [apply-ext-mask](apply-ext-mask.md)
 * [check-duplicate-filenames](check-duplicate-filenames.md)
 * [coerce-box](coerce-box.md)
 * [coerce-mask](coerce-mask.md)

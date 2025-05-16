@@ -1,4 +1,5 @@
 from ._any_to_rgb import AnyToRGB
+from ._apply_ext_mask import ApplyExternalMask
 from ._check_duplicate_filenames import CheckDuplicateFilenames, DUPLICATE_ACTIONS, DUPLICATE_ACTION_IGNORE, DUPLICATE_ACTION_WARN, DUPLICATE_ACTION_DROP, DUPLICATE_ACTION_ERROR
 from ._convert_image_format import ConvertImageFormat
 from ._discard_invalid_images import DiscardInvalidImages

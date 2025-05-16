@@ -22,6 +22,7 @@ Changelog
 - prefixed image segmentation methods like `from_bluechannel` and `to_bluechannel` with `imgseg_`
 - added depth information readers `from-grayscale-dp` and `from-numpy-dp`
 - added depth information writers `to-grayscale-dp` and `to-numpy-dp`
+- added `apply-ext-mask` filter to applying external PNG masks to image containers (image and/or annotations)
 
 
 0.0.11 (2025-04-03)
