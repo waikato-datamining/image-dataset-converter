@@ -2,6 +2,9 @@
 For converting image annotations datasets from one format into another.
 Filters can be supplied as well, e.g., for cleaning up the data.
 
+[Additional libraries](#additional-libraries) further extend the available
+plugins with additional readers, filters and/or writers.
+
 
 ## Installation
 
