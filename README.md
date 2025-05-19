@@ -76,12 +76,12 @@ usage: idc-convert [-h|--help|--help-all|--help-plugin NAME]
 
 Tool for converting between image annotation dataset formats.
 
-readers (19):
+readers (20):
    from-adams-ic, from-adams-od, from-blue-channel-is, from-coco-od, 
    from-csv-dp, from-data, from-grayscale-dp, from-grayscale-is, 
    from-indexed-png-is, from-layer-segments-is, from-multi, 
-   from-numpy-dp, from-opex-od, from-pyfunc, from-roicsv-od, 
-   from-subdir-ic, from-voc-od, from-yolo-od, poll-dir
+   from-numpy-dp, from-opex-od, from-pfm-dp, from-pyfunc, 
+   from-roicsv-od, from-subdir-ic, from-voc-od, from-yolo-od, poll-dir
 filters (45):
    any-to-rgb, apply-ext-mask, check-duplicate-filenames, coerce-box, 
    coerce-mask, convert-image-format, depth-to-grayscale, 
@@ -95,11 +95,11 @@ filters (45):
    rename, rgb-to-grayscale, rgb-to-greyscale*, sample, set-placeholder, 
    sort-pixels, split-records, strip-annotations, tee, use-mask, 
    write-labels
-writers (18):
+writers (19):
    to-adams-ic, to-adams-od, to-blue-channel-is, to-coco-od, to-csv-dp, 
    to-data, to-grayscale-dp, to-grayscale-is, to-indexed-png-is, 
-   to-layer-segments-is, to-multi, to-numpy-dp, to-opex-od, to-pyfunc, 
-   to-roicsv-od, to-subdir-ic, to-voc-od, to-yolo-od
+   to-layer-segments-is, to-multi, to-numpy-dp, to-opex-od, to-pfm-dp, 
+   to-pyfunc, to-roicsv-od, to-subdir-ic, to-voc-od, to-yolo-od
 
 optional arguments:
   -h, --help            show basic help message and exit
