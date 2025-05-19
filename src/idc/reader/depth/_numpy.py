@@ -14,7 +14,7 @@ from idc.api import locate_file, JPEG_EXTENSIONS, \
 class NumpyDepthInfoReader(Reader, PlaceholderSupporter):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
-                 image_path_rel: str = None, resume_from: str = None,
+                 image_path_rel: str = None, resume_from: str = None, allow_pickle: bool = False,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
         Initializes the reader.
@@ -25,6 +25,8 @@ class NumpyDepthInfoReader(Reader, PlaceholderSupporter):
         :type image_path_rel: str
         :param resume_from: the file to resume from (glob)
         :type resume_from: str
+        :param allow_pickle: whether to load the numpy data with allow_pickle or not
+        :type allow_pickle: bool
         :param logger_name: the name to use for the logger
         :type logger_name: str
         :param logging_level: the logging level to use
@@ -35,6 +37,7 @@ class NumpyDepthInfoReader(Reader, PlaceholderSupporter):
         self.source_list = source_list
         self.image_path_rel = image_path_rel
         self.resume_from = resume_from
+        self.allow_pickle = allow_pickle
         self._inputs = None
         self._current_input = None
 
@@ -68,6 +71,7 @@ class NumpyDepthInfoReader(Reader, PlaceholderSupporter):
         parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the .npy files to use; " + placeholder_list(obj=self), required=False, nargs="*")
         parser.add_argument("--resume_from", type=str, help="Glob expression matching the file to resume from, e.g., '*/012345.npy'", required=False)
         parser.add_argument("--image_path_rel", metavar="PATH", type=str, default=None, help="The relative path from the annotations to the images directory", required=False)
+        parser.add_argument("--allow_pickle", action="store_true", help="Whether to use `allow_pickle=True` - CAUTION: use only with trusted sources!", default=False)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
@@ -82,6 +86,7 @@ class NumpyDepthInfoReader(Reader, PlaceholderSupporter):
         self.source_list = ns.input_list
         self.image_path_rel = ns.image_path_rel
         self.resume_from = ns.resume_from
+        self.allow_pickle = ns.allow_pickle
 
     def generates(self) -> List:
         """
@@ -97,6 +102,8 @@ class NumpyDepthInfoReader(Reader, PlaceholderSupporter):
         Initializes the processing, e.g., for opening files or databases.
         """
         super().initialize()
+        if self.allow_pickle is None:
+            allow_pickle = False
         self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.npy", resume_from=self.resume_from)
 
     def read(self) -> Iterable:
@@ -117,7 +124,7 @@ class NumpyDepthInfoReader(Reader, PlaceholderSupporter):
 
         # read annotations
         self.logger().info("Reading from: " + str(self.session.current_input))
-        annotations = np.load(self.session.current_input)
+        annotations = np.load(self.session.current_input, allow_pickle=self.allow_pickle)
 
         # associated image
         if len(imgs) > 1:

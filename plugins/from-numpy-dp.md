@@ -8,6 +8,7 @@ Loads the depth information from associated numpy files.
 usage: from-numpy-dp [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                      [-N LOGGER_NAME] [-i [INPUT ...]] [-I [INPUT_LIST ...]]
                      [--resume_from RESUME_FROM] [--image_path_rel PATH]
+                     [--allow_pickle]
 
 Loads the depth information from associated numpy files.
 
@@ -32,6 +33,8 @@ options:
   --image_path_rel PATH
                         The relative path from the annotations to the images
                         directory (default: None)
+  --allow_pickle        Whether to use `allow_pickle=True` - CAUTION: use only
+                        with trusted sources! (default: False)
 ```
 
 Available placeholders:
