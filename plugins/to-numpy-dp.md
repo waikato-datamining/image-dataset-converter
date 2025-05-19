@@ -10,7 +10,8 @@ usage: to-numpy-dp [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                    [--split_ratios SPLIT_RATIOS [SPLIT_RATIOS ...]]
                    [--split_names SPLIT_NAMES [SPLIT_NAMES ...]]
                    [--split_group SPLIT_GROUP] -o OUTPUT
-                   [--image_path_rel PATH] [--annotations_only]
+                   [--image_path_rel PATH] [--allow_pickle]
+                   [--annotations_only]
 
 Saves the depth info as pickled numpy files with no loss of information. The
 associated JPG images can be placed in folder relative to the annotation.
@@ -44,6 +45,7 @@ options:
   --image_path_rel PATH
                         The relative path from the annotations to the images
                         directory (default: None)
+  --allow_pickle        Whether to use `allow_pickle=True` (default: False)
   --annotations_only    Outputs only the annotations and skips the base image.
                         (default: False)
 ```
