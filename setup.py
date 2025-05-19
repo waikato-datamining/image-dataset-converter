@@ -44,6 +44,7 @@ setup(
         "shapely",
         "python_image_complete",
         "simple_palette_utils",
+        "pypfm",
     ],
     version="0.0.11",
     author='Peter Reutemann',

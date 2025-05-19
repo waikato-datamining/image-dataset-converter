@@ -37,6 +37,7 @@ The following dataset formats are supported:
 | Depth data             | [CSV](formats/csv.md)                                                         | [Y](plugins/from-csv-dp.md)            | [Y](plugins/to-csv-dp.md)            | 
 | Depth data             | [Grayscale](formats/grayscale.md)                                             | [Y](plugins/from-grayscale-dp.md)      | [Y](plugins/to-grayscale-dp.md)      | 
 | Depth data             | [Numpy](formats/numpy.md)                                                     | [Y](plugins/from-numpy-dp.md)          | [Y](plugins/to-numpy-dp.md)          | 
+| Depth data             | [PFM](formats/pfm.md)                                                         | [Y](plugins/from-pfm-dp.md)            | [Y](plugins/to-pfm-dp.md)            | 
 | Image classification   | [ADAMS](formats/adams.md)                                                     | [Y](plugins/from-adams-ic.md)          | [Y](plugins/to-adams-ic.md)          | 
 | Image classification   | [subdir](formats/subdir.md)                                                   | [Y](plugins/from-subdir-ic.md)         | [Y](plugins/to-subdir-ic.md)         | 
 | Image segmentation     | [Blue-channel](formats/bluechannel.md)                                        | [Y](plugins/from-blue-channel-is.md)   | [Y](plugins/to-blue-channel-is.md)   | 
