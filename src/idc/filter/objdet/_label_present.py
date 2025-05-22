@@ -8,9 +8,10 @@ from wai.common.adams.imaging.locateobjects import LocatedObjects, LocatedObject
 from wai.logging import LOGGING_WARNING
 
 from idc.api import ObjectDetectionData, locatedobject_polygon_to_shapely, intersect_over_union, get_object_label, flatten_list, make_list
+from seppl import AliasSupporter
 
 
-class LabelPresent(Filter):
+class LabelPresent(Filter, AliasSupporter):
     """
     Only forwards images that have the specified label(s) present.
     """
@@ -61,6 +62,15 @@ class LabelPresent(Filter):
         :rtype: str
         """
         return "label-present"
+
+    def aliases(self) -> List[str]:
+        """
+        Returns the aliases under which the plugin is known under/available as well.
+
+        :return: the aliases
+        :rtype: list
+        """
+        return ["label-present-od"]
 
     def description(self) -> str:
         """
