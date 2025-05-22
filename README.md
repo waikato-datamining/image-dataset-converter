@@ -82,13 +82,15 @@ readers (20):
    from-indexed-png-is, from-layer-segments-is, from-multi, 
    from-numpy-dp, from-opex-od, from-pfm-dp, from-pyfunc, 
    from-roicsv-od, from-subdir-ic, from-voc-od, from-yolo-od, poll-dir
-filters (45):
-   any-to-rgb, apply-ext-mask, check-duplicate-filenames, coerce-box, 
-   coerce-mask, convert-image-format, depth-to-grayscale, 
-   depth-to-greyscale*, dimension-discarder, discard-by-name, 
-   discard-invalid-images, discard-negatives, filter-labels, 
-   grayscale-to-binary, greyscale-to-binary*, inspect, label-from-name, 
-   label-present, label-to-metadata, map-labels, max-records, metadata, 
+filters (49):
+   any-to-rgb, apply-ext-mask, apply-label-mask, 
+   check-duplicate-filenames, coerce-box, coerce-mask, 
+   convert-image-format, depth-to-grayscale, depth-to-greyscale*, 
+   dimension-discarder, discard-by-name, discard-invalid-images, 
+   discard-negatives, filter-labels, grayscale-to-binary, 
+   greyscale-to-binary*, inspect, label-from-name, label-present*, 
+   label-present-ic, label-present-is, label-present-od, 
+   label-to-metadata, map-labels, max-records, metadata, 
    metadata-from-name, metadata-od, metadata-to-placeholder, od-to-ic, 
    od-to-is, passthrough, polygon-discarder, polygon-simplifier, 
    pyfunc-filter, randomize-records, record-window, remove-classes, 

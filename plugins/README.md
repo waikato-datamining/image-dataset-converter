@@ -24,6 +24,7 @@
 ## Filters
 * [any-to-rgb](any-to-rgb.md)
 * [apply-ext-mask](apply-ext-mask.md)
+* [apply-label-mask](apply-label-mask.md)
 * [check-duplicate-filenames](check-duplicate-filenames.md)
 * [coerce-box](coerce-box.md)
 * [coerce-mask](coerce-mask.md)
@@ -37,7 +38,9 @@
 * [grayscale-to-binary](grayscale-to-binary.md)
 * [inspect](inspect.md)
 * [label-from-name](label-from-name.md)
-* [label-present](label-present.md)
+* [label-present-ic](label-present-ic.md)
+* [label-present-is](label-present-is.md)
+* [label-present-od](label-present-od.md)
 * [label-to-metadata](label-to-metadata.md)
 * [map-labels](map-labels.md)
 * [max-records](max-records.md)

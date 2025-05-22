@@ -1,17 +1,18 @@
-# label-present
+# label-present-od
 
 * accepts: idc.api.ObjectDetectionData
 * generates: idc.api.ObjectDetectionData
+* alias(es): label-present
 
 Only forwards images that have the specified label(s) present.
 
 ```
-usage: label-present [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                     [-N LOGGER_NAME] [--skip] [--labels [LABELS ...]]
-                     [--regexp REGEXP] [--region REGION]
-                     [--coordinate_separator COORDINATE_SEPARATOR]
-                     [--pair_separator PAIR_SEPARATOR] [--min_iou MIN_IOU]
-                     [--invert_regions]
+usage: label-present-od [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
+                        [-N LOGGER_NAME] [--skip] [--labels [LABELS ...]]
+                        [--regexp REGEXP] [--region REGION]
+                        [--coordinate_separator COORDINATE_SEPARATOR]
+                        [--pair_separator PAIR_SEPARATOR] [--min_iou MIN_IOU]
+                        [--invert_regions]
 
 Only forwards images that have the specified label(s) present.
 
