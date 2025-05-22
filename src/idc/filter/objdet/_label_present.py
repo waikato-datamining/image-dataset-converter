@@ -61,7 +61,7 @@ class LabelPresent(Filter, AliasSupporter):
         :return: the name
         :rtype: str
         """
-        return "label-present"
+        return "label-present-od"
 
     def aliases(self) -> List[str]:
         """
@@ -70,7 +70,7 @@ class LabelPresent(Filter, AliasSupporter):
         :return: the aliases
         :rtype: list
         """
-        return ["label-present-od"]
+        return ["label-present"]
 
     def description(self) -> str:
         """
