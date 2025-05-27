@@ -26,6 +26,8 @@ Changelog
 - added `apply-label-mask` filter for applying image segmentation label masks to their base images
 - added `label-present-ic` and `label-present-is` that ensure that certain label(s) are present or otherwise discard the image
 - filter `label-present` was renamed to `label-present-od` but keeping `label-present` as alias for the time being
+- fix: `imgseg_to_bluechannel`, `imgseg_to_indexedpng` and `imgseg_to_grayscale` now handle overlapping pixels correctly,
+  no longer adding them up and introducing additional labels
 
 
 0.0.11 (2025-04-03)

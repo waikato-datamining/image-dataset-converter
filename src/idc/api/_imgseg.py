@@ -229,7 +229,7 @@ def imgseg_to_indexedpng(width: int, height: int, ann: ImageSegmentationAnnotati
         if label in ann.layers:
             sub_arr = ann.layers[label]
             sub_arr = np.where(sub_arr == 255, index, 0).astype(np.uint8)
-            arr += sub_arr
+            np.copyto(arr, sub_arr, 'safe', sub_arr > 0)
     if background > 0:
         arr = np.where(arr == 0, background, arr)
     result = Image.fromarray(arr, "P")
@@ -300,7 +300,7 @@ def imgseg_to_bluechannel(width: int, height: int, ann: ImageSegmentationAnnotat
         if label in ann.layers:
             sub_arr = ann.layers[label]
             sub_arr = np.where(sub_arr == 255, index, 0).astype(np.uint8)
-            arr += sub_arr
+            np.copyto(arr, sub_arr, 'safe', sub_arr > 0)
     if background > 0:
         arr = np.where(arr == 0, background, arr)
     blue = np.zeros((*arr.shape, 3), np.uint8)
@@ -371,7 +371,7 @@ def imgseg_to_grayscale(width: int, height: int, ann: ImageSegmentationAnnotatio
         if label in ann.layers:
             sub_arr = ann.layers[label]
             sub_arr = np.where(sub_arr == 255, index, 0).astype(np.uint8)
-            arr += sub_arr
+            np.copyto(arr, sub_arr, 'safe', sub_arr > 0)
     if background > 0:
         arr = np.where(arr == 0, background, arr)
     result = Image.fromarray(arr, "L")
