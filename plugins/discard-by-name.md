@@ -3,16 +3,16 @@
 * accepts: idc.api.ImageData
 * generates: seppl.AnyData
 
-Discards files based on list of image names and/or regular expressions that image names must match.
+Discards files based on list of image names, list of paths and/or regular expressions that image names must match.
 
 ```
 usage: discard-by-name [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                        [-N LOGGER_NAME] [--skip] [-i [NAMES ...]]
-                       [-I NAMES_FILE] [-r [REGEXPS ...]] [-R REGEXPS_FILE]
-                       [-e] [-V]
+                       [-I NAMES_FILE] [-p [PATHS ...]] [-r [REGEXPS ...]]
+                       [-R REGEXPS_FILE] [-e] [-V]
 
-Discards files based on list of image names and/or regular expressions that
-image names must match.
+Discards files based on list of image names, list of paths and/or regular
+expressions that image names must match.
 
 options:
   -h, --help            show this help message and exit
@@ -28,6 +28,8 @@ options:
   -I NAMES_FILE, --names_file NAMES_FILE
                         The text file with the image name(s) to drop.
                         (default: None)
+  -p [PATHS ...], --paths [PATHS ...]
+                        The directories with images to ignore. (default: None)
   -r [REGEXPS ...], --regexps [REGEXPS ...]
                         The regular expressions for matching image name(s) to
                         drop. (default: None)

@@ -15,7 +15,7 @@ class DiscardByName(Filter):
     Discards files based on list of image names and/or regular expressions that image names must match.
     """
 
-    def __init__(self, names: List[str] = None, names_file: str = None,
+    def __init__(self, names: List[str] = None, names_file: str = None, paths: List[str] = None,
                  regexps: List[str] = None, regexps_file: str = None,
                  remove_ext: bool = None, invert: bool = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
@@ -26,6 +26,8 @@ class DiscardByName(Filter):
         :type names: list
         :param names_file: the text file with the image names to drop (one per line)
         :type names_file: str
+        :param paths: the list of paths with files to ignore, ignored if None
+        :type paths: list
         :param regexps: the regular expressions for dropping image names
         :type regexps: list
         :param regexps_file: the text file with the regexps for dropping image names (one per line)
@@ -42,6 +44,7 @@ class DiscardByName(Filter):
         super().__init__(logger_name=logger_name, logging_level=logging_level)
         self.names = names
         self.names_file = names_file
+        self.paths = paths
         self.regexps = regexps
         self.regexps_file = regexps_file
         self.remove_ext = remove_ext
@@ -65,7 +68,7 @@ class DiscardByName(Filter):
         :return: the description
         :rtype: str
         """
-        return "Discards files based on list of image names and/or regular expressions that image names must match."
+        return "Discards files based on list of image names, list of paths and/or regular expressions that image names must match."
 
     def accepts(self) -> List:
         """
@@ -95,6 +98,7 @@ class DiscardByName(Filter):
         parser = super()._create_argparser()
         parser.add_argument("-i", "--names", type=str, help="The image name(s) to drop.", required=False, nargs="*")
         parser.add_argument("-I", "--names_file", type=str, help="The text file with the image name(s) to drop.", required=False, default=None)
+        parser.add_argument("-p", "--paths", type=str, help="The directories with images to ignore.", required=False, nargs="*")
         parser.add_argument("-r", "--regexps", type=str, help="The regular expressions for matching image name(s) to drop.", required=False, nargs="*")
         parser.add_argument("-R", "--regexps_file", type=str, help="The text file with regular expressions for matching image name(s) to drop.", required=False, default=None)
         parser.add_argument("-e", "--remove_ext", action="store_true", help="Whether to remove the extension (and dot) before matching.")
@@ -111,6 +115,7 @@ class DiscardByName(Filter):
         super()._apply_args(ns)
         self.names = ns.names
         self.names_file = ns.names_file
+        self.paths = ns.paths
         self.regexps = ns.regexps
         self.regexps_file = ns.regexps_file
         self.remove_ext = ns.remove_ext
@@ -138,6 +143,18 @@ class DiscardByName(Filter):
                     line = line.strip()
                     if len(line) > 0:
                         self._names.add(line)
+
+        # paths
+        if self.paths is not None:
+            for path in self.paths:
+                for f in os.listdir(path):
+                    full = os.path.join(path, f)
+                    if not os.path.isfile(full):
+                        continue
+                    if self.remove_ext:
+                        f = os.path.splitext(f)[0]
+                    self._names.add(f)
+
         self.logger().info("# names: %d" % len(self._names))
 
         # regexps

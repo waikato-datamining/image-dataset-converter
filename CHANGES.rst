@@ -28,6 +28,7 @@ Changelog
 - filter `label-present` was renamed to `label-present-od` but keeping `label-present` as alias for the time being
 - fix: `imgseg_to_bluechannel`, `imgseg_to_indexedpng` and `imgseg_to_grayscale` now handle overlapping pixels correctly,
   no longer adding them up and introducing additional labels
+- `discard-by-name` filter can use names of files in specified paths now as well
 
 
 0.0.11 (2025-04-03)
