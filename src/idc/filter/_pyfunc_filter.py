@@ -9,7 +9,7 @@ from idc.api import flatten_list, make_list, ImageData, DATATYPES, data_type_to_
 
 class PythonFunctionFilter(Filter, DataTypeSupporter):
     """
-    Selects a sub-sample from the stream.
+    Applies a Python function to the data.
     """
 
     def __init__(self, function: str = None, input_data_type: str = None, output_data_type: str = None,
