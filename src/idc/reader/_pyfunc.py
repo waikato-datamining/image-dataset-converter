@@ -124,7 +124,7 @@ class PythonFunctionReader(Reader, PlaceholderSupporter, DataTypeSupporter):
             if issubclass(type(item), self._output_cls):
                 yield item
             else:
-                self.logger().error("Function '%s' did not return an object of type '%s' but of type '%s'!" % (self.function, self._output_cls, type(item)))
+                self.logger().error("Function '%s' did not return an object of type '%s' but of type '%s'!" % (self.function, str(self._output_cls), str(type(item))))
 
     def has_finished(self) -> bool:
         """

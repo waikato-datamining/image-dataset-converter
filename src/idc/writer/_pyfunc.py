@@ -107,4 +107,4 @@ class PythonFunctionWriter(SplittableStreamWriter, DataTypeSupporter):
                 self.logger().info("Processing image '%s' (split: %s)" % (item.image_name, str(split)))
                 self._function(item, split)
             else:
-                self.logger().error("Did not receive an object of type '%s' but of type '%s'!" % (self._input_cls, type(item)))
+                self.logger().error("Did not receive an object of type '%s' but of type '%s'!" % (str(self._input_cls), str(type(item))))

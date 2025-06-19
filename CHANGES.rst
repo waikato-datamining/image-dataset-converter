@@ -29,6 +29,7 @@ Changelog
 - fix: `imgseg_to_bluechannel`, `imgseg_to_indexedpng` and `imgseg_to_grayscale` now handle overlapping pixels correctly,
   no longer adding them up and introducing additional labels
 - `discard-by-name` filter can use names of files in specified paths now as well
+- fixed the construction of the error messages in the pyfunc reader/filter/writer classes
 
 
 0.0.11 (2025-04-03)

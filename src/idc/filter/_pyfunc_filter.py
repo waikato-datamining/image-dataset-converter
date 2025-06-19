@@ -125,8 +125,8 @@ class PythonFunctionFilter(Filter, DataTypeSupporter):
                     if issubclass(type(item), self._output_cls):
                         result.append(new_item)
                     else:
-                        self.logger().error("Function '%s' did not return an object of type '%s' but of type '%s'!" % (self.function, self._output_cls, type(item)))
+                        self.logger().error("Function '%s' did not return an object of type '%s' but of type '%s'!" % (self.function, str(self._output_cls), str(type(item))))
             else:
-                self.logger().error("Did not receive an object of type '%s' but of type '%s'!" % (self._input_cls, type(item)))
+                self.logger().error("Did not receive an object of type '%s' but of type '%s'!" % (str(self._input_cls), str(type(item))))
 
         return flatten_list(result)
