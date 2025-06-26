@@ -13,7 +13,7 @@ class BlueChannelImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnly
 
     def __init__(self, output_dir: str = None,
                  image_path_rel: str = None, annotations_only: bool = None, background: int = None,
-                 split_names: List[str] = None, split_ratios: List[int] = None,
+                 split_names: List[str] = None, split_ratios: List[int] = None, split_group: str = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
         Initializes the writer.
