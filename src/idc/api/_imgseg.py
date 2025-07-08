@@ -90,19 +90,26 @@ class ImageSegmentationData(ImageData):
 
         return result
 
-    def new_layer(self, label: str) -> np.ndarray:
+    def new_layer(self, label: str, labels: List[str] = None) -> np.ndarray:
         """
         Adds an empty layer with the specified label.
 
         :param label: the label of the layer
         :type label: str
+        :param labels: the labels to initialize the annotations if none present
+        :type labels: list
         :return: the generated layer
         :rtype: np.ndarray
         """
+        if labels is None:
+            labels = []
         if self.image_size is None:
             raise Exception("No image dimensions available, cannot create empty layer ''%s!" % label)
         if self.annotation is None:
-            self.annotation = ImageSegmentationAnnotations(labels=[], layers={})
+            self.annotation = ImageSegmentationAnnotations(labels=labels, layers={})
+        if (self.annotation.labels is None) or (len(self.annotation.labels) == 0):
+            if len(labels) > 0:
+                self.annotation.labels = labels[:]
         width, height = self.image_size
         layer = np.zeros((height, width), dtype=np.uint8)
         if label not in self.annotation.labels:
