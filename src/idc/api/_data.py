@@ -151,6 +151,12 @@ class ImageData(MetaDataHandler, LoggingHandler):
     def __init__(self, source: str = None, image_name: str = None, data: bytes = None,
                  image: Image.Image = None, image_format: str = None, image_size: Tuple[int, int] = None,
                  metadata: Dict = None, annotation=None):
+
+        # container with image or data must have source or name
+        if (image is not None) or (data is not None):
+            if (source is None) and (image_name is None):
+                raise Exception("Either source or name must be provided!")
+
         self._logger = None
         """ for logging. """
         self._source = source
