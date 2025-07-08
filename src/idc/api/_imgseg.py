@@ -26,9 +26,10 @@ class ImageSegmentationAnnotations:
                 if label not in labels:
                     raise Exception("Layer %s is not specified as label!" % label)
         self.labels = labels
-        for label in layers:
-            if layers[label].dtype != np.uint8:
-                raise Exception("Layers must be %s, but got %s for label '%s'!" % (str(np.dtype(np.uint8)), str(layers[label].dtype), label))
+        if layers is not None:
+            for label in layers:
+                if layers[label].dtype != np.uint8:
+                    raise Exception("Layers must be %s, but got %s for label '%s'!" % (str(np.dtype(np.uint8)), str(layers[label].dtype), label))
         self.layers = layers
 
     def subset(self, labels: List[str]) -> 'ImageSegmentationAnnotations':
@@ -67,7 +68,7 @@ class ImageSegmentationData(ImageData):
         :return: True if annotations present
         :rtype: bool
         """
-        return (self.annotation is not None) and (len(self.annotation.layers) > 0)
+        return (self.annotation is not None) and (self.annotation.layers is not None) and (len(self.annotation.layers) > 0)
 
     def _annotation_to_dict(self):
         """
@@ -106,6 +107,8 @@ class ImageSegmentationData(ImageData):
         layer = np.zeros((height, width), dtype=np.uint8)
         if label not in self.annotation.labels:
             self.annotation.labels.append(label)
+        if self.annotation.layers is None:
+            self.annotation.layers = dict()
         self.annotation.layers[label] = layer
         return layer
 
