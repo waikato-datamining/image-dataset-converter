@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.0.13 (????-??-??)
+-------------------
+
+- requiring seppl>=0.2.20 now for improved help requests
+
+
 0.0.12 (2025-07-11)
 -------------------
 
