@@ -46,7 +46,7 @@ setup(
         "simple_palette_utils",
         "pypfm",
     ],
-    version="0.0.12",
+    version="0.0.13",
     author='Peter Reutemann',
     author_email='fracpete@waikato.ac.nz',
     entry_points={
