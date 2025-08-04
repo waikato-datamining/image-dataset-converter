@@ -8,6 +8,7 @@ Changelog
 - centralized comparison code in `idc.api._comparison` (available via `idc.api`)
 - `split-records` filter now allows specifying the meta-data field in which to store the split name
 - the `tee` meta-filter can now forward or drop the incoming data based on a meta-data evaluation
+- added `sub-process` filter for processing data with sub-flow of filters, can be conditional based on meta-data evaluation
 
 
 0.0.13 (2025-07-15)

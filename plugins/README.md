@@ -65,6 +65,7 @@
 * [sort-pixels](sort-pixels.md)
 * [split-records](split-records.md)
 * [strip-annotations](strip-annotations.md)
+* [sub-process](sub-process.md)
 * [tee](tee.md)
 * [use-mask](use-mask.md)
 * [write-labels](write-labels.md)
