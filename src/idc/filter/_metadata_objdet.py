@@ -1,15 +1,13 @@
 import argparse
-import re
-from typing import List, Tuple
+from typing import List
 
 from seppl.io import Filter, FILTER_ACTIONS, FILTER_ACTION_DISCARD, FILTER_ACTION_KEEP
-from wai.logging import LOGGING_WARNING
 from wai.common.adams.imaging.locateobjects import LocatedObjects
+from wai.logging import LOGGING_WARNING
 
-from idc.api import ObjectDetectionData, make_list, flatten_list
-from idc.core import COMPARISONS_EXT, COMPARISON_LESSTHAN, COMPARISON_LESSOREQUAL, COMPARISON_EQUAL, \
-    COMPARISON_NOTEQUAL, \
-    COMPARISON_GREATEROREQUAL, COMPARISON_GREATERTHAN, COMPARISON_CONTAINS, COMPARISON_MATCHES, COMPARISON_EXT_HELP
+from idc.api import ObjectDetectionData, make_list, flatten_list, \
+    COMPARISONS_EXT, COMPARISON_EQUAL, COMPARISON_CONTAINS, COMPARISON_MATCHES, COMPARISON_EXT_HELP, \
+    compare_values
 
 
 class MetaDataObjectDetection(Filter):
@@ -127,23 +125,6 @@ class MetaDataObjectDetection(Filter):
         self.kept = 0
         self.discarded = 0
 
-    def _ensure_same_type(self, v1, v2) -> Tuple:
-        """
-        Ensures that both values are of the same type.
-
-        :param v1: the first value
-        :param v2: the second value
-        :return: the tuple of the updated values
-        :rtype: tuple
-        """
-        if isinstance(v1, float):
-            v2 = float(v2)
-        elif isinstance(v1, int):
-            v2 = int(v2)
-        elif isinstance(v1, bool):
-            v2 = str(v2).lower() == 'true'
-        return v1, v2
-
     def _do_process(self, data):
         """
         Processes the data record(s).
@@ -175,30 +156,7 @@ class MetaDataObjectDetection(Filter):
 
                 v1 = meta[self.field]
                 v2 = self.value
-                if self.comparison in [COMPARISON_CONTAINS, COMPARISON_MATCHES]:
-                    v1 = str(v1)
-                else:
-                    v1, v2 = self._ensure_same_type(v1, v2)
-
-                # compare
-                if self.comparison == COMPARISON_LESSTHAN:
-                    comp_result = v1 < v2
-                elif self.comparison == COMPARISON_LESSOREQUAL:
-                    comp_result = v1 <= v2
-                elif self.comparison == COMPARISON_EQUAL:
-                    comp_result = v1 == v2
-                elif self.comparison == COMPARISON_NOTEQUAL:
-                    comp_result = v1 != v2
-                elif self.comparison == COMPARISON_GREATERTHAN:
-                    comp_result = v1 > v2
-                elif self.comparison == COMPARISON_GREATEROREQUAL:
-                    comp_result = v1 >= v2
-                elif self.comparison == COMPARISON_CONTAINS:
-                    comp_result = v2 in v1
-                elif self.comparison == COMPARISON_MATCHES:
-                    comp_result = re.search(v2, v1) is not None
-                else:
-                    raise Exception("Unhandled comparison: %s" % self.comparison)
+                comp_result = compare_values(v1, self.comparison, v2)
 
                 if self.action == FILTER_ACTION_KEEP:
                     if not comp_result:
@@ -217,7 +175,7 @@ class MetaDataObjectDetection(Filter):
 
                 info = "keeping" if (lobj_result is not None) else "discarding"
                 comp = str(meta[self.field]) + " " + self.comparison + " " + str(self.value) + " = " + str(comp_result)
-                self.logger().debug("Comparison result '%s': %s" % (comp, info))
+                self.logger().debug("Field '%s': '%s' --> %s" % (self.field, comp, info))
 
             item_new = item.duplicate(annotation=LocatedObjects(lobjs))
             result.append(item_new)

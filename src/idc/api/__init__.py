@@ -1,4 +1,7 @@
 from ._colors import rgb2yiq, text_color
+from ._comparison import compare_values, COMPARISONS, COMPARISON_HELP, COMPARISONS_EXT, COMPARISON_EXT_HELP, \
+    COMPARISON_LESSTHAN, COMPARISON_LESSOREQUAL, COMPARISON_EQUAL, COMPARISON_NOTEQUAL, COMPARISON_GREATEROREQUAL, \
+    COMPARISON_GREATERTHAN, COMPARISON_CONTAINS, COMPARISON_MATCHES
 from ._fonts import DEFAULT_FONT_FAMILY, load_font, text_size
 from ._data import ImageData, make_list, flatten_list, jpeg_quality, array_to_image, empty_image, save_image
 from ._data import FORMATS, FORMAT_JPEG, FORMAT_PNG, FORMAT_BMP, FORMAT_EXTENSIONS
