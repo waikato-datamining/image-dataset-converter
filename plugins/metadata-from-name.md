@@ -3,14 +3,15 @@
 * accepts: seppl.AnyData
 * generates: seppl.AnyData
 
-Extracts a sub-string from the image name and stores them in the meta-data.
+Extracts a sub-string from the image name or path and stores it in the meta-data.
 
 ```
 usage: metadata-from-name [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                          [-N LOGGER_NAME] [--skip] [-r REGEXP]
-                          [-k METADATA_KEY]
+                          [-N LOGGER_NAME] [--skip] [-s {name,path}]
+                          [-r REGEXP] [-k METADATA_KEY]
 
-Extracts a sub-string from the image name and stores them in the meta-data.
+Extracts a sub-string from the image name or path and stores it in the meta-
+data.
 
 options:
   -h, --help            show this help message and exit
@@ -21,6 +22,9 @@ options:
                         name by default (default: None)
   --skip                Disables the plugin, removing it from the pipeline.
                         (default: False)
+  -s {name,path}, --source {name,path}
+                        The string to apply the regular expression to for
+                        extracting the meta-data. (default: name)
   -r REGEXP, --regexp REGEXP
                         The regular expression apply to the image name, with
                         the 1st group being used as the meta-data value.
