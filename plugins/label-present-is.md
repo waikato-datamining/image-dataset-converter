@@ -8,6 +8,7 @@ Only forwards images that have the specified label(s) present.
 ```
 usage: label-present-is [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                         [-N LOGGER_NAME] [--skip] [--labels [LABELS ...]]
+                        [--min_pixels MIN_PIXELS]
 
 Only forwards images that have the specified label(s) present.
 
@@ -21,5 +22,8 @@ options:
   --skip                Disables the plugin, removing it from the pipeline.
                         (default: False)
   --labels [LABELS ...]
-                        The labels to use (default: None)
+                        The labels to use. (default: None)
+  --min_pixels MIN_PIXELS
+                        The minimum number of pixels that need to be present.
+                        (default: None)
 ```

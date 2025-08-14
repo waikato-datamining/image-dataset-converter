@@ -1,4 +1,5 @@
 import argparse
+import numpy as np
 from typing import List
 
 from seppl.io import Filter
@@ -12,13 +13,15 @@ class LabelPresent(Filter):
     Only forwards images that have the specified label(s) present.
     """
 
-    def __init__(self, labels: List[str] = None,
+    def __init__(self, labels: List[str] = None, min_pixels: int = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
         Initializes the filter.
 
         :param labels: the labels to use
         :type labels: list
+        :param min_pixels: the minimum number of pixels that have to be present
+        :type min_pixels: int
         :param logger_name: the name to use for the logger
         :type logger_name: str
         :param logging_level: the logging level to use
@@ -26,6 +29,7 @@ class LabelPresent(Filter):
         """
         super().__init__(logger_name=logger_name, logging_level=logging_level)
         self.labels = labels
+        self.min_pixels = min_pixels
 
     def name(self) -> str:
         """
@@ -71,7 +75,8 @@ class LabelPresent(Filter):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("--labels", type=str, default=None, help="The labels to use", required=False, nargs="*")
+        parser.add_argument("--labels", type=str, default=None, help="The labels to use.", required=False, nargs="*")
+        parser.add_argument("--min_pixels", type=int, default=None, help="The minimum number of pixels that need to be present.", required=False)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
@@ -83,6 +88,7 @@ class LabelPresent(Filter):
         """
         super()._apply_args(ns)
         self.labels = ns.labels
+        self.min_pixels = ns.min_pixels
 
     def initialize(self):
         """
@@ -91,6 +97,8 @@ class LabelPresent(Filter):
         super().initialize()
         if (self.labels is None) or (len(self.labels) == 0):
             raise Exception("No label(s) specified!")
+        if self.min_pixels is None:
+            self.min_pixels = 0
 
     def _do_process(self, data):
         """
@@ -105,8 +113,13 @@ class LabelPresent(Filter):
             present = False
             for label in self.labels:
                 if item.has_layer(label):
-                    present = True
-                    break
+                    if self.min_pixels <= 0:
+                        present = True
+                    else:
+                        num = np.count_nonzero(item.annotation.layers[label] > 0)
+                        present = (num > 0)
+                    if present:
+                        break
 
             if present:
                 result.append(item)
