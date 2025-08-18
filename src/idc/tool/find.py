@@ -17,9 +17,7 @@ def main(args=None):
     :param args: the commandline arguments, uses sys.argv if not supplied
     :type args: list
     """
-    perform_find_files(ENV_IDC_LOGLEVEL, args, FIND,
-                       "Tool for locating files in directories that match certain patterns and store them in files.",
-                       _logger)
+    perform_find_files(ENV_IDC_LOGLEVEL, args, FIND, None, _logger)
 
 
 def sys_main() -> int:
