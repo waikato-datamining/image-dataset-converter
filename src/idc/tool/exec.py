@@ -7,7 +7,6 @@ from idc.tool.convert import main as convert_main, CONVERT
 from kasperl.api import perform_pipeline_execution
 
 EXEC = "idc-exec"
-DESCRIPTION = "Tool for executing a pipeline multiple times, each time with a different set of variables expanded. A variable is surrounded by curly quotes (e.g., variable 'i' gets referenced with '{i}')."
 
 _logger = logging.getLogger(EXEC)
 
