@@ -1,12 +1,9 @@
-import argparse
 import logging
 import traceback
 
-from wai.logging import init_logging, set_logging_level, add_logging_level
-
-from kasperl.api import Generator
 from idc.core import ENV_IDC_LOGLEVEL
 from idc.registry import available_generators
+from kasperl.api import Generator, perform_generator_test
 
 TEST_GENERATOR = "idc-test-generator"
 
@@ -36,17 +33,7 @@ def main(args=None):
     :param args: the commandline arguments, uses sys.argv if not supplied
     :type args: list
     """
-    init_logging(env_var=ENV_IDC_LOGLEVEL)
-    generators = sorted(list(available_generators().keys()))
-    parser = argparse.ArgumentParser(
-        description="Tool for testing generators by outputting the generated variables and their associated values. Available generators: " + ", ".join(generators),
-        prog=TEST_GENERATOR,
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument("-g", "--generator", help="The generator plugin to use.", default=None, type=str, required=True)
-    add_logging_level(parser)
-    parsed = parser.parse_args(args=args)
-    set_logging_level(_logger, parsed.logging_level)
-    test_generator(parsed.generator)
+    perform_generator_test(ENV_IDC_LOGLEVEL, args, TEST_GENERATOR, None, available_generators(), _logger)
 
 
 def sys_main() -> int:
