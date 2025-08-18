@@ -1,6 +1,6 @@
 # rename
 
-* accepts: idc.api.ImageData
+* accepts: seppl.AnyData
 * generates: seppl.AnyData
 
 Renames files using a user-supplied format.

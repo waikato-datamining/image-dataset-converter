@@ -1,6 +1,6 @@
 # check-duplicate-filenames
 
-* accepts: idc.api.ImageData
+* accepts: seppl.AnyData
 * generates: seppl.AnyData
 
 Ensures that file names are unique (raises an exception if not).

@@ -4,7 +4,7 @@ import io
 import logging
 import os.path
 import shutil
-from typing import Dict, Optional, Tuple, Union
+from typing import Dict, Optional, Tuple, Union, Any
 
 import imagesize
 import numpy as np
@@ -13,7 +13,7 @@ from image_complete.bmp import is_bmp
 from image_complete.jpg import is_jpg
 from image_complete.png import is_png
 from seppl import MetaDataHandler, LoggingHandler
-from kasperl.api import safe_deepcopy
+from kasperl.api import safe_deepcopy, NameSupporter, SourceSupporter, AnnotationHandler
 from ._utils import load_image_from_bytes
 from wai.logging import set_logging_level, LOGGING_INFO
 
@@ -147,7 +147,7 @@ def empty_image(mode: str, width: int, height: int, image_format: str) -> Tuple[
     return img, img_bytes
 
 
-class ImageData(MetaDataHandler, LoggingHandler):
+class ImageData(AnnotationHandler, MetaDataHandler, NameSupporter, SourceSupporter, LoggingHandler):
 
     def __init__(self, source: str = None, image_name: str = None, data: bytes = None,
                  image: Image.Image = None, image_format: str = None, image_size: Tuple[int, int] = None,
@@ -402,6 +402,14 @@ class ImageData(MetaDataHandler, LoggingHandler):
         """
         return self.annotation is not None
 
+    def get_annotation(self) -> Any:
+        """
+        Returns the annotations.
+
+        :return: the annotations
+        """
+        return self.annotation
+
     def has_metadata(self) -> bool:
         """
         Returns whether meta-data is present.
@@ -428,6 +436,33 @@ class ImageData(MetaDataHandler, LoggingHandler):
         :type metadata: dict
         """
         self._metadata = metadata
+
+    def get_name(self) -> str:
+        """
+        Returns the name.
+
+        :return: the name
+        :rtype: str
+        """
+        return self.image_name
+
+    def set_name(self, name: str):
+        """
+        Sets the new name.
+
+        :param name: the new name
+        :type name: str
+        """
+        self.image_name = name
+
+    def get_source(self) -> str:
+        """
+        Returns the source.
+
+        :return: the source
+        :rtype: str
+        """
+        return self.source
 
     def duplicate(self, source: str = None, force_no_source: bool = None,
                   name: str = None, data: bytes = None,

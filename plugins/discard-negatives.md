@@ -1,6 +1,6 @@
 # discard-negatives
 
-* accepts: idc.api.ImageData
+* accepts: seppl.AnyData
 * generates: seppl.AnyData
 
 Discards negative images, i.e., ones without annotations.
