@@ -11,7 +11,8 @@ from seppl.placeholders import load_user_defined_placeholders, expand_placeholde
 from seppl.io import execute, Reader, Filter, MultiFilter, Writer
 from wai.logging import init_logging, set_logging_level, add_logging_level, LOGGING_LEVELS
 
-from idc.core import Session, ENV_IDC_LOGLEVEL
+from kasperl.api import Session
+from idc.core import ENV_IDC_LOGLEVEL
 from idc.help import generate_plugin_usage
 from idc.registry import available_readers, available_filters, available_writers, REGISTRY
 
