@@ -3,27 +3,11 @@ import traceback
 
 from idc.core import ENV_IDC_LOGLEVEL
 from idc.registry import available_generators
-from kasperl.api import Generator, perform_generator_test
+from kasperl.api import perform_generator_test
 
 TEST_GENERATOR = "idc-test-generator"
 
 _logger = logging.getLogger(TEST_GENERATOR)
-
-
-def test_generator(generator: str):
-    """
-    Parses/executes the generator and then outputs the generated variables.
-
-    :param generator: the generator command-line to use for generating variable values
-    :type generator: str
-    """
-    # parse generator
-    generator_obj = Generator.parse_generator(generator, available_generators())
-
-    # apply generator to pipeline template and execute it
-    vars_list = generator_obj.generate()
-    for vars_ in vars_list:
-        print(vars_)
 
 
 def main(args=None):
