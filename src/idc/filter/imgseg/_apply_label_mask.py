@@ -6,9 +6,8 @@ from PIL import Image
 from seppl.io import Filter
 from wai.logging import LOGGING_WARNING
 
-from idc.api import empty_image
-from idc.api import flatten_list, make_list, ImageSegmentationData
-from idc.api import safe_deepcopy
+from kasperl.api import make_list, flatten_list, safe_deepcopy
+from idc.api import empty_image, ImageSegmentationData
 
 
 class ApplyLabelMask(Filter):

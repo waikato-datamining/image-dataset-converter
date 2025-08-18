@@ -4,7 +4,7 @@ import io
 import logging
 import os.path
 import shutil
-from typing import Dict, Optional, Tuple, List, Union
+from typing import Dict, Optional, Tuple, Union
 
 import imagesize
 import numpy as np
@@ -13,7 +13,8 @@ from image_complete.bmp import is_bmp
 from image_complete.jpg import is_jpg
 from image_complete.png import is_png
 from seppl import MetaDataHandler, LoggingHandler
-from ._utils import load_image_from_bytes, safe_deepcopy
+from kasperl.api import safe_deepcopy
+from ._utils import load_image_from_bytes
 from wai.logging import set_logging_level, LOGGING_INFO
 
 _logger = None
@@ -522,34 +523,6 @@ class ImageData(MetaDataHandler, LoggingHandler):
         if metadata and (self.get_metadata() is not None):
             result["metadata"] = copy.deepcopy(self.get_metadata())
         return result
-
-
-def make_list(data, cls=ImageData) -> List:
-    """
-    Wraps the data item in a list if not already a list.
-
-    :param data: the data item to wrap if necessary
-    :param cls: the type of class to check for
-    :return: the list
-    :rtype: list
-    """
-    if isinstance(data, cls):
-        data = [data]
-    return data
-
-
-def flatten_list(data: List):
-    """
-    If the list contains only a single item, then it returns that instead of a list.
-
-    :param data: the list to check
-    :type data: list
-    :return: the list or single item
-    """
-    if len(data) == 1:
-        return data[0]
-    else:
-        return data
 
 
 def ensure_grayscale(image: Image.Image, logger=None) -> Image.Image:

@@ -4,8 +4,8 @@ from typing import List, Iterable, Union
 
 from wai.logging import LOGGING_WARNING
 from seppl.placeholders import PlaceholderSupporter, placeholder_list
+from kasperl.api import Reader
 from idc.api import ImageClassificationData
-from idc.api import Reader
 
 
 class SubDirReader(Reader, PlaceholderSupporter):

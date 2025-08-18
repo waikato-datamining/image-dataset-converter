@@ -5,7 +5,8 @@ from wai.logging import LOGGING_WARNING
 from wai.common.geometry import Polygon, Point, NormalizedPolygon, NormalizedPoint
 from wai.common.adams.imaging.locateobjects import LocatedObjects, NormalizedLocatedObjects
 from seppl.io import Filter
-from idc.api import ObjectDetectionData, flatten_list, make_list
+from kasperl.api import make_list, flatten_list
+from idc.api import ObjectDetectionData
 
 
 class CoerceMask(Filter):

@@ -6,7 +6,8 @@ from seppl.placeholders import PlaceholderSupporter, placeholder_list, expand_pl
 from seppl.io import Filter
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ObjectDetectionData, ImageClassificationData, ImageSegmentationData, get_object_label, make_list
+from kasperl.api import make_list
+from idc.api import ObjectDetectionData, ImageClassificationData, ImageSegmentationData, get_object_label
 
 OUTPUT_FORMAT_TEXT = "text"
 OUTPUT_FORMAT_COMMASEP = "comma-separated"

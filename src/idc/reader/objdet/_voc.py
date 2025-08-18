@@ -7,8 +7,8 @@ from wai.logging import LOGGING_WARNING
 from wai.common.adams.imaging.locateobjects import LocatedObjects, LocatedObject
 from seppl.placeholders import PlaceholderSupporter, placeholder_list
 from seppl.io import locate_files
+from kasperl.api import Reader
 from idc.api import ObjectDetectionData, locate_image
-from idc.api import Reader
 
 
 class VOCObjectDetectionReader(Reader, PlaceholderSupporter):

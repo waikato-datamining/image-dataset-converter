@@ -5,7 +5,8 @@ from seppl.io import locate_files
 from wai.logging import LOGGING_WARNING
 
 from seppl.placeholders import PlaceholderSupporter, placeholder_list
-from idc.api import DATATYPES, data_type_to_class, DataTypeSupporter, ImageData, Reader
+from kasperl.api import Reader
+from idc.api import DATATYPES, data_type_to_class, DataTypeSupporter, ImageData
 
 
 class DataReader(Reader, PlaceholderSupporter, DataTypeSupporter):

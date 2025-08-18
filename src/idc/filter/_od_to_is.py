@@ -6,7 +6,8 @@ from typing import List
 from PIL import Image, ImageDraw
 from seppl.io import Filter
 from wai.logging import LOGGING_WARNING
-from idc.api import ObjectDetectionData, ImageSegmentationData, ImageSegmentationAnnotations, flatten_list, make_list, get_object_label
+from kasperl.api import make_list, flatten_list
+from idc.api import ObjectDetectionData, ImageSegmentationData, ImageSegmentationAnnotations, get_object_label
 
 
 class ObjectDetectionToImageSegmentation(Filter):

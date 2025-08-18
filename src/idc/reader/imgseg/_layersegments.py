@@ -9,8 +9,8 @@ from seppl.placeholders import PlaceholderSupporter, placeholder_list
 from seppl.io import locate_files
 from wai.logging import LOGGING_WARNING
 
+from kasperl.api import Reader
 from idc.api import ImageSegmentationData, ImageSegmentationAnnotations
-from idc.api import Reader
 
 
 class LayerSegmentsImageSegmentationReader(Reader, PlaceholderSupporter):

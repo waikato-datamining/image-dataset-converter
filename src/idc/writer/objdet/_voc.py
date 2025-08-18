@@ -4,7 +4,8 @@ from typing import List
 from xml.etree.ElementTree import Element, ElementTree
 
 from wai.logging import LOGGING_WARNING
-from idc.api import ObjectDetectionData, SplittableStreamWriter, get_object_label, make_list, AnnotationsOnlyWriter, add_annotations_only_param
+from kasperl.api import make_list, SplittableStreamWriter, AnnotationsOnlyWriter, add_annotations_only_param
+from idc.api import ObjectDetectionData, get_object_label
 from seppl.placeholders import placeholder_list, InputBasedPlaceholderSupporter
 
 

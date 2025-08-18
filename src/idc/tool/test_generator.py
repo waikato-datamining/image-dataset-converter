@@ -4,7 +4,7 @@ import traceback
 
 from wai.logging import init_logging, set_logging_level, add_logging_level
 
-from idc.api import Generator
+from kasperl.api import Generator
 from idc.core import ENV_IDC_LOGLEVEL
 from idc.registry import available_generators
 
@@ -21,7 +21,7 @@ def test_generator(generator: str):
     :type generator: str
     """
     # parse generator
-    generator_obj = Generator.parse_generator(generator)
+    generator_obj = Generator.parse_generator(generator, available_generators())
 
     # apply generator to pipeline template and execute it
     vars_list = generator_obj.generate()

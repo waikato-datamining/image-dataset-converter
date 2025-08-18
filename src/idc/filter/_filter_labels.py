@@ -9,8 +9,9 @@ from wai.logging import LOGGING_WARNING
 from wai.common.adams.imaging.locateobjects import LocatedObjects, LocatedObject, normalized_to_absolute, \
     NormalizedLocatedObjects
 from seppl.io import Filter
+from kasperl.api import make_list, flatten_list
 from idc.api import ObjectDetectionData, ImageClassificationData, ImageSegmentationData, locatedobject_polygon_to_shapely, \
-    intersect_over_union, get_object_label, flatten_list, make_list
+    intersect_over_union, get_object_label
 
 
 class FilterLabels(Filter):

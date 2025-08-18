@@ -6,7 +6,8 @@ from wai.common.geometry import NormalizedPoint, NormalizedPolygon
 from wai.common.adams.imaging.locateobjects import NormalizedLocatedObjects, NormalizedLocatedObject
 from seppl.placeholders import PlaceholderSupporter, placeholder_list
 from seppl.io import locate_files
-from idc.api import ObjectDetectionData, locate_image, Reader, load_labels
+from kasperl.api import Reader
+from idc.api import ObjectDetectionData, locate_image, load_labels
 
 
 class YoloObjectDetectionReader(Reader, PlaceholderSupporter):

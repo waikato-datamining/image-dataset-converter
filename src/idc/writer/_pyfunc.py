@@ -3,7 +3,8 @@ from typing import List
 
 from wai.logging import LOGGING_WARNING
 
-from idc.api import DATATYPES, data_type_to_class, DataTypeSupporter, ImageData, SplittableStreamWriter, make_list, load_function
+from kasperl.api import make_list, load_function, SplittableStreamWriter
+from idc.api import DATATYPES, data_type_to_class, DataTypeSupporter, ImageData
 
 
 class PythonFunctionWriter(SplittableStreamWriter, DataTypeSupporter):

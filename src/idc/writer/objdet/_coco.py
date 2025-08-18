@@ -6,7 +6,8 @@ from typing import List, Iterable, Dict
 
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ObjectDetectionData, SplittableBatchWriter, get_object_label, AnnotationsOnlyWriter, add_annotations_only_param
+from kasperl.api import SplittableBatchWriter, AnnotationsOnlyWriter, add_annotations_only_param
+from idc.api import ObjectDetectionData, get_object_label
 from seppl.placeholders import placeholder_list, InputBasedPlaceholderSupporter
 
 

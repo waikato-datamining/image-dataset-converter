@@ -4,7 +4,8 @@ from typing import List
 
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ImageData, SplittableStreamWriter, make_list
+from kasperl.api import make_list, SplittableStreamWriter
+from idc.api import ImageData
 from seppl.placeholders import placeholder_list, InputBasedPlaceholderSupporter
 
 

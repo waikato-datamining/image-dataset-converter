@@ -61,8 +61,7 @@ options:
   --category_output_file CATEGORY_OUTPUT_FILE
                         The name of the file (no path) to store the categories
                         in as comma-separated list. (default: None)
-  --annotations_only    Outputs only the annotations and skips the base image.
-                        (default: False)
+  --annotations_only    Outputs only the annotations. (default: False)
 ```
 
 Available placeholders:

@@ -45,8 +45,7 @@ options:
                         The field prefix to use in the .report files for
                         identifying bbox/polygon object definitions (default:
                         Object.)
-  --annotations_only    Outputs only the annotations and skips the base image.
-                        (default: False)
+  --annotations_only    Outputs only the annotations. (default: False)
 ```
 
 Available placeholders:

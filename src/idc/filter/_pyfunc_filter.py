@@ -4,7 +4,8 @@ from typing import List
 from seppl.io import Filter
 from wai.logging import LOGGING_WARNING
 
-from idc.api import flatten_list, make_list, ImageData, DATATYPES, data_type_to_class, DataTypeSupporter, load_function
+from kasperl.api import make_list, flatten_list, load_function
+from idc.api import ImageData, DATATYPES, data_type_to_class, DataTypeSupporter
 
 
 class PythonFunctionFilter(Filter, DataTypeSupporter):

@@ -11,24 +11,14 @@ from ._grayscale_to_binary import GrayscaleToBinary
 from ._inspect import Inspect, MODES, MODE_NONINTERACTIVE, MODE_INTERACTIVE, OUTPUTS, OUTPUT_STDOUT, OUTPUT_STDERR, OUTPUT_LOGGER, OUTPUT_FILE
 from ._label_to_metadata import LabelToMetaData
 from ._map_labels import MapLabels
-from ._max_records import MaxRecords
-from ._metadata import MetaData
-from ._metadata_from_name import MetaDataFromName
 from ._metadata_objdet import MetaDataObjectDetection
-from ._metadata_to_placeholder import MetaDataToPlaceholder
 from ._od_to_is import ObjectDetectionToImageSegmentation
 from ._od_to_ic import ObjectDetectionToImageClassification, MULTIPLICITY, MULTIPLICITY_ERROR, MULTIPLICITY_SKIP, MULTIPLICITY_SINGLE, MULTIPLICITY_MAJORITY
-from ._passthrough import PassThrough
 from ._pyfunc_filter import PythonFunctionFilter
-from ._randomize_records import RandomizeRecords
-from ._record_window import RecordWindow
 from ._remove_classes import RemoveClasses
 from ._rename import Rename, RENAME_PLACEHOLDERS, RENAME_PH_NAME, RENAME_PH_COUNT, RENAME_PH_PDIR, RENAME_PH_SAME, RENAME_PH_PDIR_SUFFIX, RENAME_PH_EXT, RENAME_PH_OCCURRENCES, RENAME_PH_HELP
 from ._rgb_to_grayscale import RGBToGrayscale
-from ._sample import Sample
-from ._set_placeholder import SetPlaceholder
 from ._sort_pixels import SortPixels
-from ._split_records import SplitRecords
 from ._strip_annotations import StripAnnotations
 from ._sub_process import SubProcess
 from ._tee import Tee

@@ -9,8 +9,8 @@ from wai.common.adams.imaging.locateobjects import LocatedObjects, LocatedObject
 from wai.common.geometry import Point, Polygon
 from wai.logging import LOGGING_WARNING
 
+from kasperl.api import Reader
 from idc.api import ObjectDetectionData
-from idc.api import Reader
 
 
 class COCOObjectDetectionReader(Reader, PlaceholderSupporter):

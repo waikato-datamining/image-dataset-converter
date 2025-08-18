@@ -5,8 +5,8 @@ from seppl.placeholders import PlaceholderSupporter, placeholder_list
 from seppl.io import locate_files
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ImageSegmentationData, locate_file, load_image_from_file, imgseg_from_bluechannel, JPEG_EXTENSIONS
-from idc.api import Reader
+from kasperl.api import locate_file, Reader
+from idc.api import ImageSegmentationData, load_image_from_file, imgseg_from_bluechannel, JPEG_EXTENSIONS
 
 
 class BlueChannelImageSegmentationReader(Reader, PlaceholderSupporter):

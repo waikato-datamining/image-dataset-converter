@@ -8,10 +8,10 @@ from seppl.io import Filter
 from seppl.placeholders import InputBasedPlaceholderSupporter
 from wai.logging import LOGGING_WARNING
 
+from kasperl.api import make_list, flatten_list, safe_deepcopy
 from idc.api import add_apply_to_param, APPLY_TO_IMAGE, APPLY_TO_ANNOTATIONS, APPLY_TO_BOTH, empty_image, \
     ImageClassificationData, ObjectDetectionData
-from idc.api import flatten_list, make_list, ImageData, load_image_from_file, ImageSegmentationData, DepthData
-from idc.api import safe_deepcopy
+from idc.api import load_image_from_file, ImageSegmentationData, DepthData
 
 
 class ApplyExternalMask(Filter, InputBasedPlaceholderSupporter):

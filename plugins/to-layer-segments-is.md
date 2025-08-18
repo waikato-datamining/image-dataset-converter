@@ -44,8 +44,7 @@ options:
   --label_separator LABEL_SEPARATOR
                         The separator between name and label used by the mask
                         images. (default: -)
-  --annotations_only    Outputs only the annotations and skips the base image.
-                        (default: False)
+  --annotations_only    Outputs only the annotations. (default: False)
 ```
 
 Available placeholders:

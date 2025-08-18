@@ -46,8 +46,7 @@ options:
                         The relative path from the annotations to the images
                         directory (default: None)
   --allow_pickle        Whether to use `allow_pickle=True` (default: False)
-  --annotations_only    Outputs only the annotations and skips the base image.
-                        (default: False)
+  --annotations_only    Outputs only the annotations. (default: False)
 ```
 
 Available placeholders:

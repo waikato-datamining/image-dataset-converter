@@ -4,7 +4,8 @@ from typing import List
 from wai.logging import LOGGING_WARNING
 
 from seppl import Plugin
-from idc.api import ImageData, StreamWriter, DATATYPES, data_type_to_class, DataTypeSupporter, BatchWriter, make_list
+from kasperl.api import make_list, StreamWriter, BatchWriter
+from idc.api import ImageData, DATATYPES, data_type_to_class, DataTypeSupporter
 
 
 class MultiWriter(StreamWriter, DataTypeSupporter):

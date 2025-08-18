@@ -5,8 +5,8 @@ from seppl import AliasSupporter
 from seppl.io import Filter
 from wai.logging import LOGGING_WARNING
 
-from idc.api import DepthData, depth_to_grayscale, DATATYPES, data_type_to_class, DataTypeSupporter, flatten_list, \
-    make_list, safe_deepcopy
+from kasperl.api import make_list, flatten_list, safe_deepcopy
+from idc.api import DepthData, depth_to_grayscale, DATATYPES, data_type_to_class, DataTypeSupporter
 
 
 class DepthToGrayscale(Filter, AliasSupporter, DataTypeSupporter):

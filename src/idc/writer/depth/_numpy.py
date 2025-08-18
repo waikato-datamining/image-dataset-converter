@@ -5,8 +5,9 @@ from typing import List
 
 from wai.logging import LOGGING_WARNING
 
-from idc.api import SplittableStreamWriter, make_list, AnnotationsOnlyWriter, \
-    add_annotations_only_param, DepthData
+from kasperl.api import make_list, SplittableStreamWriter, AnnotationsOnlyWriter, \
+    add_annotations_only_param
+from idc.api import DepthData
 from seppl.placeholders import placeholder_list, InputBasedPlaceholderSupporter
 
 

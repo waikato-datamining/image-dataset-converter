@@ -4,8 +4,8 @@ from typing import List, Dict, Optional
 from seppl.io import Filter
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ObjectDetectionData, ImageClassificationData, ImageSegmentationData, get_object_label, \
-    flatten_list, make_list, safe_deepcopy
+from kasperl.api import make_list, flatten_list, safe_deepcopy
+from idc.api import ObjectDetectionData, ImageClassificationData, ImageSegmentationData, get_object_label
 
 
 class LabelToMetaData(Filter):

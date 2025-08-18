@@ -4,7 +4,8 @@ from seppl import AnyData
 from seppl.io import Filter
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ImageData, flatten_list, make_list
+from kasperl.api import make_list, flatten_list
+from idc.api import ImageData
 
 
 class DiscardNegatives(Filter):

@@ -6,8 +6,8 @@ from wai.common.adams.imaging.locateobjects import LocatedObjects
 from wai.common.file.report import loadf
 from seppl.placeholders import PlaceholderSupporter, placeholder_list
 from seppl.io import locate_files
+from kasperl.api import Reader
 from idc.api import ObjectDetectionData, locate_image
-from idc.api import Reader
 
 
 class AdamsObjectDetectionReader(Reader, PlaceholderSupporter):

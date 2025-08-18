@@ -5,7 +5,8 @@ from seppl.io import Filter, FILTER_ACTIONS, FILTER_ACTION_DISCARD, FILTER_ACTIO
 from wai.common.adams.imaging.locateobjects import LocatedObjects
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ObjectDetectionData, make_list, flatten_list, \
+from idc.api import ObjectDetectionData
+from kasperl.api import make_list, flatten_list, \
     COMPARISONS_EXT, COMPARISON_EQUAL, COMPARISON_CONTAINS, COMPARISON_MATCHES, COMPARISON_EXT_HELP, \
     compare_values
 

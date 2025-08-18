@@ -1,5 +1,4 @@
-from typing import Tuple, List, Dict, Union
-from simple_palette_utils import colors, x11_colors, COLOR_LISTS, COLOR_LIST_X11
+from typing import Tuple
 
 
 def rgb2yiq(r: int, g: int, b: int) -> float:

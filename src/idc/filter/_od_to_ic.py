@@ -3,7 +3,8 @@ from typing import List
 
 from seppl.io import Filter
 from wai.logging import LOGGING_WARNING
-from idc.api import ObjectDetectionData, ImageClassificationData, flatten_list, make_list, get_object_label
+from kasperl.api import make_list, flatten_list
+from idc.api import ObjectDetectionData, ImageClassificationData, get_object_label
 
 
 MULTIPLICITY_ERROR = "error"

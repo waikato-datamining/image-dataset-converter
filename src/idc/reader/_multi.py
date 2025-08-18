@@ -4,7 +4,8 @@ from typing import List, Iterable
 from seppl import Plugin
 from wai.logging import LOGGING_WARNING
 
-from idc.api import DATATYPES, data_type_to_class, DataTypeSupporter, ImageData, Reader
+from kasperl.api import Reader
+from idc.api import DATATYPES, data_type_to_class, DataTypeSupporter, ImageData
 
 READ_ORDER_SEQUENTIAL = "sequential"
 READ_ORDER_INTERLEAVED = "interleaved"

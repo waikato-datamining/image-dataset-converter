@@ -7,7 +7,8 @@ from seppl import AnyData, AliasSupporter
 from seppl.io import Filter
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ImageData, flatten_list, make_list, array_to_image, safe_deepcopy
+from kasperl.api import make_list, flatten_list, safe_deepcopy
+from idc.api import ImageData, array_to_image
 
 CONVERSION_BT601 = "BT.601"
 CONVERSION_BT709 = "BT.709"

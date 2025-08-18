@@ -43,8 +43,7 @@ options:
   -c FIELD, --class_field FIELD
                         The report field containing the image classification
                         label (default: None)
-  --annotations_only    Outputs only the annotations and skips the base image.
-                        (default: False)
+  --annotations_only    Outputs only the annotations. (default: False)
 ```
 
 Available placeholders:

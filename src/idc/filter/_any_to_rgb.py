@@ -1,6 +1,7 @@
 from typing import List
 
-from idc.api import ImageData, flatten_list, make_list, array_to_image, safe_deepcopy
+from kasperl.api import make_list, flatten_list, safe_deepcopy
+from idc.api import ImageData, array_to_image
 from seppl import AnyData
 from seppl.io import Filter
 

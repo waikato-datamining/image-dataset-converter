@@ -57,8 +57,7 @@ options:
   --labels_csv LABELS_CSV
                         The CSV file (no path) to write the label mapping to
                         (index and label) (default: None)
-  --annotations_only    Outputs only the annotations and skips the base image.
-                        (default: False)
+  --annotations_only    Outputs only the annotations. (default: False)
 ```
 
 Available placeholders:

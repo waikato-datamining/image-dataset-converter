@@ -3,7 +3,8 @@ from typing import List
 from seppl import get_class_name, AnyData
 from seppl.io import Filter
 
-from idc.api import ImageData, flatten_list, make_list
+from kasperl.api import make_list, flatten_list
+from idc.api import ImageData
 
 
 class StripAnnotations(Filter):

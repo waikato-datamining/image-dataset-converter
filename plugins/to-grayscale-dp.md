@@ -51,8 +51,7 @@ options:
   -M MAX_VALUE, --max_value MAX_VALUE
                         The maximum value to use, larger values get set to
                         this. (default: None)
-  --annotations_only    Outputs only the annotations and skips the base image.
-                        (default: False)
+  --annotations_only    Outputs only the annotations. (default: False)
 ```
 
 Available placeholders:

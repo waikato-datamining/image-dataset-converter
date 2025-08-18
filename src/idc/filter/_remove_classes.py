@@ -6,8 +6,9 @@ from seppl.io import Filter
 from wai.common.adams.imaging.locateobjects import LocatedObjects, NormalizedLocatedObjects
 from wai.logging import LOGGING_WARNING
 
+from kasperl.api import make_list, flatten_list
 from idc.api import ObjectDetectionData, ImageClassificationData, ImageSegmentationData, ImageSegmentationAnnotations, \
-    get_object_label, flatten_list, make_list
+    get_object_label
 
 
 class RemoveClasses(Filter):

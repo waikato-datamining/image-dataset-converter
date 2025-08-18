@@ -6,7 +6,8 @@ from typing import List
 from wai.common.adams.imaging.locateobjects import absolute_to_normalized
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ObjectDetectionData, SplittableStreamWriter, make_list, AnnotationsOnlyWriter, add_annotations_only_param
+from kasperl.api import make_list, SplittableStreamWriter, AnnotationsOnlyWriter, add_annotations_only_param
+from idc.api import ObjectDetectionData
 from seppl.placeholders import placeholder_list, InputBasedPlaceholderSupporter
 
 

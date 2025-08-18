@@ -6,9 +6,8 @@ from seppl.io import locate_files
 from seppl.placeholders import PlaceholderSupporter, placeholder_list
 from wai.logging import LOGGING_WARNING
 
-from idc.api import Reader
-from idc.api import locate_file, JPEG_EXTENSIONS, \
-    DepthInformation, DepthData
+from kasperl.api import locate_file, Reader
+from idc.api import JPEG_EXTENSIONS, DepthInformation, DepthData
 
 
 class NumpyDepthInfoReader(Reader, PlaceholderSupporter):

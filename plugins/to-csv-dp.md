@@ -44,8 +44,7 @@ options:
   --image_path_rel PATH
                         The relative path from the annotations to the images
                         directory (default: None)
-  --annotations_only    Outputs only the annotations and skips the base image.
-                        (default: False)
+  --annotations_only    Outputs only the annotations. (default: False)
 ```
 
 Available placeholders:

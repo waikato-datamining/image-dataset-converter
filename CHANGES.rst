@@ -11,6 +11,7 @@ Changelog
 - added `sub-process` filter for processing data with sub-flow of filters, can be conditional based on meta-data evaluation
 - the `metadata-from-name` filter can work on the path now as well (must be present)
 - the `label-present-is` filter now lets the user to specify a minimum number of pixels that need to be present in the layers
+- switched to `kasperl` library for base API and generic pipeline plugins
 
 
 0.0.13 (2025-07-15)

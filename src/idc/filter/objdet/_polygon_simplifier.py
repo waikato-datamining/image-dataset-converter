@@ -8,7 +8,8 @@ from wai.common.adams.imaging.locateobjects import LocatedObjects, LocatedObject
 from wai.common.geometry import Point as WaiPoint, Polygon as WaiPolygon
 
 from seppl.io import Filter
-from idc.api import ObjectDetectionData, flatten_list, make_list, locatedobject_polygon_to_shapely
+from kasperl.api import make_list, flatten_list
+from idc.api import ObjectDetectionData, locatedobject_polygon_to_shapely
 
 
 class PolygonSimplifier(Filter):

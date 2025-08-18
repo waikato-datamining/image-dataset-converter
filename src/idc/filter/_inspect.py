@@ -6,7 +6,7 @@ from typing import List
 from seppl import get_metadata, AnyData
 from seppl.io import Filter
 from wai.logging import LOGGING_WARNING
-from idc.api import make_list, flatten_list
+from kasperl.api import make_list, flatten_list
 
 MODE_INTERACTIVE = "interactive"
 MODE_NONINTERACTIVE = "non-interactive"

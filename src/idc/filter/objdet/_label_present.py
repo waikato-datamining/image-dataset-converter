@@ -2,13 +2,14 @@ import argparse
 import re
 from typing import List
 
+from seppl import AliasSupporter
 from seppl.io import Filter
 from shapely.geometry import Polygon
 from wai.common.adams.imaging.locateobjects import LocatedObjects, LocatedObject
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ObjectDetectionData, locatedobject_polygon_to_shapely, intersect_over_union, get_object_label, flatten_list, make_list
-from seppl import AliasSupporter
+from idc.api import ObjectDetectionData, locatedobject_polygon_to_shapely, intersect_over_union, get_object_label
+from kasperl.api import make_list, flatten_list
 
 
 class LabelPresent(Filter, AliasSupporter):

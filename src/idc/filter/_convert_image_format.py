@@ -6,7 +6,8 @@ from typing import List
 from wai.logging import LOGGING_WARNING
 from seppl import AnyData
 from seppl.io import Filter
-from idc.api import flatten_list, make_list, FORMAT_EXTENSIONS, FORMATS
+from kasperl.api import make_list, flatten_list
+from idc.api import FORMAT_EXTENSIONS, FORMATS
 
 
 class ConvertImageFormat(Filter):

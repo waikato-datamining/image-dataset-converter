@@ -48,8 +48,7 @@ options:
   --background BACKGROUND
                         The index (0-255) to use for the background (default:
                         0)
-  --annotations_only    Outputs only the annotations and skips the base image.
-                        (default: False)
+  --annotations_only    Outputs only the annotations. (default: False)
 ```
 
 Available placeholders:

@@ -5,7 +5,8 @@ from typing import List
 from PIL import Image
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ImageSegmentationData, SplittableStreamWriter, make_list, AnnotationsOnlyWriter, add_annotations_only_param
+from kasperl.api import make_list, SplittableStreamWriter, AnnotationsOnlyWriter, add_annotations_only_param
+from idc.api import ImageSegmentationData
 from seppl.placeholders import placeholder_list, InputBasedPlaceholderSupporter
 
 

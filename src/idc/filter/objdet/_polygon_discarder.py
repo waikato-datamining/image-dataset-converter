@@ -4,7 +4,8 @@ from typing import List
 from wai.logging import LOGGING_WARNING
 from wai.common.adams.imaging.locateobjects import LocatedObjects, LocatedObject
 from seppl.io import Filter
-from idc.api import ObjectDetectionData, flatten_list, make_list
+from kasperl.api import make_list, flatten_list
+from idc.api import ObjectDetectionData
 
 
 class PolygonDiscarder(Filter):

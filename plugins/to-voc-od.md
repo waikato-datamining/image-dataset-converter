@@ -39,8 +39,7 @@ options:
                         placeholders: {INPUT_PATH}, {INPUT_NAMEEXT},
                         {INPUT_NAMENOEXT}, {INPUT_EXT}, {INPUT_PARENT_PATH},
                         {INPUT_PARENT_NAME} (default: None)
-  --annotations_only    Outputs only the annotations and skips the base image.
-                        (default: False)
+  --annotations_only    Outputs only the annotations. (default: False)
 ```
 
 Available placeholders:

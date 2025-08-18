@@ -3,7 +3,8 @@ import os
 from typing import List
 
 from wai.logging import LOGGING_WARNING
-from idc.api import ImageClassificationData, SplittableStreamWriter, make_list
+from kasperl.api import make_list, SplittableStreamWriter
+from idc.api import ImageClassificationData
 from seppl.placeholders import placeholder_list, InputBasedPlaceholderSupporter
 
 
