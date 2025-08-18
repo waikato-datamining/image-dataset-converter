@@ -158,8 +158,8 @@ def _parse_args(args: List[str], require_reader: bool = True, require_writer: bo
     parser.add_argument("-b", "--force_batch", action="store_true")
     parser.add_argument("--placeholders")
     parser.add_argument("--dump_pipeline")
-    session = Session(options=parser.parse_args(parsed[""] if ("" in parsed) else []))
-    session.logger = logging.getLogger(CONVERT)
+    session = Session(options=parser.parse_args(parsed[""] if ("" in parsed) else []),
+                      logger=logging.getLogger(CONVERT))
     set_logging_level(session.logger, session.options.logging_level)
     if session.options.placeholders is not None:
         if not os.path.exists(session.options.placeholders):
