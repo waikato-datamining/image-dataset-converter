@@ -2,10 +2,8 @@ import logging
 import sys
 import traceback
 
-from wai.logging import init_logging, set_logging_level
-
 from idc.core import ENV_IDC_LOGLEVEL
-from kasperl.api import find_files_parser, find_files
+from kasperl.api import perform_find_files
 
 FIND = "idc-find"
 
@@ -19,14 +17,9 @@ def main(args=None):
     :param args: the commandline arguments, uses sys.argv if not supplied
     :type args: list
     """
-    init_logging(env_var=ENV_IDC_LOGLEVEL)
-    parser = find_files_parser("Tool for locating files in directories that match certain patterns and store them in files.", FIND)
-    parsed = parser.parse_args(args=args)
-    set_logging_level(_logger, parsed.logging_level)
-    find_files(parsed.input, parsed.output, recursive=parsed.recursive,
-               match=parsed.match, not_match=parsed.not_match,
-               split_ratios=parsed.split_ratios, split_names=parsed.split_names,
-               split_name_separator=parsed.split_name_separator, logger=_logger)
+    perform_find_files(ENV_IDC_LOGLEVEL, args, FIND,
+                       "Tool for locating files in directories that match certain patterns and store them in files.",
+                       _logger)
 
 
 def sys_main() -> int:
