@@ -573,7 +573,7 @@ def ensure_grayscale(image: Image.Image, logger=None) -> Image.Image:
     """
     if image.mode != 'L':
         if logger is not None:
-            logger.warning("Not a grayscale image, converting... Consider using the 'rgb-to-grayscale' filter explicitly.")
+            logger.warning("Not a grayscale image (mode: %s), converting... Consider using the 'rgb-to-grayscale' filter explicitly." % image.mode)
         image = image.convert('L')
     return image
 
@@ -601,7 +601,7 @@ def ensure_binary(image: Image.Image, logger=None) -> Image.Image:
     """
     if image.mode != '1':
         if logger is not None:
-            logger.warning("Not a binary image, converting... Consider using the 'grayscale-to-binary' filter explicitly.")
+            logger.warning("Not a binary image (mode: %s), converting... Consider using the 'grayscale-to-binary' filter explicitly." % image.mode)
         image = image.convert('1')
     return image
 
