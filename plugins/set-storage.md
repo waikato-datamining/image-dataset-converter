@@ -1,15 +1,16 @@
-# discard-negatives
+# set-storage
 
 * accepts: seppl.AnyData
 * generates: seppl.AnyData
 
-Discards negative records, i.e., ones without annotations.
+Stores the objects passing through in internal storage using the specified name.
 
 ```
-usage: discard-negatives [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                         [-N LOGGER_NAME] [--skip]
+usage: set-storage [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
+                   [-N LOGGER_NAME] [--skip] -s STORAGE_NAME
 
-Discards negative records, i.e., ones without annotations.
+Stores the objects passing through in internal storage using the specified
+name.
 
 options:
   -h, --help            show this help message and exit
@@ -20,4 +21,7 @@ options:
                         name by default (default: None)
   --skip                Disables the plugin, removing it from the pipeline.
                         (default: False)
+  -s STORAGE_NAME, --storage_name STORAGE_NAME
+                        The name to store the object under in internal
+                        storage. (default: None)
 ```

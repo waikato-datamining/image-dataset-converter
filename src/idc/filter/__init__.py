@@ -18,5 +18,6 @@ from ._sort_pixels import SortPixels
 from ._strip_annotations import StripAnnotations
 from ._sub_process import SubProcess
 from ._tee import Tee
+from ._trigger import Trigger
 from ._use_mask import UseMask
 from ._write_labels import WriteLabels, OUTPUT_FORMATS, OUTPUT_FORMAT_TEXT, OUTPUT_FORMAT_COMMASEP, OUTPUT_FORMAT_CUSTOMSEP

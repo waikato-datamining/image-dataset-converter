@@ -1,15 +1,14 @@
-# discard-negatives
+# from-storage
 
-* accepts: seppl.AnyData
 * generates: seppl.AnyData
 
-Discards negative records, i.e., ones without annotations.
+Retrieves the specified object from internal storage.
 
 ```
-usage: discard-negatives [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                         [-N LOGGER_NAME] [--skip]
+usage: from-storage [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
+                    [-N LOGGER_NAME] -s STORAGE_NAME
 
-Discards negative records, i.e., ones without annotations.
+Retrieves the specified object from internal storage.
 
 options:
   -h, --help            show this help message and exit
@@ -18,6 +17,7 @@ options:
   -N LOGGER_NAME, --logger_name LOGGER_NAME
                         The custom name to use for the logger, uses the plugin
                         name by default (default: None)
-  --skip                Disables the plugin, removing it from the pipeline.
-                        (default: False)
+  -s STORAGE_NAME, --storage_name STORAGE_NAME
+                        The name of the object to retrieve from internal
+                        storage. (default: None)
 ```
