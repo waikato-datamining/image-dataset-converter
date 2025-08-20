@@ -5,7 +5,7 @@ from seppl.io import locate_files
 from seppl.placeholders import PlaceholderSupporter, placeholder_list
 from wai.logging import LOGGING_WARNING
 
-from kasperl.api import locate_file, Reader, AnnotationsOnlyReader, add_annotations_only_reader_param, annotation_to_image_name
+from kasperl.api import locate_file, Reader, AnnotationsOnlyReader, add_annotations_only_reader_param, annotation_to_name
 from idc.api import load_image_from_file, JPEG_EXTENSIONS, DepthData, depth_from_grayscale, empty_image, FORMAT_JPEG, FORMAT_EXTENSIONS
 
 
@@ -149,7 +149,7 @@ class GrayscaleDepthInfoReader(Reader, PlaceholderSupporter, AnnotationsOnlyRead
                 yield None
             yield DepthData(source=imgs[0], annotation=annotations)
         else:
-            image_name = annotation_to_image_name(self.session.current_input, ext=FORMAT_EXTENSIONS[FORMAT_JPEG])
+            image_name = annotation_to_name(self.session.current_input, ext=FORMAT_EXTENSIONS[FORMAT_JPEG])
             image, _ = empty_image("RGB", ann.size[0], ann.size[1], FORMAT_JPEG)
             yield DepthData(image_name=image_name, image=image, image_format=FORMAT_JPEG, annotation=annotations)
 
