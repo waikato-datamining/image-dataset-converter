@@ -6,7 +6,7 @@ from typing import List
 from wai.common.adams.imaging.locateobjects import absolute_to_normalized
 from wai.logging import LOGGING_WARNING
 
-from kasperl.api import make_list, SplittableStreamWriter, AnnotationsOnlyWriter, add_annotations_only_param
+from kasperl.api import make_list, SplittableStreamWriter, AnnotationsOnlyWriter, add_annotations_only_writer_param
 from idc.api import ObjectDetectionData
 from seppl.placeholders import placeholder_list, InputBasedPlaceholderSupporter
 
@@ -75,7 +75,7 @@ class ROIObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter, In
         parser.add_argument("-o", "--output", type=str, help="The directory to store the images/.csv files in. Any defined splits get added beneath there. " + placeholder_list(obj=self), required=True)
         parser.add_argument("-s", "--suffix", metavar="SUFFIX", type=str, default="-rois.csv", help="The suffix used by the ROI CSV files.", required=False)
         parser.add_argument("--size_mode", action="store_true", help="Whether to output w/h rather than x1/y1.", required=False)
-        add_annotations_only_param(parser)
+        add_annotations_only_writer_param(parser)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):

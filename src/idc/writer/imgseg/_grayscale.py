@@ -5,7 +5,7 @@ from typing import List
 from wai.logging import LOGGING_WARNING
 
 from kasperl.api import make_list, SplittableStreamWriter, AnnotationsOnlyWriter, \
-    add_annotations_only_param
+    add_annotations_only_writer_param
 from idc.api import ImageSegmentationData, imgseg_to_grayscale
 from seppl.placeholders import placeholder_list, InputBasedPlaceholderSupporter
 
@@ -73,7 +73,7 @@ class GrayscaleImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnlyWr
         parser.add_argument("-o", "--output", type=str, help="The directory to store the image files in. Any defined splits get added beneath there. " + placeholder_list(obj=self), required=True)
         parser.add_argument("--image_path_rel", metavar="PATH", type=str, default=None, help="The relative path from the annotations to the images directory", required=False)
         parser.add_argument("--background", type=int, help="The index (0-255) to use for the background", required=False, default=0)
-        add_annotations_only_param(parser)
+        add_annotations_only_writer_param(parser)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):

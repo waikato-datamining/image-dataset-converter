@@ -5,7 +5,7 @@ from typing import List
 from wai.logging import LOGGING_WARNING
 
 from kasperl.api import make_list, SplittableStreamWriter, \
-    AnnotationsOnlyWriter, add_annotations_only_param
+    AnnotationsOnlyWriter, add_annotations_only_writer_param
 from idc.api import ImageSegmentationData, imgseg_to_indexedpng
 from simple_palette_utils import generate_palette_list, PALETTE_AUTO, palettes
 from seppl.placeholders import placeholder_list, InputBasedPlaceholderSupporter
@@ -79,7 +79,7 @@ class IndexedPngImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnlyW
         parser.add_argument("--image_path_rel", metavar="PATH", type=str, default=None, help="The relative path from the annotations to the images directory", required=False)
         parser.add_argument("-p", "--palette", metavar="PALETTE", type=str, default=PALETTE_AUTO, help="The palette to use; either palette name (%s) or comma-separated list of R,G,B values." % "|".join(palettes()), required=False)
         parser.add_argument("--background", type=int, help="The index (0-255) to use for the background", required=False, default=0)
-        add_annotations_only_param(parser)
+        add_annotations_only_writer_param(parser)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):

@@ -6,7 +6,7 @@ from typing import List, Iterable, Dict
 
 from wai.logging import LOGGING_WARNING
 
-from kasperl.api import SplittableBatchWriter, AnnotationsOnlyWriter, add_annotations_only_param
+from kasperl.api import SplittableBatchWriter, AnnotationsOnlyWriter, add_annotations_only_writer_param
 from idc.api import ObjectDetectionData, get_object_label
 from seppl.placeholders import placeholder_list, InputBasedPlaceholderSupporter
 
@@ -98,7 +98,7 @@ class COCOObjectDetectionWriter(SplittableBatchWriter, AnnotationsOnlyWriter, In
         parser.add_argument("--default_supercategory", type=str, help="The default super category to use, e.g., 'Object'.", required=False, default="Object")
         parser.add_argument("--sort_categories", action="store_true", help="Whether to sort the categories.", required=False)
         parser.add_argument("--category_output_file", type=str, help="The name of the file (no path) to store the categories in as comma-separated list.", required=False, default=None)
-        add_annotations_only_param(parser)
+        add_annotations_only_writer_param(parser)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):

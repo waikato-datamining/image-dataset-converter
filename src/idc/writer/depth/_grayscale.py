@@ -5,7 +5,7 @@ from typing import List
 from wai.logging import LOGGING_WARNING
 
 from kasperl.api import make_list, SplittableStreamWriter, AnnotationsOnlyWriter, \
-    add_annotations_only_param
+    add_annotations_only_writer_param
 from idc.api import DepthData, depth_to_grayscale
 from seppl.placeholders import placeholder_list, InputBasedPlaceholderSupporter
 
@@ -78,7 +78,7 @@ class GrayscaleDepthInfoWriter(SplittableStreamWriter, AnnotationsOnlyWriter, In
         parser.add_argument("--image_path_rel", metavar="PATH", type=str, default=None, help="The relative path from the annotations to the images directory", required=False)
         parser.add_argument("-m", "--min_value", type=float, help="The minimum value to use, smaller values get set to this.", default=None, required=False)
         parser.add_argument("-M", "--max_value", type=float, help="The maximum value to use, larger values get set to this.", default=None, required=False)
-        add_annotations_only_param(parser)
+        add_annotations_only_writer_param(parser)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):

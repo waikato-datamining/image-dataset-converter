@@ -5,7 +5,7 @@ from typing import List
 from PIL import Image
 from wai.logging import LOGGING_WARNING
 
-from kasperl.api import make_list, SplittableStreamWriter, AnnotationsOnlyWriter, add_annotations_only_param
+from kasperl.api import make_list, SplittableStreamWriter, AnnotationsOnlyWriter, add_annotations_only_writer_param
 from idc.api import ImageSegmentationData
 from seppl.placeholders import placeholder_list, InputBasedPlaceholderSupporter
 
@@ -69,7 +69,7 @@ class LayerSegmentsImageSegmentationWriter(SplittableStreamWriter, AnnotationsOn
         parser = super()._create_argparser()
         parser.add_argument("-o", "--output", type=str, help="The directory to store the image files in. Any defined splits get added beneath there. " + placeholder_list(obj=self), required=True)
         parser.add_argument("--label_separator", type=str, help="The separator between name and label used by the mask images.", required=False, default="-")
-        add_annotations_only_param(parser)
+        add_annotations_only_writer_param(parser)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):

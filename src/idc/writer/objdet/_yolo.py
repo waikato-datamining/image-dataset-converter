@@ -4,7 +4,7 @@ from collections import OrderedDict
 from typing import List
 
 from wai.logging import LOGGING_WARNING
-from kasperl.api import make_list, SplittableStreamWriter, AnnotationsOnlyWriter, add_annotations_only_param
+from kasperl.api import make_list, SplittableStreamWriter, AnnotationsOnlyWriter, add_annotations_only_writer_param
 from idc.api import ObjectDetectionData, save_labels, save_labels_csv
 from seppl.placeholders import placeholder_list, InputBasedPlaceholderSupporter
 
@@ -92,7 +92,7 @@ class YoloObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter, I
         parser.add_argument("--categories", type=str, help="The predefined order of categories.", required=False, nargs="*")
         parser.add_argument("--labels", type=str, default=None, help="The text file (no path) with the comma-separated list of labels", required=False)
         parser.add_argument("--labels_csv", type=str, default=None, help="The CSV file (no path) to write the label mapping to (index and label)", required=False)
-        add_annotations_only_param(parser)
+        add_annotations_only_writer_param(parser)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):

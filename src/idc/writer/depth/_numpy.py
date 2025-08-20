@@ -6,7 +6,7 @@ from typing import List
 from wai.logging import LOGGING_WARNING
 
 from kasperl.api import make_list, SplittableStreamWriter, AnnotationsOnlyWriter, \
-    add_annotations_only_param
+    add_annotations_only_writer_param
 from idc.api import DepthData
 from seppl.placeholders import placeholder_list, InputBasedPlaceholderSupporter
 
@@ -74,7 +74,7 @@ class NumpyDepthInfoWriter(SplittableStreamWriter, AnnotationsOnlyWriter, InputB
         parser.add_argument("-o", "--output", type=str, help="The directory to store the files in. Any defined splits get added beneath there. " + placeholder_list(obj=self), required=True)
         parser.add_argument("--image_path_rel", metavar="PATH", type=str, default=None, help="The relative path from the annotations to the images directory", required=False)
         parser.add_argument("--allow_pickle", action="store_true", help="Whether to use `allow_pickle=True`", default=False)
-        add_annotations_only_param(parser)
+        add_annotations_only_writer_param(parser)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
