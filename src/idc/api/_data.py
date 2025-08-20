@@ -560,7 +560,7 @@ class ImageData(AnnotationHandler, MetaDataHandler, NameSupporter, SourceSupport
         return result
 
 
-def ensure_grayscale(image: Image.Image, logger=None) -> Image.Image:
+def ensure_grayscale(image: Image.Image, logger: logging.Logger = None) -> Image.Image:
     """
     Ensures that the image is a grayscale one. Converts if necessary.
     If a logger is supplied, will output a warning in case the conversion occurs.
@@ -588,7 +588,7 @@ def grayscale_required_info() -> str:
     return "A grayscale image is required. You can use the 'rgb-to-grayscale' for the conversion."
 
 
-def ensure_binary(image: Image.Image, logger=None) -> Image.Image:
+def ensure_binary(image: Image.Image, logger: logging.Logger = None) -> Image.Image:
     """
     Ensures that the image is a binary one. Converts if necessary.
     If a logger is supplied, will output a warning in case the conversion occurs.
@@ -614,3 +614,21 @@ def binary_required_info() -> str:
     :rtype: str
     """
     return "A binary image is required. You can use the 'grayscale-to-binary' for the conversion."
+
+
+def binarize_image(img: Image.Image, threshold: int = 127, logger: logging.Logger = None) -> Image.Image:
+    """
+    Binarizes the image using the specified threshold.
+    Ensures that the image is grayscale before binarizing.
+
+    :param img: the image to binarize
+    :type img: Image.Image
+    :param threshold: the threshold to use (255 if greater than threshold, otherwise 0)
+    :type threshold: int
+    :param logger: the optional logger to use to warning messages
+    :type logger: logging.Logger
+    :return: the binarized image
+    :rtype: Image.Image
+    """
+    img = ensure_grayscale(img, logger=logger)
+    return img.point(lambda p: 255 if p > threshold else 0, '1')

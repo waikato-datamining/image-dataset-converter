@@ -17,6 +17,7 @@ Changelog
 - the `use-mask` filter now sets the image format PNG in the generated output container
 - the readers `from-grayscale-dp`, `from-indexed-png-is`, `from-blue-channel-is` and
   `from-grayscale-is` now support reading only the annotations
+- added `idc.api.binarize_image` convenience function
 
 
 0.0.13 (2025-07-15)

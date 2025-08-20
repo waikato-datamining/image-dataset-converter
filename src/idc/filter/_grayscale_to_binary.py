@@ -1,11 +1,12 @@
 import argparse
 from typing import List
 
-from kasperl.api import make_list, flatten_list, safe_deepcopy
-from idc.api import ImageData, array_to_image, ensure_grayscale, grayscale_required_info
 from seppl import AnyData, AliasSupporter
 from seppl.io import Filter
 from wai.logging import LOGGING_WARNING
+
+from idc.api import ImageData, array_to_image, grayscale_required_info, binarize_image
+from kasperl.api import make_list, flatten_list, safe_deepcopy
 
 
 class GrayscaleToBinary(Filter, AliasSupporter):
@@ -111,9 +112,7 @@ class GrayscaleToBinary(Filter, AliasSupporter):
         """
         result = []
         for gray_item in make_list(data):
-            img = ensure_grayscale(gray_item.image, self.logger())
-            # apply threshold
-            binary_img = img.point(lambda p: 255 if p > self.threshold else 0, '1')
+            binary_img = binarize_image(gray_item.image, threshold=self.threshold, logger=self.logger())
             binary_item = type(gray_item)(source=None, image_name=gray_item.image_name,
                                           data=array_to_image(binary_img, gray_item.image_format)[1].getvalue(),
                                           image=binary_img, image_format=gray_item.image_format,
