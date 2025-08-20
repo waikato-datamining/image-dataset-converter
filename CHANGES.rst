@@ -15,6 +15,8 @@ Changelog
 - requiring seppl>=0.2.21 now
 - added `@abc.abstractmethod` decorator where appropriate
 - the `use-mask` filter now sets the image format PNG in the generated output container
+- the readers `from-grayscale-dp`, `from-indexed-png-is`, `from-blue-channel-is` and
+  `from-grayscale-is` now support reading only the annotations
 
 
 0.0.13 (2025-07-15)

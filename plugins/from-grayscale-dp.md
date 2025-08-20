@@ -2,15 +2,17 @@
 
 * generates: idc.api.DepthData
 
-Loads the depth information from associated grayscale PNG files.
+Loads the depth information from associated grayscale PNG files. When reading only the annotations, an empty image of the same dimensions is used.
 
 ```
 usage: from-grayscale-dp [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                          [-N LOGGER_NAME] [-i [INPUT ...]]
                          [-I [INPUT_LIST ...]] [--resume_from RESUME_FROM]
                          [-m MIN_VALUE] [-M MAX_VALUE] [--image_path_rel PATH]
+                         [--annotations_only]
 
-Loads the depth information from associated grayscale PNG files.
+Loads the depth information from associated grayscale PNG files. When reading
+only the annotations, an empty image of the same dimensions is used.
 
 options:
   -h, --help            show this help message and exit
@@ -40,6 +42,7 @@ options:
   --image_path_rel PATH
                         The relative path from the annotations to the images
                         directory (default: None)
+  --annotations_only    Reads only the annotations. (default: False)
 ```
 
 Available placeholders:

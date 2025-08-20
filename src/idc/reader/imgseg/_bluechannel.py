@@ -5,15 +5,15 @@ from seppl.placeholders import PlaceholderSupporter, placeholder_list
 from seppl.io import locate_files
 from wai.logging import LOGGING_WARNING
 
-from kasperl.api import locate_file, Reader
-from idc.api import ImageSegmentationData, load_image_from_file, imgseg_from_bluechannel, JPEG_EXTENSIONS
+from kasperl.api import locate_file, Reader, AnnotationsOnlyReader, add_annotations_only_reader_param, annotation_to_image_name
+from idc.api import ImageSegmentationData, load_image_from_file, imgseg_from_bluechannel, JPEG_EXTENSIONS, empty_image, FORMAT_JPEG, FORMAT_EXTENSIONS
 
 
-class BlueChannelImageSegmentationReader(Reader, PlaceholderSupporter):
+class BlueChannelImageSegmentationReader(Reader, PlaceholderSupporter, AnnotationsOnlyReader):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
                  image_path_rel: str = None, labels: List[str] = None, background: int = None, resume_from: str = None,
-                 logger_name: str = None, logging_level: str = LOGGING_WARNING):
+                 annotations_only: bool = None, logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
         Initializes the reader.
 
@@ -27,6 +27,8 @@ class BlueChannelImageSegmentationReader(Reader, PlaceholderSupporter):
         :type background: int
         :param resume_from: the file to resume from (glob)
         :type resume_from: str
+        :param annotations_only: whether to only load the annotations
+        :type annotations_only: bool
         :param logger_name: the name to use for the logger
         :type logger_name: str
         :param logging_level: the logging level to use
@@ -39,6 +41,7 @@ class BlueChannelImageSegmentationReader(Reader, PlaceholderSupporter):
         self.labels = labels
         self.background = background
         self.resume_from = resume_from
+        self.annotations_only = annotations_only
         self._label_mapping = None
         self._inputs = None
         self._current_input = None
@@ -59,7 +62,7 @@ class BlueChannelImageSegmentationReader(Reader, PlaceholderSupporter):
         :return: the description
         :rtype: str
         """
-        return "Loads the annotations from associated blue channel JPG/PNG files."
+        return "Loads the annotations from associated blue channel PNG files. When reading only the annotations, an empty image of the same dimensions is used."
 
     def _create_argparser(self) -> argparse.ArgumentParser:
         """
@@ -75,6 +78,7 @@ class BlueChannelImageSegmentationReader(Reader, PlaceholderSupporter):
         parser.add_argument("--image_path_rel", metavar="PATH", type=str, default=None, help="The relative path from the annotations to the images directory", required=False)
         parser.add_argument("--labels", metavar="LABEL", type=str, default=None, help="The labels that the indices represent.", nargs="+")
         parser.add_argument("--background", type=int, help="The index (0-255) that is used for the background", required=False, default=0)
+        add_annotations_only_reader_param(parser)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
@@ -91,6 +95,7 @@ class BlueChannelImageSegmentationReader(Reader, PlaceholderSupporter):
         self.labels = ns.labels
         self.background = ns.background
         self.resume_from = ns.resume_from
+        self.annotations_only = ns.annotations_only
 
     def generates(self) -> List:
         """
@@ -113,6 +118,8 @@ class BlueChannelImageSegmentationReader(Reader, PlaceholderSupporter):
         for i, label in enumerate(self.labels):
             self._label_mapping[i] = label
         self.logger().debug("label mapping: %s" % str(self._label_mapping))
+        if self.annotations_only is None:
+            self.annotations_only = False
 
     def read(self) -> Iterable:
         """
@@ -125,10 +132,12 @@ class BlueChannelImageSegmentationReader(Reader, PlaceholderSupporter):
         self.session.current_input = self._current_input
 
         # associated images?
-        imgs = locate_file(self.session.current_input, JPEG_EXTENSIONS, rel_path=self.image_path_rel)
-        if len(imgs) == 0:
-            self.logger().warning("Failed to locate associated image for: %s" % self.session.current_input)
-            yield None
+        imgs = []
+        if not self.annotations_only:
+            imgs = locate_file(self.session.current_input, JPEG_EXTENSIONS, rel_path=self.image_path_rel)
+            if len(imgs) == 0:
+                self.logger().warning("Failed to locate associated image for: %s" % self.session.current_input)
+                yield None
 
         # read annotations
         self.logger().info("Reading from: " + str(self.session.current_input))
@@ -136,11 +145,15 @@ class BlueChannelImageSegmentationReader(Reader, PlaceholderSupporter):
         annotations = imgseg_from_bluechannel(ann, self.labels, self._label_mapping, self.logger(), background=self.background)
 
         # associated image
-        if len(imgs) > 1:
-            self.logger().warning("Found more than one image associated with annotation, using first: %s" % imgs[0])
-            yield None
-
-        yield ImageSegmentationData(source=imgs[0], annotation=annotations)
+        if not self.annotations_only:
+            if len(imgs) > 1:
+                self.logger().warning("Found more than one image associated with annotation, using first: %s" % imgs[0])
+                yield None
+            yield ImageSegmentationData(source=imgs[0], annotation=annotations)
+        else:
+            image_name = annotation_to_image_name(self.session.current_input, ext=FORMAT_EXTENSIONS[FORMAT_JPEG])
+            image, _ = empty_image("RGB", ann.size[0], ann.size[1], FORMAT_JPEG)
+            yield ImageSegmentationData(image_name=image_name, image=image, image_format=FORMAT_JPEG, annotation=annotations)
 
     def has_finished(self) -> bool:
         """

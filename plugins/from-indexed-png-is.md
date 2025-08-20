@@ -2,7 +2,7 @@
 
 * generates: idc.api.ImageSegmentationData
 
-Loads the annotations from associated indexed PNG files.
+Loads the annotations from associated indexed PNG files. When reading only the annotations, an empty image of the same dimensions is used.
 
 ```
 usage: from-indexed-png-is [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
@@ -10,9 +10,10 @@ usage: from-indexed-png-is [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                            [-I [INPUT_LIST ...]] [--resume_from RESUME_FROM]
                            [--image_path_rel PATH]
                            [--labels LABEL [LABEL ...]]
-                           [--background BACKGROUND]
+                           [--background BACKGROUND] [--annotations_only]
 
-Loads the annotations from associated indexed PNG files.
+Loads the annotations from associated indexed PNG files. When reading only the
+annotations, an empty image of the same dimensions is used.
 
 options:
   -h, --help            show this help message and exit
@@ -40,6 +41,7 @@ options:
   --background BACKGROUND
                         The index (0-255) that is used for the background
                         (default: 0)
+  --annotations_only    Reads only the annotations. (default: False)
 ```
 
 Available placeholders:

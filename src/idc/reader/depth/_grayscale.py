@@ -5,16 +5,15 @@ from seppl.io import locate_files
 from seppl.placeholders import PlaceholderSupporter, placeholder_list
 from wai.logging import LOGGING_WARNING
 
-from kasperl.api import locate_file, Reader
-from idc.api import load_image_from_file, JPEG_EXTENSIONS, DepthData, depth_from_grayscale
+from kasperl.api import locate_file, Reader, AnnotationsOnlyReader, add_annotations_only_reader_param, annotation_to_image_name
+from idc.api import load_image_from_file, JPEG_EXTENSIONS, DepthData, depth_from_grayscale, empty_image, FORMAT_JPEG, FORMAT_EXTENSIONS
 
 
-class GrayscaleDepthInfoReader(Reader, PlaceholderSupporter):
+class GrayscaleDepthInfoReader(Reader, PlaceholderSupporter, AnnotationsOnlyReader):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
-                 min_value: float = None, max_value: float = None,
-                 image_path_rel: str = None, resume_from: str = None,
-                 logger_name: str = None, logging_level: str = LOGGING_WARNING):
+                 min_value: float = None, max_value: float = None, image_path_rel: str = None, resume_from: str = None,
+                 annotations_only: bool = None, logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
         Initializes the reader.
 
@@ -28,6 +27,8 @@ class GrayscaleDepthInfoReader(Reader, PlaceholderSupporter):
         :type image_path_rel: str
         :param resume_from: the file to resume from (glob)
         :type resume_from: str
+        :param annotations_only: whether to only load the annotations
+        :type annotations_only: bool
         :param logger_name: the name to use for the logger
         :type logger_name: str
         :param logging_level: the logging level to use
@@ -40,6 +41,7 @@ class GrayscaleDepthInfoReader(Reader, PlaceholderSupporter):
         self.max_value = max_value
         self.image_path_rel = image_path_rel
         self.resume_from = resume_from
+        self.annotations_only = annotations_only
         self._inputs = None
         self._current_input = None
 
@@ -59,7 +61,7 @@ class GrayscaleDepthInfoReader(Reader, PlaceholderSupporter):
         :return: the description
         :rtype: str
         """
-        return "Loads the depth information from associated grayscale PNG files."
+        return "Loads the depth information from associated grayscale PNG files. When reading only the annotations, an empty image of the same dimensions is used."
 
     def _create_argparser(self) -> argparse.ArgumentParser:
         """
@@ -75,6 +77,7 @@ class GrayscaleDepthInfoReader(Reader, PlaceholderSupporter):
         parser.add_argument("-m", "--min_value", type=float, help="The minimum value to use, grayscale values get offset by this.", default=None, required=False)
         parser.add_argument("-M", "--max_value", type=float, help="The maximum value to use, grayscale values 0-255 get scaled to min/max, requires min to be specified.", default=None, required=False)
         parser.add_argument("--image_path_rel", metavar="PATH", type=str, default=None, help="The relative path from the annotations to the images directory", required=False)
+        add_annotations_only_reader_param(parser)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
@@ -91,6 +94,7 @@ class GrayscaleDepthInfoReader(Reader, PlaceholderSupporter):
         self.max_value = ns.max_value
         self.image_path_rel = ns.image_path_rel
         self.resume_from = ns.resume_from
+        self.annotations_only = ns.annotations_only
 
     def generates(self) -> List:
         """
@@ -112,6 +116,8 @@ class GrayscaleDepthInfoReader(Reader, PlaceholderSupporter):
             if self.min_value >= self.max_value:
                 raise Exception("The min value must be smaller than the max value, but got: min=%f, max=%f" % (self.min_value, self.max_value))
         self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.png", resume_from=self.resume_from)
+        if self.annotations_only is None:
+            self.annotations_only = False
 
     def read(self) -> Iterable:
         """
@@ -124,10 +130,12 @@ class GrayscaleDepthInfoReader(Reader, PlaceholderSupporter):
         self.session.current_input = self._current_input
 
         # associated images?
-        imgs = locate_file(self.session.current_input, JPEG_EXTENSIONS, rel_path=self.image_path_rel)
-        if len(imgs) == 0:
-            self.logger().warning("Failed to locate associated image for: %s" % self.session.current_input)
-            yield None
+        imgs = []
+        if not self.annotations_only:
+            imgs = locate_file(self.session.current_input, JPEG_EXTENSIONS, rel_path=self.image_path_rel)
+            if len(imgs) == 0:
+                self.logger().warning("Failed to locate associated image for: %s" % self.session.current_input)
+                yield None
 
         # read annotations
         self.logger().info("Reading from: " + str(self.session.current_input))
@@ -135,11 +143,15 @@ class GrayscaleDepthInfoReader(Reader, PlaceholderSupporter):
         annotations = depth_from_grayscale(ann, min_value=self.min_value, max_value=self.max_value, logger=self.logger())
 
         # associated image
-        if len(imgs) > 1:
-            self.logger().warning("Found more than one image associated with annotation, using first: %s" % imgs[0])
-            yield None
-
-        yield DepthData(source=imgs[0], annotation=annotations)
+        if not self.annotations_only:
+            if len(imgs) > 1:
+                self.logger().warning("Found more than one image associated with annotation, using first: %s" % imgs[0])
+                yield None
+            yield DepthData(source=imgs[0], annotation=annotations)
+        else:
+            image_name = annotation_to_image_name(self.session.current_input, ext=FORMAT_EXTENSIONS[FORMAT_JPEG])
+            image, _ = empty_image("RGB", ann.size[0], ann.size[1], FORMAT_JPEG)
+            yield DepthData(image_name=image_name, image=image, image_format=FORMAT_JPEG, annotation=annotations)
 
     def has_finished(self) -> bool:
         """
