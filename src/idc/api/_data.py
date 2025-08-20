@@ -134,7 +134,7 @@ def array_to_image(array: Union[np.ndarray, Image.Image], image_format: str) -> 
         img = array
     else:
         img = Image.fromarray(np.uint8(array))
-    img_bytes = image_to_array(img, image_format)
+    img_bytes = image_to_bytesio(img, image_format)
     return img, img_bytes
 
 
