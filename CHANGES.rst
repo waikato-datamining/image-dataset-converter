@@ -13,6 +13,7 @@ Changelog
 - the `label-present-is` filter now lets the user to specify a minimum number of pixels that need to be present in the layers
 - switched to `kasperl` library for base API and generic pipeline plugins
 - requiring seppl>=0.2.21 now
+- added `@abc.abstractmethod` decorator where appropriate
 
 
 0.0.13 (2025-07-15)
