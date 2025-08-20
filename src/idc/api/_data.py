@@ -98,6 +98,25 @@ def save_image(img: Image.Image, path: str, make_dirs: bool = False):
         img.save(path)
 
 
+def image_to_bytesio(img: Image.Image, image_format: str) -> io.BytesIO:
+    """
+    Turns the image into BytesIO.
+
+    :param img: the image to convert
+    :type img: Image.Image
+    :param image_format: the image format to generate
+    :type image_format: str
+    :return: the BytesIO data structure
+    :rtype: io.BytesIO
+    """
+    result = io.BytesIO()
+    if image_format == "JPEG":
+        img.save(result, format=image_format, quality=jpeg_quality())
+    else:
+        img.save(result, format=image_format)
+    return result
+
+
 def array_to_image(array: Union[np.ndarray, Image.Image], image_format: str) -> Tuple[Image.Image, io.BytesIO]:
     """
     Turns the numpy array back into an image of the specified format.
@@ -115,11 +134,7 @@ def array_to_image(array: Union[np.ndarray, Image.Image], image_format: str) -> 
         img = array
     else:
         img = Image.fromarray(np.uint8(array))
-    img_bytes = io.BytesIO()
-    if image_format == "JPEG":
-        img.save(img_bytes, format=image_format, quality=jpeg_quality())
-    else:
-        img.save(img_bytes, format=image_format)
+    img_bytes = image_to_array(img, image_format)
     return img, img_bytes
 
 

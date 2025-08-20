@@ -2,7 +2,7 @@ from ._colors import rgb2yiq, text_color
 from ._fonts import DEFAULT_FONT_FAMILY, load_font, text_size
 from ._data import ImageData, jpeg_quality, array_to_image, empty_image, save_image
 from ._data import FORMATS, FORMAT_JPEG, FORMAT_PNG, FORMAT_BMP, FORMAT_EXTENSIONS
-from ._data import ensure_grayscale, grayscale_required_info, ensure_binary, binary_required_info, binarize_image
+from ._data import ensure_grayscale, grayscale_required_info, ensure_binary, binary_required_info, binarize_image, image_to_bytesio
 from ._depth import DepthData, DepthInformation, depth_to_grayscale, depth_from_grayscale
 from ._device import DEVICES, DEVICE_AUTO, DEVICE_CPU, DEVICE_CUDA
 from ._imgcls import ImageClassificationData

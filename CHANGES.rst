@@ -18,6 +18,7 @@ Changelog
 - the readers `from-grayscale-dp`, `from-indexed-png-is`, `from-blue-channel-is` and
   `from-grayscale-is` now support reading only the annotations
 - added `idc.api.binarize_image` convenience function
+- added `idc.api.image_to_bytesio` helper method
 
 
 0.0.13 (2025-07-15)
