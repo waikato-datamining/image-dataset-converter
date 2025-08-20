@@ -14,6 +14,7 @@ Changelog
 - switched to `kasperl` library for base API and generic pipeline plugins
 - requiring seppl>=0.2.21 now
 - added `@abc.abstractmethod` decorator where appropriate
+- the `use-mask` filter now sets the image format PNG in the generated output container
 
 
 0.0.13 (2025-07-15)

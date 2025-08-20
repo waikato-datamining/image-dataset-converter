@@ -7,7 +7,7 @@ from simple_palette_utils import generate_palette_list, PALETTE_AUTO, palettes
 from wai.logging import LOGGING_WARNING
 
 from kasperl.api import make_list, flatten_list
-from idc.api import DATATYPES, data_type_to_class, DataTypeSupporter, ImageData, imgseg_to_indexedpng
+from idc.api import DATATYPES, data_type_to_class, DataTypeSupporter, ImageData, imgseg_to_indexedpng, FORMAT_PNG
 from idc.api import ImageSegmentationData
 
 
@@ -128,7 +128,7 @@ class UseMask(Filter, DataTypeSupporter):
                 new_image = imgseg_to_indexedpng(item.image_width, item.image_height, item.annotation, self._palette_list, background=0)
                 if self.use_rgb:
                     new_image = new_image.convert("RGB")
-                new_item = self._output_cls(image_name=new_image_name, image=new_image)
+                new_item = self._output_cls(image_name=new_image_name, image=new_image, image_format=FORMAT_PNG)
                 result.append(new_item)
 
         return flatten_list(result)
