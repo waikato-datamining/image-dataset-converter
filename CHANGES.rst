@@ -19,6 +19,10 @@ Changelog
   `from-grayscale-is` now support reading only the annotations
 - added `idc.api.binarize_image` convenience function
 - added `idc.api.image_to_bytesio` helper method
+- the `idc-exec` tool now uses all remaining parameters as the pipeline components rather than having
+  to specify them via the `-p/--pipeline` parameter, making it easy to simply prefix the `idc-exec`
+  command to an existing `idc-convert` command-line
+- added the `text-file` and `csv-file` generators that work off files to populate the variable(s)
 
 
 0.0.13 (2025-07-15)

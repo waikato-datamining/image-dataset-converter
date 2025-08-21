@@ -123,19 +123,23 @@ optional arguments:
 ### Executing pipeline multiple times
 
 ```
-usage: idc-exec [-h] -p PIPELINE -g GENERATOR [-n] [-P PREFIX]
-                [--placeholders FILE] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
+usage: idc-exec [-h] -g GENERATOR [-n] [-P PREFIX] [--placeholders FILE]
+                [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
+                ...
 
 Tool for executing a pipeline multiple times, each time with a different set
 of variables expanded. A variable is surrounded by curly quotes (e.g.,
-variable 'i' gets referenced with '{i}'). Available generators: dirs, list,
-null, range
+variable 'i' gets referenced with '{i}'). All remaining arguments are
+interpreted as pipeline arguments, making it easy to prefix the exec arguments
+to an existing pipeline command. Available generators: csv-file, dirs, list,
+null, range, text-file
+
+positional arguments:
+  pipeline              The pipeline template with variables to expand and
+                        then execute.
 
 options:
   -h, --help            show this help message and exit
-  -p PIPELINE, --pipeline PIPELINE
-                        The pipeline template with variables to expand and
-                        then execute. (default: None)
   -g GENERATOR, --generator GENERATOR
                         The generator plugin to use. (default: None)
   -n, --dry_run         Applies the generator to the pipeline template and
