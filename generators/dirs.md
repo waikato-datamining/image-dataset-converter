@@ -19,7 +19,7 @@ options:
                         The custom name to use for the logger, uses the plugin
                         name by default (default: None)
   -p DIR [DIR ...], --path DIR [DIR ...]
-                        The directory/directories to serarch (default: None)
+                        The directory/directories to search (default: None)
   -r, --recursive       Whether to search for directories recursively.
                         (default: False)
   --regexp REGEXP       The regular expression to use for matching
