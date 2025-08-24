@@ -123,8 +123,9 @@ optional arguments:
 ### Executing pipeline multiple times
 
 ```
-usage: idc-exec [-h] -g GENERATOR [-n] [-P PREFIX] [--placeholders FILE]
-                [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
+usage: idc-exec [-h] --exec_generator GENERATOR [--exec_dry_run]
+                [--exec_prefix PREFIX] [--exec_placeholders FILE]
+                [--exec_logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                 ...
 
 Tool for executing a pipeline multiple times, each time with a different set
@@ -140,16 +141,17 @@ positional arguments:
 
 options:
   -h, --help            show this help message and exit
-  -g GENERATOR, --generator GENERATOR
-                        The generator plugin to use. (default: None)
-  -n, --dry_run         Applies the generator to the pipeline template and
+  --exec_generator GENERATOR
+                        The generator plugin to use, incl. its options.
+                        (default: None)
+  --exec_dry_run        Applies the generator to the pipeline template and
                         only outputs it on stdout. (default: False)
-  -P PREFIX, --prefix PREFIX
-                        The string to prefix the pipeline with when in dry-run
+  --exec_prefix PREFIX  The string to prefix the pipeline with when in dry-run
                         mode. (default: None)
-  --placeholders FILE   The file with custom placeholders to load (format:
+  --exec_placeholders FILE
+                        The file with custom placeholders to load (format:
                         key=value). (default: None)
-  -l {DEBUG,INFO,WARNING,ERROR,CRITICAL}, --logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
+  --exec_logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
                         The logging level to use. (default: WARN)
 ```
 
