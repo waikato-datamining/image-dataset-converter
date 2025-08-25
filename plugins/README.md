@@ -63,6 +63,7 @@
 * [rename](rename.md)
 * [rgb-to-grayscale](rgb-to-grayscale.md)
 * [sample](sample.md)
+* [set-metadata](set-metadata.md)
 * [set-placeholder](set-placeholder.md)
 * [set-storage](set-storage.md)
 * [sort-pixels](sort-pixels.md)
