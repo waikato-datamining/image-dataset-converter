@@ -68,11 +68,10 @@ Readers and writers typically have a suffix that denotes their data domain:
 
 ```
 usage: idc-convert [-h|--help|--help-all|--help-plugin NAME]
-                   [-u INTERVAL] [-b|--force_batch] [--placeholders FILE] [--dump_pipeline FILE]
+                   [-u INTERVAL] [-b|--force_batch] [--placeholders FILE]
+                   [--load_pipeline FILE] [--dump_pipeline FILE]
                    [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                   reader
-                   [filter [filter [...]]]
-                   [writer]
+                   [reader] [filter ...] [writer]
 
 Tool for converting between image annotation dataset formats.
 
@@ -86,16 +85,16 @@ readers (22):
 filters (54):
    any-to-rgb, apply-ext-mask, apply-label-mask, 
    check-duplicate-filenames, coerce-box, coerce-mask, 
-   convert-image-format, depth-to-grayscale, depth-to-greyscale, 
+   convert-image-format, depth-to-grayscale, depth-to-greyscale*, 
    dimension-discarder, dims-to-metadata, discard-by-name, 
    discard-invalid-images, discard-negatives, filter-labels, 
-   grayscale-to-binary, greyscale-to-binary, inspect, label-from-name, 
-   label-present, label-present-ic, label-present-is, label-present-od, 
+   grayscale-to-binary, greyscale-to-binary*, inspect, label-from-name, 
+   label-present*, label-present-ic, label-present-is, label-present-od, 
    label-to-metadata, map-labels, max-records, metadata, 
    metadata-from-name, metadata-od, metadata-to-placeholder, od-to-ic, 
    od-to-is, passthrough, polygon-discarder, polygon-simplifier, 
    pyfunc-filter, randomize-records, record-window, remove-classes, 
-   rename, rgb-to-grayscale, rgb-to-greyscale, sample, set-metadata, 
+   rename, rgb-to-grayscale, rgb-to-greyscale*, sample, set-metadata, 
    set-placeholder, set-storage, sort-pixels, split-records, 
    strip-annotations, sub-process, tee, trigger, use-mask, write-labels
 writers (20):
@@ -105,7 +104,7 @@ writers (20):
    to-pyfunc, to-roicsv-od, to-storage, to-subdir-ic, to-voc-od, 
    to-yolo-od
 
-optional arguments:
+options:
   -h, --help            show basic help message and exit
   --help-all            show basic help message plus help on all plugins and exit
   --help-plugin NAME    show help message for plugin NAME and exit
@@ -116,6 +115,8 @@ optional arguments:
   -b, --force_batch     processes the data in batches
   --placeholders FILE
                         The file with custom placeholders to load (format: key=value).
+  --load_pipeline FILE
+                        The file to load the pipeline command from.
   --dump_pipeline FILE
                         The file to dump the pipeline command in.
 ```
@@ -125,19 +126,18 @@ optional arguments:
 ```
 usage: idc-exec [-h] --exec_generator GENERATOR [--exec_dry_run]
                 [--exec_prefix PREFIX] [--exec_placeholders FILE]
+                [--exec_format {cmdline,file}]
                 [--exec_logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                 ...
 
 Tool for executing a pipeline multiple times, each time with a different set
 of variables expanded. A variable is surrounded by curly quotes (e.g.,
-variable 'i' gets referenced with '{i}'). All remaining arguments are
-interpreted as pipeline arguments, making it easy to prefix the exec arguments
-to an existing pipeline command. Available generators: csv-file, dirs, list,
-null, range, text-file
+variable 'i' gets referenced with '{i}'). Available generators: csv-file,
+dirs, list, null, range, text-file
 
 positional arguments:
   pipeline              The pipeline template with variables to expand and
-                        then execute.
+                        then execute; see '--exec_format' option.
 
 options:
   -h, --help            show this help message and exit
@@ -151,6 +151,16 @@ options:
   --exec_placeholders FILE
                         The file with custom placeholders to load (format:
                         key=value). (default: None)
+  --exec_format {cmdline,file}
+                        The format that the pipeline is in. The format
+                        'cmdline' interprets the remaining arguments as the
+                        pipeline arguments to execute. The format 'file'
+                        expects a file to load the pipeline arguments from.
+                        This file format allows spreading the pipeline
+                        arguments over multiple lines: it simply joins all
+                        lines into a single command-line before splitting it
+                        into individual arguments for execution. (default:
+                        cmdline)
   --exec_logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
                         The logging level to use. (default: WARN)
 ```
