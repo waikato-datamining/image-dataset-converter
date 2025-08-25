@@ -1,8 +1,9 @@
 import traceback
+from encodings.aliases import aliases
 
 from idc.core import ENV_IDC_LOGLEVEL
 from idc.help import generate_plugin_usage
-from idc.registry import available_readers, available_filters, available_writers
+from idc.registry import available_readers, available_filters, available_writers, REGISTRY
 from kasperl.api import perform_conversion
 
 CONVERT = "idc-convert"
@@ -19,7 +20,8 @@ def main(args=None):
     perform_conversion(
         ENV_IDC_LOGLEVEL, args, CONVERT, DESCRIPTION,
         available_readers(), available_filters(), available_writers(),
-        require_reader=True, require_writer=False, generate_plugin_usage=generate_plugin_usage)
+        aliases=REGISTRY.all_aliases, require_reader=True, require_writer=False,
+        generate_plugin_usage=generate_plugin_usage)
 
 
 def sys_main() -> int:
