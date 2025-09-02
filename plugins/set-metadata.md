@@ -7,7 +7,7 @@ Sets the specified key/value pair in the meta-data. Can use the data passing thr
 
 ```
 usage: set-metadata [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                    [-N LOGGER_NAME] [--skip] -f FIELD -v VALUE
+                    [-N LOGGER_NAME] [--skip] -f FIELD [-v VALUE]
                     [-t {string,bool,numeric}] [-u]
 
 Sets the specified key/value pair in the meta-data. Can use the data passing

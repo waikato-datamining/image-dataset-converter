@@ -7,7 +7,8 @@ Sets the placeholder to the specified value when data passes through. The value 
 
 ```
 usage: set-placeholder [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                       [-N LOGGER_NAME] [--skip] -p PLACEHOLDER -v VALUE [-u]
+                       [-N LOGGER_NAME] [--skip] -p PLACEHOLDER [-v VALUE]
+                       [-u]
 
 Sets the placeholder to the specified value when data passes through. The
 value can contain other placeholders, which get expanded each time data passes
