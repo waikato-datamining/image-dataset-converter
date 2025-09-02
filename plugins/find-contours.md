@@ -3,15 +3,18 @@
 * accepts: idc.api.ObjectDetectionData
 * generates: idc.api.ObjectDetectionData
 
-Finds the contours in the binary image and stores them as polygons in the annotations.
+Finds the contours in the binary image and stores them as polygons in the annotations. When calculating the minimal rectangles, the following fields get added to the meta-data of the objects: min_rect_width, min_rect_height. The minimal rectangle width/height also get checked against the specified min/max sizes.
 
 ```
 usage: find-contours [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                      [-N LOGGER_NAME] [--skip] [--label LABEL] [-m MIN_SIZE]
-                     [-M MAX_SIZE]
+                     [-M MAX_SIZE] [-r]
 
 Finds the contours in the binary image and stores them as polygons in the
-annotations.
+annotations. When calculating the minimal rectangles, the following fields get
+added to the meta-data of the objects: min_rect_width, min_rect_height. The
+minimal rectangle width/height also get checked against the specified min/max
+sizes.
 
 options:
   -h, --help            show this help message and exit
@@ -30,4 +33,7 @@ options:
   -M MAX_SIZE, --max_size MAX_SIZE
                         The maximum width or height that detected contours can
                         have. (default: None)
+  -r, --calculate_min_rect
+                        Whether to calculate the minimal rectangle for each
+                        contour. (default: False)
 ```
