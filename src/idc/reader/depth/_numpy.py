@@ -103,7 +103,7 @@ class NumpyDepthInfoReader(Reader, PlaceholderSupporter):
         super().initialize()
         if self.allow_pickle is None:
             self.allow_pickle = False
-        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.npy", resume_from=self.resume_from)
+        self._inputs = None
 
     def read(self) -> Iterable:
         """
@@ -112,6 +112,8 @@ class NumpyDepthInfoReader(Reader, PlaceholderSupporter):
         :return: the data
         :rtype: Iterable
         """
+        if self._inputs is None:
+            self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.npy", resume_from=self.resume_from)
         self._current_input = self._inputs.pop(0)
         self.session.current_input = self._current_input
 

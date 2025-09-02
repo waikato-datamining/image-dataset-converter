@@ -97,7 +97,7 @@ class AdamsImageClassificationReader(Reader, PlaceholderSupporter):
         super().initialize()
         if self.class_field is None:
             raise Exception("No class field defined!")
-        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.report", resume_from=self.resume_from)
+        self._inputs = None
 
     def read(self) -> Iterable:
         """
@@ -106,6 +106,8 @@ class AdamsImageClassificationReader(Reader, PlaceholderSupporter):
         :return: the data
         :rtype: Iterable
         """
+        if self._inputs is None:
+            self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.report", resume_from=self.resume_from)
         self._current_input = self._inputs.pop(0)
         self.session.current_input = self._current_input
         self.logger().info("Reading from: " + str(self.session.current_input))

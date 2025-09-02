@@ -118,7 +118,7 @@ class LayerSegmentsImageSegmentationReader(Reader, PlaceholderSupporter):
         super().initialize()
         if self.labels is None:
             raise Exception("No labels defined!")
-        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.jpg", resume_from=self.resume_from)
+        self._inputs = None
 
     def read(self) -> Iterable:
         """
@@ -127,6 +127,8 @@ class LayerSegmentsImageSegmentationReader(Reader, PlaceholderSupporter):
         :return: the data
         :rtype: Iterable
         """
+        if self._inputs is None:
+            self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.jpg", resume_from=self.resume_from)
         self._current_input = self._inputs.pop(0)
         self.session.current_input = self._current_input
 

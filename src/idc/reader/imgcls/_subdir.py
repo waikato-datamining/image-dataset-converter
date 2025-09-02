@@ -82,7 +82,12 @@ class SubDirReader(Reader, PlaceholderSupporter):
         Initializes the processing, e.g., for opening files or databases.
         """
         super().initialize()
+        self._sub_dirs = None
 
+    def _locate_dirs(self):
+        """
+        Locates the directories to use.
+        """
         # assemble top-level dirs
         all_dirs = []
         if self.source is not None:
@@ -131,6 +136,8 @@ class SubDirReader(Reader, PlaceholderSupporter):
         :return: the data
         :rtype: Iterable
         """
+        if self._sub_dirs is None:
+            self._locate_dirs()
         input_dirs = sorted(list(self._sub_dirs.keys()))
         for input_dir in input_dirs:
             for sub_dir in self._sub_dirs[input_dir]:

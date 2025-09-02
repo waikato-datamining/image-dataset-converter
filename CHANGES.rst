@@ -25,6 +25,9 @@ Changelog
 - added the `text-file` and `csv-file` generators that work off files to populate the variable(s)
 - `idc-exec` can load pipelines from file now as well, useful when dealing with large pipelines
 - added `--load_pipeline` option to `idc-convert`
+- added `from-text-file` reader and `to-text-file` writer
+- readers now locate files the first time the `read()` method gets called rather than in the
+  `initialized()`, to allow more dynamic placeholders
 
 
 0.0.13 (2025-07-15)

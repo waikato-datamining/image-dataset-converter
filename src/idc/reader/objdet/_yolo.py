@@ -111,7 +111,7 @@ class YoloObjectDetectionReader(Reader, PlaceholderSupporter):
             self.image_path_rel = "../images"
         if self.labels is None:
             raise Exception("No labels file defined!")
-        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.txt", resume_from=self.resume_from)
+        self._inputs = None
         _, self._label_mapping = load_labels(self.labels, logger=self.logger())
 
     def read(self) -> Iterable:
@@ -121,6 +121,8 @@ class YoloObjectDetectionReader(Reader, PlaceholderSupporter):
         :return: the data
         :rtype: Iterable
         """
+        if self._inputs is None:
+            self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.txt", resume_from=self.resume_from)
         self._current_input = self._inputs.pop(0)
         self.session.current_input = self._current_input
         self.logger().info("Reading from: " + str(self.session.current_input))

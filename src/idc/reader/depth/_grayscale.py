@@ -115,7 +115,7 @@ class GrayscaleDepthInfoReader(Reader, PlaceholderSupporter, AnnotationsOnlyRead
         if (self.min_value is not None) and (self.max_value is not None):
             if self.min_value >= self.max_value:
                 raise Exception("The min value must be smaller than the max value, but got: min=%f, max=%f" % (self.min_value, self.max_value))
-        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.png", resume_from=self.resume_from)
+        self._inputs = None
         if self.annotations_only is None:
             self.annotations_only = False
 
@@ -126,6 +126,8 @@ class GrayscaleDepthInfoReader(Reader, PlaceholderSupporter, AnnotationsOnlyRead
         :return: the data
         :rtype: Iterable
         """
+        if self._inputs is None:
+            self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.png", resume_from=self.resume_from)
         self._current_input = self._inputs.pop(0)
         self.session.current_input = self._current_input
 

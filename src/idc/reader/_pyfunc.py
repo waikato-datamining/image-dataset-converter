@@ -107,7 +107,7 @@ class PythonFunctionReader(Reader, PlaceholderSupporter, DataTypeSupporter):
         super().initialize()
         if self.data_type is None:
             raise Exception("No data type defined!")
-        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, resume_from=self.resume_from)
+        self._inputs = None
         self._output_cls = data_type_to_class(self.data_type)
         self._function = load_function(self.function)
 
@@ -118,6 +118,8 @@ class PythonFunctionReader(Reader, PlaceholderSupporter, DataTypeSupporter):
         :return: the data
         :rtype: Iterable
         """
+        if self._inputs is None:
+            self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, resume_from=self.resume_from)
         self._current_input = self._inputs.pop(0)
         self.session.current_input = self._current_input
         self.logger().info("Reading from: " + str(self.session.current_input))

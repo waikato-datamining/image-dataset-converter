@@ -99,7 +99,7 @@ class ROIObjectDetectionReader(Reader, PlaceholderSupporter):
         super().initialize()
         if self.suffix is None:
             raise Exception("No suffix defined!")
-        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.csv", resume_from=self.resume_from)
+        self._inputs = None
 
     def read(self) -> Iterable:
         """
@@ -110,6 +110,8 @@ class ROIObjectDetectionReader(Reader, PlaceholderSupporter):
         """
         self.finalize()
 
+        if self._inputs is None:
+            self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.csv", resume_from=self.resume_from)
         self._current_input = self._inputs.pop(0)
         self.session.current_input = self._current_input
         self.logger().info("Reading from: " + str(self.session.current_input))

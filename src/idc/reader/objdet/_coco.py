@@ -93,7 +93,7 @@ class COCOObjectDetectionReader(Reader, PlaceholderSupporter):
         Initializes the processing, e.g., for opening files or databases.
         """
         super().initialize()
-        self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.json", resume_from=self.resume_from)
+        self._inputs = None
 
     def _create_lookup(self, data: Dict, key: str, key_name: str) -> Dict:
         """
@@ -122,6 +122,8 @@ class COCOObjectDetectionReader(Reader, PlaceholderSupporter):
         :return: the data
         :rtype: Iterable
         """
+        if self._inputs is None:
+            self._inputs = locate_files(self.source, input_lists=self.source_list, fail_if_empty=True, default_glob="*.json", resume_from=self.resume_from)
         self._current_input = self._inputs.pop(0)
         self.session.current_input = self._current_input
         self.logger().info("Reading from: " + str(self.session.current_input))
