@@ -67,21 +67,20 @@ Readers and writers typically have a suffix that denotes their data domain:
 ### Dataset conversion
 
 ```
-usage: idc-convert [-h|--help|--help-all|--help-plugin NAME]
-                   [-u INTERVAL] [-b|--force_batch] [--placeholders FILE]
-                   [--load_pipeline FILE] [--dump_pipeline FILE]
-                   [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                   [reader] [filter ...] [writer]
+usage: idc-convert [-h] [--help-all] [--help-plugin NAME] [-u INTERVAL]
+                   [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-b]
+                   [--placeholders FILE] [--load_pipeline FILE]
+                   [--dump_pipeline FILE]
 
 Tool for converting between image annotation dataset formats.
 
-readers (22):
+readers (23):
    from-adams-ic, from-adams-od, from-blue-channel-is, from-coco-od, 
    from-csv-dp, from-data, from-grayscale-dp, from-grayscale-is, 
    from-indexed-png-is, from-layer-segments-is, from-multi, 
    from-numpy-dp, from-opex-od, from-pfm-dp, from-pyfunc, 
-   from-roicsv-od, from-storage, from-subdir-ic, from-voc-od, 
-   from-yolo-od, poll-dir, start
+   from-roicsv-od, from-storage, from-subdir-ic, from-text-file, 
+   from-voc-od, from-yolo-od, poll-dir, start
 filters (54):
    any-to-rgb, apply-ext-mask, apply-label-mask, 
    check-duplicate-filenames, coerce-box, coerce-mask, 
@@ -97,28 +96,25 @@ filters (54):
    rename, rgb-to-grayscale, rgb-to-greyscale*, sample, set-metadata, 
    set-placeholder, set-storage, sort-pixels, split-records, 
    strip-annotations, sub-process, tee, trigger, use-mask, write-labels
-writers (20):
+writers (21):
    to-adams-ic, to-adams-od, to-blue-channel-is, to-coco-od, to-csv-dp, 
    to-data, to-grayscale-dp, to-grayscale-is, to-indexed-png-is, 
    to-layer-segments-is, to-multi, to-numpy-dp, to-opex-od, to-pfm-dp, 
-   to-pyfunc, to-roicsv-od, to-storage, to-subdir-ic, to-voc-od, 
-   to-yolo-od
+   to-pyfunc, to-roicsv-od, to-storage, to-subdir-ic, to-text-file, 
+   to-voc-od, to-yolo-od
 
 options:
-  -h, --help            show basic help message and exit
-  --help-all            show basic help message plus help on all plugins and exit
-  --help-plugin NAME    show help message for plugin NAME and exit
-  -u INTERVAL, --update_interval INTERVAL
-                        outputs the progress every INTERVAL records (default: 1000)
+  -h, --help           Show basic help message and exit.
+  --help-all           Show basic help message plus help on all plugins and exit.
+  --help-plugin NAME   Show help message for plugin NAME and exit.
+  -u, --update_interval INTERVAL
+                       Outputs the progress every INTERVAL records (default: 1000).
   -l {DEBUG,INFO,WARNING,ERROR,CRITICAL}, --logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
-                        the logging level to use (default: WARN)
-  -b, --force_batch     processes the data in batches
-  --placeholders FILE
-                        The file with custom placeholders to load (format: key=value).
-  --load_pipeline FILE
-                        The file to load the pipeline command from.
-  --dump_pipeline FILE
-                        The file to dump the pipeline command in.
+                       The logging level to use (default: WARN).
+  -b, --force_batch    Processes the data in batches.
+  --placeholders FILE  The file with custom placeholders to load (format: key=value).
+  --load_pipeline FILE The file to load the pipeline command from.
+  --dump_pipeline FILE The file to dump the pipeline command in.
 ```
 
 ### Executing pipeline multiple times
