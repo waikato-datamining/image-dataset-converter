@@ -46,6 +46,7 @@ setup(
         "python_image_complete",
         "simple_palette_utils",
         "pypfm",
+        "opencv-python",
     ],
     version="0.0.13",
     author='Peter Reutemann',
