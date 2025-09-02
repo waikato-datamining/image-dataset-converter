@@ -3,15 +3,15 @@
 * accepts: seppl.AnyData
 * generates: seppl.AnyData
 
-Sets the placeholder to the specified value when data passes through. The value can contain other placeholders, which get expanded each time data passes through.
+Sets the placeholder to the specified value when data passes through. The value can contain other placeholders, which get expanded each time data passes through. Can use the data passing through instead of specified value as well.
 
 ```
 usage: set-placeholder [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                       [-N LOGGER_NAME] [--skip] -p PLACEHOLDER -v VALUE
+                       [-N LOGGER_NAME] [--skip] -p PLACEHOLDER -v VALUE [-u]
 
 Sets the placeholder to the specified value when data passes through. The
 value can contain other placeholders, which get expanded each time data passes
-through.
+through. Can use the data passing through instead of specified value as well.
 
 options:
   -h, --help            show this help message and exit
@@ -31,6 +31,8 @@ options:
                         {INPUT_NAMEEXT}, {INPUT_NAMENOEXT}, {INPUT_EXT},
                         {INPUT_PARENT_PATH}, {INPUT_PARENT_NAME} (default:
                         None)
+  -u, --use_current     Whether to use the data passing through instead of the
+                        specified value. (default: False)
 ```
 
 Available placeholders:

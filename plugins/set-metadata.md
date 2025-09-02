@@ -3,14 +3,15 @@
 * accepts: seppl.AnyData
 * generates: seppl.AnyData
 
-Sets the specified key/value pair in the meta-data.
+Sets the specified key/value pair in the meta-data. Can use the data passing through instead of the specified value as well.
 
 ```
 usage: set-metadata [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                     [-N LOGGER_NAME] [--skip] -f FIELD -v VALUE
-                    [-t {string,bool,numeric}]
+                    [-t {string,bool,numeric}] [-u]
 
-Sets the specified key/value pair in the meta-data.
+Sets the specified key/value pair in the meta-data. Can use the data passing
+through instead of the specified value as well.
 
 options:
   -h, --help            show this help message and exit
@@ -28,4 +29,6 @@ options:
                         The value to use in the comparison (default: None)
   -t {string,bool,numeric}, --as_type {string,bool,numeric}
                         How to interpret the value (default: string)
+  -u, --use_current     Whether to use the data passing through instead of the
+                        specified value. (default: False)
 ```
