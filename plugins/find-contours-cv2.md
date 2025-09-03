@@ -1,20 +1,20 @@
-# find-contours
+# find-contours-cv2
 
 * accepts: idc.api.ObjectDetectionData
 * generates: idc.api.ObjectDetectionData
 
-Finds the contours in the binary image and stores them as polygons in the annotations. When calculating the minimal rectangles, the following fields get added to the meta-data of the objects: min_rect_width, min_rect_height. The minimal rectangle width/height also get checked against the specified min/max sizes.
+Finds the contours in the binary image using OpenCV's findContours method and stores them as polygons in the annotations. When calculating the minimal rectangles, the following fields get added to the meta-data of the objects: min_rect_width, min_rect_height. The minimal rectangle width/height also get checked against the specified min/max sizes.
 
 ```
-usage: find-contours [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                     [-N LOGGER_NAME] [--skip] [--label LABEL] [-m MIN_SIZE]
-                     [-M MAX_SIZE] [-r]
+usage: find-contours-cv2 [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
+                         [-N LOGGER_NAME] [--skip] [--label LABEL]
+                         [-m MIN_SIZE] [-M MAX_SIZE] [-r]
 
-Finds the contours in the binary image and stores them as polygons in the
-annotations. When calculating the minimal rectangles, the following fields get
-added to the meta-data of the objects: min_rect_width, min_rect_height. The
-minimal rectangle width/height also get checked against the specified min/max
-sizes.
+Finds the contours in the binary image using OpenCV's findContours method and
+stores them as polygons in the annotations. When calculating the minimal
+rectangles, the following fields get added to the meta-data of the objects:
+min_rect_width, min_rect_height. The minimal rectangle width/height also get
+checked against the specified min/max sizes.
 
 options:
   -h, --help            show this help message and exit

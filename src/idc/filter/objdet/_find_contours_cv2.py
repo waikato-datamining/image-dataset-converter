@@ -16,7 +16,7 @@ MIN_RECT_WIDTH = "min_rect_width"
 MIN_RECT_HEIGHT = "min_rect_height"
 
 
-class FindContours(Filter):
+class FindContoursCV2(Filter):
     """
     Finds the contours in the binary image and stores them as polygons in the annotations.
     """
@@ -52,7 +52,7 @@ class FindContours(Filter):
         :return: the name
         :rtype: str
         """
-        return "find-contours"
+        return "find-contours-cv2"
 
     def description(self) -> str:
         """
@@ -61,7 +61,8 @@ class FindContours(Filter):
         :return: the description
         :rtype: str
         """
-        return "Finds the contours in the binary image and stores them as polygons in the annotations. "\
+        return "Finds the contours in the binary image using OpenCV's findContours method and stores "\
+            + "them as polygons in the annotations. "\
             + "When calculating the minimal rectangles, the following fields get added to the meta-data "\
             + "of the objects: " + MIN_RECT_WIDTH + ", " + MIN_RECT_HEIGHT + ". "\
             + "The minimal rectangle width/height also get checked against the specified min/max sizes."
