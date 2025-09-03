@@ -28,7 +28,6 @@ Changelog
 - added `from-text-file` reader and `to-text-file` writer
 - readers now locate files the first time the `read()` method gets called rather than in the
   `initialized()`, to allow more dynamic placeholders
-- added `find-contours-cv2` filter which adds contours as polygon object detections using OpenCV
 
 
 0.0.13 (2025-07-15)

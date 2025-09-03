@@ -81,22 +81,21 @@ readers (23):
    from-numpy-dp, from-opex-od, from-pfm-dp, from-pyfunc, 
    from-roicsv-od, from-storage, from-subdir-ic, from-text-file, 
    from-voc-od, from-yolo-od, poll-dir, start
-filters (55):
+filters (54):
    any-to-rgb, apply-ext-mask, apply-label-mask, 
    check-duplicate-filenames, coerce-box, coerce-mask, 
    convert-image-format, depth-to-grayscale, depth-to-greyscale*, 
    dimension-discarder, dims-to-metadata, discard-by-name, 
    discard-invalid-images, discard-negatives, filter-labels, 
-   find-contours, grayscale-to-binary, greyscale-to-binary*, inspect, 
-   label-from-name, label-present*, label-present-ic, label-present-is, 
-   label-present-od, label-to-metadata, map-labels, max-records, 
-   metadata, metadata-from-name, metadata-od, metadata-to-placeholder, 
-   od-to-ic, od-to-is, passthrough, polygon-discarder, 
-   polygon-simplifier, pyfunc-filter, randomize-records, record-window, 
-   remove-classes, rename, rgb-to-grayscale, rgb-to-greyscale*, sample, 
-   set-metadata, set-placeholder, set-storage, sort-pixels, 
-   split-records, strip-annotations, sub-process, tee, trigger, 
-   use-mask, write-labels
+   grayscale-to-binary, greyscale-to-binary*, inspect, label-from-name, 
+   label-present*, label-present-ic, label-present-is, label-present-od, 
+   label-to-metadata, map-labels, max-records, metadata, 
+   metadata-from-name, metadata-od, metadata-to-placeholder, od-to-ic, 
+   od-to-is, passthrough, polygon-discarder, polygon-simplifier, 
+   pyfunc-filter, randomize-records, record-window, remove-classes, 
+   rename, rgb-to-grayscale, rgb-to-greyscale*, sample, set-metadata, 
+   set-placeholder, set-storage, sort-pixels, split-records, 
+   strip-annotations, sub-process, tee, trigger, use-mask, write-labels
 writers (21):
    to-adams-ic, to-adams-od, to-blue-channel-is, to-coco-od, to-csv-dp, 
    to-data, to-grayscale-dp, to-grayscale-is, to-indexed-png-is, 
