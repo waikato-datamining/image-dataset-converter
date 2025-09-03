@@ -6,6 +6,7 @@ from ._discard_invalid_images import DiscardInvalidImages
 from ._discard_negatives import DiscardNegatives
 from ._filter_labels import FilterLabels
 from ._grayscale_to_binary import GrayscaleToBinary
+from ._image_and_annotation_filter import ImageAndAnnotationFilter, REQUIRED_FORMAT_ANY, REQUIRED_FORMAT_BINARY, REQUIRED_FORMAT_GRAYSCALE, OUTPUT_FORMAT_ASIS, OUTPUT_FORMAT_BINARY, OUTPUT_FORMAT_GRAYSCALE, OUTPUT_FORMAT_RGB, OUTPUT_FORMATS, INCORRECT_FORMAT_SKIP, INCORRECT_FORMAT_FAIL, INCORRECT_FORMAT_ACTIONS
 from ._inspect import Inspect, MODES, MODE_NONINTERACTIVE, MODE_INTERACTIVE, OUTPUTS, OUTPUT_STDOUT, OUTPUT_STDERR, OUTPUT_LOGGER, OUTPUT_FILE
 from ._label_to_metadata import LabelToMetaData
 from ._map_labels import MapLabels
