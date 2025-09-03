@@ -47,6 +47,7 @@ setup(
         "simple_palette_utils",
         "pypfm",
         "opencv-python",
+        "opencv-contrib-python",
     ],
     version="0.0.13",
     author='Peter Reutemann',
