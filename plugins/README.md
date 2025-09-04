@@ -70,6 +70,7 @@
 * [set-storage](set-storage.md)
 * [sort-pixels](sort-pixels.md)
 * [split-records](split-records.md)
+* [stop](stop.md)
 * [strip-annotations](strip-annotations.md)
 * [sub-process](sub-process.md)
 * [tee](tee.md)
