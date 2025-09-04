@@ -1,25 +1,15 @@
 import abc
 import argparse
+import logging
 
 import numpy as np
 from PIL import Image
 from wai.logging import LOGGING_WARNING
 
-from kasperl.api import make_list, flatten_list, safe_deepcopy
-from idc.api import ensure_binary, ensure_grayscale, ImageSegmentationData, \
+from idc.api import ImageSegmentationData, \
     APPLY_TO_IMAGE, APPLY_TO_ANNOTATIONS, APPLY_TO_BOTH, add_apply_to_param, image_to_bytesio, binarize_image
-from seppl.io import Filter
-
-REQUIRED_FORMAT_ANY = "any"
-REQUIRED_FORMAT_BINARY = "binary"
-REQUIRED_FORMAT_GRAYSCALE = "grayscale"
-
-INCORRECT_FORMAT_SKIP = "skip"
-INCORRECT_FORMAT_FAIL = "fail"
-INCORRECT_FORMAT_ACTIONS = [
-    INCORRECT_FORMAT_SKIP,
-    INCORRECT_FORMAT_FAIL,
-]
+from idc.filter import RequiredFormatFilter
+from kasperl.api import make_list, flatten_list, safe_deepcopy
 
 OUTPUT_FORMAT_ASIS = "as-is"
 OUTPUT_FORMAT_BINARY = "binary"
@@ -33,7 +23,42 @@ OUTPUT_FORMATS = [
 ]
 
 
-class ImageAndAnnotationFilter(Filter, abc.ABC):
+def array_to_output_format(array: np.ndarray, output_format: str, logger: logging.Logger = None) -> Image.Image:
+    """
+    Turns the numpy array into the specified output format.
+
+    :param array: the array to convert
+    :type array: np.ndarray
+    :param output_format: the output format to generate
+    :type output_format: str
+    :param logger: the optional logger to use
+    :type logger: logging.Logger
+    :return: the generated PIL image object
+    :rtype: Image.Image
+    """
+    if output_format == OUTPUT_FORMAT_ASIS:
+        return Image.fromarray(np.uint8(array))
+    elif output_format == OUTPUT_FORMAT_BINARY:
+        return binarize_image(Image.fromarray(np.uint8(array)), threshold=1, logger=logger)
+    elif output_format == OUTPUT_FORMAT_GRAYSCALE:
+        return Image.fromarray(np.uint8(array), mode='L')
+    elif output_format == OUTPUT_FORMAT_RGB:
+        return Image.fromarray(np.uint8(array), mode='RGB')
+    else:
+        raise Exception("Unsupported output format: %s" % output_format)
+
+
+def add_output_format(parser: argparse.ArgumentParser):
+    """
+    Adds the -o/--output_format option to the parser.
+
+    :param parser: the parser to append
+    :type parser: argparse.ArgumentParser
+    """
+    parser.add_argument("-o", "--output_format", choices=OUTPUT_FORMATS, help="The image format to generate as output.", default=OUTPUT_FORMAT_ASIS, required=False)
+
+
+class ImageAndAnnotationFilter(RequiredFormatFilter, abc.ABC):
     """
     Ancestor for filters that can work on either image or annotations.
     """
@@ -54,10 +79,9 @@ class ImageAndAnnotationFilter(Filter, abc.ABC):
         :param logging_level: the logging level to use
         :type logging_level: str
         """
-        super().__init__(logger_name=logger_name, logging_level=logging_level)
+        super().__init__(incorrect_format_action=incorrect_format_action, logger_name=logger_name, logging_level=logging_level)
         self.apply_to = apply_to
         self.output_format = output_format
-        self.incorrect_format_action = incorrect_format_action
 
     def _create_argparser(self) -> argparse.ArgumentParser:
         """
@@ -68,8 +92,7 @@ class ImageAndAnnotationFilter(Filter, abc.ABC):
         """
         parser = super()._create_argparser()
         add_apply_to_param(parser)
-        parser.add_argument("-o", "--output_format", choices=OUTPUT_FORMATS, help="The image format to generate as output.", default=OUTPUT_FORMAT_ASIS, required=False)
-        parser.add_argument("-I", "--incorrect_format_action", choices=INCORRECT_FORMAT_ACTIONS, help="The action to undertake if an invalid input format is encountered.", default=INCORRECT_FORMAT_SKIP, required=False)
+        add_output_format(parser)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
@@ -82,7 +105,6 @@ class ImageAndAnnotationFilter(Filter, abc.ABC):
         super()._apply_args(ns)
         self.apply_to = ns.apply_to
         self.output_format = ns.output_format
-        self.incorrect_format_action = ns.incorrect_format_action
 
     def initialize(self):
         """
@@ -93,8 +115,6 @@ class ImageAndAnnotationFilter(Filter, abc.ABC):
             self.apply_to = APPLY_TO_IMAGE
         if self.output_format is None:
             self.output_format = OUTPUT_FORMAT_ASIS
-        if self.incorrect_format_action is None:
-            self.incorrect_format_action = INCORRECT_FORMAT_SKIP
 
     def _nothing_to_do(self, data) -> bool:
         """
@@ -106,57 +126,10 @@ class ImageAndAnnotationFilter(Filter, abc.ABC):
         """
         return False
 
-    def _required_format(self) -> str:
-        """
-        Returns what input format is required for applying the filter.
-
-        :return: the type of image
-        :rtype: str
-        """
-        return REQUIRED_FORMAT_ANY
-
-    def _has_correct_format(self, image: Image.Image) -> bool:
-        """
-        Checks whether the image is in the right format.
-
-        :param image: the image to check
-        :type image: Image.Image
-        :return: whether the image is in the correct format
-        :rtype: bool
-        """
-        req_format = self._required_format()
-        if req_format == REQUIRED_FORMAT_ANY:
-            return True
-        elif req_format == REQUIRED_FORMAT_BINARY:
-            return image.mode == '1'
-        elif req_format == REQUIRED_FORMAT_GRAYSCALE:
-            return image.mode == 'L'
-        else:
-            return False
-
-    def _ensure_correct_format(self, image: Image.Image) -> Image.Image:
-        """
-        Ensures that the image is in the right format.
-
-        :param image: the image to check
-        :type image: Image.Image
-        :return: the image with the correct format
-        :rtype: Image.Image
-        """
-        req_format = self._required_format()
-        if req_format == REQUIRED_FORMAT_ANY:
-            return image
-        elif req_format == REQUIRED_FORMAT_BINARY:
-            return ensure_binary(image, self.logger())
-        elif req_format == REQUIRED_FORMAT_GRAYSCALE:
-            return ensure_grayscale(image, self.logger())
-        else:
-            raise Exception("Unsupported required format: %s" % req_format)
-
     @abc.abstractmethod
     def _apply_filter(self, array: np.ndarray) -> np.ndarray:
         """
-        Applies the morphological filter to the image and returns the numpy array.
+        Applies the filter to the image and returns the numpy array.
 
         :param array: the image the filter to apply to
         :type array: np.ndarray
@@ -181,37 +154,22 @@ class ImageAndAnnotationFilter(Filter, abc.ABC):
             # apply to image
             if self.apply_to in [APPLY_TO_IMAGE, APPLY_TO_BOTH]:
                 # incorrect format?
-                if not self._has_correct_format(item.image):
-                    msg = "Incorrect image format (required: %s, found: %s), skipping!" % (self._required_format(), item.image.mode)
-                    if self.incorrect_format_action == INCORRECT_FORMAT_SKIP:
-                        self.logger().warning(msg)
-                        result.append(item)
-                        continue
-                    elif self.incorrect_format_action == INCORRECT_FORMAT_FAIL:
-                        raise Exception(msg)
-                    else:
-                        raise Exception("Unhandled incorrect format action: %s" % self.incorrect_format_action)
+                if not self._can_process(item.image):
+                    result.append(item)
+                    continue
                 # process
                 image = self._ensure_correct_format(item.image)
                 array = np.asarray(image).astype(np.uint8)
                 array_new = self._apply_filter(array)
+            # apply to annotations, nothing to do for image
             else:
                 array_new = np.asarray(item.image).astype(np.uint8)
 
             # generate image/bytes
-            if self.output_format == OUTPUT_FORMAT_ASIS:
-                img_new = Image.fromarray(np.uint8(array_new))
-            elif self.output_format == OUTPUT_FORMAT_BINARY:
-                img_new = binarize_image(Image.fromarray(np.uint8(array_new)), threshold=1, logger=self.logger())
-            elif self.output_format == OUTPUT_FORMAT_GRAYSCALE:
-                img_new = Image.fromarray(np.uint8(array_new), mode='L')
-            elif self.output_format == OUTPUT_FORMAT_RGB:
-                img_new = Image.fromarray(np.uint8(array_new), mode='RGB')
-            else:
-                raise Exception("Unsupported output format: %s" % self.output_format)
+            img_new = array_to_output_format(array_new, self.output_format, self.logger())
             bytes_new = image_to_bytesio(img_new, item.image_format).getvalue()
 
-            # apply to annotations
+            # apply to annotations?
             annotation_new = safe_deepcopy(item.annotation)
             if isinstance(item, ImageSegmentationData) and item.has_annotation():
                 if self.apply_to in [APPLY_TO_ANNOTATIONS, APPLY_TO_BOTH]:

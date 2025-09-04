@@ -39,7 +39,6 @@
 * [discard-invalid-images](discard-invalid-images.md)
 * [discard-negatives](discard-negatives.md)
 * [filter-labels](filter-labels.md)
-* [find-contours-cv2](find-contours-cv2.md)
 * [grayscale-to-binary](grayscale-to-binary.md)
 * [inspect](inspect.md)
 * [label-from-name](label-from-name.md)

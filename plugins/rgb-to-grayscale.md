@@ -11,7 +11,8 @@ BT.2020: https://en.wikipedia.org/wiki/Rec._2020
 
 ```
 usage: rgb-to-grayscale [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                        [-N LOGGER_NAME] [--skip] [-c {BT.601,BT.709,BT.2020}]
+                        [-N LOGGER_NAME] [--skip] [-I {skip,fail}]
+                        [-c {BT.601,BT.709,BT.2020}]
 
 Turns RGB images into grayscale ones. BT.601:
 https://en.wikipedia.org/wiki/Rec._601 BT.709:
@@ -27,6 +28,9 @@ options:
                         name by default (default: None)
   --skip                Disables the plugin, removing it from the pipeline.
                         (default: False)
+  -I {skip,fail}, --incorrect_format_action {skip,fail}
+                        The action to undertake if an invalid input format is
+                        encountered. (default: skip)
   -c {BT.601,BT.709,BT.2020}, --conversion {BT.601,BT.709,BT.2020}
                         The conversion to apply. (default: BT.601)
 ```

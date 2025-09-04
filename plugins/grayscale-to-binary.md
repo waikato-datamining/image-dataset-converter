@@ -8,7 +8,8 @@ Turns grayscale images into binary ones. A grayscale image is required. You can 
 
 ```
 usage: grayscale-to-binary [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                           [-N LOGGER_NAME] [--skip] [-t THRESHOLD]
+                           [-N LOGGER_NAME] [--skip] [-I {skip,fail}]
+                           [-t THRESHOLD]
 
 Turns grayscale images into binary ones. A grayscale image is required. You
 can use the 'rgb-to-grayscale' for the conversion.
@@ -22,6 +23,9 @@ options:
                         name by default (default: None)
   --skip                Disables the plugin, removing it from the pipeline.
                         (default: False)
+  -I {skip,fail}, --incorrect_format_action {skip,fail}
+                        The action to undertake if an invalid input format is
+                        encountered. (default: skip)
   -t THRESHOLD, --threshold THRESHOLD
                         The threshold to use (0-255). (default: 127)
 ```

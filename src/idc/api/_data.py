@@ -575,6 +575,34 @@ class ImageData(AnnotationHandler, MetaDataHandler, NameSupporter, SourceSupport
         return result
 
 
+def ensure_rgb(image: Image.Image, logger: logging.Logger = None) -> Image.Image:
+    """
+    Ensures that the image is an RGB one. Converts if necessary.
+    If a logger is supplied, will output a warning in case the conversion occurs.
+
+    :param image: the image to potentially convert
+    :type image: Image.Image
+    :param logger: the optional Logger instance
+    :return: the (potentially) updated image
+    :rtype: Image.Image
+    """
+    if image.mode != 'RGB':
+        if logger is not None:
+            logger.warning("Not an RGB image (mode: %s), converting... Consider using the 'any-to-rgb' filter explicitly." % image.mode)
+        image = image.convert('RGB')
+    return image
+
+
+def rgb_required_info() -> str:
+    """
+    Returns a note about an RGB image being required and that the 'any-to-rgb' filter can be used.
+
+    :return: the note
+    :rtype: str
+    """
+    return "An RGB image is required. You can use the 'any-to-rgb' for the conversion."
+
+
 def ensure_grayscale(image: Image.Image, logger: logging.Logger = None) -> Image.Image:
     """
     Ensures that the image is a grayscale one. Converts if necessary.

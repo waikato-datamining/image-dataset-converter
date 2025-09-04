@@ -2,14 +2,14 @@ import argparse
 from typing import List
 
 from seppl import AnyData, AliasSupporter
-from seppl.io import Filter
 from wai.logging import LOGGING_WARNING
 
 from idc.api import ImageData, array_to_image, grayscale_required_info, binarize_image
 from kasperl.api import make_list, flatten_list, safe_deepcopy
+from idc.filter import RequiredFormatFilter, REQUIRED_FORMAT_GRAYSCALE
 
 
-class GrayscaleToBinary(Filter, AliasSupporter):
+class GrayscaleToBinary(RequiredFormatFilter, AliasSupporter):
     """
     Turns RGB images into grayscale ones.
     """
@@ -103,6 +103,15 @@ class GrayscaleToBinary(Filter, AliasSupporter):
         if self.threshold is None:
             self.threshold = 127
 
+    def _required_format(self) -> str:
+        """
+        Returns what input format is required for applying the filter.
+
+        :return: the type of image
+        :rtype: str
+        """
+        return REQUIRED_FORMAT_GRAYSCALE
+
     def _do_process(self, data):
         """
         Processes the data record(s).
@@ -112,6 +121,9 @@ class GrayscaleToBinary(Filter, AliasSupporter):
         """
         result = []
         for gray_item in make_list(data):
+            if not self._can_process(gray_item.image):
+                result.append(gray_item)
+                continue
             binary_img = binarize_image(gray_item.image, threshold=self.threshold, logger=self.logger())
             binary_item = type(gray_item)(source=None, image_name=gray_item.image_name,
                                           data=array_to_image(binary_img, gray_item.image_format)[1].getvalue(),

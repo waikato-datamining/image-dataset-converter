@@ -4,11 +4,11 @@ from typing import List
 import numpy as np
 from PIL import Image
 from seppl import AnyData, AliasSupporter
-from seppl.io import Filter
 from wai.logging import LOGGING_WARNING
 
 from kasperl.api import make_list, flatten_list, safe_deepcopy
 from idc.api import ImageData, array_to_image
+from idc.filter import RequiredFormatFilter, REQUIRED_FORMAT_RGB
 
 CONVERSION_BT601 = "BT.601"
 CONVERSION_BT709 = "BT.709"
@@ -30,7 +30,7 @@ CONVERSION_INFO = {
 }
 
 
-class RGBToGrayscale(Filter, AliasSupporter):
+class RGBToGrayscale(RequiredFormatFilter, AliasSupporter):
     """
     Turns RGB images into grayscale ones.
     """
@@ -127,6 +127,15 @@ class RGBToGrayscale(Filter, AliasSupporter):
         if self.conversion not in CONVERSIONS:
             raise Exception("Unknown conversion (available: %s): %s" % ("|".join(CONVERSIONS), self.conversion))
 
+    def _required_format(self) -> str:
+        """
+        Returns what input format is required for applying the filter.
+
+        :return: the type of image
+        :rtype: str
+        """
+        return REQUIRED_FORMAT_RGB
+
     def _do_process(self, data):
         """
         Processes the data record(s).
@@ -136,6 +145,9 @@ class RGBToGrayscale(Filter, AliasSupporter):
         """
         result = []
         for rgb_item in make_list(data):
+            if not self._can_process(rgb_item.image):
+                result.append(rgb_item)
+                continue
             rgb_array = np.array(rgb_item.image)
             gray_array = np.dot(rgb_array[..., :3], CONVERSION_PARAMETERS[self.conversion])
             gray_img = Image.fromarray(np.uint8(gray_array), mode='L')
