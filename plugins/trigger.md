@@ -7,8 +7,9 @@ Triggers the sub-flow with its reader/filter(s)/writer whenever data is passing 
 
 ```
 usage: trigger [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-N LOGGER_NAME]
-               [--skip] [-f SUB_FLOW] [--field FIELD] [--value VALUE]
+               [--skip] [-f SUB_FLOW] [--field FIELD]
                [--comparison {lt,le,eq,ne,ge,gt,contains,matches}]
+               [--value VALUE]
 
 Triggers the sub-flow with its reader/filter(s)/writer whenever data is
 passing through. When supplying a meta-data field and a value, this can be
@@ -30,7 +31,6 @@ options:
                         (reader/filter(s)/writer). (default: None)
   --field FIELD         The meta-data field to use in the comparison (default:
                         None)
-  --value VALUE         The value to use in the comparison (default: None)
   --comparison {lt,le,eq,ne,ge,gt,contains,matches}
                         How to compare the value with the meta-data value; lt:
                         less than, le: less or equal, eq: equal, ne: not
@@ -39,4 +39,5 @@ options:
                         case of 'contains' and 'matches' the supplied value
                         represents the substring to find/regexp to search with
                         (default: eq)
+  --value VALUE         The value to use in the comparison (default: None)
 ```

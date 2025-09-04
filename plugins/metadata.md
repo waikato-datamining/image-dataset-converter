@@ -7,8 +7,8 @@ Keeps or discards data records based on meta-data comparisons. Performs the foll
 
 ```
 usage: metadata [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-N LOGGER_NAME]
-                [--skip] -f FIELD -v VALUE
-                [-c {lt,le,eq,ne,ge,gt,contains,matches}] [-a {keep,discard}]
+                [--skip] -f FIELD [-c {lt,le,eq,ne,ge,gt,contains,matches}] -v
+                VALUE [-a {keep,discard}]
 
 Keeps or discards data records based on meta-data comparisons. Performs the
 following comparison: METADATA_VALUE COMPARISON VALUE. Records that do not
@@ -26,8 +26,6 @@ options:
   -f FIELD, --field FIELD
                         The meta-data field to use in the comparison (default:
                         None)
-  -v VALUE, --value VALUE
-                        The value to use in the comparison (default: None)
   -c {lt,le,eq,ne,ge,gt,contains,matches}, --comparison {lt,le,eq,ne,ge,gt,contains,matches}
                         How to compare the value with the meta-data value; lt:
                         less than, le: less or equal, eq: equal, ne: not
@@ -36,6 +34,8 @@ options:
                         case of 'contains' and 'matches' the supplied value
                         represents the substring to find/regexp to search with
                         (default: eq)
+  -v VALUE, --value VALUE
+                        The value to use in the comparison (default: None)
   -a {keep,discard}, --action {keep,discard}
                         How to react when a keyword is encountered (default:
                         keep)

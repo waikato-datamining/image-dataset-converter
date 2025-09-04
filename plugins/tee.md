@@ -7,8 +7,8 @@ Forwards the data passing through to the filter/writer defined as its sub-flow. 
 
 ```
 usage: tee [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-N LOGGER_NAME]
-           [--skip] [-f SUB_FLOW] [--field FIELD] [--value VALUE]
-           [--comparison {lt,le,eq,ne,ge,gt,contains,matches}]
+           [--skip] [-f SUB_FLOW] [--field FIELD]
+           [--comparison {lt,le,eq,ne,ge,gt,contains,matches}] [--value VALUE]
 
 Forwards the data passing through to the filter/writer defined as its sub-
 flow. When supplying a meta-data field and a value, this can be turned into a
@@ -29,7 +29,6 @@ options:
                         (filter(s)/writer). (default: None)
   --field FIELD         The meta-data field to use in the comparison (default:
                         None)
-  --value VALUE         The value to use in the comparison (default: None)
   --comparison {lt,le,eq,ne,ge,gt,contains,matches}
                         How to compare the value with the meta-data value; lt:
                         less than, le: less or equal, eq: equal, ne: not
@@ -38,4 +37,5 @@ options:
                         case of 'contains' and 'matches' the supplied value
                         represents the substring to find/regexp to search with
                         (default: eq)
+  --value VALUE         The value to use in the comparison (default: None)
 ```
