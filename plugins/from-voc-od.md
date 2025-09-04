@@ -21,11 +21,15 @@ options:
   -i [INPUT ...], --input [INPUT ...]
                         Path to the XML file(s) to read; glob syntax is
                         supported; Supported placeholders: {HOME}, {CWD},
-                        {TMP} (default: None)
+                        {TMP}, {INPUT_PATH}, {INPUT_NAMEEXT},
+                        {INPUT_NAMENOEXT}, {INPUT_EXT}, {INPUT_PARENT_PATH},
+                        {INPUT_PARENT_NAME} (default: None)
   -I [INPUT_LIST ...], --input_list [INPUT_LIST ...]
                         Path to the text file(s) listing the XML files to use;
-                        Supported placeholders: {HOME}, {CWD}, {TMP} (default:
-                        None)
+                        Supported placeholders: {HOME}, {CWD}, {TMP},
+                        {INPUT_PATH}, {INPUT_NAMEEXT}, {INPUT_NAMENOEXT},
+                        {INPUT_EXT}, {INPUT_PARENT_PATH}, {INPUT_PARENT_NAME}
+                        (default: None)
   --resume_from RESUME_FROM
                         Glob expression matching the file to resume from,
                         e.g., '*/012345.xml' (default: None)
@@ -39,3 +43,9 @@ Available placeholders:
 * `{HOME}`: The home directory of the current user.
 * `{CWD}`: The current working directory.
 * `{TMP}`: The temp directory.
+* `{INPUT_PATH}`: The directory part of the current input, i.e., `/some/where` of input `/some/where/file.txt`.
+* `{INPUT_NAMEEXT}`: The name (incl extension) of the current input, i.e., `file.txt` of input `/some/where/file.txt`.
+* `{INPUT_NAMENOEXT}`: The name (excl extension) of the current input, i.e., `file` of input `/some/where/file.txt`.
+* `{INPUT_EXT}`: The extension of the current input (incl dot), i.e., `.txt` of input `/some/where/file.txt`.
+* `{INPUT_PARENT_PATH}`: The directory part of the parent directory of the current input, i.e., `/some` of input `/some/where/file.txt`.
+* `{INPUT_PARENT_NAME}`: The name of the parent directory of the current input, i.e., `where` of input `/some/where/file.txt`.

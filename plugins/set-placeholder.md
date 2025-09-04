@@ -28,16 +28,19 @@ options:
                         (default: None)
   -v VALUE, --value VALUE
                         The value of the placeholder, may contain other
-                        placeholders. Supported placeholders: {INPUT_PATH},
-                        {INPUT_NAMEEXT}, {INPUT_NAMENOEXT}, {INPUT_EXT},
-                        {INPUT_PARENT_PATH}, {INPUT_PARENT_NAME} (default:
-                        None)
+                        placeholders. Supported placeholders: {HOME}, {CWD},
+                        {TMP}, {INPUT_PATH}, {INPUT_NAMEEXT},
+                        {INPUT_NAMENOEXT}, {INPUT_EXT}, {INPUT_PARENT_PATH},
+                        {INPUT_PARENT_NAME} (default: None)
   -u, --use_current     Whether to use the data passing through instead of the
                         specified value. (default: False)
 ```
 
 Available placeholders:
 
+* `{HOME}`: The home directory of the current user.
+* `{CWD}`: The current working directory.
+* `{TMP}`: The temp directory.
 * `{INPUT_PATH}`: The directory part of the current input, i.e., `/some/where` of input `/some/where/file.txt`.
 * `{INPUT_NAMEEXT}`: The name (incl extension) of the current input, i.e., `file.txt` of input `/some/where/file.txt`.
 * `{INPUT_NAMENOEXT}`: The name (excl extension) of the current input, i.e., `file` of input `/some/where/file.txt`.

@@ -38,9 +38,10 @@ options:
   -o OUTPUT, --output OUTPUT
                         The directory to store the image files in. Any defined
                         splits get added beneath there. Supported
-                        placeholders: {INPUT_PATH}, {INPUT_NAMEEXT},
-                        {INPUT_NAMENOEXT}, {INPUT_EXT}, {INPUT_PARENT_PATH},
-                        {INPUT_PARENT_NAME} (default: None)
+                        placeholders: {HOME}, {CWD}, {TMP}, {INPUT_PATH},
+                        {INPUT_NAMEEXT}, {INPUT_NAMENOEXT}, {INPUT_EXT},
+                        {INPUT_PARENT_PATH}, {INPUT_PARENT_NAME} (default:
+                        None)
   --label_separator LABEL_SEPARATOR
                         The separator between name and label used by the mask
                         images. (default: -)
@@ -49,6 +50,9 @@ options:
 
 Available placeholders:
 
+* `{HOME}`: The home directory of the current user.
+* `{CWD}`: The current working directory.
+* `{TMP}`: The temp directory.
 * `{INPUT_PATH}`: The directory part of the current input, i.e., `/some/where` of input `/some/where/file.txt`.
 * `{INPUT_NAMEEXT}`: The name (incl extension) of the current input, i.e., `file.txt` of input `/some/where/file.txt`.
 * `{INPUT_NAMENOEXT}`: The name (excl extension) of the current input, i.e., `file` of input `/some/where/file.txt`.
