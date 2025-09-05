@@ -21,6 +21,7 @@
 * [from-text-file](from-text-file.md)
 * [from-voc-od](from-voc-od.md)
 * [from-yolo-od](from-yolo-od.md)
+* [list-files](list-files.md)
 * [poll-dir](poll-dir.md)
 * [start](start.md)
 
@@ -47,6 +48,7 @@
 * [label-present-is](label-present-is.md)
 * [label-present-od](label-present-od.md)
 * [label-to-metadata](label-to-metadata.md)
+* [list-to-sequence](list-to-sequence.md)
 * [map-labels](map-labels.md)
 * [max-records](max-records.md)
 * [metadata](metadata.md)
@@ -79,6 +81,7 @@
 * [write-labels](write-labels.md)
 
 ## Writers
+* [send-email](send-email.md)
 * [to-adams-ic](to-adams-ic.md)
 * [to-adams-od](to-adams-od.md)
 * [to-blue-channel-is](to-blue-channel-is.md)

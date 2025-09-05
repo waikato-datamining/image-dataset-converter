@@ -74,34 +74,35 @@ usage: idc-convert [-h] [--help-all] [--help-plugin NAME] [-u INTERVAL]
 
 Tool for converting between image annotation dataset formats.
 
-readers (23):
+readers (24):
    from-adams-ic, from-adams-od, from-blue-channel-is, from-coco-od, 
    from-csv-dp, from-data, from-grayscale-dp, from-grayscale-is, 
    from-indexed-png-is, from-layer-segments-is, from-multi, 
    from-numpy-dp, from-opex-od, from-pfm-dp, from-pyfunc, 
    from-roicsv-od, from-storage, from-subdir-ic, from-text-file, 
-   from-voc-od, from-yolo-od, poll-dir, start
-filters (54):
-   any-to-rgb, apply-ext-mask, apply-label-mask, 
+   from-voc-od, from-yolo-od, list-files, poll-dir, start
+filters (57):
+   any-to-rgb, apply-ext-mask, apply-label-mask, block, 
    check-duplicate-filenames, coerce-box, coerce-mask, 
    convert-image-format, depth-to-grayscale, depth-to-greyscale*, 
    dimension-discarder, dims-to-metadata, discard-by-name, 
    discard-invalid-images, discard-negatives, filter-labels, 
    grayscale-to-binary, greyscale-to-binary*, inspect, label-from-name, 
    label-present*, label-present-ic, label-present-is, label-present-od, 
-   label-to-metadata, map-labels, max-records, metadata, 
-   metadata-from-name, metadata-od, metadata-to-placeholder, od-to-ic, 
-   od-to-is, passthrough, polygon-discarder, polygon-simplifier, 
-   pyfunc-filter, randomize-records, record-window, remove-classes, 
-   rename, rgb-to-grayscale, rgb-to-greyscale*, sample, set-metadata, 
-   set-placeholder, set-storage, sort-pixels, split-records, 
-   strip-annotations, sub-process, tee, trigger, use-mask, write-labels
-writers (21):
-   to-adams-ic, to-adams-od, to-blue-channel-is, to-coco-od, to-csv-dp, 
-   to-data, to-grayscale-dp, to-grayscale-is, to-indexed-png-is, 
-   to-layer-segments-is, to-multi, to-numpy-dp, to-opex-od, to-pfm-dp, 
-   to-pyfunc, to-roicsv-od, to-storage, to-subdir-ic, to-text-file, 
-   to-voc-od, to-yolo-od
+   label-to-metadata, list-to-sequence, map-labels, max-records, 
+   metadata, metadata-from-name, metadata-od, metadata-to-placeholder, 
+   od-to-ic, od-to-is, passthrough, polygon-discarder, 
+   polygon-simplifier, pyfunc-filter, randomize-records, record-window, 
+   remove-classes, rename, rgb-to-grayscale, rgb-to-greyscale*, sample, 
+   set-metadata, set-placeholder, set-storage, sort-pixels, 
+   split-records, stop, strip-annotations, sub-process, tee, trigger, 
+   use-mask, write-labels
+writers (22):
+   send-email, to-adams-ic, to-adams-od, to-blue-channel-is, to-coco-od, 
+   to-csv-dp, to-data, to-grayscale-dp, to-grayscale-is, 
+   to-indexed-png-is, to-layer-segments-is, to-multi, to-numpy-dp, 
+   to-opex-od, to-pfm-dp, to-pyfunc, to-roicsv-od, to-storage, 
+   to-subdir-ic, to-text-file, to-voc-od, to-yolo-od
 
 options:
   -h, --help           Show basic help message and exit.
