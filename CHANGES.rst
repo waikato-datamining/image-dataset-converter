@@ -28,7 +28,7 @@ Changelog
 - added `from-text-file` reader and `to-text-file` writer
 - readers now locate files the first time the `read()` method gets called rather than in the
   `initialized()`, to allow more dynamic placeholders
-- added `stop` filter
+- added `block`, `stop` filters
 - added `list-files` reader, `list-to-sequence` filter and `send-email` writer
 
 
