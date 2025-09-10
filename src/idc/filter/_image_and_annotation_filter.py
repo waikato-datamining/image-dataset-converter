@@ -82,6 +82,7 @@ class ImageAndAnnotationFilter(RequiredFormatFilter, abc.ABC):
         super().__init__(incorrect_format_action=incorrect_format_action, logger_name=logger_name, logging_level=logging_level)
         self.apply_to = apply_to
         self.output_format = output_format
+        self.incorrect_format_action = incorrect_format_action
 
     def _create_argparser(self) -> argparse.ArgumentParser:
         """
