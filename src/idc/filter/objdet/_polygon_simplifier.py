@@ -7,12 +7,12 @@ from wai.logging import LOGGING_WARNING
 from wai.common.adams.imaging.locateobjects import LocatedObjects, LocatedObject
 from wai.common.geometry import Point as WaiPoint, Polygon as WaiPolygon
 
-from seppl.io import Filter
+from seppl.io import BatchFilter
 from kasperl.api import make_list, flatten_list
 from idc.api import ObjectDetectionData, locatedobject_polygon_to_shapely
 
 
-class PolygonSimplifier(Filter):
+class PolygonSimplifier(BatchFilter):
     """
     Simplifies polygons according to the tolerance parameter: the smaller the tolerance, the closer to the original.
     """

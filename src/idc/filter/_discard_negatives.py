@@ -1,13 +1,13 @@
 from typing import List
 
 from seppl import AnyData
-from seppl.io import Filter
+from seppl.io import BatchFilter
 from wai.logging import LOGGING_WARNING
 
 from kasperl.api import make_list, flatten_list, AnnotationHandler
 
 
-class DiscardNegatives(Filter):
+class DiscardNegatives(BatchFilter):
     """
     Discards negative records, i.e., ones without annotations.
     """

@@ -3,12 +3,12 @@ from typing import List
 
 from wai.logging import LOGGING_WARNING
 from wai.common.adams.imaging.locateobjects import LocatedObjects, LocatedObject
-from seppl.io import Filter
+from seppl.io import BatchFilter
 from kasperl.api import make_list, flatten_list
 from idc.api import ObjectDetectionData
 
 
-class DimensionDiscarder(Filter):
+class DimensionDiscarder(BatchFilter):
     """
     Removes annotations which fall outside certain dimensional limits.
     """

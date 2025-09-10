@@ -4,7 +4,7 @@ from typing import List
 import numpy as np
 from PIL import Image
 from seppl import AnyData
-from seppl.io import Filter
+from seppl.io import BatchFilter
 from wai.logging import LOGGING_WARNING
 
 from kasperl.api import make_list, flatten_list, safe_deepcopy
@@ -23,7 +23,7 @@ SORTING_TYPES = [
 ]
 
 
-class SortPixels(Filter):
+class SortPixels(BatchFilter):
     """
     Sorts the (grayscale) pixels in ascending order per row.
     """

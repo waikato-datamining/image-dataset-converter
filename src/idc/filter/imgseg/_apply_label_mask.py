@@ -3,14 +3,14 @@ from typing import List
 
 import numpy as np
 from PIL import Image
-from seppl.io import Filter
+from seppl.io import BatchFilter
 from wai.logging import LOGGING_WARNING
 
 from kasperl.api import make_list, flatten_list, safe_deepcopy
 from idc.api import empty_image, ImageSegmentationData
 
 
-class ApplyLabelMask(Filter):
+class ApplyLabelMask(BatchFilter):
     """
     Applies the binary mask loaded from an external PNG file with the same name.
     """

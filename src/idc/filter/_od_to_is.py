@@ -4,13 +4,13 @@ import re
 from typing import List
 
 from PIL import Image, ImageDraw
-from seppl.io import Filter
+from seppl.io import BatchFilter
 from wai.logging import LOGGING_WARNING
 from kasperl.api import make_list, flatten_list
 from idc.api import ObjectDetectionData, ImageSegmentationData, ImageSegmentationAnnotations, get_object_label
 
 
-class ObjectDetectionToImageSegmentation(Filter):
+class ObjectDetectionToImageSegmentation(BatchFilter):
     """
     Converts object detection annotations into image segmentation ones.
     """

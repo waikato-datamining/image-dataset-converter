@@ -1,14 +1,14 @@
 import argparse
 from typing import List
 
-from seppl.io import Filter
+from seppl.io import BatchFilter
 from wai.logging import LOGGING_WARNING
 
 from kasperl.api import make_list, flatten_list, load_function
 from idc.api import ImageData, DATATYPES, data_type_to_class, DataTypeSupporter
 
 
-class PythonFunctionFilter(Filter, DataTypeSupporter):
+class PythonFunctionFilter(BatchFilter, DataTypeSupporter):
     """
     Applies a Python function to the data.
     """

@@ -1,13 +1,13 @@
 from typing import List
 
 from seppl import get_class_name, AnyData
-from seppl.io import Filter
+from seppl.io import BatchFilter
 
 from kasperl.api import make_list, flatten_list
 from idc.api import ImageData
 
 
-class StripAnnotations(Filter):
+class StripAnnotations(BatchFilter):
 
     def name(self) -> str:
         """

@@ -4,7 +4,7 @@ import sys
 from typing import List
 
 from seppl import get_metadata, AnyData
-from seppl.io import Filter
+from seppl.io import BatchFilter
 from wai.logging import LOGGING_WARNING
 from kasperl.api import make_list, flatten_list
 
@@ -27,7 +27,7 @@ OUTPUTS = [
 ]
 
 
-class Inspect(Filter):
+class Inspect(BatchFilter):
     """
     Allows inspecting the data flowing through the pipeline.
     """

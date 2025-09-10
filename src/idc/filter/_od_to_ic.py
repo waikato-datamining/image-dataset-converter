@@ -1,7 +1,7 @@
 import argparse
 from typing import List
 
-from seppl.io import Filter
+from seppl.io import BatchFilter
 from wai.logging import LOGGING_WARNING
 from kasperl.api import make_list, flatten_list
 from idc.api import ObjectDetectionData, ImageClassificationData, get_object_label
@@ -19,7 +19,7 @@ MULTIPLICITY = [
 ]
 
 
-class ObjectDetectionToImageClassification(Filter):
+class ObjectDetectionToImageClassification(BatchFilter):
     """
     Converts object detection annotations into image classification ones.
     """

@@ -5,11 +5,11 @@ import re
 from typing import List
 
 from wai.logging import LOGGING_WARNING
-from seppl.io import Filter
+from seppl.io import BatchFilter
 from idc.api import ImageClassificationData
 
 
-class LabelFromName(Filter):
+class LabelFromName(BatchFilter):
     """
     Extracts the classification label from the image name.
     """

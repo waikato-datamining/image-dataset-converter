@@ -1,14 +1,14 @@
 from typing import List
 
 from seppl import AnyData
-from seppl.io import Filter
+from seppl.io import BatchFilter
 from wai.logging import LOGGING_WARNING
 
 from kasperl.api import make_list, flatten_list
 from idc.api import ImageData
 
 
-class DiscardInvalidImages(Filter):
+class DiscardInvalidImages(BatchFilter):
     """
     Discards invalid images, e.g., stemming from corrupt files.
     """

@@ -3,10 +3,10 @@ from typing import List
 from kasperl.api import make_list, flatten_list, safe_deepcopy
 from idc.api import ImageData, array_to_image
 from seppl import AnyData
-from seppl.io import Filter
+from seppl.io import BatchFilter
 
 
-class AnyToRGB(Filter):
+class AnyToRGB(BatchFilter):
     """
     Turns any image type into an RGB one.
     """

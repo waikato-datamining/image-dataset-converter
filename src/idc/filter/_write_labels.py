@@ -3,7 +3,7 @@ import os
 from typing import List
 
 from seppl.placeholders import PlaceholderSupporter, placeholder_list, expand_placeholders
-from seppl.io import Filter
+from seppl.io import BatchFilter
 from wai.logging import LOGGING_WARNING
 
 from kasperl.api import make_list
@@ -19,7 +19,7 @@ OUTPUT_FORMATS = [
 ]
 
 
-class WriteLabels(Filter, PlaceholderSupporter):
+class WriteLabels(BatchFilter, PlaceholderSupporter):
     """
     Collects labels passing through and writes them to the specified file (stdout if not provided).
     """

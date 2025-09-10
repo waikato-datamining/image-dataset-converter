@@ -4,12 +4,12 @@ from typing import List, Tuple
 from wai.logging import LOGGING_WARNING
 from wai.common.adams.imaging.locateobjects import LocatedObjects, NormalizedLocatedObjects
 from wai.common.adams.imaging.locateobjects.constants import KEY_POLY_X, KEY_POLY_Y
-from seppl.io import Filter
+from seppl.io import BatchFilter
 from kasperl.api import make_list, flatten_list
 from idc.api import ObjectDetectionData
 
 
-class CoerceBox(Filter):
+class CoerceBox(BatchFilter):
     """
     Converts all annotation bounds into box regions.
     """

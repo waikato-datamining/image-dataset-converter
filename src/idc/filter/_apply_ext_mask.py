@@ -4,7 +4,7 @@ import os
 from typing import List
 
 from PIL import Image
-from seppl.io import Filter
+from seppl.io import BatchFilter
 from seppl.placeholders import InputBasedPlaceholderSupporter
 from wai.logging import LOGGING_WARNING
 
@@ -14,7 +14,7 @@ from idc.api import add_apply_to_param, APPLY_TO_IMAGE, APPLY_TO_ANNOTATIONS, AP
 from idc.api import load_image_from_file, ImageSegmentationData, DepthData
 
 
-class ApplyExternalMask(Filter, InputBasedPlaceholderSupporter):
+class ApplyExternalMask(BatchFilter, InputBasedPlaceholderSupporter):
     """
     Applies the binary mask loaded from an external PNG file with the same name.
     """

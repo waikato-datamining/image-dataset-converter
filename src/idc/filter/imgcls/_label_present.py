@@ -1,14 +1,14 @@
 import argparse
 from typing import List
 
-from seppl.io import Filter
+from seppl.io import BatchFilter
 from wai.logging import LOGGING_WARNING
 
 from kasperl.api import make_list, flatten_list
 from idc.api import ImageClassificationData
 
 
-class LabelPresent(Filter):
+class LabelPresent(BatchFilter):
     """
     Only forwards images that have the specified label(s) present.
     """

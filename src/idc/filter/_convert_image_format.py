@@ -5,12 +5,12 @@ from typing import List
 
 from wai.logging import LOGGING_WARNING
 from seppl import AnyData
-from seppl.io import Filter
+from seppl.io import BatchFilter
 from kasperl.api import make_list, flatten_list
 from idc.api import FORMAT_EXTENSIONS, FORMATS
 
 
-class ConvertImageFormat(Filter):
+class ConvertImageFormat(BatchFilter):
     """
     Converts the image format to the specified type.
     """

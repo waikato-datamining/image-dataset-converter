@@ -2,7 +2,7 @@ import argparse
 import copy
 from typing import List, Union
 
-from seppl.io import Filter
+from seppl.io import BatchFilter
 from wai.common.adams.imaging.locateobjects import LocatedObjects, NormalizedLocatedObjects
 from wai.logging import LOGGING_WARNING
 
@@ -11,7 +11,7 @@ from idc.api import ObjectDetectionData, ImageClassificationData, ImageSegmentat
     set_object_label, ImageSegmentationAnnotations
 
 
-class MapLabels(Filter):
+class MapLabels(BatchFilter):
     """
     Filters out labels according to the parameters.
     """

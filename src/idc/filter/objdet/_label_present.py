@@ -3,7 +3,7 @@ import re
 from typing import List
 
 from seppl import AliasSupporter
-from seppl.io import Filter
+from seppl.io import BatchFilter
 from shapely.geometry import Polygon
 from wai.common.adams.imaging.locateobjects import LocatedObjects, LocatedObject
 from wai.logging import LOGGING_WARNING
@@ -12,7 +12,7 @@ from idc.api import ObjectDetectionData, locatedobject_polygon_to_shapely, inter
 from kasperl.api import make_list, flatten_list
 
 
-class LabelPresent(Filter, AliasSupporter):
+class LabelPresent(BatchFilter, AliasSupporter):
     """
     Only forwards images that have the specified label(s) present.
     """

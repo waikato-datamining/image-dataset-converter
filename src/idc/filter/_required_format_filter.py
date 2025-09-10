@@ -2,7 +2,7 @@ import abc
 import argparse
 
 from PIL import Image
-from seppl.io import Filter
+from seppl.io import BatchFilter
 from wai.logging import LOGGING_WARNING
 
 from idc.api import ensure_binary, ensure_grayscale, ensure_rgb
@@ -40,7 +40,7 @@ def mode_to_format(mode: str) -> str:
         return mode
 
 
-class RequiredFormatFilter(Filter, abc.ABC):
+class RequiredFormatFilter(BatchFilter, abc.ABC):
     """
     Ancestor for filters that require a specific format.
     """

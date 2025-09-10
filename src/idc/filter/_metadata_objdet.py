@@ -1,7 +1,7 @@
 import argparse
 from typing import List
 
-from seppl.io import Filter, FILTER_ACTIONS, FILTER_ACTION_DISCARD, FILTER_ACTION_KEEP
+from seppl.io import BatchFilter, FILTER_ACTIONS, FILTER_ACTION_DISCARD, FILTER_ACTION_KEEP
 from wai.common.adams.imaging.locateobjects import LocatedObjects
 from wai.logging import LOGGING_WARNING
 
@@ -11,7 +11,7 @@ from kasperl.api import make_list, flatten_list, \
     compare_values
 
 
-class MetaDataObjectDetection(Filter):
+class MetaDataObjectDetection(BatchFilter):
     """
     Keeps or discards data records based on meta-data values.
     """

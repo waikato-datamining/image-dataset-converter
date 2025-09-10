@@ -2,14 +2,14 @@ import argparse
 from typing import List
 
 from seppl import AliasSupporter
-from seppl.io import Filter
+from seppl.io import BatchFilter
 from wai.logging import LOGGING_WARNING
 
 from kasperl.api import make_list, flatten_list, safe_deepcopy
 from idc.api import DepthData, depth_to_grayscale, DATATYPES, data_type_to_class, DataTypeSupporter
 
 
-class DepthToGrayscale(Filter, AliasSupporter, DataTypeSupporter):
+class DepthToGrayscale(BatchFilter, AliasSupporter, DataTypeSupporter):
     """
     Turns the depth information into a grayscale image.
     """
