@@ -31,13 +31,17 @@ options:
                         {INPUT_NAMENOEXT}, {INPUT_EXT}, {INPUT_PARENT_PATH},
                         {INPUT_PARENT_NAME} (default: None)
   -f EMAIL, --email_from EMAIL
-                        The email address to use for FROM. (default: None)
+                        The email address to use for FROM; placeholders get
+                        automatically expanded. (default: None)
   -t EMAIL [EMAIL ...], --email_to EMAIL [EMAIL ...]
-                        The email address(es) to send the email TO. (default:
+                        The email address(es) to send the email TO;
+                        placeholders get automatically expanded. (default:
                         None)
   -s SUBJECT, --subject SUBJECT
-                        The SUBJECT for the email. (default: None)
-  -b TEXT, --body TEXT  The email body to use. (default: None)
+                        The SUBJECT for the email; placeholders get
+                        automatically expanded. (default: None)
+  -b TEXT, --body TEXT  The email body to use; placeholders get automatically
+                        expanded. (default: None)
 ```
 
 Available placeholders:
