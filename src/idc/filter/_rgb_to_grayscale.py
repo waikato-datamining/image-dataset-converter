@@ -1,4 +1,5 @@
 import argparse
+import logging
 from typing import List
 
 import numpy as np
@@ -151,6 +152,8 @@ class RGBToGrayscale(RequiredFormatFilter, AliasSupporter):
             rgb_array = np.array(rgb_item.image)
             gray_array = np.dot(rgb_array[..., :3], CONVERSION_PARAMETERS[self.conversion])
             gray_img = Image.fromarray(np.uint8(gray_array), mode='L')
+            if self.logger().isEnabledFor(logging.DEBUG):
+                self.logger().debug(np.unique(gray_img, return_counts=True))
             gray_item = type(rgb_item)(source=None, image_name=rgb_item.image_name,
                                        data=array_to_image(gray_array, rgb_item.image_format)[1].getvalue(),
                                        image=gray_img, image_format=rgb_item.image_format,

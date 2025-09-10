@@ -1,5 +1,8 @@
 import argparse
+import logging
 from typing import List
+
+import numpy as np
 
 from seppl import AnyData, AliasSupporter
 from wai.logging import LOGGING_WARNING
@@ -125,6 +128,8 @@ class GrayscaleToBinary(RequiredFormatFilter, AliasSupporter):
                 result.append(gray_item)
                 continue
             binary_img = binarize_image(gray_item.image, threshold=self.threshold, logger=self.logger())
+            if self.logger().isEnabledFor(logging.DEBUG):
+                self.logger().debug(np.unique(binary_img, return_counts=True))
             binary_item = type(gray_item)(source=None, image_name=gray_item.image_name,
                                           data=array_to_image(binary_img, gray_item.image_format)[1].getvalue(),
                                           image=binary_img, image_format=gray_item.image_format,
