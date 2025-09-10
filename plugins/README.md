@@ -21,6 +21,7 @@
 * [from-text-file](from-text-file.md)
 * [from-voc-od](from-voc-od.md)
 * [from-yolo-od](from-yolo-od.md)
+* [get-email](get-email.md)
 * [list-files](list-files.md)
 * [poll-dir](poll-dir.md)
 * [start](start.md)
@@ -81,6 +82,7 @@
 * [write-labels](write-labels.md)
 
 ## Writers
+* [console](console.md)
 * [send-email](send-email.md)
 * [to-adams-ic](to-adams-ic.md)
 * [to-adams-od](to-adams-od.md)

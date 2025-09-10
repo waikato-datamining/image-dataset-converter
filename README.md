@@ -74,13 +74,13 @@ usage: idc-convert [-h] [--help-all] [--help-plugin NAME] [-u INTERVAL]
 
 Tool for converting between image annotation dataset formats.
 
-readers (24):
+readers (25):
    from-adams-ic, from-adams-od, from-blue-channel-is, from-coco-od, 
    from-csv-dp, from-data, from-grayscale-dp, from-grayscale-is, 
    from-indexed-png-is, from-layer-segments-is, from-multi, 
    from-numpy-dp, from-opex-od, from-pfm-dp, from-pyfunc, 
    from-roicsv-od, from-storage, from-subdir-ic, from-text-file, 
-   from-voc-od, from-yolo-od, list-files, poll-dir, start
+   from-voc-od, from-yolo-od, get-email, list-files, poll-dir, start
 filters (57):
    any-to-rgb, apply-ext-mask, apply-label-mask, block, 
    check-duplicate-filenames, coerce-box, coerce-mask, 
@@ -97,9 +97,9 @@ filters (57):
    set-metadata, set-placeholder, set-storage, sort-pixels, 
    split-records, stop, strip-annotations, sub-process, tee, trigger, 
    use-mask, write-labels
-writers (22):
-   send-email, to-adams-ic, to-adams-od, to-blue-channel-is, to-coco-od, 
-   to-csv-dp, to-data, to-grayscale-dp, to-grayscale-is, 
+writers (23):
+   console, send-email, to-adams-ic, to-adams-od, to-blue-channel-is, 
+   to-coco-od, to-csv-dp, to-data, to-grayscale-dp, to-grayscale-is, 
    to-indexed-png-is, to-layer-segments-is, to-multi, to-numpy-dp, 
    to-opex-od, to-pfm-dp, to-pyfunc, to-roicsv-od, to-storage, 
    to-subdir-ic, to-text-file, to-voc-od, to-yolo-od

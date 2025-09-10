@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.0.14 (????-??-??)
+0.1.0 (????-??-??)
 -------------------
 
 - added `dims-to-metadata` filter for transferring image dimension to metadata
@@ -28,8 +28,11 @@ Changelog
 - added `from-text-file` reader and `to-text-file` writer
 - readers now locate files the first time the `read()` method gets called rather than in the
   `initialized()`, to allow more dynamic placeholders
-- added `block`, `stop` filters
-- added `list-files` reader, `list-to-sequence` filter and `send-email` writer
+- added `block`, `stop` filters for controlling the flow of data (via meta-data conditions)
+- added email support with `get-email` reader and `send-email` writer
+- added `list-files` reader for listing files in a directory
+- added `list-to-sequence` stream filter that forwards list items one by one
+- added `console` writer for outputting the data on stdout that is coming through
 
 
 0.0.13 (2025-07-15)

@@ -6,7 +6,7 @@ Stores the incoming data in the specified text file.
 
 ```
 usage: to-text-file [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                    [-N LOGGER_NAME] [--skip] -p FILE [-a] [-d]
+                    [-N LOGGER_NAME] [--skip] -o FILE [-a] [-d]
 
 Stores the incoming data in the specified text file.
 
@@ -19,7 +19,8 @@ options:
                         name by default (default: None)
   --skip                Disables the plugin, removing it from the pipeline.
                         (default: False)
-  -p FILE, --path FILE  The file to write the data to; Supported placeholders:
+  -o FILE, --output_file FILE
+                        The file to write the data to; Supported placeholders:
                         {HOME}, {CWD}, {TMP}, {INPUT_PATH}, {INPUT_NAMEEXT},
                         {INPUT_NAMENOEXT}, {INPUT_EXT}, {INPUT_PARENT_PATH},
                         {INPUT_PARENT_NAME} (default: None)

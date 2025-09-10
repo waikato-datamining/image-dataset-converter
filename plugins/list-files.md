@@ -6,7 +6,7 @@ Lists files in the specified directory and forwards them.
 
 ```
 usage: list-files [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                  [-N LOGGER_NAME] -p DIR [-r REGEXP] [--as_list]
+                  [-N LOGGER_NAME] -i DIR [-r REGEXP] [--as_list]
 
 Lists files in the specified directory and forwards them.
 
@@ -17,7 +17,8 @@ options:
   -N LOGGER_NAME, --logger_name LOGGER_NAME
                         The custom name to use for the logger, uses the plugin
                         name by default (default: None)
-  -p DIR, --path DIR    The directory to list the files in; Supported
+  -i DIR, --input_dir DIR
+                        The directory to list the files in; Supported
                         placeholders: {HOME}, {CWD}, {TMP}, {INPUT_PATH},
                         {INPUT_NAMEEXT}, {INPUT_NAMENOEXT}, {INPUT_EXT},
                         {INPUT_PARENT_PATH}, {INPUT_PARENT_NAME} (default:
