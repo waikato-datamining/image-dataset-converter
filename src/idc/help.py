@@ -38,9 +38,9 @@ def generate_plugin_usage(plugin_name: str, help_format: str = HELP_FORMAT_TEXT,
         suffix = ".txt"
         result += "\n" + plugin_name + "\n" + "=" * len(plugin_name) + "\n"
         if isinstance(plugin, InputConsumer):
-            result += "accepts: " + classes_to_str(plugin.accepts()) + "\n"
+            result += "accepts: " + classes_to_str(plugin.accepts(), clean=True) + "\n"
         if isinstance(plugin, OutputProducer):
-            result += "generates: " + classes_to_str(plugin.generates()) + "\n"
+            result += "generates: " + classes_to_str(plugin.generates(), clean=True) + "\n"
         if has_aliases(plugin):
             result += "alias(es): " + ", ".join(get_aliases(plugin)) + "\n"
         result = result.strip()
@@ -55,9 +55,9 @@ def generate_plugin_usage(plugin_name: str, help_format: str = HELP_FORMAT_TEXT,
         result += "#"*heading_level + " " + plugin_name + "\n"
         result += "\n"
         if isinstance(plugin, InputConsumer):
-            result += "* accepts: " + classes_to_str(plugin.accepts()) + "\n"
+            result += "* accepts: " + classes_to_str(plugin.accepts(), clean=True) + "\n"
         if isinstance(plugin, OutputProducer):
-            result += "* generates: " + classes_to_str(plugin.generates()) + "\n"
+            result += "* generates: " + classes_to_str(plugin.generates(), clean=True) + "\n"
         if has_aliases(plugin):
             result += "* alias(es): " + ", ".join(get_aliases(plugin)) + "\n"
         result = result.strip()

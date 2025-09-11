@@ -1,6 +1,6 @@
 # from-text-file
 
-* generates: builtins.str
+* generates: str
 
 Reads the specified text file line by line and forwards the data.
 

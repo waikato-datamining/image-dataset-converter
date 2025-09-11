@@ -1,6 +1,6 @@
 # list-files
 
-* generates: builtins.str
+* generates: str
 
 Lists files in the specified directory and forwards them.
 

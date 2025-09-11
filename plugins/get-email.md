@@ -1,6 +1,6 @@
 # get-email
 
-* generates: builtins.str
+* generates: str
 
 Retrieves emails from the specified IMAP folder, saves the attachments in the specified folder and forwards the file names of the saved attachments as list.
 
