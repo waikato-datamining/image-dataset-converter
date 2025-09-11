@@ -130,7 +130,7 @@ usage: idc-exec [-h] --exec_generator GENERATOR [--exec_dry_run]
 Tool for executing a pipeline multiple times, each time with a different set
 of variables expanded. A variable is surrounded by curly quotes (e.g.,
 variable 'i' gets referenced with '{i}'). Available generators: csv-file,
-dirs, list, null, range, text-file
+dirs, list, null, prompt, range, text-file
 
 positional arguments:
   pipeline              The pipeline template with variables to expand and

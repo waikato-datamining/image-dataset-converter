@@ -4,5 +4,6 @@
 * [dirs](dirs.md)
 * [list](list.md)
 * [null](null.md)
+* [prompt](prompt.md)
 * [range](range.md)
 * [text-file](text-file.md)
