@@ -121,15 +121,16 @@ options:
 ### Executing pipeline multiple times
 
 ```
-usage: idc-exec [-h] --exec_generator GENERATOR [--exec_dry_run]
-                [--exec_prefix PREFIX] [--exec_placeholders FILE]
-                [--exec_format {cmdline,file}]
+usage: idc-exec [-h] --exec_generator GENERATOR [GENERATOR ...]
+                [--exec_dry_run] [--exec_prefix PREFIX]
+                [--exec_placeholders FILE] [--exec_format {cmdline,file}]
                 [--exec_logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                 ...
 
 Tool for executing a pipeline multiple times, each time with a different set
 of variables expanded. A variable is surrounded by curly quotes (e.g.,
-variable 'i' gets referenced with '{i}'). Available generators: csv-file,
+variable 'i' gets referenced with '{i}'). When supplying multiple generators,
+then these get treated as nested executions. Available generators: csv-file,
 dirs, list, null, prompt, range, text-file
 
 positional arguments:
@@ -138,8 +139,8 @@ positional arguments:
 
 options:
   -h, --help            show this help message and exit
-  --exec_generator GENERATOR
-                        The generator plugin to use, incl. its options.
+  --exec_generator GENERATOR [GENERATOR ...]
+                        The generator plugin(s) to use, incl. their options.
                         (default: None)
   --exec_dry_run        Applies the generator to the pipeline template and
                         only outputs it on stdout. (default: False)
@@ -277,16 +278,18 @@ options:
 ### Testing generators
 
 ```
-usage: idc-test-generator [-h] -g GENERATOR
+usage: idc-test-generator [-h] -g GENERATOR [GENERATOR ...]
                           [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
 
 Tool for testing generators by outputting the generated variables and their
-associatd values. Available generators: dirs, list, null, range
+associated values. Available generators: csv-file, dirs, list, null, prompt,
+range, text-file
 
 options:
   -h, --help            show this help message and exit
-  -g GENERATOR, --generator GENERATOR
-                        The generator plugin to use. (default: None)
+  -g GENERATOR [GENERATOR ...], --exec_generator GENERATOR [GENERATOR ...]
+                        The generator plugin(s) to use, incl. their options.
+                        (default: None)
   -l {DEBUG,INFO,WARNING,ERROR,CRITICAL}, --logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
                         The logging level to use. (default: WARN)
 ```
