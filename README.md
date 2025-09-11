@@ -81,7 +81,7 @@ readers (25):
    from-numpy-dp, from-opex-od, from-pfm-dp, from-pyfunc, 
    from-roicsv-od, from-storage, from-subdir-ic, from-text-file, 
    from-voc-od, from-yolo-od, get-email, list-files, poll-dir, start
-filters (57):
+filters (58):
    any-to-rgb, apply-ext-mask, apply-label-mask, block, 
    check-duplicate-filenames, coerce-box, coerce-mask, 
    convert-image-format, depth-to-grayscale, depth-to-greyscale*, 
@@ -91,7 +91,7 @@ filters (57):
    label-present*, label-present-ic, label-present-is, label-present-od, 
    label-to-metadata, list-to-sequence, map-labels, max-records, 
    metadata, metadata-from-name, metadata-od, metadata-to-placeholder, 
-   od-to-ic, od-to-is, passthrough, polygon-discarder, 
+   move-files, od-to-ic, od-to-is, passthrough, polygon-discarder, 
    polygon-simplifier, pyfunc-filter, randomize-records, record-window, 
    remove-classes, rename, rgb-to-grayscale, rgb-to-greyscale*, sample, 
    set-metadata, set-placeholder, set-storage, sort-pixels, 

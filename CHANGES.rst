@@ -33,6 +33,7 @@ Changelog
 - added `list-files` reader for listing files in a directory
 - added `list-to-sequence` stream filter that forwards list items one by one
 - added `console` writer for outputting the data on stdout that is coming through
+- added `move-files` filter which moves incoming files to a target directory
 
 
 0.0.13 (2025-07-15)
