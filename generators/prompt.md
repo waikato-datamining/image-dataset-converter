@@ -4,7 +4,7 @@ Prompts the user to enter values for the specified variables.
 
 ```
 usage: prompt [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-N LOGGER_NAME]
-              [-v NAME [NAME ...]]
+              [-v NAME [NAME ...]] [-m PROMPT]
 
 Prompts the user to enter values for the specified variables.
 
@@ -18,4 +18,8 @@ options:
   -v NAME [NAME ...], --var_names NAME [NAME ...]
                         The list of variable names to prompt the user with.
                         (default: None)
+  -m PROMPT, --message PROMPT
+                        The custom message to prompt the user with, expects
+                        one %s in the template which will get expanded with
+                        the variable name. (default: None)
 ```
