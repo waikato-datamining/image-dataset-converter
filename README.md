@@ -121,9 +121,9 @@ options:
 ### Executing pipeline multiple times
 
 ```
-usage: idc-exec [-h] --exec_generator GENERATOR [GENERATOR ...]
-                [--exec_dry_run] [--exec_prefix PREFIX]
-                [--exec_placeholders FILE] [--exec_format {cmdline,file}]
+usage: idc-exec [-h] --exec_generator GENERATOR [--exec_dry_run]
+                [--exec_prefix PREFIX] [--exec_placeholders FILE]
+                [--exec_format {cmdline,file}]
                 [--exec_logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                 ...
 
@@ -139,8 +139,9 @@ positional arguments:
 
 options:
   -h, --help            show this help message and exit
-  --exec_generator GENERATOR [GENERATOR ...]
+  --exec_generator GENERATOR
                         The generator plugin(s) to use, incl. their options.
+                        Flag needs to be specified for each generator.
                         (default: None)
   --exec_dry_run        Applies the generator to the pipeline template and
                         only outputs it on stdout. (default: False)
@@ -278,7 +279,7 @@ options:
 ### Testing generators
 
 ```
-usage: idc-test-generator [-h] -g GENERATOR [GENERATOR ...]
+usage: idc-test-generator [-h] -g GENERATOR
                           [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
 
 Tool for testing generators by outputting the generated variables and their
@@ -287,8 +288,9 @@ range, text-file
 
 options:
   -h, --help            show this help message and exit
-  -g GENERATOR [GENERATOR ...], --exec_generator GENERATOR [GENERATOR ...]
+  -g GENERATOR, --exec_generator GENERATOR
                         The generator plugin(s) to use, incl. their options.
+                        Flag needs to be specified for each generator.
                         (default: None)
   -l {DEBUG,INFO,WARNING,ERROR,CRITICAL}, --logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
                         The logging level to use. (default: WARN)
