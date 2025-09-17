@@ -17,6 +17,7 @@ ENV_IDC_CLASS_LISTERS_EXCL = "IDC_CLASS_LISTERS_EXCL"
 # can be overridden with IDC_CLASS_LISTERS environment variable
 DEFAULT_IDC_CLASS_LISTERS = [
     "idc.class_lister",
+    "kasperl.class_lister",
 ]
 
 # environment variable with comma-separated list of class listers to provided ignored classes
