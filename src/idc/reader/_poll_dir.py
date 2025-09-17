@@ -3,12 +3,13 @@ from typing import Dict, List
 from wai.logging import LOGGING_WARNING
 from seppl import Plugin
 from kasperl.reader import PollDir as KPollDir
+from kasperl.reader import POLL_ACTIONS, POLL_ACTION_NOTHING, POLL_ACTION_MOVE, POLL_ACTION_DELETE
 
 
 class PollDir(KPollDir):
 
     def __init__(self, dir_in: str = None, dir_out: str = None, poll_wait: float = None, process_wait: float = None,
-                 delete_input: bool = False, extensions: List[str] = None,
+                 action: str = None, extensions: List[str] = None,
                  other_input_files: List[str] = None, max_files: int = None, base_reader: str = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
@@ -22,8 +23,8 @@ class PollDir(KPollDir):
         :type poll_wait: float
         :param process_wait: the seconds to wait before processing the files (e.g., to be fully written to disk)
         :type process_wait: float
-        :param delete_input: whether to delete the input data
-        :type delete_input: bool
+        :param action: the action to apply to the input files
+        :type action: str
         :param extensions: the list of extensions to poll the directory for
         :type extensions: list
         :param other_input_files: other files that need to be present, glob expression (use placeholder GLOB_NAME_PLACEHOLDER)
@@ -38,7 +39,7 @@ class PollDir(KPollDir):
         :type logging_level: str
         """
         super().__init__(dir_in=dir_in, dir_out=dir_out, poll_wait=poll_wait, process_wait=process_wait,
-                         delete_input=delete_input, extensions=extensions, other_input_files=other_input_files,
+                         action=action, extensions=extensions, other_input_files=other_input_files,
                          max_files=max_files, base_reader=base_reader,
                          logger_name=logger_name, logging_level=logging_level)
 

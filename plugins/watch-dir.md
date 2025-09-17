@@ -7,9 +7,10 @@ Watches a directory for file changes and presents them to the base reader.
 ```
 usage: watch-dir [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                  [-N LOGGER_NAME] -i DIR_IN -o DIR_OUT [-w CHECK_WAIT]
-                 [-W PROCESS_WAIT] [-d] -e EXTENSIONS [EXTENSIONS ...]
-                 [-O [OTHER_INPUT_FILES ...]] [-m MAX_FILES] [-b BASE_READER]
-                 -E {created,modified} [{created,modified} ...]
+                 [-W PROCESS_WAIT] [-a {nothing,move,delete}] -e EXTENSIONS
+                 [EXTENSIONS ...] [-O [OTHER_INPUT_FILES ...]] [-m MAX_FILES]
+                 [-b BASE_READER] -E {created,modified}
+                 [{created,modified} ...]
 
 Watches a directory for file changes and presents them to the base reader.
 
@@ -38,8 +39,9 @@ options:
                         The number of seconds to wait before processing the
                         polled files (e.g., waiting for files to be fully
                         written) (default: 0.0)
-  -d, --delete_input    Whether to delete the input files rather than move
-                        them to --dir_out directory (default: False)
+  -a {nothing,move,delete}, --action {nothing,move,delete}
+                        The action to apply to the input files; 'move' moves
+                        the files to --dir_out directory (default: move)
   -e EXTENSIONS [EXTENSIONS ...], --extensions EXTENSIONS [EXTENSIONS ...]
                         The extensions of the files to poll (incl. dot)
                         (default: None)
