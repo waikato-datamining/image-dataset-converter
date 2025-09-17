@@ -74,13 +74,14 @@ usage: idc-convert [-h] [--help-all] [--help-plugin NAME] [-u INTERVAL]
 
 Tool for converting between image annotation dataset formats.
 
-readers (25):
+readers (26):
    from-adams-ic, from-adams-od, from-blue-channel-is, from-coco-od, 
    from-csv-dp, from-data, from-grayscale-dp, from-grayscale-is, 
    from-indexed-png-is, from-layer-segments-is, from-multi, 
    from-numpy-dp, from-opex-od, from-pfm-dp, from-pyfunc, 
    from-roicsv-od, from-storage, from-subdir-ic, from-text-file, 
-   from-voc-od, from-yolo-od, get-email, list-files, poll-dir, start
+   from-voc-od, from-yolo-od, get-email, list-files, poll-dir, start, 
+   watch-dir
 filters (58):
    any-to-rgb, apply-ext-mask, apply-label-mask, block, 
    check-duplicate-filenames, coerce-box, coerce-mask, 

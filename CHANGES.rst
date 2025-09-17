@@ -34,6 +34,8 @@ Changelog
 - added `list-to-sequence` stream filter that forwards list items one by one
 - added `console` writer for outputting the data on stdout that is coming through
 - added `move-files` filter which moves incoming files to a target directory
+- added `watch-dir` meta-reader that uses the watchdog library to react to file-system events
+  rather than using fixed-interval polling like `poll-dir`
 
 
 0.0.13 (2025-07-15)
