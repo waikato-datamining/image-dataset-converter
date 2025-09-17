@@ -2,17 +2,21 @@
 
 * generates: seppl.AnyData
 
-Watches a directory for file changes and presents them to the base reader.
+Watches a directory for file changes and presents them to the base reader. The 'polling_type' determines how files are being discovered: never: always uses files supplied by the watchdog events; initial: does a full poll when first starting and then relies on files form watchdog events; always: performs and initial poll and whenever the watchdog triggers an event.
 
 ```
 usage: watch-dir [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                 [-N LOGGER_NAME] -i DIR_IN -o DIR_OUT [-w CHECK_WAIT]
-                 [-W PROCESS_WAIT] [-a {nothing,move,delete}] -e EXTENSIONS
-                 [EXTENSIONS ...] [-O [OTHER_INPUT_FILES ...]] [-m MAX_FILES]
-                 [-b BASE_READER] -E {created,modified}
-                 [{created,modified} ...]
+                 [-N LOGGER_NAME] -b BASE_READER -i DIR_IN [-o DIR_OUT]
+                 [-w CHECK_WAIT] [-W PROCESS_WAIT] [-a {nothing,move,delete}]
+                 -e EXTENSIONS [EXTENSIONS ...] [-O [OTHER_INPUT_FILES ...]]
+                 [-m MAX_FILES] [-p {never,initial,always}] -E
+                 {created,modified} [{created,modified} ...]
 
-Watches a directory for file changes and presents them to the base reader.
+Watches a directory for file changes and presents them to the base reader. The
+'polling_type' determines how files are being discovered: never: always uses
+files supplied by the watchdog events; initial: does a full poll when first
+starting and then relies on files form watchdog events; always: performs and
+initial poll and whenever the watchdog triggers an event.
 
 options:
   -h, --help            show this help message and exit
@@ -21,6 +25,9 @@ options:
   -N LOGGER_NAME, --logger_name LOGGER_NAME
                         The custom name to use for the logger, uses the plugin
                         name by default (default: None)
+  -b BASE_READER, --base_reader BASE_READER
+                        The command-line of the reader for reading the files
+                        (default: None)
   -i DIR_IN, --dir_in DIR_IN
                         The directory to poll; Supported placeholders: {HOME},
                         {CWD}, {TMP}, {INPUT_PATH}, {INPUT_NAMEEXT},
@@ -52,9 +59,8 @@ options:
   -m MAX_FILES, --max_files MAX_FILES
                         The maximum number of files in a single poll; <1 for
                         unlimited (default: -1)
-  -b BASE_READER, --base_reader BASE_READER
-                        The command-line of the reader for reading the files
-                        (default: None)
+  -p {never,initial,always}, --polling_type {never,initial,always}
+                        The type of polling type to perform. (default: never)
   -E {created,modified} [{created,modified} ...], --events {created,modified} [{created,modified} ...]
                         The events to monitor (default: None)
 ```

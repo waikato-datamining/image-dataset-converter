@@ -6,9 +6,9 @@ Polls a directory for files and presents them to the base reader.
 
 ```
 usage: poll-dir [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-N LOGGER_NAME]
-                -i DIR_IN -o DIR_OUT [-w POLL_WAIT] [-W PROCESS_WAIT]
-                [-a {nothing,move,delete}] -e EXTENSIONS [EXTENSIONS ...]
-                [-O [OTHER_INPUT_FILES ...]] [-m MAX_FILES] [-b BASE_READER]
+                -b BASE_READER -i DIR_IN [-o DIR_OUT] [-w POLL_WAIT]
+                [-W PROCESS_WAIT] [-a {nothing,move,delete}] -e EXTENSIONS
+                [EXTENSIONS ...] [-O [OTHER_INPUT_FILES ...]] [-m MAX_FILES]
 
 Polls a directory for files and presents them to the base reader.
 
@@ -19,6 +19,9 @@ options:
   -N LOGGER_NAME, --logger_name LOGGER_NAME
                         The custom name to use for the logger, uses the plugin
                         name by default (default: None)
+  -b BASE_READER, --base_reader BASE_READER
+                        The command-line of the reader for reading the files
+                        (default: None)
   -i DIR_IN, --dir_in DIR_IN
                         The directory to poll; Supported placeholders: {HOME},
                         {CWD}, {TMP}, {INPUT_PATH}, {INPUT_NAMEEXT},
@@ -49,9 +52,6 @@ options:
   -m MAX_FILES, --max_files MAX_FILES
                         The maximum number of files in a single poll; <1 for
                         unlimited (default: -1)
-  -b BASE_READER, --base_reader BASE_READER
-                        The command-line of the reader for reading the files
-                        (default: None)
 ```
 
 Available placeholders:
