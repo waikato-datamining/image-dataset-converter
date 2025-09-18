@@ -36,6 +36,7 @@ Changelog
 - added `move-files` filter which moves incoming files to a target directory
 - added `watch-dir` meta-reader that uses the watchdog library to react to file-system events
   rather than using fixed-interval polling like `poll-dir`
+- added `delete-files` writer
 
 
 0.0.13 (2025-07-15)
