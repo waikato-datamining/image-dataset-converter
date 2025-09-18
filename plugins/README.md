@@ -85,6 +85,7 @@
 
 ## Writers
 * [console](console.md)
+* [delete-files](delete-files.md)
 * [send-email](send-email.md)
 * [to-adams-ic](to-adams-ic.md)
 * [to-adams-od](to-adams-od.md)
