@@ -36,6 +36,7 @@
 * [coerce-box](coerce-box.md)
 * [coerce-mask](coerce-mask.md)
 * [convert-image-format](convert-image-format.md)
+* [copy-files](copy-files.md)
 * [depth-to-grayscale](depth-to-grayscale.md)
 * [dimension-discarder](dimension-discarder.md)
 * [dims-to-metadata](dims-to-metadata.md)

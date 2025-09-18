@@ -37,6 +37,7 @@ Changelog
 - added `watch-dir` meta-reader that uses the watchdog library to react to file-system events
   rather than using fixed-interval polling like `poll-dir`
 - added `delete-files` writer
+- added `copy-files` filter
 
 
 0.0.13 (2025-07-15)
