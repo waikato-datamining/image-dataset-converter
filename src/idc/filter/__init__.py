@@ -1,4 +1,4 @@
-from ._required_format_filter import RequiredFormatFilter, REQUIRED_FORMAT_ANY, REQUIRED_FORMAT_RGB, REQUIRED_FORMAT_GRAYSCALE, REQUIRED_FORMAT_BINARY, INCORRECT_FORMAT_FAIL, INCORRECT_FORMAT_SKIP, INCORRECT_FORMAT_ACTIONS, mode_to_format
+from ._required_format_filter import RequiredFormatFilter
 from ._image_and_annotation_filter import ImageAndAnnotationFilter, OUTPUT_FORMAT_ASIS, OUTPUT_FORMAT_BINARY, OUTPUT_FORMAT_GRAYSCALE, OUTPUT_FORMAT_RGB, OUTPUT_FORMATS, array_to_output_format, add_output_format
 from ._any_to_rgb import AnyToRGB
 from ._apply_ext_mask import ApplyExternalMask

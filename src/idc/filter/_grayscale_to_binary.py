@@ -7,9 +7,9 @@ import numpy as np
 from seppl import AnyData, AliasSupporter
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ImageData, array_to_image, grayscale_required_info, binarize_image
+from idc.api import ImageData, array_to_image, grayscale_required_info, binarize_image, REQUIRED_FORMAT_GRAYSCALE
 from kasperl.api import make_list, flatten_list, safe_deepcopy
-from idc.filter import RequiredFormatFilter, REQUIRED_FORMAT_GRAYSCALE
+from idc.filter import RequiredFormatFilter
 
 
 class GrayscaleToBinary(RequiredFormatFilter, AliasSupporter):

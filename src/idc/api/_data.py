@@ -675,3 +675,114 @@ def binarize_image(img: Image.Image, threshold: int = 127, logger: logging.Logge
     """
     img = ensure_grayscale(img, logger=logger)
     return img.point(lambda p: 255 if p > threshold else 0, '1')
+
+REQUIRED_FORMAT_ANY = "any"
+REQUIRED_FORMAT_BINARY = "binary"
+REQUIRED_FORMAT_GRAYSCALE = "grayscale"
+REQUIRED_FORMAT_RGB = "rgb"
+
+INCORRECT_FORMAT_SKIP = "skip"
+INCORRECT_FORMAT_FAIL = "fail"
+INCORRECT_FORMAT_ACTIONS = [
+    INCORRECT_FORMAT_SKIP,
+    INCORRECT_FORMAT_FAIL,
+]
+
+
+def mode_to_format(mode: str) -> str:
+    """
+    Converts the mode string into the required format string.
+    Simply returns the mode string if it is an unknown mode.
+
+    :param mode: the mode to convert
+    :type mode: str
+    :return: the format string
+    :rtype: str
+    """
+    if mode == '1':
+        return REQUIRED_FORMAT_BINARY
+    elif mode == 'L':
+        return REQUIRED_FORMAT_GRAYSCALE
+    elif mode == 'RGB':
+        return REQUIRED_FORMAT_RGB
+    else:
+        return mode
+
+
+def has_correct_format(image: Image.Image, req_format: str) -> bool:
+    """
+    Checks whether the image is in the right format.
+
+    :param image: the image to check
+    :type image: Image.Image
+    :param req_format: the required format for the image
+    :type req_format: str
+    :return: whether the image is in the correct format
+    :rtype: bool
+    """
+    if req_format == REQUIRED_FORMAT_ANY:
+        return True
+    elif req_format == REQUIRED_FORMAT_BINARY:
+        return image.mode == '1'
+    elif req_format == REQUIRED_FORMAT_GRAYSCALE:
+        return image.mode == 'L'
+    elif req_format == REQUIRED_FORMAT_RGB:
+        return image.mode == 'RGB'
+    else:
+        return False
+
+
+def ensure_correct_format(image: Image.Image, req_format: str, logger: logging.Logger = None) -> Image.Image:
+    """
+    Ensures that the image is in the right format.
+
+    :param image: the image to check
+    :type image: Image.Image
+    :param req_format: the required format for the image
+    :type req_format: str
+    :param logger: an optional logger for output
+    :type logger: logging.Logger
+    :return: the image with the correct format
+    :rtype: Image.Image
+    """
+    if req_format == REQUIRED_FORMAT_ANY:
+        return image
+    elif req_format == REQUIRED_FORMAT_BINARY:
+        return ensure_binary(image, logger=logger)
+    elif req_format == REQUIRED_FORMAT_GRAYSCALE:
+        return ensure_grayscale(image, logger=logger)
+    elif req_format == REQUIRED_FORMAT_RGB:
+        return ensure_rgb(image, logger=logger)
+    else:
+        raise Exception("Unsupported required format: %s" % req_format)
+
+
+def can_process_format(image: Image.Image, req_format: str, incorrect_format_action: str, logger: logging.Logger = None) -> bool:
+    """
+    Checks whether the image can be processed.
+    May raise an Exception if image is of incorrect format and the action is INCORRECT_FORMAT_FAIL.
+
+    :param image: the image to check
+    :type image: Image.Image
+    :param req_format: the required format for the image
+    :type req_format: str
+    :param incorrect_format_action: the action to take when the format is incorrect
+    :type incorrect_format_action: str
+    :param logger: an optional logger for output
+    :type logger: logging.Logger
+    :return: True if the image can be processed, False if it needs to be skipped
+    :rtype: bool
+    """
+    if not has_correct_format(image, req_format):
+        msg = "Incorrect image format (required: %s, found: %s), skipping!" % (req_format, mode_to_format(image.mode))
+        if incorrect_format_action == INCORRECT_FORMAT_SKIP:
+            if logger is None:
+                print(msg)
+            else:
+                logger.warning(msg)
+            return False
+        elif incorrect_format_action == INCORRECT_FORMAT_FAIL:
+            raise Exception(msg)
+        else:
+            raise Exception("Unhandled incorrect format action: %s" % incorrect_format_action)
+    return True

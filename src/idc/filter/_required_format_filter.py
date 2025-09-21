@@ -2,42 +2,11 @@ import abc
 import argparse
 
 from PIL import Image
-from seppl.io import BatchFilter
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ensure_binary, ensure_grayscale, ensure_rgb
-
-REQUIRED_FORMAT_ANY = "any"
-REQUIRED_FORMAT_BINARY = "binary"
-REQUIRED_FORMAT_GRAYSCALE = "grayscale"
-REQUIRED_FORMAT_RGB = "rgb"
-
-INCORRECT_FORMAT_SKIP = "skip"
-INCORRECT_FORMAT_FAIL = "fail"
-INCORRECT_FORMAT_ACTIONS = [
-    INCORRECT_FORMAT_SKIP,
-    INCORRECT_FORMAT_FAIL,
-]
-
-
-def mode_to_format(mode: str) -> str:
-    """
-    Converts the mode string into the required format string.
-    Simply returns the mode string if it is an unknown mode.
-
-    :param mode: the mode to convert
-    :type mode: str
-    :return: the format string
-    :rtype: str
-    """
-    if mode == '1':
-        return REQUIRED_FORMAT_BINARY
-    elif mode == 'L':
-        return REQUIRED_FORMAT_GRAYSCALE
-    elif mode == 'RGB':
-        return REQUIRED_FORMAT_RGB
-    else:
-        return mode
+from idc.api import REQUIRED_FORMAT_ANY, INCORRECT_FORMAT_SKIP, INCORRECT_FORMAT_ACTIONS, has_correct_format, \
+    ensure_correct_format, can_process_format
+from seppl.io import BatchFilter
 
 
 class RequiredFormatFilter(BatchFilter, abc.ABC):
@@ -107,17 +76,7 @@ class RequiredFormatFilter(BatchFilter, abc.ABC):
         :return: whether the image is in the correct format
         :rtype: bool
         """
-        req_format = self._required_format()
-        if req_format == REQUIRED_FORMAT_ANY:
-            return True
-        elif req_format == REQUIRED_FORMAT_BINARY:
-            return image.mode == '1'
-        elif req_format == REQUIRED_FORMAT_GRAYSCALE:
-            return image.mode == 'L'
-        elif req_format == REQUIRED_FORMAT_RGB:
-            return image.mode == 'RGB'
-        else:
-            return False
+        return has_correct_format(image, self._required_format())
 
     def _ensure_correct_format(self, image: Image.Image) -> Image.Image:
         """
@@ -128,17 +87,7 @@ class RequiredFormatFilter(BatchFilter, abc.ABC):
         :return: the image with the correct format
         :rtype: Image.Image
         """
-        req_format = self._required_format()
-        if req_format == REQUIRED_FORMAT_ANY:
-            return image
-        elif req_format == REQUIRED_FORMAT_BINARY:
-            return ensure_binary(image, self.logger())
-        elif req_format == REQUIRED_FORMAT_GRAYSCALE:
-            return ensure_grayscale(image, self.logger())
-        elif req_format == REQUIRED_FORMAT_RGB:
-            return ensure_rgb(image, self.logger())
-        else:
-            raise Exception("Unsupported required format: %s" % req_format)
+        return ensure_correct_format(image, self._required_format())
 
     def _can_process(self, image: Image.Image) -> bool:
         """
@@ -150,13 +99,4 @@ class RequiredFormatFilter(BatchFilter, abc.ABC):
         :return: True if the image can be processed, False if it needs to be skipped
         :rtype: bool
         """
-        if not self._has_correct_format(image):
-            msg = "Incorrect image format (required: %s, found: %s), skipping!" % (self._required_format(), mode_to_format(image.mode))
-            if self.incorrect_format_action == INCORRECT_FORMAT_SKIP:
-                self.logger().warning(msg)
-                return False
-            elif self.incorrect_format_action == INCORRECT_FORMAT_FAIL:
-                raise Exception(msg)
-            else:
-                raise Exception("Unhandled incorrect format action: %s" % self.incorrect_format_action)
-        return True
+        return can_process_format(image, self._required_format(), self.incorrect_format_action, logger=self.logger())

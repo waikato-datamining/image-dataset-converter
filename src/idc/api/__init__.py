@@ -3,6 +3,7 @@ from ._fonts import DEFAULT_FONT_FAMILY, load_font, text_size
 from ._data import ImageData, jpeg_quality, array_to_image, empty_image, save_image
 from ._data import FORMATS, FORMAT_JPEG, FORMAT_PNG, FORMAT_BMP, FORMAT_EXTENSIONS
 from ._data import ensure_rgb, rgb_required_info, ensure_grayscale, grayscale_required_info, ensure_binary, binary_required_info, binarize_image, image_to_bytesio
+from ._data import REQUIRED_FORMAT_ANY, REQUIRED_FORMAT_RGB, REQUIRED_FORMAT_GRAYSCALE, REQUIRED_FORMAT_BINARY, INCORRECT_FORMAT_FAIL, INCORRECT_FORMAT_SKIP, INCORRECT_FORMAT_ACTIONS, mode_to_format, has_correct_format, ensure_correct_format, can_process_format
 from ._depth import DepthData, DepthInformation, depth_to_grayscale, depth_from_grayscale
 from ._device import DEVICES, DEVICE_AUTO, DEVICE_CPU, DEVICE_CUDA
 from ._imgcls import ImageClassificationData
