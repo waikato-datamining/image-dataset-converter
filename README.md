@@ -82,10 +82,10 @@ readers (26):
    from-roicsv-od, from-storage, from-subdir-ic, from-text-file, 
    from-voc-od, from-yolo-od, get-email, list-files, poll-dir, start, 
    watch-dir
-filters (59):
+filters (60):
    any-to-rgb, apply-ext-mask, apply-label-mask, block, 
    check-duplicate-filenames, coerce-box, coerce-mask, 
-   convert-image-format, copy-files, depth-to-grayscale, 
+   convert-image-format, copy-files, count-specks, depth-to-grayscale, 
    depth-to-greyscale*, dimension-discarder, dims-to-metadata, 
    discard-by-name, discard-invalid-images, discard-negatives, 
    filter-labels, grayscale-to-binary, greyscale-to-binary*, inspect, 

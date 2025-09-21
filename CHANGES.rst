@@ -38,6 +38,7 @@ Changelog
   rather than using fixed-interval polling like `poll-dir`
 - added `delete-files` writer
 - added `copy-files` filter
+- added `count-specks` filter that adds counts of small objects to meta-data
 
 
 0.0.13 (2025-07-15)

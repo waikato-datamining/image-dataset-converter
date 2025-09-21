@@ -3,6 +3,7 @@ from ._image_and_annotation_filter import ImageAndAnnotationFilter, OUTPUT_FORMA
 from ._any_to_rgb import AnyToRGB
 from ._apply_ext_mask import ApplyExternalMask
 from ._convert_image_format import ConvertImageFormat
+from ._count_specks import CountSpecks
 from ._dims_to_metadata import DimensionToMetadata
 from ._discard_invalid_images import DiscardInvalidImages
 from ._discard_negatives import DiscardNegatives
