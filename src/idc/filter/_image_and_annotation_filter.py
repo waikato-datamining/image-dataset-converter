@@ -127,6 +127,14 @@ class ImageAndAnnotationFilter(RequiredFormatFilter, abc.ABC):
         """
         return False
 
+    def _pre_apply_filter(self, item):
+        """
+        Hook method that gets executed before the filter is being applied the first time.
+
+        :param item: the current image data being processed
+        """
+        pass
+
     @abc.abstractmethod
     def _apply_filter(self, array: np.ndarray) -> np.ndarray:
         """
@@ -138,6 +146,14 @@ class ImageAndAnnotationFilter(RequiredFormatFilter, abc.ABC):
         :rtype: np.ndarray
         """
         raise NotImplementedError()
+
+    def _post_apply_filter(self, item):
+        """
+        Hook method that gets executed after the filter has been applied the last time.
+
+        :param item: the updated image data
+        """
+        pass
 
     def _do_process(self, data):
         """
@@ -152,6 +168,8 @@ class ImageAndAnnotationFilter(RequiredFormatFilter, abc.ABC):
 
         result = []
         for item in make_list(data):
+            self._pre_apply_filter(item)
+
             # apply to image
             if self.apply_to in [APPLY_TO_IMAGE, APPLY_TO_BOTH]:
                 # incorrect format?
@@ -181,6 +199,9 @@ class ImageAndAnnotationFilter(RequiredFormatFilter, abc.ABC):
                                   data=bytes_new,
                                   metadata=safe_deepcopy(item.get_metadata()),
                                   annotation=annotation_new)
+
+            self._post_apply_filter(item_new)
+
             result.append(item_new)
 
         return flatten_list(result)
