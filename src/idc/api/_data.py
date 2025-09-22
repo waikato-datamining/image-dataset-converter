@@ -12,7 +12,8 @@ from PIL import Image
 from image_complete.bmp import is_bmp
 from image_complete.jpg import is_jpg
 from image_complete.png import is_png
-from seppl import MetaDataHandler, LoggingHandler
+
+from seppl import MetaDataHandler, LoggingHandler, get_class_name
 from kasperl.api import safe_deepcopy, NameSupporter, SourceSupporter, AnnotationHandler
 from ._utils import load_image_from_bytes
 from wai.logging import set_logging_level, LOGGING_INFO
@@ -573,6 +574,15 @@ class ImageData(AnnotationHandler, MetaDataHandler, NameSupporter, SourceSupport
         if metadata and (self.get_metadata() is not None):
             result["metadata"] = copy.deepcopy(self.get_metadata())
         return result
+
+    def __str__(self) -> str:
+        """
+        Returns a basic description of the container.
+
+        :return: the description
+        :rtype: str
+        """
+        return "name=" + self.image_name + ", annotation=" + str(self.has_annotation()) + ", type=" + str(get_class_name(self)) + ", metadata=" + str(self.get_metadata())
 
 
 def ensure_rgb(image: Image.Image, logger: logging.Logger = None) -> Image.Image:
