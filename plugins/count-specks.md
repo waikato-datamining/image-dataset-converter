@@ -9,8 +9,8 @@ Counts the number of small specks in the image. A binary image is required. You 
 usage: count-specks [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                     [-N LOGGER_NAME] [--skip] [-I {skip,fail}]
                     [-a {both,image,annotations}]
-                    [-o {as-is,binary,grayscale,rgb}] [-M MAX_AREA] [-i]
-                    [-k METADATA_KEY]
+                    [-o {as-is,binary,grayscale,rgb}] [-m MIN_AREA]
+                    [-M MAX_AREA] [-i] [-k METADATA_KEY]
 
 Counts the number of small specks in the image. A binary image is required.
 You can use the 'grayscale-to-binary' for the conversion.
@@ -32,6 +32,9 @@ options:
   -o {as-is,binary,grayscale,rgb}, --output_format {as-is,binary,grayscale,rgb}
                         The image format to generate as output. (default: as-
                         is)
+  -m MIN_AREA, --min_area MIN_AREA
+                        The minimum area for the specks in order to count
+                        them. (default: 0.0)
   -M MAX_AREA, --max_area MAX_AREA
                         The maximum area for the specks in order to count
                         them. (default: 2.0)

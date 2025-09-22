@@ -15,7 +15,7 @@ class CountSpecks(ImageAndAnnotationFilter):
     """
 
     def __init__(self, apply_to: str = None, output_format: str = None, incorrect_format_action: str = None,
-                 max_area: float = None, invert: bool = False, metadata_key: str = None,
+                 min_area: float = None, max_area: float = None, invert: bool = False, metadata_key: str = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
         Initializes the filter.
@@ -26,6 +26,8 @@ class CountSpecks(ImageAndAnnotationFilter):
         :type output_format: str
         :param incorrect_format_action: how to react to incorrect input format
         :type incorrect_format_action: str
+        :param min_area: the minimum area for the specks
+        :type min_area: float
         :param max_area: the maximum area for the specks
         :type max_area: float
         :param invert: whether to invert the binary image
@@ -39,6 +41,7 @@ class CountSpecks(ImageAndAnnotationFilter):
         """
         super().__init__(apply_to=apply_to, output_format=output_format, incorrect_format_action=incorrect_format_action,
                          logger_name=logger_name, logging_level=logging_level)
+        self.min_area = min_area
         self.max_area = max_area
         self.invert = invert
         self.metadata_key = metadata_key
@@ -88,6 +91,7 @@ class CountSpecks(ImageAndAnnotationFilter):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
+        parser.add_argument("-m", "--min_area", type=float, help="The minimum area for the specks in order to count them.", default=0.0, required=False)
         parser.add_argument("-M", "--max_area", type=float, help="The maximum area for the specks in order to count them.", default=2.0, required=False)
         parser.add_argument("-i", "--invert", action="store_true", help="Whether to invert the binary image, i.e., looking for black specks rather than white ones.")
         parser.add_argument("-k", "--metadata_key", type=str, help="The key in the meta-data to store the count under.", default="speck-count", required=False)
@@ -101,6 +105,7 @@ class CountSpecks(ImageAndAnnotationFilter):
         :type ns: argparse.Namespace
         """
         super()._apply_args(ns)
+        self.min_area = ns.min_area
         self.max_area = ns.max_area
         self.invert = ns.invert
         self.metadata_key = ns.metadata_key
@@ -110,8 +115,12 @@ class CountSpecks(ImageAndAnnotationFilter):
         Initializes the processing, e.g., for opening files or databases.
         """
         super().initialize()
+        if self.min_area is None:
+            self.min_area = 0.0
         if self.max_area is None:
             self.max_area = 2.0
+        if self.min_area >= self.max_area:
+            raise Exception("Min area must be smaller than max area: min=%f, max=%f" % (self.min_area, self.max_area))
         if self.max_area < 1:
             raise Exception("Area must be least 1, current: %s" % str(self.max_area))
         if self.invert is None:
@@ -153,6 +162,8 @@ class CountSpecks(ImageAndAnnotationFilter):
         num_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(current, connectivity=8)
         for i in range(1, num_labels):  # skip background (i=0)
             area = stats[i, cv2.CC_STAT_AREA]
+            if area < self.min_area:
+                continue
             if area <= self.max_area:
                 self._count += 1
 
