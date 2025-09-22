@@ -135,10 +135,12 @@ class ImageAndAnnotationFilter(RequiredFormatFilter, abc.ABC):
         pass
 
     @abc.abstractmethod
-    def _apply_filter(self, array: np.ndarray) -> np.ndarray:
+    def _apply_filter(self, source: str, array: np.ndarray) -> np.ndarray:
         """
         Applies the filter to the image and returns the numpy array.
 
+        :param source: whether image or layer
+        :type source: str
         :param array: the image the filter to apply to
         :type array: np.ndarray
         :return: the filtered image
@@ -178,7 +180,7 @@ class ImageAndAnnotationFilter(RequiredFormatFilter, abc.ABC):
                 # process
                 image = self._ensure_correct_format(item.image)
                 array = np.asarray(image).astype(np.uint8)
-                array_new = self._apply_filter(array)
+                array_new = self._apply_filter("image", array)
             # apply to annotations, nothing to do for image
             else:
                 array_new = np.asarray(item.image).astype(np.uint8)
@@ -192,7 +194,7 @@ class ImageAndAnnotationFilter(RequiredFormatFilter, abc.ABC):
             if isinstance(item, ImageSegmentationData) and item.has_annotation():
                 if self.apply_to in [APPLY_TO_ANNOTATIONS, APPLY_TO_BOTH]:
                     for layer in annotation_new.layers:
-                        annotation_new.layers[layer] = self._apply_filter(annotation_new.layers[layer])
+                        annotation_new.layers[layer] = self._apply_filter(layer, annotation_new.layers[layer])
 
             item_new = type(item)(image_name=item.image_name,
                                   data=bytes_new,
