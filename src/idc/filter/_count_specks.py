@@ -88,7 +88,7 @@ class CountSpecks(ImageAndAnnotationFilter):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-m", "--max_area", type=float, help="The maximum area for the specks in order to count them.", default=2.0, required=False)
+        parser.add_argument("-M", "--max_area", type=float, help="The maximum area for the specks in order to count them.", default=2.0, required=False)
         parser.add_argument("-i", "--invert", action="store_true", help="Whether to invert the binary image, i.e., looking for black specks rather than white ones.")
         parser.add_argument("-k", "--metadata_key", type=str, help="The key in the meta-data to store the count under.", default="speck-count", required=False)
         return parser
