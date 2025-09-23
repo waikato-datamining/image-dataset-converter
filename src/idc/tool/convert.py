@@ -1,5 +1,4 @@
 import traceback
-from encodings.aliases import aliases
 
 from idc.core import ENV_IDC_LOGLEVEL
 from idc.help import generate_plugin_usage
