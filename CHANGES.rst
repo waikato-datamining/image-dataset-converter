@@ -39,6 +39,8 @@ Changelog
 - added `delete-files` writer
 - added `copy-files` filter
 - added `count-specks` filter that adds counts of small objects to meta-data
+- added support for caching plugins via `IDC_CLASS_CACHE` environment variable
+
 
 
 0.0.13 (2025-07-15)
