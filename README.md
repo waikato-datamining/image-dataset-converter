@@ -382,6 +382,26 @@ For instance, the following setting would use a quality of 100%:
 IDC_JPEG_QUALITY=100
 ```
 
+## Caching classes
+
+In order to speed up plugin discovery, they discovered plugins can be cached
+on disk after the initial discovery. Installing additional plugins after
+the cache has been initialized will not make them visible, the cache will
+require resetting first.
+
+The cache can be managed through the following environment variable:
+
+```
+IDC_CLASS_CACHE
+```
+
+It supports the following options:
+
+* `off`: disables the cache
+* `on`: enables the cache
+* `reset`: resets the cached plugins first and enables the cache
+
+
 ## Additional libraries
 
 * [Image augmentation](https://github.com/waikato-datamining/image-dataset-converter-imgaug)

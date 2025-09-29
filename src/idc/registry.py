@@ -23,6 +23,9 @@ DEFAULT_IDC_CLASS_LISTERS = [
 # environment variable with comma-separated list of class listers to provided ignored classes
 ENV_IDC_CLASS_LISTERS_IGNORED = "IDC_CLASS_LISTERS_IGNORED"
 
+# environment variable for managing the class cache: on|off|reset
+ENV_IDC_CLASS_CACHE = "IDC_CLASS_CACHE"
+
 # the default class listers that provide ignored classes
 # can be overridden with IDC_CLASS_LISTERS_IGNORED environment variable
 DEFAULT_IDC_CLASS_LISTERS_IGNORED = [
@@ -33,7 +36,9 @@ REGISTRY = ClassListerRegistry(default_class_listers=DEFAULT_IDC_CLASS_LISTERS,
                                env_class_listers=ENV_IDC_CLASS_LISTERS,
                                env_excluded_class_listers=ENV_IDC_CLASS_LISTERS_EXCL,
                                ignored_class_listers=DEFAULT_IDC_CLASS_LISTERS_IGNORED,
-                               env_ignored_class_listers=ENV_IDC_CLASS_LISTERS_IGNORED)
+                               env_ignored_class_listers=ENV_IDC_CLASS_LISTERS_IGNORED,
+                               app_name="image-dataset-converter",
+                               class_cache_env=ENV_IDC_CLASS_CACHE)
 
 IMG_REGISTRY = "idc-registry"
 
