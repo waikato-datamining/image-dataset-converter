@@ -382,7 +382,7 @@ For instance, the following setting would use a quality of 100%:
 IDC_JPEG_QUALITY=100
 ```
 
-## Caching classes
+## Caching plugins
 
 In order to speed up plugin discovery, they discovered plugins can be cached
 on disk after the initial discovery. Installing additional plugins after
