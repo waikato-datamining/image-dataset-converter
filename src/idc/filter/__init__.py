@@ -10,6 +10,7 @@ from ._discard_negatives import DiscardNegatives
 from ._filter_labels import FilterLabels
 from ._grayscale_to_binary import GrayscaleToBinary
 from ._inspect import Inspect, MODES, MODE_NONINTERACTIVE, MODE_INTERACTIVE, OUTPUTS, OUTPUT_STDOUT, OUTPUT_STDERR, OUTPUT_LOGGER, OUTPUT_FILE
+from ._is_to_od import ImageSegmentationToObjectDetection
 from ._label_to_metadata import LabelToMetaData
 from ._map_labels import MapLabels
 from ._metadata_objdet import MetaDataObjectDetection

@@ -47,6 +47,7 @@
 * [filter-labels](filter-labels.md)
 * [grayscale-to-binary](grayscale-to-binary.md)
 * [inspect](inspect.md)
+* [is-to-od](is-to-od.md)
 * [label-from-name](label-from-name.md)
 * [label-present-ic](label-present-ic.md)
 * [label-present-is](label-present-is.md)
