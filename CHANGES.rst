@@ -40,6 +40,7 @@ Changelog
 - added `copy-files` filter
 - added `count-specks` filter that adds counts of small objects to meta-data
 - added support for caching plugins via `IDC_CLASS_CACHE` environment variable
+- `od-to-is` now handles labels or regexp pattern correctly
 
 
 

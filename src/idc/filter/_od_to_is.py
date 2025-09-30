@@ -99,7 +99,7 @@ class ObjectDetectionToImageSegmentation(BatchFilter):
         """
         super().initialize()
         self._pattern = re.compile(self.regexp) if (self.regexp is not None) else None
-        if (self.labels is None) or (len(self.labels) == 0) and (self._pattern is None):
+        if ((self.labels is None) or (len(self.labels) == 0)) and (self._pattern is None):
             raise Exception("No labels/layers or regexp defined!")
 
     def _label_matches(self, label: str) -> bool:
