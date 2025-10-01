@@ -193,6 +193,8 @@ class ImageSegmentationToObjectDetection(BatchFilter):
                 for i, label in enumerate(item.annotation.labels):
                     if label not in item.annotation.layers:
                         continue
+                    if not self._label_matches(label):
+                        continue
                     layer = item.annotation.layers[label]
                     layer = np.where(layer > 0, 1, 0)
                     contours, _ = cv2.findContours(np.array(layer).astype(np.uint8), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
