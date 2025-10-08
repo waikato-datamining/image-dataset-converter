@@ -99,12 +99,13 @@ filters (61):
    set-metadata, set-placeholder, set-storage, sort-pixels, 
    split-records, stop, strip-annotations, sub-process, tee, trigger, 
    use-mask, write-labels
-writers (24):
+writers (25):
    console, delete-files, send-email, to-adams-ic, to-adams-od, 
    to-blue-channel-is, to-coco-od, to-csv-dp, to-data, to-grayscale-dp, 
-   to-grayscale-is, to-indexed-png-is, to-layer-segments-is, to-multi, 
-   to-numpy-dp, to-opex-od, to-pfm-dp, to-pyfunc, to-roicsv-od, 
-   to-storage, to-subdir-ic, to-text-file, to-voc-od, to-yolo-od
+   to-grayscale-is, to-indexed-png-is, to-layer-segments-is, 
+   to-metadata, to-multi, to-numpy-dp, to-opex-od, to-pfm-dp, to-pyfunc, 
+   to-roicsv-od, to-storage, to-subdir-ic, to-text-file, to-voc-od, 
+   to-yolo-od
 
 options:
   -h, --help           Show basic help message and exit.

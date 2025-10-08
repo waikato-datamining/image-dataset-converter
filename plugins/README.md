@@ -100,6 +100,7 @@
 * [to-grayscale-is](to-grayscale-is.md)
 * [to-indexed-png-is](to-indexed-png-is.md)
 * [to-layer-segments-is](to-layer-segments-is.md)
+* [to-metadata](to-metadata.md)
 * [to-multi](to-multi.md)
 * [to-numpy-dp](to-numpy-dp.md)
 * [to-opex-od](to-opex-od.md)

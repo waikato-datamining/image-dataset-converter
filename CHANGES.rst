@@ -42,6 +42,7 @@ Changelog
 - added support for caching plugins via `IDC_CLASS_CACHE` environment variable
 - `od-to-is` now handles labels or regexp pattern correctly
 - added `is-to-od` filter that generates object detection annotations from contours determined in image segmentation layers
+- added `to-metadata` writer that outputs the meta-data of an image
 
 
 
