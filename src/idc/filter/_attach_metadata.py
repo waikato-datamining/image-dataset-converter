@@ -1,10 +1,10 @@
 from typing import Optional
 
+from kasperl.filter import AttachMetaData as KAttachMetaData
 from idc.api import ImageData
-from kasperl.writer import MetaDataWriter as KMetaDataWriter
 
 
-class MetaDataWriter(KMetaDataWriter):
+class AttachMetaData(KAttachMetaData):
 
     def _get_name(self, item) -> Optional[str]:
         """

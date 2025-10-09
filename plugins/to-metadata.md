@@ -1,6 +1,6 @@
 # to-metadata
 
-* accepts: idc.api.ImageData
+* accepts: seppl.AnyData
 
 Saves just the meta-data.
 

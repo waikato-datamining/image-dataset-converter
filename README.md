@@ -82,8 +82,8 @@ readers (26):
    from-roicsv-od, from-storage, from-subdir-ic, from-text-file, 
    from-voc-od, from-yolo-od, get-email, list-files, poll-dir, start, 
    watch-dir
-filters (61):
-   any-to-rgb, apply-ext-mask, apply-label-mask, block, 
+filters (62):
+   any-to-rgb, apply-ext-mask, apply-label-mask, attach-metadata, block, 
    check-duplicate-filenames, coerce-box, coerce-mask, 
    convert-image-format, copy-files, count-specks, depth-to-grayscale, 
    depth-to-greyscale*, dimension-discarder, dims-to-metadata, 

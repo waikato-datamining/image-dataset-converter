@@ -31,6 +31,7 @@
 * [any-to-rgb](any-to-rgb.md)
 * [apply-ext-mask](apply-ext-mask.md)
 * [apply-label-mask](apply-label-mask.md)
+* [attach-metadata](attach-metadata.md)
 * [block](block.md)
 * [check-duplicate-filenames](check-duplicate-filenames.md)
 * [coerce-box](coerce-box.md)

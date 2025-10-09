@@ -1,5 +1,6 @@
 from ._required_format_filter import RequiredFormatFilter
 from ._image_and_annotation_filter import ImageAndAnnotationFilter, OUTPUT_FORMAT_ASIS, OUTPUT_FORMAT_BINARY, OUTPUT_FORMAT_GRAYSCALE, OUTPUT_FORMAT_RGB, OUTPUT_FORMATS, array_to_output_format, add_output_format
+from ._attach_metadata import AttachMetaData
 from ._any_to_rgb import AnyToRGB
 from ._apply_ext_mask import ApplyExternalMask
 from ._convert_image_format import ConvertImageFormat
