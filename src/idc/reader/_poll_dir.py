@@ -3,7 +3,6 @@ from typing import Dict, List
 from wai.logging import LOGGING_WARNING
 from seppl import Plugin
 from kasperl.reader import PollDir as KPollDir
-from kasperl.reader import POLL_ACTIONS, POLL_ACTION_NOTHING, POLL_ACTION_MOVE, POLL_ACTION_DELETE
 
 
 class PollDir(KPollDir):

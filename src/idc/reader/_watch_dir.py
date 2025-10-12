@@ -3,7 +3,6 @@ from typing import Dict, List
 from wai.logging import LOGGING_WARNING
 from seppl import Plugin
 from kasperl.reader import WatchDir as KWatchDir
-from kasperl.reader import EVENTS, EVENT_MODIFIED, EVENT_CREATED, WATCH_ACTIONS, WATCH_ACTION_NOTHING, WATCH_ACTION_MOVE, WATCH_ACTION_DELETE, POLLING_TYPES, POLLING_TYPE_NEVER, POLLING_TYPE_INITIAL, POLLING_TYPE_ALWAYS
 
 
 class WatchDir(KWatchDir):
