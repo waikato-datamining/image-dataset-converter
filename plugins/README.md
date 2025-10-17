@@ -25,7 +25,6 @@
 * [list-files](list-files.md)
 * [poll-dir](poll-dir.md)
 * [start](start.md)
-* [watch-dir](watch-dir.md)
 
 ## Filters
 * [any-to-rgb](any-to-rgb.md)
@@ -55,6 +54,7 @@
 * [label-present-od](label-present-od.md)
 * [label-to-metadata](label-to-metadata.md)
 * [list-to-sequence](list-to-sequence.md)
+* [load-data](load-data.md)
 * [map-labels](map-labels.md)
 * [max-records](max-records.md)
 * [metadata](metadata.md)

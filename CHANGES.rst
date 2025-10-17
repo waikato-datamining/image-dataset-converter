@@ -44,6 +44,7 @@ Changelog
 - added `is-to-od` filter that generates object detection annotations from contours determined in image segmentation layers
 - added `to-metadata` writer that outputs the meta-data of an image
 - added `attach-metadata` filter that loads meta-data from a directory and attaches it to the data passing through
+- added `load-data` filter to turn file names into data containers
 
 
 

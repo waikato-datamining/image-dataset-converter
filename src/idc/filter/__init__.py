@@ -13,6 +13,7 @@ from ._grayscale_to_binary import GrayscaleToBinary
 from ._inspect import Inspect, MODES, MODE_NONINTERACTIVE, MODE_INTERACTIVE, OUTPUTS, OUTPUT_STDOUT, OUTPUT_STDERR, OUTPUT_LOGGER, OUTPUT_FILE
 from ._is_to_od import ImageSegmentationToObjectDetection
 from ._label_to_metadata import LabelToMetaData
+from ._load_data import LoadData
 from ._map_labels import MapLabels
 from ._metadata_objdet import MetaDataObjectDetection
 from ._od_to_is import ObjectDetectionToImageSegmentation

@@ -74,15 +74,14 @@ usage: idc-convert [-h] [--help-all] [--help-plugin NAME] [-u INTERVAL]
 
 Tool for converting between image annotation dataset formats.
 
-readers (26):
+readers (25):
    from-adams-ic, from-adams-od, from-blue-channel-is, from-coco-od, 
    from-csv-dp, from-data, from-grayscale-dp, from-grayscale-is, 
    from-indexed-png-is, from-layer-segments-is, from-multi, 
    from-numpy-dp, from-opex-od, from-pfm-dp, from-pyfunc, 
    from-roicsv-od, from-storage, from-subdir-ic, from-text-file, 
-   from-voc-od, from-yolo-od, get-email, list-files, poll-dir, start, 
-   watch-dir
-filters (62):
+   from-voc-od, from-yolo-od, get-email, list-files, poll-dir, start
+filters (63):
    any-to-rgb, apply-ext-mask, apply-label-mask, attach-metadata, block, 
    check-duplicate-filenames, coerce-box, coerce-mask, 
    convert-image-format, copy-files, count-specks, depth-to-grayscale, 
@@ -91,7 +90,7 @@ filters (62):
    filter-labels, grayscale-to-binary, greyscale-to-binary*, inspect, 
    is-to-od, label-from-name, label-present*, label-present-ic, 
    label-present-is, label-present-od, label-to-metadata, 
-   list-to-sequence, map-labels, max-records, metadata, 
+   list-to-sequence, load-data, map-labels, max-records, metadata, 
    metadata-from-name, metadata-od, metadata-to-placeholder, move-files, 
    od-to-ic, od-to-is, passthrough, polygon-discarder, 
    polygon-simplifier, pyfunc-filter, randomize-records, record-window, 
