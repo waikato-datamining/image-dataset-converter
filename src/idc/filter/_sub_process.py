@@ -17,7 +17,7 @@ class SubProcess(KSubProcess):
         """
         Initializes the filter.
 
-        :param sub_flow: the command-line of the filter(s) to execute
+        :param sub_flow: the command-line/pipeline file with the filter(s) to execute
         :type sub_flow: str
         :param sub_flow_format: the format the sub_flow is in
         :type sub_flow_format: str
