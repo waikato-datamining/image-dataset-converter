@@ -7,7 +7,7 @@ Forwards the data passing through to the filter/writer defined as its sub-flow. 
 
 ```
 usage: tee [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-N LOGGER_NAME]
-           [--skip] [-f SUB_FLOW] [--field FIELD]
+           [--skip] [-f SUB_FLOW] [-F {cmdline,file}] [--field FIELD]
            [--comparison {lt,le,eq,ne,ge,gt,contains,matches}] [--value VALUE]
 
 Forwards the data passing through to the filter/writer defined as its sub-
@@ -25,8 +25,10 @@ options:
   --skip                Disables the plugin, removing it from the pipeline.
                         (default: False)
   -f SUB_FLOW, --sub_flow SUB_FLOW
-                        The command-line defining the subflow
-                        (filter(s)/writer). (default: None)
+                        The subflow to execute (filter(s)/writer). (default:
+                        None)
+  -F {cmdline,file}, --sub_flow_format {cmdline,file}
+                        The format of the pipeline. (default: cmdline)
   --field FIELD         The meta-data field to use in the comparison (default:
                         None)
   --comparison {lt,le,eq,ne,ge,gt,contains,matches}

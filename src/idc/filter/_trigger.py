@@ -12,14 +12,16 @@ class Trigger(KTrigger):
     Triggers the sub-flow with data passing through.
     """
 
-    def __init__(self, sub_flow: List[Plugin] = None,
+    def __init__(self, sub_flow: str = None, sub_flow_format: str = None,
                  field: str = None, comparison: str = COMPARISON_EQUAL, value=None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
         Initializes the filter.
 
-        :param sub_flow: the reader/filter(s)/writer to execute
-        :type sub_flow: list
+        :param sub_flow: the command-line of the reader/filter(s)/writer to execute
+        :type sub_flow: str
+        :param sub_flow_format: the format the sub_flow is in
+        :type sub_flow_format: str
         :param field: the name of the meta-data field to perform the comparison on
         :type field: str
         :param comparison: the comparison to perform
@@ -30,7 +32,8 @@ class Trigger(KTrigger):
         :param logging_level: the logging level to use
         :type logging_level: str
         """
-        super().__init__(sub_flow=sub_flow, field=field, comparison=comparison, value=value,
+        super().__init__(sub_flow=sub_flow, sub_flow_format=sub_flow_format,
+                         field=field, comparison=comparison, value=value,
                          logger_name=logger_name, logging_level=logging_level)
 
     def _available_readers(self) -> Dict[str, Plugin]:
