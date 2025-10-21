@@ -27,6 +27,8 @@
 * [start](start.md)
 
 ## Filters
+* [annotations-from-storage](annotations-from-storage.md)
+* [annotations-to-storage](annotations-to-storage.md)
 * [any-to-rgb](any-to-rgb.md)
 * [apply-ext-mask](apply-ext-mask.md)
 * [apply-label-mask](apply-label-mask.md)

@@ -81,8 +81,9 @@ readers (25):
    from-numpy-dp, from-opex-od, from-pfm-dp, from-pyfunc, 
    from-roicsv-od, from-storage, from-subdir-ic, from-text-file, 
    from-voc-od, from-yolo-od, get-email, list-files, poll-dir, start
-filters (63):
-   any-to-rgb, apply-ext-mask, apply-label-mask, attach-metadata, block, 
+filters (65):
+   annotations-from-storage, annotations-to-storage, any-to-rgb, 
+   apply-ext-mask, apply-label-mask, attach-metadata, block, 
    check-duplicate-filenames, coerce-box, coerce-mask, 
    convert-image-format, copy-files, count-specks, depth-to-grayscale, 
    depth-to-greyscale*, dimension-discarder, dims-to-metadata, 
