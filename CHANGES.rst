@@ -47,6 +47,7 @@ Changelog
 - added `load-data` filter to turn file names into data containers
 - added `annotation-to-storage` and `annotation-from-storage` filters
 - annotation data is now being type-checked when setting it
+- added `delete-storage` filter for removing objects from internal storage
 
 
 
