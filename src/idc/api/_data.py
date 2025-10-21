@@ -457,16 +457,15 @@ class ImageData(AnnotationHandler, MetaDataHandler, NameSupporter, SourceSupport
         """
         return self.annotation is not None
 
-    def set_annotation(self, ann: Any):
+    def set_annotation(self, ann: Optional[Any]):
         """
         Sets the annotations.
 
         :param ann: the annotations
         """
-        self._check_annotation(ann)
         self.annotation = ann
 
-    def get_annotation(self) -> Any:
+    def get_annotation(self) -> Optional[Any]:
         """
         Returns the annotations.
 
