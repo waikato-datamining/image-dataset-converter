@@ -7,7 +7,7 @@ Retrieves emails from the specified IMAP folder, saves the attachments in the sp
 ```
 usage: get-email [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                  [-N LOGGER_NAME] [-d FILE] [-f FOLDER] [-u] [-R] [-r REGEXP]
-                 -o DIR [-w POLL_WAIT] [-F PLACEHOLDER] [-S PLACEHOLDER]
+                 -o DIR [-w POLL_WAIT] [-O] [-F PLACEHOLDER] [-S PLACEHOLDER]
 
 Retrieves emails from the specified IMAP folder, saves the attachments in the
 specified folder and forwards the file names of the saved attachments as list.
@@ -45,6 +45,8 @@ options:
                         None)
   -w POLL_WAIT, --poll_wait POLL_WAIT
                         The poll interval in seconds (default: 60.0)
+  -O, --poll_once       Polls the mailbox only once rather than continuously.
+                        (default: False)
   -F PLACEHOLDER, --from_placeholder PLACEHOLDER
                         The optional placeholder name to store the FROM email
                         address under, without curly brackets. (default: None)
