@@ -7,7 +7,7 @@ Attaches the incoming file(s) and sends them to the specified email address(es).
 ```
 usage: send-email [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                   [-N LOGGER_NAME] [--skip] [-d FILE] -f EMAIL -t EMAIL
-                  [EMAIL ...] [-s SUBJECT] [-b TEXT]
+                  [EMAIL ...] [-s SUBJECT] [-b TEXT] [-B FILE]
 
 Attaches the incoming file(s) and sends them to the specified email
 address(es).
@@ -40,8 +40,12 @@ options:
   -s SUBJECT, --subject SUBJECT
                         The SUBJECT for the email; placeholders get
                         automatically expanded. (default: None)
-  -b TEXT, --body TEXT  The email body to use; placeholders get automatically
-                        expanded. (default: None)
+  -b TEXT, --body TEXT  The email body to use, splits on ' ' strings (not
+                        newlines!); placeholders get automatically expanded.
+                        (default: None)
+  -B FILE, --body_file FILE
+                        The file with the email body to use; placeholders get
+                        automatically expanded. (default: None)
 ```
 
 Available placeholders:
