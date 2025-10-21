@@ -62,7 +62,7 @@ class WriteLabels(BatchFilter, PlaceholderSupporter):
         :return: the description
         :rtype: str
         """
-        return "Collects labels passing through and writes them to the specified file (stdout if not provided)."
+        return "Collects labels passing through and writes them to the specified file after all data has been processed (stdout if not provided)."
 
     def accepts(self) -> List:
         """
