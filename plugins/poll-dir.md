@@ -24,15 +24,10 @@ options:
                         (default: None)
   -i DIR_IN, --dir_in DIR_IN
                         The directory to poll; Supported placeholders: {HOME},
-                        {CWD}, {TMP}, {INPUT_PATH}, {INPUT_NAMEEXT},
-                        {INPUT_NAMENOEXT}, {INPUT_EXT}, {INPUT_PARENT_PATH},
-                        {INPUT_PARENT_NAME} (default: None)
+                        {CWD}, {TMP} (default: None)
   -o DIR_OUT, --dir_out DIR_OUT
                         The directory to move the files to; Supported
-                        placeholders: {HOME}, {CWD}, {TMP}, {INPUT_PATH},
-                        {INPUT_NAMEEXT}, {INPUT_NAMENOEXT}, {INPUT_EXT},
-                        {INPUT_PARENT_PATH}, {INPUT_PARENT_NAME} (default:
-                        None)
+                        placeholders: {HOME}, {CWD}, {TMP} (default: None)
   -w POLL_WAIT, --poll_wait POLL_WAIT
                         The poll interval in seconds (default: 1.0)
   -W PROCESS_WAIT, --process_wait PROCESS_WAIT
@@ -59,9 +54,3 @@ Available placeholders:
 * `{HOME}`: The home directory of the current user.
 * `{CWD}`: The current working directory.
 * `{TMP}`: The temp directory.
-* `{INPUT_PATH}`: The directory part of the current input, i.e., `/some/where` of input `/some/where/file.txt`.
-* `{INPUT_NAMEEXT}`: The name (incl extension) of the current input, i.e., `file.txt` of input `/some/where/file.txt`.
-* `{INPUT_NAMENOEXT}`: The name (excl extension) of the current input, i.e., `file` of input `/some/where/file.txt`.
-* `{INPUT_EXT}`: The extension of the current input (incl dot), i.e., `.txt` of input `/some/where/file.txt`.
-* `{INPUT_PARENT_PATH}`: The directory part of the parent directory of the current input, i.e., `/some` of input `/some/where/file.txt`.
-* `{INPUT_PARENT_NAME}`: The name of the parent directory of the current input, i.e., `where` of input `/some/where/file.txt`.
