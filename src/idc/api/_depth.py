@@ -2,7 +2,7 @@ import base64
 import logging
 import numpy as np
 from PIL import Image
-from typing import Tuple, Dict
+from typing import Tuple, Dict, Any
 
 from ._data import ImageData
 
@@ -60,6 +60,29 @@ class DepthData(ImageData):
         :rtype: bool
         """
         return (self.annotation is not None) and (self.annotation.size > 0)
+
+    def _is_correct_annotation_type(self, ann: Any):
+        """
+        Checks whether the annotation type is valid. Raises an exception if not.
+
+        :param ann: the annotations to check, never None
+        """
+        if not isinstance(ann, DepthInformation):
+            raise Exception("Unsupported annotation type: %s" % str(type(ann)))
+
+    def set_annotation(self, ann: Any):
+        """
+        Sets the annotations.
+
+        :param ann: the annotations
+        """
+        if ann is None:
+            self.annotation = None
+            return
+        if isinstance(ann, DepthInformation):
+            self.annotation = ann
+        else:
+            raise Exception("Unsupported annotation type: %s" % str(type(ann)))
 
     def _annotation_to_dict(self):
         """

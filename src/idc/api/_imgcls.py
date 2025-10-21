@@ -1,5 +1,5 @@
 from PIL import Image
-from typing import Tuple, Dict
+from typing import Tuple, Dict, Any
 
 from ._data import ImageData
 
@@ -25,6 +25,15 @@ class ImageClassificationData(ImageData):
         :rtype: bool
         """
         return (self.annotation is not None) and (len(self.annotation) > 0)
+
+    def _is_correct_annotation_type(self, ann: Any):
+        """
+        Checks whether the annotation type is valid. Raises an exception if not.
+
+        :param ann: the annotations to check, never None
+        """
+        if not isinstance(ann, str):
+            raise Exception("Unsupported annotation type: %s" % str(type(ann)))
 
     def _annotation_to_dict(self):
         """

@@ -1,5 +1,5 @@
 import copy
-from typing import Tuple, Dict, Union, Optional
+from typing import Tuple, Dict, Union, Optional, Any
 
 from PIL import Image
 from wai.common.adams.imaging.locateobjects import LocatedObject, LocatedObjects
@@ -63,6 +63,15 @@ class ObjectDetectionData(ImageData):
         :rtype: bool
         """
         return (self.annotation is not None) and (len(self.annotation) > 0)
+
+    def _is_correct_annotation_type(self, ann: Any):
+        """
+        Checks whether the annotation type is valid. Raises an exception if not.
+
+        :param ann: the annotations to check, never None
+        """
+        if not (isinstance(ann, LocatedObjects) or isinstance(ann, NormalizedLocatedObjects)):
+            raise Exception("Unsupported annotation type: %s" % str(type(ann)))
 
     def is_normalized(self) -> bool:
         """

@@ -409,6 +409,45 @@ class ImageData(AnnotationHandler, MetaDataHandler, NameSupporter, SourceSupport
             return True
         return False
 
+    @property
+    def annotation(self) -> Optional[Any]:
+        """
+        Returns the current annotation, if any.
+
+        :return: the annotation
+        """
+        return self._annotation
+
+    @annotation.setter
+    def annotation(self, ann: Optional[Any]):
+        """
+        Sets the annotation to use.
+
+        :param ann: the annotation, can be None
+        """
+        self._annotation = self._check_annotation(ann)
+
+    def _is_correct_annotation_type(self, ann: Any):
+        """
+        Checks whether the annotation type is valid. Raises an exception if not.
+        Default annotations performs no check.
+
+        :param ann: the annotations to check
+        """
+        pass
+
+    def _check_annotation(self, ann: Any):
+        """
+        Checks whether the annotations are valid. Raises an exception if invalid type.
+        Ignores None values.
+
+        :param ann: the annotations to check
+        :return: the annotations
+        """
+        if ann is not None:
+            self._is_correct_annotation_type(ann)
+        return ann
+
     def has_annotation(self) -> bool:
         """
         Checks whether annotations are present.
@@ -417,6 +456,15 @@ class ImageData(AnnotationHandler, MetaDataHandler, NameSupporter, SourceSupport
         :rtype: bool
         """
         return self.annotation is not None
+
+    def set_annotation(self, ann: Any):
+        """
+        Sets the annotations.
+
+        :param ann: the annotations
+        """
+        self._check_annotation(ann)
+        self.annotation = ann
 
     def get_annotation(self) -> Any:
         """
