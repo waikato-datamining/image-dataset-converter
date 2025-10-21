@@ -190,8 +190,9 @@ class ImageData(AnnotationHandler, MetaDataHandler, NameSupporter, SourceSupport
         """ the size (width, height) tuple of the image. """
         self._metadata = metadata
         """ the dictionary with optional meta-data. """
-        self.annotation = annotation
+        self._annotation = None
         """ the associated annotation data. """
+        self.annotation = annotation
 
     def logger(self) -> logging.Logger:
         """
@@ -436,12 +437,12 @@ class ImageData(AnnotationHandler, MetaDataHandler, NameSupporter, SourceSupport
         """
         pass
 
-    def _check_annotation(self, ann: Any):
+    def _check_annotation(self, ann: Optional[Any]):
         """
         Checks whether the annotations are valid. Raises an exception if invalid type.
         Ignores None values.
 
-        :param ann: the annotations to check
+        :param ann: the annotations to check, can be None
         :return: the annotations
         """
         if ann is not None:
