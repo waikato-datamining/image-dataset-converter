@@ -6,9 +6,10 @@ Retrieves emails from the specified IMAP folder, saves the attachments in the sp
 
 ```
 usage: get-email [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                 [-N LOGGER_NAME] [-d FILE] [-f FOLDER] [-u] [-R] [-r REGEXP]
-                 -o DIR [-w SECONDS] [-W SECONDS] [-c THRESHOLD] [-m MAX]
-                 [-F PLACEHOLDER] [-S PLACEHOLDER]
+                 [-N LOGGER_NAME] [-d FILE] [-f FOLDER] [-u]
+                 [-a {none,read,delete}] [-r REGEXP] -o DIR [-w SECONDS]
+                 [-W SECONDS] [-c THRESHOLD] [-m MAX] [-F PLACEHOLDER]
+                 [-S PLACEHOLDER]
 
 Retrieves emails from the specified IMAP folder, saves the attachments in the
 specified folder and forwards the file names of the saved attachments as list.
@@ -35,8 +36,9 @@ options:
                         INBOX)
   -u, --only_unseen     Whether to only retrieve unseen/new emails. (default:
                         False)
-  -R, --mark_as_read    Whether to mark the emails as read after retrieval.
-                        (default: False)
+  -a {none,read,delete}, --action {none,read,delete}
+                        The action to apply to the retrieved emails. (default:
+                        none)
   -r REGEXP, --regexp REGEXP
                         The regular expression that the attachment file names
                         must match. (default: None)
