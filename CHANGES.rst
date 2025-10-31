@@ -12,7 +12,7 @@ Changelog
 - the `metadata-from-name` filter can work on the path now as well (must be present)
 - the `label-present-is` filter now lets the user to specify a minimum number of pixels that need to be present in the layers
 - switched to `kasperl` library for base API and generic pipeline plugins
-- requiring seppl>=0.2.21 now
+- requiring seppl>=0.3.0 now
 - added `@abc.abstractmethod` decorator where appropriate
 - the `use-mask` filter now sets the image format PNG in the generated output container
 - the readers `from-grayscale-dp`, `from-indexed-png-is`, `from-blue-channel-is` and
