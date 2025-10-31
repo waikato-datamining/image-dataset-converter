@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.1.0 (????-??-??)
+0.1.0 (2025-10-31)
 -------------------
 
 - added `dims-to-metadata` filter for transferring image dimension to metadata
