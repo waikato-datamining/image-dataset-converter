@@ -1,6 +1,15 @@
 Changelog
 =========
 
+0.1.1 (????-??-??)
+------------------
+
+- added `from-instance-png-is`, `from-instance-png-od` readers for loading PNGs that use a separate
+  palette index for each object instance
+- added `PNG_EXTENSIONS` constant
+- added `imgseg_from_instancepng`, `objdet_from_instancepng`, `contours_to_objdet` methods
+
+
 0.1.0 (2025-10-31)
 -------------------
 

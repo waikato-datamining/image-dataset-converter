@@ -9,6 +9,8 @@
 * [from-grayscale-dp](from-grayscale-dp.md)
 * [from-grayscale-is](from-grayscale-is.md)
 * [from-indexed-png-is](from-indexed-png-is.md)
+* [from-instance-png-is](from-instance-png-is.md)
+* [from-instance-png-od](from-instance-png-od.md)
 * [from-layer-segments-is](from-layer-segments-is.md)
 * [from-multi](from-multi.md)
 * [from-numpy-dp](from-numpy-dp.md)
