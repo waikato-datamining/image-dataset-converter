@@ -184,7 +184,7 @@ def split_layers(array: np.ndarray, labels: List[str]) -> ImageSegmentationAnnot
 
 
 def imgseg_from_indexedpng(img: Image.Image, labels: List[str], label_mapping: Dict[int, str],
-                           logger: logging.Logger, background: int = 0) -> ImageSegmentationAnnotations:
+                           logger: logging.Logger = None, background: int = 0) -> ImageSegmentationAnnotations:
     """
     Loads the annotations from the indexed png.
 
@@ -223,6 +223,30 @@ def imgseg_from_indexedpng(img: Image.Image, labels: List[str], label_mapping: D
         sub_arr = np.where(arr == index, 255, 0).astype(np.uint8)
         layers[label_mapping[label_index]] = sub_arr
     return ImageSegmentationAnnotations(labels, layers)
+
+
+def imgseg_from_instancepng(img: Image.Image, label: str, logger: logging.Logger = None,
+                            background: int = 0) -> ImageSegmentationAnnotations:
+    """
+    Loads the annotations from the instance png, i.e., a png with each object instance as separate palette index.
+
+    :param img: the image to turn into annotations
+    :type img: Image.Image
+    :param label: the label to use
+    :type label: str
+    :param logger: the (optional) logger for logging messages
+    :type logger: logging.Logger
+    :param background: the index (0-255) of the background, default 0
+    :type background: int
+    :return: the generated annotations
+    :rtype: ImageSegmentationAnnotations
+    """
+    arr = np.asarray(img).astype(np.uint8)
+    arr = np.where(arr == background, 0, arr)
+    arr = np.where(arr > 0, 255, 0).astype(np.uint8)
+    layers = dict()
+    layers[label] = arr
+    return ImageSegmentationAnnotations([label], layers)
 
 
 def imgseg_to_indexedpng(width: int, height: int, ann: ImageSegmentationAnnotations, palette_list: List[int], background: int = 0) -> Image.Image:

@@ -10,6 +10,8 @@ from kasperl.api import locate_file
 
 JPEG_EXTENSIONS = [".jpg", ".jpeg", ".JPG", ".JPEG"]
 
+PNG_EXTENSIONS = [".png", ".PNG"]
+
 
 def locate_image(path: str, rel_path: str = None, suffix: str = None) -> Optional[str]:
     """
