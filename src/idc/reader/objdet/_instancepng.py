@@ -57,7 +57,6 @@ class InstancePngObjectDetectionReader(Reader, PlaceholderSupporter, Annotations
         self.min_size = min_size
         self.max_size = max_size
         self.annotations_only = annotations_only
-        self._label_mapping = None
         self._inputs = None
         self._current_input = None
 
@@ -142,7 +141,6 @@ class InstancePngObjectDetectionReader(Reader, PlaceholderSupporter, Annotations
             self.image_prefix = None
             self.annotation_prefix = None
         self._inputs = None
-        self.logger().debug("label mapping: %s" % str(self._label_mapping))
         if self.annotations_only is None:
             self.annotations_only = False
 
