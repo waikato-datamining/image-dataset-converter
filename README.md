@@ -43,9 +43,11 @@ The following dataset formats are supported:
 | Image segmentation     | [Blue-channel](formats/bluechannel.md)                                        | [Y](plugins/from-blue-channel-is.md)   | [Y](plugins/to-blue-channel-is.md)   | 
 | Image segmentation     | [Grayscale](formats/grayscale.md)                                             | [Y](plugins/from-grayscale-is.md)      | [Y](plugins/to-grayscale-is.md)      | 
 | Image segmentation     | [Indexed PNG](formats/indexedpng.md)                                          | [Y](plugins/from-indexed-png-is.md)    | [Y](plugins/to-indexed-png-is.md)    | 
+| Image segmentation     | [Instance PNG](formats/instancepng.md)                                        | [Y](plugins/from-instance-png-is.md)   |                                      | 
 | Image segmentation     | [Layer segments](formats/layersegments.md)                                    | [Y](plugins/from-layer-segments-is.md) | [Y](plugins/to-layer-segments-is.md) | 
 | Object detection       | [ADAMS](formats/adams.md)                                                     | [Y](plugins/from-adams-od.md)          | [Y](plugins/to-adams-od.md)          | 
 | Object detection       | [COCO](https://cocodataset.org/#format-data)                                  | [Y](plugins/from-coco-od.md)           | [Y](plugins/to-coco-od.md)           | 
+| Object detection       | [Instance PNG](formats/instancepng.md)                                        | [Y](plugins/from-instance-png-od.md)   | [Y](plugins/to-instance-png-od.md)   | 
 | Object detection       | [OPEX](https://github.com/WaikatoLink2020/objdet-predictions-exchange-format) | [Y](plugins/from-opex-od.md)           | [Y](plugins/to-opex-od.md)           | 
 | Object detection       | [ROI CSV](formats/roicsv.md)                                                  | [Y](plugins/from-roicsv-od.md)         | [Y](plugins/to-roicsv-od.md)         | 
 | Object detection       | [VOC](formats/voc.md)                                                         | [Y](plugins/from-voc-od.md)            | [Y](plugins/to-voc-od.md)            | 
@@ -100,13 +102,13 @@ filters (66):
    rgb-to-grayscale, rgb-to-greyscale*, sample, set-metadata, 
    set-placeholder, set-storage, sort-pixels, split-records, stop, 
    strip-annotations, sub-process, tee, trigger, use-mask, write-labels
-writers (25):
+writers (26):
    console, delete-files, send-email, to-adams-ic, to-adams-od, 
    to-blue-channel-is, to-coco-od, to-csv-dp, to-data, to-grayscale-dp, 
-   to-grayscale-is, to-indexed-png-is, to-layer-segments-is, 
-   to-metadata, to-multi, to-numpy-dp, to-opex-od, to-pfm-dp, to-pyfunc, 
-   to-roicsv-od, to-storage, to-subdir-ic, to-text-file, to-voc-od, 
-   to-yolo-od
+   to-grayscale-is, to-indexed-png-is, to-instance-png-od, 
+   to-layer-segments-is, to-metadata, to-multi, to-numpy-dp, to-opex-od, 
+   to-pfm-dp, to-pyfunc, to-roicsv-od, to-storage, to-subdir-ic, 
+   to-text-file, to-voc-od, to-yolo-od
 
 options:
   -h, --help           Show basic help message and exit.

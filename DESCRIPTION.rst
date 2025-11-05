@@ -6,8 +6,8 @@ Dataset formats:
 
 - depth data: CSV (r/w), grayscale (r/w), numpy (r/w), PFM (r/w)
 - image classification: ADAMS (r/w), sub-dir (r/w)
-- image segmentation: blue-channel (r/w), grayscale (r/w), indexed PNG (r/w), layer segments (r/w)
-- object detection: ADAMS (r/w), COCO (r/w), OPEX (r/w), ROI (r/w), VOC (r/w), YOLO (r/w)
+- image segmentation: blue-channel (r/w), grayscale (r/w), indexed PNG (r/w), instance PNG (r), layer segments (r/w)
+- object detection: ADAMS (r/w), COCO (r/w), instance PNG (r/w), OPEX (r/w), ROI (r/w), VOC (r/w), YOLO (r/w)
 
 Examples can be found here:
 

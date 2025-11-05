@@ -105,6 +105,7 @@
 * [to-grayscale-dp](to-grayscale-dp.md)
 * [to-grayscale-is](to-grayscale-is.md)
 * [to-indexed-png-is](to-indexed-png-is.md)
+* [to-instance-png-od](to-instance-png-od.md)
 * [to-layer-segments-is](to-layer-segments-is.md)
 * [to-metadata](to-metadata.md)
 * [to-multi](to-multi.md)
