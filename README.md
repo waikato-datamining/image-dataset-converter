@@ -76,14 +76,14 @@ usage: idc-convert [-h] [--help-all] [--help-plugin NAME] [-u INTERVAL]
 
 Tool for converting between image annotation dataset formats.
 
-readers (27):
-   from-adams-ic, from-adams-od, from-blue-channel-is, from-coco-od, 
-   from-csv-dp, from-data, from-grayscale-dp, from-grayscale-is, 
-   from-indexed-png-is, from-instance-png-is, from-instance-png-od, 
-   from-layer-segments-is, from-multi, from-numpy-dp, from-opex-od, 
-   from-pfm-dp, from-pyfunc, from-roicsv-od, from-storage, 
-   from-subdir-ic, from-text-file, from-voc-od, from-yolo-od, get-email, 
-   list-files, poll-dir, start
+readers (28):
+   cron, from-adams-ic, from-adams-od, from-blue-channel-is, 
+   from-coco-od, from-csv-dp, from-data, from-grayscale-dp, 
+   from-grayscale-is, from-indexed-png-is, from-instance-png-is, 
+   from-instance-png-od, from-layer-segments-is, from-multi, 
+   from-numpy-dp, from-opex-od, from-pfm-dp, from-pyfunc, 
+   from-roicsv-od, from-storage, from-subdir-ic, from-text-file, 
+   from-voc-od, from-yolo-od, get-email, list-files, poll-dir, start
 filters (66):
    annotations-from-storage, annotations-to-storage, any-to-rgb, 
    apply-ext-mask, apply-label-mask, attach-metadata, block, 

@@ -1,5 +1,6 @@
 # image-dataset-converter plugins
 ## Readers
+* [cron](cron.md)
 * [from-adams-ic](from-adams-ic.md)
 * [from-adams-od](from-adams-od.md)
 * [from-blue-channel-is](from-blue-channel-is.md)
