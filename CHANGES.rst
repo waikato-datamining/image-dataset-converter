@@ -12,6 +12,7 @@ Changelog
   as separate palette indices
 - added `watch-dir` - was accidentally left out of `__init__.py`
 - added `remove-alpha` filter for removing any alpha channel from base images
+- the `sub-dir` reader now sets the current input
 
 
 0.1.0 (2025-10-31)

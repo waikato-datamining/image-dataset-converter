@@ -150,6 +150,7 @@ class SubDirReader(Reader, PlaceholderSupporter):
                         files.append(path)
                 files = sorted(files)
                 for file in files:
+                    self.session.current_input = file
                     yield ImageClassificationData(source=file, annotation=os.path.basename(sub_dir))
             del self._sub_dirs[input_dir]
 
