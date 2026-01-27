@@ -1,17 +1,16 @@
-# set-metadata
+# log-data
 
 * accepts: seppl.AnyData
 * generates: seppl.AnyData
 
-Sets the specified key/value pair in the meta-data. Can use the data passing through instead of the specified value as well.
+Logs information about the data passing through, either storing it in the specified file or outputting it on stdout.
 
 ```
-usage: set-metadata [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                    [-N LOGGER_NAME] [--skip] -f FIELD [-v VALUE]
-                    [-t {string,bool,numeric}] [-u]
+usage: log-data [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-N LOGGER_NAME]
+                [--skip] -f FORMAT [-o FILE] [-d]
 
-Sets the specified key/value pair in the meta-data. Can use the data passing
-through instead of the specified value as well.
+Logs information about the data passing through, either storing it in the
+specified file or outputting it on stdout.
 
 options:
   -h, --help            show this help message and exit
@@ -22,19 +21,23 @@ options:
                         name by default (default: None)
   --skip                Disables the plugin, removing it from the pipeline.
                         (default: False)
-  -f FIELD, --field FIELD
-                        The meta-data field to set (default: None)
-  -v VALUE, --value VALUE
-                        The value to store in the meta-data; in case of type
-                        string, placeholders in the value get automatically
-                        expanded; Supported placeholders: {HOME}, {CWD},
-                        {TMP}, {INPUT_PATH}, {INPUT_NAMEEXT},
-                        {INPUT_NAMENOEXT}, {INPUT_EXT}, {INPUT_PARENT_PATH},
-                        {INPUT_PARENT_NAME} (default: None)
-  -t {string,bool,numeric}, --as_type {string,bool,numeric}
-                        How to interpret the value (default: string)
-  -u, --use_current     Whether to use the data passing through instead of the
-                        specified value. (default: False)
+  -f FORMAT, --log_format FORMAT
+                        The format to use for logging; {NAME}: for
+                        NameSupporter data, {SOURCE}: for SourceSupporter
+                        data, {HAS_ANNOTATION}/{ANNOTATION}: for
+                        AnnotationHandler data, {META.<key>}: for
+                        MetaDataHandler data (<key> is the key in the meta-
+                        data); use \t for tab and \n for new-line (default:
+                        None)
+  -o FILE, --output_file FILE
+                        The file to write the logging data to; Supported
+                        placeholders: {HOME}, {CWD}, {TMP}, {INPUT_PATH},
+                        {INPUT_NAMEEXT}, {INPUT_NAMENOEXT}, {INPUT_EXT},
+                        {INPUT_PARENT_PATH}, {INPUT_PARENT_NAME} (default:
+                        None)
+  -d, --delete_on_initialize
+                        Whether to remove any existing file when initializing
+                        the writer. (default: False)
 ```
 
 Available placeholders:

@@ -62,6 +62,7 @@
 * [label-to-metadata](label-to-metadata.md)
 * [list-to-sequence](list-to-sequence.md)
 * [load-data](load-data.md)
+* [log-data](log-data.md)
 * [map-labels](map-labels.md)
 * [max-records](max-records.md)
 * [metadata](metadata.md)
