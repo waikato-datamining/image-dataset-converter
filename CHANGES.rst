@@ -11,6 +11,7 @@ Changelog
 - added `to-instance-png-od` writer that outputs the object annotations of a particular label
   as separate palette indices
 - added `watch-dir` - was accidentally left out of `__init__.py`
+- added `remove-alpha` filter for removing any alpha channel from base images
 
 
 0.1.0 (2025-10-31)

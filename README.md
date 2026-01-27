@@ -76,15 +76,16 @@ usage: idc-convert [-h] [--help-all] [--help-plugin NAME] [-u INTERVAL]
 
 Tool for converting between image annotation dataset formats.
 
-readers (28):
+readers (29):
    cron, from-adams-ic, from-adams-od, from-blue-channel-is, 
    from-coco-od, from-csv-dp, from-data, from-grayscale-dp, 
    from-grayscale-is, from-indexed-png-is, from-instance-png-is, 
    from-instance-png-od, from-layer-segments-is, from-multi, 
    from-numpy-dp, from-opex-od, from-pfm-dp, from-pyfunc, 
    from-roicsv-od, from-storage, from-subdir-ic, from-text-file, 
-   from-voc-od, from-yolo-od, get-email, list-files, poll-dir, start
-filters (66):
+   from-voc-od, from-yolo-od, get-email, list-files, poll-dir, start, 
+   watch-dir
+filters (67):
    annotations-from-storage, annotations-to-storage, any-to-rgb, 
    apply-ext-mask, apply-label-mask, attach-metadata, block, 
    check-duplicate-filenames, coerce-box, coerce-mask, 
@@ -98,8 +99,8 @@ filters (66):
    max-records, metadata, metadata-from-name, metadata-od, 
    metadata-to-placeholder, move-files, od-to-ic, od-to-is, passthrough, 
    polygon-discarder, polygon-simplifier, pyfunc-filter, 
-   randomize-records, record-window, remove-classes, rename, 
-   rgb-to-grayscale, rgb-to-greyscale*, sample, set-metadata, 
+   randomize-records, record-window, remove-alpha, remove-classes, 
+   rename, rgb-to-grayscale, rgb-to-greyscale*, sample, set-metadata, 
    set-placeholder, set-storage, sort-pixels, split-records, stop, 
    strip-annotations, sub-process, tee, trigger, use-mask, write-labels
 writers (26):

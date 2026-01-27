@@ -19,6 +19,7 @@ from ._metadata_objdet import MetaDataObjectDetection
 from ._od_to_is import ObjectDetectionToImageSegmentation
 from ._od_to_ic import ObjectDetectionToImageClassification, MULTIPLICITY, MULTIPLICITY_ERROR, MULTIPLICITY_SKIP, MULTIPLICITY_SINGLE, MULTIPLICITY_MAJORITY
 from ._pyfunc_filter import PythonFunctionFilter
+from ._remove_alpha import RemoveAlpha
 from ._remove_classes import RemoveClasses
 from ._rgb_to_grayscale import RGBToGrayscale
 from ._sort_pixels import SortPixels

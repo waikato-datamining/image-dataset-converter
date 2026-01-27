@@ -28,6 +28,7 @@
 * [list-files](list-files.md)
 * [poll-dir](poll-dir.md)
 * [start](start.md)
+* [watch-dir](watch-dir.md)
 
 ## Filters
 * [annotations-from-storage](annotations-from-storage.md)
@@ -76,6 +77,7 @@
 * [pyfunc-filter](pyfunc-filter.md)
 * [randomize-records](randomize-records.md)
 * [record-window](record-window.md)
+* [remove-alpha](remove-alpha.md)
 * [remove-classes](remove-classes.md)
 * [rename](rename.md)
 * [rgb-to-grayscale](rgb-to-grayscale.md)

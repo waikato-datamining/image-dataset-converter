@@ -844,3 +844,38 @@ def can_process_format(image: Image.Image, req_format: str, incorrect_format_act
         else:
             raise Exception("Unhandled incorrect format action: %s" % incorrect_format_action)
     return True
+
+
+def remove_alpha(item: ImageData, logger: logging.Logger = None) -> Optional[Image.Image]:
+    """
+    Removes the alpha channel from the image.
+
+    :param item: the image data to process
+    :type item: ImageData
+    :param logger: the optional logger instance to use for logging
+    :type logger: logging.Logger
+    :return: the updated image if alpha channel removed, otherwise None
+    :rtype: Image.Image
+    """
+    result = None
+    img = item.image
+
+    if img.has_transparency_data:
+        result = None
+        if img.mode in ["RGBA", "RGBa"]:
+            result = img.convert("RGB")
+        elif img.mode in ["LA", "La"]:
+            result = img.convert("L")
+        elif img.mode == "PA":
+            result = img.convert("P")
+        else:
+            if logger is not None:
+                logger.warning("Don't know how to remove alpha channel from image type '%s': %s" % (img.mode, item.image_name))
+        if result is not None:
+            if logger is not None:
+                logger.info("Alpha channel removed: %s" % item.image_name)
+    else:
+        if logger is not None:
+            logger.info("No alpha channel present: %s" % item.image_name)
+
+    return result
