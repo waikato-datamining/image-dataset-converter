@@ -707,6 +707,28 @@ def ensure_binary(image: Image.Image, logger: logging.Logger = None) -> Image.Im
     return image
 
 
+def ensure_indexed_palette(image: Image.Image, logger: logging.Logger = None) -> Image.Image:
+    """
+    Ensures that the image is a one with an indexed palette. Converts if necessary.
+    If a logger is supplied, will output a warning in case the conversion occurs.
+
+    :param image: the image to potentially convert
+    :type image: Image.Image
+    :param logger: the optional Logger instance
+    :return: the (potentially) updated image
+    :rtype: Image.Image
+    """
+    if image.mode != 'P':
+        # remove any alpha channel
+        image_new = remove_alpha(image, logger=logger)
+        if image_new is not None:
+            image = image_new
+        if logger is not None:
+            logger.warning("Not an image with an indexed palette (mode: %s), converting..." % image.mode)
+        image = image.convert('P')
+    return image
+
+
 def binary_required_info() -> str:
     """
     Returns a note about a binary image being required and that the 'grayscale-to-binary' filter can be used.
@@ -846,19 +868,24 @@ def can_process_format(image: Image.Image, req_format: str, incorrect_format_act
     return True
 
 
-def remove_alpha(item: ImageData, logger: logging.Logger = None) -> Optional[Image.Image]:
+def remove_alpha(item: [ImageData, Image.Image], logger: logging.Logger = None) -> Optional[Image.Image]:
     """
     Removes the alpha channel from the image.
 
     :param item: the image data to process
-    :type item: ImageData
+    :type item: ImageData or Image.Image
     :param logger: the optional logger instance to use for logging
     :type logger: logging.Logger
     :return: the updated image if alpha channel removed, otherwise None
     :rtype: Image.Image
     """
     result = None
-    img = item.image
+    if isinstance(item, ImageData):
+        img = item.image
+        image_name = item.image_name
+    else:
+        img = item
+        image_name = None
 
     if img.has_transparency_data:
         result = None
@@ -870,12 +897,21 @@ def remove_alpha(item: ImageData, logger: logging.Logger = None) -> Optional[Ima
             result = img.convert("P")
         else:
             if logger is not None:
-                logger.warning("Don't know how to remove alpha channel from image type '%s': %s" % (img.mode, item.image_name))
+                if image_name is None:
+                    logger.warning("Don't know how to remove alpha channel from image type '%s'!" % img.mode)
+                else:
+                    logger.warning("Don't know how to remove alpha channel from image type '%s': %s" % (img.mode, item.image_name))
         if result is not None:
             if logger is not None:
-                logger.info("Alpha channel removed: %s" % item.image_name)
+                if image_name is None:
+                    logger.info("Alpha channel removed")
+                else:
+                    logger.info("Alpha channel removed: %s" % item.image_name)
     else:
         if logger is not None:
-            logger.info("No alpha channel present: %s" % item.image_name)
+            if image_name is None:
+                logger.info("No alpha channel present")
+            else:
+                logger.info("No alpha channel present: %s" % item.image_name)
 
     return result
