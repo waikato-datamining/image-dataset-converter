@@ -7,7 +7,7 @@ Logs information about the data passing through, either storing it in the specif
 
 ```
 usage: log-data [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-N LOGGER_NAME]
-                [--skip] -f FORMAT [-o FILE] [-d]
+                [--skip] [-f FORMAT] [-o FILE] [-d]
 
 Logs information about the data passing through, either storing it in the
 specified file or outputting it on stdout.
@@ -22,13 +22,16 @@ options:
   --skip                Disables the plugin, removing it from the pipeline.
                         (default: False)
   -f FORMAT, --log_format FORMAT
-                        The format to use for logging; {NAME}: for
+                        The format to use for logging; {DATE}: for the current
+                        data (YYYY-MM-DD), {TIME}: for the current time
+                        (HH:MM:SS.SSSSSS), {TS}: for the current date/time
+                        (YYYY-MM-DD HH:MM:SS.SSSSSS), {NAME}: for
                         NameSupporter data, {SOURCE}: for SourceSupporter
                         data, {HAS_ANNOTATION}/{ANNOTATION}: for
                         AnnotationHandler data, {META.<key>}: for
                         MetaDataHandler data (<key> is the key in the meta-
                         data); use \t for tab and \n for new-line (default:
-                        None)
+                        {TS}: {NAME})
   -o FILE, --output_file FILE
                         The file to write the logging data to; Supported
                         placeholders: {HOME}, {CWD}, {TMP}, {INPUT_PATH},
