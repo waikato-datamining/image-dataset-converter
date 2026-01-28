@@ -6,7 +6,8 @@ from seppl.io import locate_files
 from wai.logging import LOGGING_WARNING
 
 from kasperl.api import locate_file, Reader, AnnotationsOnlyReader, add_annotations_only_reader_param, annotation_to_name
-from idc.api import ImageSegmentationData, load_image_from_file, imgseg_from_indexedpng, JPEG_EXTENSIONS, empty_image, FORMAT_JPEG, FORMAT_EXTENSIONS
+from idc.api import ImageSegmentationData, load_image_from_file, imgseg_from_indexedpng, JPEG_EXTENSIONS, empty_image, \
+    FORMAT_JPEG, FORMAT_EXTENSIONS, ensure_indexed_palette
 
 
 class IndexedPngImageSegmentationReader(Reader, PlaceholderSupporter, AnnotationsOnlyReader):
@@ -145,7 +146,7 @@ class IndexedPngImageSegmentationReader(Reader, PlaceholderSupporter, Annotation
 
         # read annotations
         self.logger().info("Reading from: " + str(self.session.current_input))
-        ann = load_image_from_file(self.session.current_input)
+        ann = ensure_indexed_palette(load_image_from_file(self.session.current_input), logger=self.logger())
         annotations = imgseg_from_indexedpng(ann, self.labels, self._label_mapping, self.logger(), background=self.background)
 
         # associated image

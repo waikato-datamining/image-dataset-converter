@@ -13,6 +13,7 @@ Changelog
 - added `watch-dir` - was accidentally left out of `__init__.py`
 - added `remove-alpha` filter for removing any alpha channel from base images
 - the `sub-dir` reader now sets the current input
+- `from-instance-png-is` and `from-indexed-png-is` now ensure that the annotation is an image with an indexed palette
 
 
 0.1.0 (2025-10-31)
