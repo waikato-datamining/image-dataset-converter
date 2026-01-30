@@ -7,7 +7,7 @@ Renames files using a user-supplied format.
 
 ```
 usage: rename [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-N LOGGER_NAME]
-              [--skip] [-f NAME_FORMAT]
+              [--skip] [-f NAME_FORMAT] [-r REGEXP] [-g GROUPS]
 
 Renames files using a user-supplied format.
 
@@ -35,4 +35,11 @@ options:
                         directory of the file: 'p': immediate parent, the more
                         the p's the higher up in the hierarchy. (default:
                         {name}{ext})
+  -r REGEXP, --regexp REGEXP
+                        The regular expression to use for extracting groups
+                        from the name determined by --name-format. (default:
+                        None)
+  -g GROUPS, --groups GROUPS
+                        The format for assembling the extracted groups ({1}:
+                        first group, etc). (default: None)
 ```
