@@ -304,6 +304,58 @@ options:
 ```
 
 
+### Layer segments
+
+```
+usage: idc-layer-segments [-h] -i DIR [DIR ...] [-m REGEXP] [-g REGEXP]
+                          [-a {none,grayscale-stretch}] -I DIR [DIR ...]
+                          [-M REGEXP] [-G REGEXP] [-s SUFFIX] -o DIR [-n]
+                          [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
+
+Creates layer segments annotations from PNG files with individual annotations.
+Each individual annotation will get a different suffix.
+
+options:
+  -h, --help            show this help message and exit
+  -i DIR [DIR ...], --base_input DIR [DIR ...]
+                        The dir(s) to scan for image files that form the base
+                        image for the annotations; glob syntax is supported.
+                        (default: None)
+  -m REGEXP, --base_match REGEXP
+                        The regular expression group(s) to use for extracting
+                        the new base name for the image (extension is removed
+                        before matching). (default: (.*))
+  -g REGEXP, --base_format REGEXP
+                        The name format to use for constructing the new base
+                        name from the groups (no extension; group placeholder:
+                        {X} with X being group 1, 2, etc). (default: {1})
+  -a {none,grayscale-stretch}, --base_aug {none,grayscale-stretch}
+                        The augmentation to apply to the base image (default:
+                        none)
+  -I DIR [DIR ...], --annotations_input DIR [DIR ...]
+                        The dirs(s) to scan for image files that make up the
+                        annotations; glob syntax is supported. (default: None)
+  -M REGEXP, --annotations_match REGEXP
+                        The regular expression group(s) to use for extracting
+                        the new annotation name for the image (extension is
+                        removed before matching). (default: (.*))
+  -G REGEXP, --annotations_format REGEXP
+                        The name format to use for constructing the new
+                        annotation name from the groups (no extension; group
+                        placeholder: {X} with X being group 1, 2, etc).
+                        (default: {1})
+  -s SUFFIX, --suffix SUFFIX
+                        The suffix to use for the layers, 1-based indexed gets
+                        automatically appended. (default: -object-)
+  -o DIR, --output DIR  The directory to store the cleaned up base image and
+                        annotations in. (default: None)
+  -n, --dry_run         Whether to only simulate the generation. (default:
+                        False)
+  -l {DEBUG,INFO,WARNING,ERROR,CRITICAL}, --logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
+                        The logging level to use. (default: WARN)
+```
+
+
 ## Plugins
 
 You can find help screens for the plugins here:
