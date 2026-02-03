@@ -16,6 +16,7 @@ Changelog
 - `from-instance-png-is` and `from-indexed-png-is` now ensure that the annotation is an image with an indexed palette
 - added `idc-layer-segments` tool to generate layer-segments output from image segmentation input files that require
   processing in terms of file name alignment and base image augmentation
+- the `is-to-od` filter now initializes the labels member variable correctly when only supplying a regexp for the labels
 
 
 0.1.0 (2025-10-31)

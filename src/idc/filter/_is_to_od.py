@@ -117,6 +117,8 @@ class ImageSegmentationToObjectDetection(BatchFilter):
         self._pattern = re.compile(self.regexp) if (self.regexp is not None) else None
         if ((self.labels is None) or (len(self.labels) == 0)) and (self._pattern is None):
             raise Exception("No labels/layers or regexp defined!")
+        if self.labels is None:
+            self.labels = []
 
     def _check_dimension(self, dim) -> bool:
         """
