@@ -43,6 +43,7 @@
 * [coerce-mask](coerce-mask.md)
 * [convert-image-format](convert-image-format.md)
 * [copy-files](copy-files.md)
+* [count-data](count-data.md)
 * [count-specks](count-specks.md)
 * [delete-storage](delete-storage.md)
 * [depth-to-grayscale](depth-to-grayscale.md)
