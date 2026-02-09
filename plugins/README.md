@@ -51,6 +51,7 @@
 * [discard-by-name](discard-by-name.md)
 * [discard-invalid-images](discard-invalid-images.md)
 * [discard-negatives](discard-negatives.md)
+* [discard-positives](discard-positives.md)
 * [filter-labels](filter-labels.md)
 * [grayscale-to-binary](grayscale-to-binary.md)
 * [inspect](inspect.md)

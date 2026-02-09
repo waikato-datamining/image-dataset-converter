@@ -126,20 +126,24 @@ def intersect_over_union(poly1: Polygon, poly2: Polygon) -> float:
         return 0
 
 
-def merge_polygons(combined: ObjectDetectionData, max_slope_diff: float = 1e-6, max_dist: float = 1.0) -> ObjectDetectionData:
+def merge_polygons(combined: Optional[ObjectDetectionData], max_slope_diff: float = 1e-6, max_dist: float = 1.0) -> Optional[ObjectDetectionData]:
     """
     Merges adjacent polygons. Discards metadata apart from score, which it averages across merged objects,
     and the label, which has to be the same across objects.
 
-    :param combined: the input data
-    :type combined: ObjectDetectionData
+    :param combined: the input data, ignored if None
+    :type combined: ObjectDetectionData or None
     :param max_slope_diff: the maximum difference between slopes while still being considered parallel
     :type max_slope_diff: float
     :param max_dist: the maximum distance between parallel vertices
     :type max_dist: float
     :return: the (potentially) updated annotations
-    :rtype: ObjectDetectionData
+    :rtype: ObjectDetectionData or None
     """
+
+    if combined is None:
+        return None
+
     # for each polygon
     #   for each vertex in polygon
     #      compute slope
@@ -152,6 +156,10 @@ def merge_polygons(combined: ObjectDetectionData, max_slope_diff: float = 1e-6, 
     slopes = dict()
     normalized = combined.is_normalized()
     absolute = combined.get_absolute()
+
+    if (normalized is None) or (absolute is None):
+        return None
+
     for i in range(len(absolute)):
         vertices[i] = []
         slopes[i] = []
