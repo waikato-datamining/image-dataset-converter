@@ -1,5 +1,4 @@
 import argparse
-import io
 import os.path
 from typing import List
 
@@ -7,7 +6,7 @@ from wai.logging import LOGGING_WARNING
 from seppl import AnyData
 from seppl.io import BatchFilter
 from kasperl.api import make_list, flatten_list
-from idc.api import FORMAT_EXTENSIONS, FORMATS
+from idc.api import FORMAT_EXTENSIONS, FORMATS, image_to_bytesio
 
 
 class ConvertImageFormat(BatchFilter):
@@ -111,10 +110,9 @@ class ConvertImageFormat(BatchFilter):
                 self.logger().info("Converting %s to %s: %s" % (item.image_format, self.image_format, item.image_name))
                 # convert format
                 img = item.image
-                output_io = io.BytesIO()
                 if img.mode in ['RGBA', 'ARGB']:
                     img = img.convert('RGB')
-                img.save(output_io, format=self.image_format)
+                output_io = image_to_bytesio(img, self.image_format)
                 # new container
                 item = type(item)(image_name=os.path.splitext(item.image_name)[0] + FORMAT_EXTENSIONS[self.image_format],
                                   data=output_io.getvalue(),

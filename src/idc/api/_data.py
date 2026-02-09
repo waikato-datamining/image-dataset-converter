@@ -155,11 +155,7 @@ def empty_image(mode: str, width: int, height: int, image_format: str) -> Tuple[
     :rtype: tuple
     """
     img = Image.new(mode, (width, height))
-    img_bytes = io.BytesIO()
-    if image_format == "JPEG":
-        img.save(img_bytes, format=image_format, quality=jpeg_quality())
-    else:
-        img.save(img_bytes, format=image_format)
+    img_bytes = image_to_bytesio(img, image_format)
     return img, img_bytes
 
 
@@ -249,13 +245,7 @@ class ImageData(AnnotationHandler, MetaDataHandler, NameSupporter, SourceSupport
         if self._source is not None:
             with open(self._source, "rb") as fp:
                 return fp.read()
-        buffer = io.BytesIO()
-        if self.image is not None:
-            if self.image_format == "JPEG":
-                self.image.save(buffer, format=self.image_format, quality=jpeg_quality())
-            else:
-                self.image.save(buffer, format=self.image_format)
-        return buffer.getvalue()
+        return image_to_bytesio(self.image, self.image_format).getvalue()
 
     @property
     def image_name(self) -> Optional[str]:
