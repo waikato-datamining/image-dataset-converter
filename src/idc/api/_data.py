@@ -14,7 +14,7 @@ from image_complete.jpg import is_jpg
 from image_complete.png import is_png
 
 from seppl import MetaDataHandler, LoggingHandler, get_class_name
-from kasperl.api import safe_deepcopy, NameSupporter, SourceSupporter, AnnotationHandler
+from kasperl.api import safe_deepcopy, NameSupporter, SourceSupporter, AnnotationHandler, BytesSupporter
 from ._utils import load_image_from_bytes
 from wai.logging import set_logging_level, LOGGING_INFO
 
@@ -163,7 +163,7 @@ def empty_image(mode: str, width: int, height: int, image_format: str) -> Tuple[
     return img, img_bytes
 
 
-class ImageData(AnnotationHandler, MetaDataHandler, NameSupporter, SourceSupporter, LoggingHandler):
+class ImageData(AnnotationHandler, MetaDataHandler, NameSupporter, SourceSupporter, BytesSupporter, LoggingHandler):
 
     def __init__(self, source: str = None, image_name: str = None, data: bytes = None,
                  image: Image.Image = None, image_format: str = None, image_size: Tuple[int, int] = None,
@@ -527,6 +527,15 @@ class ImageData(AnnotationHandler, MetaDataHandler, NameSupporter, SourceSupport
         :rtype: str
         """
         return self.source
+
+    def get_bytes(self) -> bytes:
+        """
+        Returns the data as bytes.
+
+        :return: the data
+        :rtype: bytes
+        """
+        return self.image_bytes
 
     def duplicate(self, source: str = None, force_no_source: bool = None,
                   name: str = None, data: bytes = None,
