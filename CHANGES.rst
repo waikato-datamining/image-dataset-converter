@@ -18,6 +18,7 @@ Changelog
   processing in terms of file name alignment and base image augmentation
 - the `is-to-od` filter now initializes the labels member variable correctly when only supplying a regexp for the labels
 - added the `discard-positives` filter that skips data that has annotations
+- the `ImageData.image_bytes` property now tries to avoid re-encoding
 
 
 0.1.0 (2025-10-31)
