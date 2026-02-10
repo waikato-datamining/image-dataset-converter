@@ -205,6 +205,10 @@ def generate(base: List[str], ann: List[str], output: str,
         max_ann = max(max_ann, len(matches[name][1]))
     _logger.info("Max # of annotations encountered: %d" % max_ann)
 
+    if not os.path.exists(output):
+        _logger.info("Creating output directory: %s" % output)
+        os.makedirs(output)
+
     for name in matches:
         generate_output(matches[name][0], matches[name][1], name, output,
                         base_aug=base_aug, ann_aug=ann_aug,
