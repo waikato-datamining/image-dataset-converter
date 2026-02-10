@@ -132,14 +132,17 @@ def generate_output(base: str, anns: List[str], name: str, output: str, base_aug
 
     # annotations
     for i, ann in enumerate(anns, start=1):
-        img = Image.open(ann)
-        arr = np.array(img)
-        arr = np.where(arr > 0, 255, 0).astype(np.uint8)
-        ann_img = Image.fromarray(arr, "L").convert("1")
-        ann_out = os.path.join(output, name + suffix + str(i) + ".png")
-        _logger.info("Writing annotation: %s" % ann_out)
-        if not dry_run:
-            ann_img.save(ann_out)
+        try:
+            img = Image.open(ann)
+            arr = np.array(img)
+            arr = np.where(arr > 0, 255, 0).astype(np.uint8)
+            ann_img = Image.fromarray(arr, "L").convert("1")
+            ann_out = os.path.join(output, name + suffix + str(i) + ".png")
+            _logger.info("Writing annotation: %s" % ann_out)
+            if not dry_run:
+                ann_img.save(ann_out)
+        except:
+            _logger.exception("Failed to process: %s" % ann)
 
 
 def generate(base: List[str], ann: List[str], output: str,
