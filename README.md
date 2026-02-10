@@ -310,7 +310,8 @@ options:
 ```
 usage: idc-layer-segments [-h] -i DIR [DIR ...] [-m REGEXP] [-g REGEXP]
                           [-a {none,grayscale-stretch}] -I DIR [DIR ...]
-                          [-M REGEXP] [-G REGEXP] [-s SUFFIX] -o DIR [-n]
+                          [-M REGEXP] [-G REGEXP] [-A {none,binary}]
+                          [-s SUFFIX] -o DIR [-n]
                           [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
 
 Creates layer segments annotations from PNG files with individual annotations.
@@ -345,6 +346,9 @@ options:
                         annotation name from the groups (no extension; group
                         placeholder: {X} with X being group 1, 2, etc).
                         (default: {1})
+  -A {none,binary}, --annotations_aug {none,binary}
+                        The augmentation to apply to the annotation image
+                        (default: none)
   -s SUFFIX, --suffix SUFFIX
                         The suffix to use for the layers, 1-based indexed gets
                         automatically appended. (default: -object-)
