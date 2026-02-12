@@ -1,5 +1,6 @@
 import argparse
 import copy
+import numpy as np
 import re
 from typing import List, Union, Optional
 
@@ -60,7 +61,7 @@ class MapLabels(BatchFilter):
         :return: the description
         :rtype: str
         """
-        return "Maps labels from one set to another."
+        return "Maps labels from one set to another. In case of image-segmentation, layers may get merged."
 
     def accepts(self) -> List:
         """
@@ -209,17 +210,40 @@ class MapLabels(BatchFilter):
         """
         result = False
 
-        for label in annotation.labels:
+        # update list of possible labels
+        new_labels = set()
+        label_list = list(annotation.labels)
+        for label in label_list:
             if self._matches(label):
+                new_label = self._replace(label)
+                if new_label == label:
+                    continue
+                new_labels.add(new_label)
                 i = annotation.labels.index(label)
-                annotation.labels[i] = self._replace(label)
+                if new_label in annotation.labels:
+                    annotation.labels.pop(i)
+                else:
+                    annotation.labels[i] = new_label
                 result = True
 
-        for label in annotation.layers:
+        # ensure that all new labels are present in list of labels
+        for new_label in new_labels:
+            if new_label not in annotation.labels:
+                annotation.labels.append(new_label)
+                result = True
+
+        # update layers, merge if necessary
+        label_list = list(annotation.layers.keys())
+        for label in label_list:
             if self._matches(label):
+                new_label = self._replace(label)
                 data = annotation.layers[label]
                 del annotation.layers[label]
-                annotation.layers[self._replace(label)] = data
+                # if layer already present, merge
+                if new_label in annotation.layers:
+                    np.copyto(annotation.layers[new_label], data, 'safe', data > 0)
+                else:
+                    annotation.layers[new_label] = data
                 result = True
 
         return result

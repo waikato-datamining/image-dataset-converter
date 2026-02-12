@@ -3,14 +3,15 @@
 * accepts: idc.api.ObjectDetectionData, idc.api.ImageClassificationData, idc.api.ImageSegmentationData
 * generates: idc.api.ObjectDetectionData, idc.api.ImageClassificationData, idc.api.ImageSegmentationData
 
-Maps labels from one set to another.
+Maps labels from one set to another. In case of image-segmentation, layers may get merged.
 
 ```
 usage: map-labels [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                   [-N LOGGER_NAME] [--skip] [-m [old=new ...]]
                   [-o [LABEL ...]] [-O [REGEXP ...]] [-n LABEL]
 
-Maps labels from one set to another.
+Maps labels from one set to another. In case of image-segmentation, layers may
+get merged.
 
 options:
   -h, --help            show this help message and exit
