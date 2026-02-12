@@ -194,6 +194,7 @@ class MapLabels(BatchFilter):
             # only update if we have a match
             if self._matches(label):
                 set_object_label(located_object, self._replace(label))
+                result = True
 
         return result
 
