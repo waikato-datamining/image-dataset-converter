@@ -311,8 +311,9 @@ options:
 usage: idc-layer-segments [-h] -i DIR [DIR ...] [-m REGEXP] [-g REGEXP]
                           [-a {none,grayscale-stretch}] -I DIR [DIR ...]
                           [-M REGEXP] [-G REGEXP] [-A {none,binary}]
-                          [-s SUFFIX] -o DIR [-n]
-                          [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
+                          [-S {provided,base,annotation}] [-s SUFFIX]
+                          [--suffix_regexp REGEXP] [--suffix_groups REGEXP] -o
+                          DIR [-n] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
 
 Creates layer segments annotations from PNG files with individual annotations.
 Each individual annotation will get a different suffix.
@@ -349,9 +350,21 @@ options:
   -A {none,binary}, --annotations_aug {none,binary}
                         The augmentation to apply to the annotation image
                         (default: none)
+  -S {provided,base,annotation}, --suffix_source {provided,base,annotation}
+                        How to obtain the suffix (ie label). (default:
+                        provided)
   -s SUFFIX, --suffix SUFFIX
-                        The suffix to use for the layers, 1-based indexed gets
-                        automatically appended. (default: -object-)
+                        The suffix (ie label) to use for the layers, 1-based
+                        indexes get automatically appended. (default:
+                        -object-)
+  --suffix_regexp REGEXP
+                        The regular expression to apply to either base or
+                        annotation filename (no ext), ignored when using the
+                        provided one. (default: (.*))
+  --suffix_groups REGEXP
+                        The expression for assembling the suffix from the
+                        detected groups; group placeholder: {X} with X being
+                        group 1, 2, etc) (default: -{1})
   -o DIR, --output DIR  The directory to store the cleaned up base image and
                         annotations in. (default: None)
   -n, --dry_run         Whether to only simulate the generation. (default:

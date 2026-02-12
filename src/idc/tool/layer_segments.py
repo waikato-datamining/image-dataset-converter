@@ -31,6 +31,15 @@ ANN_AUGMENTATIONS = [
     ANN_AUGMENTATION_BINARY,
 ]
 
+SUFFIX_SOURCE_PROVIDED = "provided"
+SUFFIX_SOURCE_BASE = "base"
+SUFFIX_SOURCE_ANN = "annotation"
+SUFFIX_SOURCES = [
+    SUFFIX_SOURCE_PROVIDED,
+    SUFFIX_SOURCE_BASE,
+    SUFFIX_SOURCE_ANN,
+]
+
 
 def assemble_names(imgs: List[str], img_match: str, img_format: str) -> Dict[str, str]:
     """
@@ -96,8 +105,33 @@ def match(base_imgs: Dict[str, str], ann_imgs: Dict[str, str]) -> Dict[str, Tupl
     return result
 
 
-def generate_output(base: str, anns: List[str], name: str, output: str, base_aug: str = BASE_AUGMENTATION_NONE,
-                    ann_aug: str = ANN_AUGMENTATION_NONE, suffix: str = "-object-", dry_run: bool = False):
+def generate_suffix(name: str, regexp: str, groups: str) -> str:
+    """
+    Generates a suffix from the name, regexp and groups expression.
+
+    :param name: the current filename to use as basis
+    :type name: str
+    :param regexp: the regexp with the groups to apply
+    :type regexp: str
+    :param groups: the expression for generating the suffix, group placeholder {X} with X=1,2,...
+    :type groups: str
+    :return: the generated suffix
+    :rtype: str
+    """
+    match = re.search(regexp, name)
+    if match is None:
+        return "none"
+
+    result = groups
+    for i in range(1, match.lastindex + 1):
+        result = result.replace("{%d}" % i, match.group(i))
+    return result
+
+
+def generate_output(base: str, anns: List[str], name: str, output: str,
+                    base_aug: str = BASE_AUGMENTATION_NONE, ann_aug: str = ANN_AUGMENTATION_NONE,
+                    suffix_source: str = SUFFIX_SOURCE_PROVIDED, suffix: str = "-object-",
+                    suffix_regexp: str = "(.*)", suffix_groups: str = "-{1}", dry_run: bool = False):
     """
     Generates output from the base image and its annotations in the output directory, using the new name.
 
@@ -113,8 +147,14 @@ def generate_output(base: str, anns: List[str], name: str, output: str, base_aug
     :type base_aug: str
     :param ann_aug: the augmentation to apply to the annotation image
     :type ann_aug: str
-    :param suffix: the suffix to use for the layer segments, 1-based index gets automatically appended
+    :param suffix_source: the source for obtaining the suffix (ie label)
+    :type suffix_source: str
+    :param suffix: the suffix (ie label) to use for the layer segments, 1-based index gets automatically appended when using the provided one
     :type suffix: str
+    :param suffix_regexp: the regexp to identify the groups for generating the actual suffix
+    :type suffix_regexp: str
+    :param suffix_groups: the expression for generating the actual suffix from the base/annotation name, no ext, group placeholder {X} with X=1,2,...
+    :type suffix_groups: str
     :param dry_run: whether to only simulate the processing
     :type dry_run: bool
     """
@@ -152,7 +192,18 @@ def generate_output(base: str, anns: List[str], name: str, output: str, base_aug
             arr = np.array(img)
             arr = np.where(arr > 0, 255, 0).astype(np.uint8)
             ann_img = Image.fromarray(arr, "L").convert("1")
-            ann_out = os.path.join(output, name + suffix + str(i) + ".png")
+
+            # output file
+            if suffix_source == SUFFIX_SOURCE_PROVIDED:
+                suffix_act = suffix + str(i)
+            elif suffix_source == SUFFIX_SOURCE_BASE:
+                suffix_act = generate_suffix(os.path.splitext(os.path.basename(base))[0], suffix_regexp, suffix_groups)
+            elif suffix_source == SUFFIX_SOURCE_ANN:
+                suffix_act = generate_suffix(os.path.splitext(os.path.basename(ann))[0], suffix_regexp, suffix_groups)
+            else:
+                raise Exception("Unhandled suffix source: %s" % suffix_source)
+            ann_out = os.path.join(output, name + suffix_act + ".png")
+
             _logger.info("Writing annotation: %s" % ann_out)
             if not dry_run:
                 ann_img.save(ann_out)
@@ -163,7 +214,8 @@ def generate_output(base: str, anns: List[str], name: str, output: str, base_aug
 def generate(base: List[str], ann: List[str], output: str,
              base_match: str = "(.*)", base_format: str = "{1}", base_aug: str = BASE_AUGMENTATION_NONE,
              ann_match: str = "(.*)", ann_format: str = "{1}", ann_aug: str = ANN_AUGMENTATION_NONE,
-             suffix: str = "-object-", dry_run: bool = False):
+             suffix_source: str = SUFFIX_SOURCE_PROVIDED, suffix: str = "-object-",
+             suffix_regexp: str = "(.*)", suffix_groups: str = "-{1}", dry_run: bool = False):
     """
     Generates instance PNGs from the base and annotation images.
 
@@ -185,8 +237,14 @@ def generate(base: List[str], ann: List[str], output: str,
     :type ann_format: str
     :param ann_aug: the augmentation to apply to the annotation image
     :type ann_aug: str
-    :param suffix: the suffix to use for the layer segments, 1-based index gets automatically appended
+    :param suffix_source: the source for obtaining the suffix (ie label)
+    :type suffix_source: str
+    :param suffix: the suffix (ie label) to use for the layer segments, 1-based index gets automatically appended when using the provided one
     :type suffix: str
+    :param suffix_regexp: the regexp to identify the groups for generating the actual suffix
+    :type suffix_regexp: str
+    :param suffix_groups: the expression for generating the actual suffix from the base/annotation name, no ext, group placeholder {X} with X=1,2,...
+    :type suffix_groups: str
     :param dry_run: whether to only simulate the processing
     :type dry_run: bool
     """
@@ -212,7 +270,9 @@ def generate(base: List[str], ann: List[str], output: str,
     for name in matches:
         generate_output(matches[name][0], matches[name][1], name, output,
                         base_aug=base_aug, ann_aug=ann_aug,
-                        suffix=suffix, dry_run=dry_run)
+                        suffix_source=suffix_source, suffix=suffix,
+                        suffix_regexp=suffix_regexp, suffix_groups=suffix_groups,
+                        dry_run=dry_run)
 
 
 def main(args=None):
@@ -232,7 +292,10 @@ def main(args=None):
     parser.add_argument("-M", "--annotations_match", metavar="REGEXP", help="The regular expression group(s) to use for extracting the new annotation name for the image (extension is removed before matching).", default="(.*)", type=str, required=False)
     parser.add_argument("-G", "--annotations_format", metavar="REGEXP", help="The name format to use for constructing the new annotation name from the groups (no extension; group placeholder: {X} with X being group 1, 2, etc).", default="{1}", type=str, required=False)
     parser.add_argument("-A", "--annotations_aug", choices=ANN_AUGMENTATIONS, help="The augmentation to apply to the annotation image", default=ANN_AUGMENTATION_NONE, type=str, required=False)
-    parser.add_argument("-s", "--suffix", metavar="SUFFIX", help="The suffix to use for the layers, 1-based indexed gets automatically appended.", default="-object-", type=str, required=False)
+    parser.add_argument("-S", "--suffix_source", choices=SUFFIX_SOURCES, help="How to obtain the suffix (ie label).", default=SUFFIX_SOURCE_PROVIDED, type=str, required=False)
+    parser.add_argument("-s", "--suffix", metavar="SUFFIX", help="The suffix (ie label) to use for the layers, 1-based indexes get automatically appended.", default="-object-", type=str, required=False)
+    parser.add_argument("--suffix_regexp", metavar="REGEXP", help="The regular expression to apply to either base or annotation filename (no ext), ignored when using the provided one.", default="(.*)", type=str, required=False)
+    parser.add_argument("--suffix_groups", metavar="REGEXP", help="The expression for assembling the suffix from the detected groups; group placeholder: {X} with X being group 1, 2, etc)", default="-{1}", type=str, required=False)
     parser.add_argument("-o", "--output", metavar="DIR", help="The directory to store the cleaned up base image and annotations in.", default=None, type=str, required=True)
     parser.add_argument("-n", "--dry_run", action="store_true", help="Whether to only simulate the generation.")
     add_logging_level(parser)
@@ -241,7 +304,8 @@ def main(args=None):
     generate(parsed.base_input, parsed.annotations_input, parsed.output,
              base_match=parsed.base_match, base_format=parsed.base_format, base_aug=parsed.base_aug,
              ann_match=parsed.annotations_match, ann_format=parsed.annotations_format, ann_aug=parsed.annotations_aug,
-             suffix=parsed.suffix, dry_run=parsed.dry_run)
+             suffix_source=parsed.suffix_source, suffix=parsed.suffix, suffix_regexp=parsed.suffix_regexp,
+             suffix_groups=parsed.suffix_groups, dry_run=parsed.dry_run)
 
 
 def sys_main() -> int:
