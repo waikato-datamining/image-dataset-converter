@@ -21,6 +21,8 @@ Changelog
 - the `ImageData.image_bytes` property now tries to avoid re-encoding
 - the `conver-image-format` filter and the property `ImageData.image_bytes` now use the `image_to_bytesio`
   method to respect JPEG quality environment variable
+- the `map-labels` filter now allows specifying a range of old labels or range of regexps matching old labels
+  to be replaced with a single new label
 
 
 0.1.0 (2025-10-31)

@@ -1,6 +1,7 @@
 import argparse
 import copy
-from typing import List, Union
+import re
+from typing import List, Union, Optional
 
 from seppl.io import BatchFilter
 from wai.common.adams.imaging.locateobjects import LocatedObjects, NormalizedLocatedObjects
@@ -16,13 +17,20 @@ class MapLabels(BatchFilter):
     Filters out labels according to the parameters.
     """
 
-    def __init__(self, mapping: List[str] = None, 
+    def __init__(self, mapping: List[str] = None,
+                 old_labels: List[str] = None, old_regexps: List[str] = None, new_label: str = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
         Initializes the filter.
 
-        :param mapping: the label mapping to use (list of old=new pairs)
+        :param mapping: the label mapping to use (list of old=new pairs), ignored if None
         :type mapping: list
+        :param old_labels: the list of old labels to map to the new one, requires new_label
+        :type old_labels: str
+        :param old_regexps: the list of regexps for matching the old labels and mapping to the new one, requires new_label
+        :type old_regexps: str
+        :param new_label: the new label to map to, requires old_labels and/or old_regexp
+        :type new_label: str
         :param logger_name: the name to use for the logger
         :type logger_name: str
         :param logging_level: the logging level to use
@@ -30,7 +38,11 @@ class MapLabels(BatchFilter):
         """
         super().__init__(logger_name=logger_name, logging_level=logging_level)
         self.mapping = mapping
+        self.old_labels = old_labels
+        self.old_regexps = old_regexps
+        self.new_label = new_label
         self._mapping = None
+        self._regexps = None
 
     def name(self) -> str:
         """
@@ -77,6 +89,9 @@ class MapLabels(BatchFilter):
         """
         parser = super()._create_argparser()
         parser.add_argument("-m", "--mapping", type=str, metavar="old=new", default=None, help="The labels to use", required=False, nargs="*")
+        parser.add_argument("-o", "--old_labels", type=str, metavar="LABEL", default=None, help="The old labels to replace with the new one, requires -n/--new_label", required=False, nargs="*")
+        parser.add_argument("-O", "--old_regexps", type=str, metavar="REGEXP", default=None, help="The regexps for matching the old labels to replace with the new one, requires -n/--new_label", required=False, nargs="*")
+        parser.add_argument("-n", "--new_label", type=str, metavar="LABEL", default=None, help="The new label to use", required=False)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
@@ -88,6 +103,9 @@ class MapLabels(BatchFilter):
         """
         super()._apply_args(ns)
         self.mapping = ns.mapping
+        self.old_labels = ns.old_labels
+        self.old_regexps = ns.old_regexps
+        self.new_label = ns.new_label
 
     def initialize(self):
         """
@@ -95,12 +113,68 @@ class MapLabels(BatchFilter):
         """
         super().initialize()
         self._mapping = {}
-        for map_string in self.mapping:
-            old, new = map_string.split("=")
-            # Make sure we don't double-map a label
-            if old in self._mapping:
-                raise ValueError(f"Multiple mappings specified for label '%s': %s, %s" % (old, self._mapping[old], new))
-            self._mapping[old] = new
+        if self.mapping is not None:
+            for map_string in self.mapping:
+                old, new = map_string.split("=")
+                # Make sure we don't double-map a label
+                if old in self._mapping:
+                    raise ValueError(f"Multiple mappings specified for label '%s': %s, %s" % (old, self._mapping[old], new))
+                self._mapping[old] = new
+        if self.new_label is not None:
+            if self.old_labels is not None:
+                for old in self.old_labels:
+                    self._mapping[old] = self.new_label
+            if self.old_regexps is not None:
+                self._regexps = []
+                for old in self.old_regexps:
+                    self._regexps.append(re.compile(old))
+
+    def _can_replace(self):
+        """
+        Whether labels can be replaced at all.
+
+        :return: True if labels can be replaced
+        :rtype: bool
+        """
+        return (len(self._mapping) > 0) or (len(self._regexps) > 0)
+
+    def _matches(self, label: str) -> bool:
+        """
+        Checks whether the label has a mapping.
+
+        :param label: the label to check
+        :type label: str
+        :return: True if a mapping exists
+        :rtype: bool
+        """
+        if label is None:
+            return False
+        if label in self._mapping:
+            return True
+        if self._regexps is not None:
+            for regexp in self._regexps:
+                if regexp.match(label) is not None:
+                    return True
+        return False
+
+    def _replace(self, label: Optional[str]) -> Optional[str]:
+        """
+        Replaces the old label with the new one.
+
+        :param label: the label to update, can be None
+        :type label: str or None
+        :return: the updated label
+        :rtype: str or None
+        """
+        if label is None:
+            return label
+        if label in self._mapping:
+            return self._mapping[label]
+        if self._regexps is not None:
+            for regexp in self._regexps:
+                if regexp.match(label) is not None:
+                    return self.new_label
+        return label
 
     def process_object_detection(self, annotation: Union[LocatedObjects, NormalizedLocatedObjects]) -> bool:
         """
@@ -111,24 +185,15 @@ class MapLabels(BatchFilter):
         :return: whether updated
         :rtype: bool
         """
-        # Do nothing if no mapping provided
-        if len(self._mapping) == 0:
-            return False
-
         # Process each object
         result = False
         for located_object in annotation:
             # Get the object's current label
             label = get_object_label(located_object, default_label=None)
 
-            # If the object doesn't have a label, skip it
-            if label is None:
-                continue
-
-            # If there is a mapping for this label, change it
-            if label in self._mapping:
-                set_object_label(located_object, self._mapping[label])
-                result = True
+            # only update if we have a match
+            if self._matches(label):
+                set_object_label(located_object, self._replace(label))
 
         return result
 
@@ -143,15 +208,17 @@ class MapLabels(BatchFilter):
         """
         result = False
 
-        for label in self._mapping:
-            if label in annotation.labels:
+        for label in annotation.labels:
+            if self._matches(label):
                 i = annotation.labels.index(label)
-                annotation.labels[i] = self._mapping[label]
+                annotation.labels[i] = self._replace(label)
                 result = True
-            if label in annotation.layers:
+
+        for label in annotation.layers:
+            if self._matches(label):
                 data = annotation.layers[label]
                 del annotation.layers[label]
-                annotation.layers[self._mapping[label]] = data
+                annotation.layers[self._replace(label)] = data
                 result = True
 
         return result
@@ -163,6 +230,10 @@ class MapLabels(BatchFilter):
         :param data: the record(s) to process
         :return: the potentially updated record(s)
         """
+        # Do nothing if no mapping provided
+        if not self._can_replace():
+            return data
+
         result = []
 
         for item in make_list(data):
@@ -174,8 +245,9 @@ class MapLabels(BatchFilter):
                     if updated:
                         item_new = item.duplicate(annotation=ann_new)
                 elif isinstance(item, ImageClassificationData):
-                    if item.annotation in self._mapping:
-                        item_new = item.duplicate(annotation=self._mapping[item.annotation])
+                    if self._matches(item.annotation):
+                        item_new = item.duplicate(annotation=self._replace(item.annotation))
+
                 elif isinstance(item, ImageSegmentationData):
                     ann_new = copy.deepcopy(item.annotation)
                     updated = self.process_image_segmentation(ann_new)
