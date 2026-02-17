@@ -4,8 +4,8 @@ from typing import List, Iterable, Union
 from wai.logging import LOGGING_WARNING
 
 from idc.api import ImageSegmentationData, load_image_from_file, imgseg_from_indexedpng, empty_image, \
-    FORMAT_JPEG, FORMAT_EXTENSIONS, ensure_indexed_palette, locate_image
-from kasperl.api import Reader, AnnotationsOnlyReader, add_annotations_only_reader_param, annotation_to_name
+    FORMAT_JPEG, FORMAT_EXTENSIONS, ensure_indexed_palette, locate_image, JPEG_EXTENSIONS
+from kasperl.api import Reader, AnnotationsOnlyReader, add_annotations_only_reader_param, annotation_to_name, locate_file
 from seppl.io import locate_files
 from seppl.placeholders import PlaceholderSupporter, placeholder_list
 
@@ -139,10 +139,14 @@ class IndexedPngImageSegmentationReader(Reader, PlaceholderSupporter, Annotation
         # associated images?
         imgs = []
         if not self.annotations_only:
-            imgs = locate_image(self.session.current_input, rel_path=self.image_path_rel)
+            if self.image_path_rel is None:
+                imgs = locate_file(self.session.current_input, JPEG_EXTENSIONS)
+            else:
+                img = locate_image(self.session.current_input, rel_path=self.image_path_rel)
+                imgs = [] if (img is None) else [img]
             if len(imgs) == 0:
                 self.logger().warning("Failed to locate associated image for: %s" % self.session.current_input)
-                yield None
+                return None
 
         # read annotations
         self.logger().info("Reading from: " + str(self.session.current_input))
@@ -153,12 +157,13 @@ class IndexedPngImageSegmentationReader(Reader, PlaceholderSupporter, Annotation
         if not self.annotations_only:
             if len(imgs) > 1:
                 self.logger().warning("Found more than one image associated with annotation, using first: %s" % imgs[0])
-                yield None
+                return None
             yield ImageSegmentationData(source=imgs[0], annotation=annotations)
         else:
             image_name = annotation_to_name(self.session.current_input, ext=FORMAT_EXTENSIONS[FORMAT_JPEG])
             image, _ = empty_image("RGB", ann.size[0], ann.size[1], FORMAT_JPEG)
             yield ImageSegmentationData(image_name=image_name, image=image, image_format=FORMAT_JPEG, annotation=annotations)
+        return None
 
     def has_finished(self) -> bool:
         """
