@@ -7,7 +7,7 @@ from seppl.placeholders import PlaceholderSupporter, placeholder_list
 from wai.logging import LOGGING_WARNING
 
 from kasperl.api import locate_file, Reader
-from idc.api import JPEG_EXTENSIONS, DepthInformation, DepthData
+from idc.api import JPEG_EXTENSIONS, DepthInformation, DepthData, locate_image
 
 
 class NumpyDepthInfoReader(Reader, PlaceholderSupporter):
@@ -118,7 +118,7 @@ class NumpyDepthInfoReader(Reader, PlaceholderSupporter):
         self.session.current_input = self._current_input
 
         # associated images?
-        imgs = locate_file(self.session.current_input, JPEG_EXTENSIONS, rel_path=self.image_path_rel)
+        imgs = locate_image(self.session.current_input, rel_path=self.image_path_rel)
         if len(imgs) == 0:
             self.logger().warning("Failed to locate associated image for: %s" % self.session.current_input)
             yield None

@@ -23,6 +23,10 @@ Changelog
   method to respect JPEG quality environment variable
 - the `map-labels` filter now allows specifying a range of old labels or range of regexps matching old labels
   to be replaced with a single new label; in case of image-segmentation layers are now getting merged instead of replaced
+- the following readers now accept PNG images as base images as well:
+  `from-csv-dp`, `from-grayscale-dp`, `from-numpy-dp`, `from-pfm-dp`, `from-blue-channel-is`, `from-grayscale-is`, `from-indexed-png-is`.
+  **NB:** you may have to convert the format of the base image using `convert-image-format` to avoid file name clashes
+  when generating output.
 
 
 0.1.0 (2025-10-31)

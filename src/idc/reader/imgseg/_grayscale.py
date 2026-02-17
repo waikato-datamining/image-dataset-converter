@@ -1,12 +1,13 @@
 import argparse
 from typing import List, Iterable, Union
 
-from seppl.placeholders import PlaceholderSupporter, placeholder_list
-from seppl.io import locate_files
 from wai.logging import LOGGING_WARNING
 
-from kasperl.api import locate_file, Reader, AnnotationsOnlyReader, add_annotations_only_reader_param, annotation_to_name
-from idc.api import ImageSegmentationData, load_image_from_file, imgseg_from_grayscale, JPEG_EXTENSIONS, empty_image, FORMAT_JPEG, FORMAT_EXTENSIONS
+from idc.api import ImageSegmentationData, load_image_from_file, imgseg_from_grayscale, empty_image, \
+    FORMAT_JPEG, FORMAT_EXTENSIONS, locate_image
+from kasperl.api import Reader, AnnotationsOnlyReader, add_annotations_only_reader_param, annotation_to_name
+from seppl.io import locate_files
+from seppl.placeholders import PlaceholderSupporter, placeholder_list
 
 
 class GrayscaleImageSegmentationReader(Reader, PlaceholderSupporter, AnnotationsOnlyReader):
@@ -136,7 +137,7 @@ class GrayscaleImageSegmentationReader(Reader, PlaceholderSupporter, Annotations
         # associated images?
         imgs = []
         if not self.annotations_only:
-            imgs = locate_file(self.session.current_input, JPEG_EXTENSIONS, rel_path=self.image_path_rel)
+            imgs = locate_image(self.session.current_input, rel_path=self.image_path_rel)
             if len(imgs) == 0:
                 self.logger().warning("Failed to locate associated image for: %s" % self.session.current_input)
                 yield None
