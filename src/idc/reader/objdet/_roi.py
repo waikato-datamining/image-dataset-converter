@@ -119,7 +119,7 @@ class ROIObjectDetectionReader(Reader, PlaceholderSupporter):
         image = locate_image(self.session.current_input, suffix=self.suffix)
         if image is None:
             self.logger().warning("No associated image found: %s" % self._current_input)
-            yield None
+            return None
 
         with open(self.session.current_input, "r") as fp:
             reader = csv.DictReader(fp)
@@ -171,6 +171,7 @@ class ROIObjectDetectionReader(Reader, PlaceholderSupporter):
         self._current_input = None
 
         yield ObjectDetectionData(source=image, annotation=annotations)
+        return None
 
     def has_finished(self) -> bool:
         """

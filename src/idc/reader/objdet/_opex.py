@@ -108,7 +108,7 @@ class OPEXObjectDetectionReader(Reader, PlaceholderSupporter):
         img = locate_image(self.session.current_input)
         if img is None:
             self.logger().warning("No corresponding image found for: %s" % self.session.current_input)
-            yield None
+            return None
 
         preds = ObjectPredictions.load_json_from_file(self.session.current_input)
 
@@ -141,6 +141,7 @@ class OPEXObjectDetectionReader(Reader, PlaceholderSupporter):
                 meta[k] = v
 
         yield ObjectDetectionData(source=img, annotation=lobjs, metadata=meta)
+        return None
 
     def has_finished(self) -> bool:
         """

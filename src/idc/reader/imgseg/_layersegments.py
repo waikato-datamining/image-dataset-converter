@@ -138,7 +138,7 @@ class LayerSegmentsImageSegmentationReader(Reader, PlaceholderSupporter):
         if len(anns) == 0:
             self.logger().warning("No associated layers found for: %s" % self.session.current_input)
             self._current_input = None
-            yield None
+            return None
 
         # read annotations
         prefix_short = os.path.basename(prefix)
@@ -168,6 +168,7 @@ class LayerSegmentsImageSegmentationReader(Reader, PlaceholderSupporter):
 
         annotations = ImageSegmentationAnnotations(self.labels, layers)
         yield ImageSegmentationData(source=self.session.current_input, annotation=annotations)
+        return None
 
     def has_finished(self) -> bool:
         """

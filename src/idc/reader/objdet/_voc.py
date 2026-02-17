@@ -134,7 +134,7 @@ class VOCObjectDetectionReader(Reader, PlaceholderSupporter):
             if img is None:
                 self.logger().warning("No corresponding image found for: %s" % self.session.current_input)
                 self._current_input = None
-                yield None
+                return None
 
         lobjs = LocatedObjects()
         for obj in xml.findall("object"):
@@ -155,6 +155,7 @@ class VOCObjectDetectionReader(Reader, PlaceholderSupporter):
             lobjs.append(lobj)
 
         yield ObjectDetectionData(source=str(img), annotation=lobjs)
+        return None
 
     def has_finished(self) -> bool:
         """

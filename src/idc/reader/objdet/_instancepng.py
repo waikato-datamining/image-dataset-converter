@@ -163,7 +163,7 @@ class InstancePngObjectDetectionReader(Reader, PlaceholderSupporter, Annotations
                                image_prefix=self.image_prefix, annotation_prefix=self.annotation_prefix)
             if len(imgs) == 0:
                 self.logger().warning("Failed to locate associated image for: %s" % self.session.current_input)
-                yield None
+                return None
 
         # read annotations
         self.logger().info("Reading from: " + str(self.session.current_input))
@@ -175,12 +175,13 @@ class InstancePngObjectDetectionReader(Reader, PlaceholderSupporter, Annotations
         if not self.annotations_only:
             if len(imgs) > 1:
                 self.logger().warning("Found more than one image associated with annotation, using first: %s" % imgs[0])
-                yield None
+                return None
             yield ObjectDetectionData(source=imgs[0], annotation=annotations)
         else:
             image_name = annotation_to_name(self.session.current_input, ext=FORMAT_EXTENSIONS[FORMAT_JPEG])
             image, _ = empty_image("RGB", ann.size[0], ann.size[1], FORMAT_JPEG)
             yield ObjectDetectionData(image_name=image_name, image=image, image_format=FORMAT_JPEG, annotation=annotations)
+        return None
 
     def has_finished(self) -> bool:
         """

@@ -114,7 +114,7 @@ class PFMDepthInfoReader(Reader, PlaceholderSupporter):
         imgs = locate_image(self.session.current_input, rel_path=self.image_path_rel)
         if len(imgs) == 0:
             self.logger().warning("Failed to locate associated image for: %s" % self.session.current_input)
-            yield None
+            return None
 
         # read annotations
         self.logger().info("Reading from: " + str(self.session.current_input))
@@ -124,9 +124,10 @@ class PFMDepthInfoReader(Reader, PlaceholderSupporter):
         # associated image
         if len(imgs) > 1:
             self.logger().warning("Found more than one image associated with annotation, using first: %s" % imgs[0])
-            yield None
+            return None
 
         yield DepthData(source=imgs[0], annotation=DepthInformation(data=annotations))
+        return None
 
     def has_finished(self) -> bool:
         """
