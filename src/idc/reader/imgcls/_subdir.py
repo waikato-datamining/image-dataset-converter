@@ -161,4 +161,4 @@ class SubDirReader(Reader, PlaceholderSupporter):
         :return: True if finished
         :rtype: bool
         """
-        return len(self._sub_dirs) == 0
+        return (self._sub_dirs is not None) and  len(self._sub_dirs) == 0
