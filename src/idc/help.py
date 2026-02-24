@@ -2,7 +2,7 @@ import os
 
 from seppl import OutputProducer, InputConsumer, classes_to_str, get_aliases, has_aliases
 from seppl.placeholders import PlaceholderSupporter, placeholder_help
-from idc.registry import available_plugins
+from idc.registry import available_plugins, REGISTRY
 from idc.api import DataTypeSupporter, data_types_help
 
 
@@ -12,6 +12,41 @@ HELP_FORMATS = [
     HELP_FORMAT_TEXT,
     HELP_FORMAT_MARKDOWN,
 ]
+
+
+def add_plugins_to_index(heading: str, plugins: dict, help_format: str, lines: list):
+    """
+    Appends a plugin section to the output list.
+
+    :param heading: the heading of the section
+    :type heading: str
+    :param plugins: the plugins dictionary to add
+    :type plugins: dict
+    :param help_format: the type of output to generate
+    :type help_format: str
+    :param lines: the output lines to append the output to
+    :type lines: list
+    """
+    plugin_names = sorted(plugins.keys())
+    if len(plugin_names) == 0:
+        return
+    if help_format == HELP_FORMAT_MARKDOWN:
+        lines.append("## " + heading)
+        for name in plugin_names:
+            if REGISTRY.is_alias(name):
+                continue
+            lines.append("* [%s](%s.md)" % (name, name))
+        lines.append("")
+    elif help_format == HELP_FORMAT_TEXT:
+        lines.append(heading)
+        lines.append("-" * len(heading))
+        for name in plugin_names:
+            if REGISTRY.is_alias(name):
+                continue
+            lines.append("- %s" % name)
+        lines.append("")
+    else:
+        raise Exception("Unsupported format for index: %s" % help_format)
 
 
 def generate_plugin_usage(plugin_name: str, help_format: str = HELP_FORMAT_TEXT, heading_level: int = 1,

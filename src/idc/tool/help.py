@@ -7,7 +7,7 @@ from typing import List, Optional
 
 from wai.logging import init_logging, set_logging_level, add_logging_level
 from idc.core import ENV_IDC_LOGLEVEL
-from idc.help import generate_plugin_usage, HELP_FORMATS, HELP_FORMAT_TEXT, HELP_FORMAT_MARKDOWN
+from idc.help import generate_plugin_usage, HELP_FORMATS, HELP_FORMAT_TEXT, HELP_FORMAT_MARKDOWN, add_plugins_to_index
 from idc.registry import register_plugins, available_pipeline_plugins, REGISTRY
 from idc.registry import available_readers, available_filters, available_writers, available_generators
 
@@ -24,41 +24,6 @@ PLUGIN_TYPES = [
     PLUGIN_TYPE_PIPELINE,
     PLUGIN_TYPE_GENERATOR,
 ]
-
-
-def _add_plugins_to_index(heading: str, plugins: dict, help_format: str, lines: list):
-    """
-    Appends a plugin section to the output list.
-
-    :param heading: the heading of the section
-    :type heading: str
-    :param plugins: the plugins dictionary to add
-    :type plugins: dict
-    :param help_format: the type of output to generate
-    :type help_format: str
-    :param lines: the output lines to append the output to
-    :type lines: list
-    """
-    plugin_names = sorted(plugins.keys())
-    if len(plugin_names) == 0:
-        return
-    if help_format == HELP_FORMAT_MARKDOWN:
-        lines.append("## " + heading)
-        for name in plugin_names:
-            if REGISTRY.is_alias(name):
-                continue
-            lines.append("* [%s](%s.md)" % (name, name))
-        lines.append("")
-    elif help_format == HELP_FORMAT_TEXT:
-        lines.append(heading)
-        lines.append("-" * len(heading))
-        for name in plugin_names:
-            if REGISTRY.is_alias(name):
-                continue
-            lines.append("- %s" % name)
-        lines.append("")
-    else:
-        raise Exception("Unsupported format for index: %s" % help_format)
 
 
 def output_help(custom_class_listers: List[str] = None, excluded_class_listers: Optional[List[str]] = None,
@@ -130,11 +95,11 @@ def output_help(custom_class_listers: List[str] = None, excluded_class_listers: 
 
         plugin_lines = []
         if plugin_type == PLUGIN_TYPE_PIPELINE:
-            _add_plugins_to_index("Readers", available_readers(), help_format, plugin_lines)
-            _add_plugins_to_index("Filters", available_filters(), help_format, plugin_lines)
-            _add_plugins_to_index("Writers", available_writers(), help_format, plugin_lines)
+            add_plugins_to_index("Readers", available_readers(), help_format, plugin_lines)
+            add_plugins_to_index("Filters", available_filters(), help_format, plugin_lines)
+            add_plugins_to_index("Writers", available_writers(), help_format, plugin_lines)
         elif plugin_type == PLUGIN_TYPE_GENERATOR:
-            _add_plugins_to_index("Generators", available_generators(), help_format, plugin_lines)
+            add_plugins_to_index("Generators", available_generators(), help_format, plugin_lines)
         else:
             raise Exception("Unhandled plugin type: %s" % plugin_type)
 
