@@ -66,6 +66,9 @@ def generate_plugin_usage(plugin_name: str, help_format: str = HELP_FORMAT_TEXT,
     if help_format not in HELP_FORMATS:
         raise Exception("Unhandled help format: %s" % help_format)
 
+    if plugin_name not in available_plugins():
+        raise Exception("Unknown plugin: %s" % plugin_name)
+
     plugin = available_plugins()[plugin_name]
 
     result = ""
