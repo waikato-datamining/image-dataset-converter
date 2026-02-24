@@ -1,10 +1,9 @@
 import os
 
-from seppl import OutputProducer, InputConsumer, classes_to_str, get_aliases, has_aliases
-from seppl.placeholders import PlaceholderSupporter, placeholder_help
-from idc.registry import available_plugins, REGISTRY
 from idc.api import DataTypeSupporter, data_types_help
-
+from idc.registry import REGISTRY
+from seppl import OutputProducer, InputConsumer, classes_to_str, get_aliases, has_aliases, Plugin
+from seppl.placeholders import PlaceholderSupporter, placeholder_help
 
 HELP_FORMAT_TEXT = "text"
 HELP_FORMAT_MARKDOWN = "markdown"
@@ -66,10 +65,10 @@ def generate_plugin_usage(plugin_name: str, help_format: str = HELP_FORMAT_TEXT,
     if help_format not in HELP_FORMATS:
         raise Exception("Unhandled help format: %s" % help_format)
 
-    if plugin_name not in available_plugins():
+    if plugin_name not in REGISTRY.all_plugins():
         raise Exception("Unknown plugin: %s" % plugin_name)
 
-    plugin = available_plugins()[plugin_name]
+    plugin = REGISTRY.all_plugins()[plugin_name]
 
     result = ""
     if help_format == HELP_FORMAT_TEXT:
