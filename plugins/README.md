@@ -27,6 +27,7 @@
 * [get-email](get-email.md)
 * [list-files](list-files.md)
 * [poll-dir](poll-dir.md)
+* [shell-exec](shell-exec.md)
 * [start](start.md)
 * [watch-dir](watch-dir.md)
 
