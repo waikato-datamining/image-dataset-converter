@@ -27,6 +27,7 @@ Changelog
   `from-csv-dp`, `from-grayscale-dp`, `from-numpy-dp`, `from-pfm-dp`, `from-blue-channel-is`, `from-grayscale-is`, `from-indexed-png-is`.
   **NB:** you may have to convert the format of the base image using `convert-image-format` to avoid file name clashes
   when generating output.
+- added `to-combined-csv-od` batch writer that generates a CSV file from all the annotations
 
 
 0.1.0 (2025-10-31)
