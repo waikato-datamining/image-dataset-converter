@@ -139,7 +139,7 @@ Tool for executing a pipeline multiple times, each time with a different set
 of variables expanded. A variable is surrounded by curly quotes (e.g.,
 variable 'i' gets referenced with '{i}'). When supplying multiple generators,
 then these get treated as nested executions. Available generators: csv-file,
-dirs, list, null, prompt, range, text-file
+dirs, files, list, null, prompt, range, text-file
 
 positional arguments:
   pipeline              The pipeline template with variables to expand and
@@ -166,8 +166,9 @@ options:
                         This file format allows spreading the pipeline
                         arguments over multiple lines: it simply joins all
                         lines into a single command-line before splitting it
-                        into individual arguments for execution. (default:
-                        cmdline)
+                        into individual arguments for execution; any line
+                        starting with # is interpreted as commend and removed
+                        before joining. (default: cmdline)
   --exec_logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
                         The logging level to use. (default: WARN)
 ```

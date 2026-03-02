@@ -28,6 +28,7 @@ Changelog
   **NB:** you may have to convert the format of the base image using `convert-image-format` to avoid file name clashes
   when generating output.
 - added `to-combined-csv-od` batch writer that generates a CSV file from all the annotations
+- added `files` generator that locates files
 
 
 0.1.0 (2025-10-31)

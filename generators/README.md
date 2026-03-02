@@ -2,6 +2,7 @@
 ## Generators
 * [csv-file](csv-file.md)
 * [dirs](dirs.md)
+* [files](files.md)
 * [list](list.md)
 * [null](null.md)
 * [prompt](prompt.md)
