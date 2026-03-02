@@ -114,14 +114,24 @@ class CombinedCSVObjectDetectionWriter(BatchWriter, PlaceholderSupporter):
 
             meta = None
             if self.output_meta:
-                meta = []
+                meta = set()
                 for item in make_list(data):
+                    # image metadata
                     if item.has_metadata():
                         m = item.get_metadata()
                         for k in m.keys():
                             if k not in meta:
-                                meta.append(k)
-                meta.sort()
+                                meta.add(k)
+                    # object metadata
+                    for lobj in item.annotation:
+                        meta.update(lobj.metadata.keys())
+
+                if not self.output_polygon:
+                    if "poly_x" in meta:
+                        meta.remove("poly_x")
+                    if "poly_y" in meta:
+                        meta.remove("poly_y")
+                meta = sorted(list(meta))
                 for m in meta:
                     row.append("meta-%s" % m)
 
