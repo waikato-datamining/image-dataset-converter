@@ -42,7 +42,7 @@ setup(
         "defusedxml",
         "numpy",
         "shapely",
-        "python_image_complete==0.0.5",
+        "python_image_complete",
         "simple_palette_utils",
         "pypfm",
         "opencv-python",
