@@ -29,6 +29,7 @@ Changelog
   when generating output.
 - added `to-combined-csv-od` batch writer that generates a CSV file from all the annotations
 - added `files` generator that locates files
+- adapted image size detection to make it work with imagesize>=2.0.0
 
 
 0.1.0 (2025-10-31)

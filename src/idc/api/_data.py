@@ -310,16 +310,24 @@ class ImageData(AnnotationHandler, MetaDataHandler, NameSupporter, SourceSupport
 
         if self._data is not None:
             try:
-                self._image_size = imagesize.get(self._data)
-                return self._image_size
+                size = imagesize.get(self._data)
+                # imagesize >= 2.0.0 returns (-1, -1) for invalid images
+                if size != (-1, -1):
+                    self._image_size = size
+                    return self._image_size
             except:
+                # imagesize < 2.0.0 throws an exception for invalid images
                 pass
 
         if self._source is not None:
             try:
-                self._image_size = imagesize.get(self._source)
-                return self._image_size
+                size = imagesize.get(self._source)
+                # imagesize >= 2.0.0 returns (-1, -1) for invalid images
+                if size != (-1, -1):
+                    self._image_size = size
+                    return self._image_size
             except:
+                # imagesize < 2.0.0 throws an exception for invalid images
                 pass
 
         if self.image is not None:

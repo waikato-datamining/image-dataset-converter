@@ -37,7 +37,7 @@ setup(
         "wai_common>=0.0.45",
         "pillow",
         "matplotlib",
-        "imagesize==1.4.1",
+        "imagesize",
         "fast_opex>=0.0.4",
         "defusedxml",
         "numpy",
