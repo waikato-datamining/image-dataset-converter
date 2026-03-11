@@ -251,13 +251,14 @@ class COCOObjectDetectionWriter(SplittableBatchWriter, AnnotationsOnlyWriter, In
             annotation["id"] = annotation_id
             annotation["image_id"] = image_id
             annotation["category_id"] = category_id
-            annotation["area"] = float(item.image_width * item.image_height)
             annotation["bbox"] = [obj.x, obj.y, obj.width, obj.height]
             annotation["iscrowd"] = 0
             if obj.has_polygon():
+                annotation["area"] = float(obj.get_actual_polygon().area())
                 x_list = obj.get_polygon_x()
                 y_list = obj.get_polygon_y()
             else:
+                annotation["area"] = float(obj.width * obj.height)
                 x_list = [obj.x, obj.x + obj.width - 1, obj.x + obj.width - 1, obj.x]
                 y_list = [obj.y, obj.y, obj.y + obj.height - 1, obj.y + obj.height - 1]
             segmentation = []
