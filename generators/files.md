@@ -1,15 +1,16 @@
 # files
 
-Iterates over files that it finds. Can be limited to files that match a regular expression. Available variables: absfile|relfile|filename. absfile: the absolute file, relfile: the relative file to the search path, filename: the file name (no parent path).
+Iterates over files that it finds. Can be limited to files that match a regular expression. Available variables: absfile|relfile|filename|filename_noext. absfile: the absolute file, relfile: the relative file to the search path, filename: the file name (no parent path), filename_noext: the file name without extension (no parent path).
 
 ```
 usage: files [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-N LOGGER_NAME] -p
              DIR [DIR ...] [-r] [--regexp REGEXP]
 
 Iterates over files that it finds. Can be limited to files that match a
-regular expression. Available variables: absfile|relfile|filename. absfile:
-the absolute file, relfile: the relative file to the search path, filename:
-the file name (no parent path).
+regular expression. Available variables:
+absfile|relfile|filename|filename_noext. absfile: the absolute file, relfile:
+the relative file to the search path, filename: the file name (no parent
+path), filename_noext: the file name without extension (no parent path).
 
 options:
   -h, --help            show this help message and exit
