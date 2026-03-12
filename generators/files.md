@@ -4,7 +4,7 @@ Iterates over files that it finds. Can be limited to files that match a regular 
 
 ```
 usage: files [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-N LOGGER_NAME] -p
-             DIR [DIR ...] [-r] [--regexp REGEXP]
+             DIR [DIR ...] [-r] [--regexp REGEXP] [-s]
 
 Iterates over files that it finds. Can be limited to files that match a
 regular expression. Available variables:
@@ -25,4 +25,6 @@ options:
                         False)
   --regexp REGEXP       The regular expression to use for matching files;
                         matches all if not provided. (default: None)
+  -s, --sort            Whether to sort the list of directories. (default:
+                        False)
 ```

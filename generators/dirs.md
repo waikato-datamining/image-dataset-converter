@@ -4,7 +4,7 @@ Iterates over directories that it finds. Can be limited to directories that cont
 
 ```
 usage: dirs [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-N LOGGER_NAME] -p
-            DIR [DIR ...] [-r] [--regexp REGEXP] [--file_regexp REGEXP]
+            DIR [DIR ...] [-r] [--regexp REGEXP] [--file_regexp REGEXP] [-s]
 
 Iterates over directories that it finds. Can be limited to directories that
 contain certain files. Available variables: absdir|reldir|dirname. absdir: the
@@ -29,4 +29,6 @@ options:
                         this regexp are returned (path is excluded from test);
                         all directories are turned if not provided. (default:
                         None)
+  -s, --sort            Whether to sort the list of directories. (default:
+                        False)
 ```
