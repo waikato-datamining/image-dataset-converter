@@ -55,6 +55,7 @@
 * [discard-negatives](discard-negatives.md)
 * [discard-positives](discard-positives.md)
 * [filter-labels](filter-labels.md)
+* [get-metadata](get-metadata.md)
 * [grayscale-to-binary](grayscale-to-binary.md)
 * [inspect](inspect.md)
 * [is-to-od](is-to-od.md)
