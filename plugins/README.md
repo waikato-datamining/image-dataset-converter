@@ -90,6 +90,7 @@
 * [set-metadata](set-metadata.md)
 * [set-placeholder](set-placeholder.md)
 * [set-storage](set-storage.md)
+* [sleep](sleep.md)
 * [sort-pixels](sort-pixels.md)
 * [split-records](split-records.md)
 * [stop](stop.md)
