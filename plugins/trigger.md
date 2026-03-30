@@ -9,7 +9,7 @@ Triggers the sub-flow with its reader/filter(s)/writer whenever data is passing 
 usage: trigger [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-N LOGGER_NAME]
                [--skip] [-f SUB_FLOW] [-F {cmdline,file}] [--field FIELD]
                [--comparison {lt,le,eq,ne,ge,gt,contains,matches}]
-               [--value VALUE]
+               [--value VALUE] [--log_execution_time]
 
 Triggers the sub-flow with its reader/filter(s)/writer whenever data is
 passing through. When supplying a meta-data field and a value, this can be
@@ -42,4 +42,7 @@ options:
                         represents the substring to find/regexp to search with
                         (default: eq)
   --value VALUE         The value to use in the comparison (default: None)
+  --log_execution_time  Whether to log the time it takes to execute the sub-
+                        flow. Requires the INFO level to be set. (default:
+                        False)
 ```
