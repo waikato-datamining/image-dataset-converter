@@ -32,6 +32,7 @@ Changelog
 - adapted image size detection to make it work with imagesize>=2.0.0
 - the `area` field in the `to-coco-od` writer output now outputs either the polygon or bounding box area
   (thanks to Jinzheng Meng for reporting the bug)
+- `idc-convert` and `idc-exec` now support the default placeholders HOME/CWD/TMP when loading custom placeholders
 
 
 0.1.0 (2025-10-31)
