@@ -67,6 +67,7 @@
 * [list-to-sequence](list-to-sequence.md)
 * [load-data](load-data.md)
 * [log-data](log-data.md)
+* [log-placeholder](log-placeholder.md)
 * [map-labels](map-labels.md)
 * [max-records](max-records.md)
 * [metadata](metadata.md)
