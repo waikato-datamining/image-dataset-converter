@@ -9,6 +9,7 @@ from ._dims_to_metadata import DimensionToMetadata
 from ._discard_invalid_images import DiscardInvalidImages
 from ._discard_negatives import DiscardNegatives
 from ._discard_positives import DiscardPositives
+from ._exif_autorotate import ExifAutorotate
 from ._filter_labels import FilterLabels
 from ._grayscale_to_binary import GrayscaleToBinary
 from ._inspect import Inspect, MODES, MODE_NONINTERACTIVE, MODE_INTERACTIVE, OUTPUTS, OUTPUT_STDOUT, OUTPUT_STDERR, OUTPUT_LOGGER, OUTPUT_FILE

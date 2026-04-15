@@ -34,7 +34,7 @@ Changelog
   (thanks to Jinzheng Meng for reporting the bug)
 - `idc-convert` and `idc-exec` now support the default placeholders HOME/CWD/TMP when loading custom placeholders,
   now load the placeholders correctly (fixed incorrect late lambda binding)
-
+- added `exif-autorotate` filter to automatically apply EXIF rotation to images (if applicable)
 
 
 0.1.0 (2025-10-31)

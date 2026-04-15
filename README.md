@@ -76,7 +76,7 @@ usage: idc-convert [-h] [--help-all] [--help-plugin NAME] [-u INTERVAL]
 
 Tool for converting between image annotation dataset formats.
 
-readers (30):
+readers (31):
    cron, from-adams-ic, from-adams-od, from-blue-channel-is, 
    from-coco-od, from-csv-dp, from-data, from-grayscale-dp, 
    from-grayscale-is, from-indexed-png-is, from-instance-png-is, 
@@ -84,8 +84,8 @@ readers (30):
    from-numpy-dp, from-opex-od, from-pfm-dp, from-pyfunc, 
    from-roicsv-od, from-storage, from-subdir-ic, from-text-file, 
    from-voc-od, from-yolo-od, get-email, list-files, poll-dir, 
-   shell-exec, start, watch-dir
-filters (72):
+   redis-image-listen, shell-exec, start, watch-dir
+filters (78):
    annotations-from-storage, annotations-to-storage, any-to-rgb, 
    apply-ext-mask, apply-label-mask, attach-metadata, block, 
    check-duplicate-filenames, coerce-box, coerce-mask, 
@@ -93,25 +93,28 @@ filters (72):
    delete-storage, depth-to-grayscale, depth-to-greyscale*, 
    dimension-discarder, dims-to-metadata, discard-by-name, 
    discard-invalid-images, discard-negatives, discard-positives, 
-   filter-labels, get-metadata, grayscale-to-binary, 
+   exif-autorotate, filter-labels, get-metadata, grayscale-to-binary, 
    greyscale-to-binary*, inspect, is-to-od, label-from-name, 
    label-present*, label-present-ic, label-present-is, label-present-od, 
-   label-to-metadata, list-to-sequence, load-data, log-data, map-labels, 
-   max-records, metadata, metadata-from-name, metadata-od, 
-   metadata-to-placeholder, move-files, od-to-ic, od-to-is, passthrough, 
-   polygon-discarder, polygon-simplifier, pyfunc-filter, 
-   randomize-records, record-window, remove-alpha, remove-classes, 
-   rename, rgb-to-grayscale, rgb-to-greyscale*, sample, set-metadata, 
+   label-to-metadata, list-to-sequence, load-data, log-data, 
+   log-placeholder, map-labels, max-records, metadata, 
+   metadata-from-name, metadata-od, metadata-to-placeholder, move-files, 
+   od-to-ic, od-to-is, passthrough, polygon-discarder, 
+   polygon-simplifier, pyfunc-filter, randomize-records, record-window, 
+   redis-predict-dp, redis-predict-ic, redis-predict-is, 
+   redis-predict-od, remove-alpha, remove-classes, rename, 
+   rgb-to-grayscale, rgb-to-greyscale*, sample, set-metadata, 
    set-placeholder, set-storage, sleep, sort-pixels, split-records, 
    stop, strip-annotations, sub-process, tee, trigger, use-mask, 
    write-labels
-writers (27):
-   console, delete-files, send-email, to-adams-ic, to-adams-od, 
-   to-blue-channel-is, to-coco-od, to-combined-csv-od, to-csv-dp, 
-   to-data, to-grayscale-dp, to-grayscale-is, to-indexed-png-is, 
-   to-instance-png-od, to-layer-segments-is, to-metadata, to-multi, 
-   to-numpy-dp, to-opex-od, to-pfm-dp, to-pyfunc, to-roicsv-od, 
-   to-storage, to-subdir-ic, to-text-file, to-voc-od, to-yolo-od
+writers (28):
+   console, delete-files, redis-data-broadcast, send-email, to-adams-ic, 
+   to-adams-od, to-blue-channel-is, to-coco-od, to-combined-csv-od, 
+   to-csv-dp, to-data, to-grayscale-dp, to-grayscale-is, 
+   to-indexed-png-is, to-instance-png-od, to-layer-segments-is, 
+   to-metadata, to-multi, to-numpy-dp, to-opex-od, to-pfm-dp, to-pyfunc, 
+   to-roicsv-od, to-storage, to-subdir-ic, to-text-file, to-voc-od, 
+   to-yolo-od
 
 options:
   -h, --help           Show basic help message and exit.
