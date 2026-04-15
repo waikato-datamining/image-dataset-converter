@@ -54,6 +54,7 @@
 * [discard-invalid-images](discard-invalid-images.md)
 * [discard-negatives](discard-negatives.md)
 * [discard-positives](discard-positives.md)
+* [exif-autorotate](exif-autorotate.md)
 * [filter-labels](filter-labels.md)
 * [get-metadata](get-metadata.md)
 * [grayscale-to-binary](grayscale-to-binary.md)
