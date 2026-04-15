@@ -1,4 +1,5 @@
 import argparse
+import os
 
 from wai.logging import LOGGING_WARNING
 
@@ -6,6 +7,7 @@ from kasperl.api import DataFormatter
 
 PH_DATA = "data"
 PH_IMAGE_NAME = "image-name"
+PH_IMAGE_NAME_NOEXT = "image-name-noext"
 PH_IMAGE_FORMAT = "image-format"
 PH_IMAGE_WIDTH = "image-width"
 PH_IMAGE_HEIGHT = "image-height"
@@ -14,6 +16,7 @@ PH_ANNOTATIONS = "annotations"
 PLACEHOLDERS = [
     PH_DATA,
     PH_IMAGE_NAME,
+    PH_IMAGE_NAME_NOEXT,
     PH_IMAGE_FORMAT,
     PH_IMAGE_WIDTH,
     PH_IMAGE_HEIGHT,
@@ -96,6 +99,8 @@ class ImageDataFormatter(DataFormatter):
                     value = str(data)
                 elif ph == PH_IMAGE_NAME:
                     value = data.image_name
+                elif ph == PH_IMAGE_NAME_NOEXT:
+                    value = os.path.splitext(data.image_name)[0]
                 elif ph == PH_IMAGE_FORMAT:
                     value = data.image_format
                 elif ph == PH_IMAGE_WIDTH:

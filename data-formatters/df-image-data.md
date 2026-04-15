@@ -17,7 +17,7 @@ options:
                         name by default (default: None)
   -f OUTPUT_FORMAT, --output_format OUTPUT_FORMAT
                         The format to use for the output, available
-                        placeholders: data, image-name, image-format, image-
-                        width, image-height, has-annotations, annotations
-                        (default: data)
+                        placeholders: data, image-name, image-name-noext,
+                        image-format, image-width, image-height, has-
+                        annotations, annotations (default: {data})
 ```
