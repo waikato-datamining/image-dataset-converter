@@ -2,13 +2,13 @@
 
 * accepts: seppl.AnyData
 
-Just prints the data to stdout.
+Prints the data to stdout using the supplied data formatter.
 
 ```
 usage: console [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-N LOGGER_NAME]
-               [--skip]
+               [--skip] [-f DATA_FORMATTER]
 
-Just prints the data to stdout.
+Prints the data to stdout using the supplied data formatter.
 
 options:
   -h, --help            show this help message and exit
@@ -19,4 +19,7 @@ options:
                         name by default (default: None)
   --skip                Disables the plugin, removing it from the pipeline.
                         (default: False)
+  -f DATA_FORMATTER, --data_formatter DATA_FORMATTER
+                        The data formatter to apply (default: df-simple-
+                        string)
 ```

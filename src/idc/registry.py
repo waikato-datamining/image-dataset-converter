@@ -51,6 +51,7 @@ LIST_READERS = "readers"
 LIST_FILTERS = "filters"
 LIST_WRITERS = "writers"
 LIST_GENERATORS = "generators"
+LIST_DATA_FORMATTERS = "data-formatters"
 LIST_CUSTOM_CLASS_LISTERS = "custom-class-listers"
 LIST_ENV_CLASS_LISTERS = "env-class-listers"
 LIST_TYPES = [
@@ -62,6 +63,7 @@ LIST_TYPES = [
     LIST_FILTERS,
     LIST_WRITERS,
     LIST_GENERATORS,
+    LIST_DATA_FORMATTERS,
 ]
 
 
@@ -132,6 +134,16 @@ def available_generators() -> Dict[str, Plugin]:
     return REGISTRY.plugins("kasperl.api.Generator", fail_if_empty=False)
 
 
+def available_data_formatters() -> Dict[str, Plugin]:
+    """
+    Returns all available data formatters.
+
+    :return: the dict of generator objects
+    :rtype: dict
+    """
+    return REGISTRY.plugins("kasperl.api.DataFormatter", fail_if_empty=False)
+
+
 def available_plugins() -> Dict[str, Plugin]:
     """
     Returns all available plugins (pipeline and generators).
@@ -144,6 +156,7 @@ def available_plugins() -> Dict[str, Plugin]:
     result.update(available_filters())
     result.update(available_writers())
     result.update(available_generators())
+    result.update(available_data_formatters())
     return result
 
 
@@ -174,7 +187,7 @@ def _list(list_type: str, custom_class_listers: Optional[List[str]] = None, excl
     """
     register_plugins(custom_class_listers=custom_class_listers, excluded_class_listers=excluded_class_listers)
 
-    if list_type in [LIST_PLUGINS, LIST_PIPELINE, LIST_READERS, LIST_FILTERS, LIST_WRITERS, LIST_GENERATORS]:
+    if list_type in [LIST_PLUGINS, LIST_PIPELINE, LIST_READERS, LIST_FILTERS, LIST_WRITERS, LIST_GENERATORS, LIST_DATA_FORMATTERS]:
         if list_type == LIST_PLUGINS:
             plugins = available_plugins()
         elif list_type == LIST_PIPELINE:
@@ -187,6 +200,8 @@ def _list(list_type: str, custom_class_listers: Optional[List[str]] = None, excl
             plugins = available_writers()
         elif list_type == LIST_GENERATORS:
             plugins = available_generators()
+        elif list_type == LIST_DATA_FORMATTERS:
+            plugins = available_data_formatters()
         else:
             raise Exception("Unhandled type: %s" % list_type)
         print("name: class")

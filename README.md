@@ -385,6 +385,7 @@ You can find help screens for the plugins here:
 
 * [Pipeline plugins](plugins/README.md) (readers/filters/writers)
 * [Generator plugins](generators/README.md) (used by `idc-exec`)
+* [Data formatter plugins](data-formatters/README.md)
 
 
 ## Command-line examples

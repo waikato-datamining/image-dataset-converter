@@ -24,4 +24,7 @@ def list_classes() -> Dict[str, List[str]]:
             "idc.writer.imgseg",
             "idc.writer.objdet",
         ],
+        "kasperl.api.DataFormatter": [
+            "idc.dataformatter",
+        ],
     }

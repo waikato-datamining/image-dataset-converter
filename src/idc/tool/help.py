@@ -8,7 +8,7 @@ from typing import List, Optional
 from wai.logging import init_logging, set_logging_level, add_logging_level
 from idc.core import ENV_IDC_LOGLEVEL
 from idc.help import generate_plugin_usage, HELP_FORMATS, HELP_FORMAT_TEXT, HELP_FORMAT_MARKDOWN, add_plugins_to_index
-from idc.registry import register_plugins, available_pipeline_plugins, REGISTRY
+from idc.registry import register_plugins, available_pipeline_plugins, REGISTRY, available_data_formatters
 from idc.registry import available_readers, available_filters, available_writers, available_generators
 
 HELP = "idc-help"
@@ -20,9 +20,11 @@ INDEX_TITLE_DEFAULT = "image-dataset-converter plugins"
 
 PLUGIN_TYPE_PIPELINE = "pipeline"
 PLUGIN_TYPE_GENERATOR = "generator"
+PLUGIN_TYPE_DATA_FORMATTER = "data-formatter"
 PLUGIN_TYPES = [
     PLUGIN_TYPE_PIPELINE,
     PLUGIN_TYPE_GENERATOR,
+    PLUGIN_TYPE_DATA_FORMATTER,
 ]
 
 
@@ -65,6 +67,8 @@ def output_help(custom_class_listers: List[str] = None, excluded_class_listers: 
         available = available_pipeline_plugins()
     elif plugin_type == PLUGIN_TYPE_GENERATOR:
         available = available_generators()
+    elif plugin_type == PLUGIN_TYPE_DATA_FORMATTER:
+        available = available_data_formatters()
     else:
         raise Exception("Unhandled plugin type: %s" % plugin_type)
 
@@ -100,6 +104,8 @@ def output_help(custom_class_listers: List[str] = None, excluded_class_listers: 
             add_plugins_to_index("Writers", available_writers(), help_format, plugin_lines)
         elif plugin_type == PLUGIN_TYPE_GENERATOR:
             add_plugins_to_index("Generators", available_generators(), help_format, plugin_lines)
+        elif plugin_type == PLUGIN_TYPE_DATA_FORMATTER:
+            add_plugins_to_index("Data formatters", available_data_formatters(), help_format, plugin_lines)
         else:
             raise Exception("Unhandled plugin type: %s" % plugin_type)
 

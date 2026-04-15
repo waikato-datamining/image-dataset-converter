@@ -2,13 +2,15 @@
 
 * accepts: seppl.AnyData
 
-Stores the incoming data in the specified text file.
+Applies the specified data formatter to the incoming data and stores the result in the specified text file.
 
 ```
 usage: to-text-file [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                    [-N LOGGER_NAME] [--skip] -o FILE [-a] [-d]
+                    [-N LOGGER_NAME] [--skip] [-f DATA_FORMATTER] -o FILE [-a]
+                    [-d]
 
-Stores the incoming data in the specified text file.
+Applies the specified data formatter to the incoming data and stores the
+result in the specified text file.
 
 options:
   -h, --help            show this help message and exit
@@ -19,6 +21,9 @@ options:
                         name by default (default: None)
   --skip                Disables the plugin, removing it from the pipeline.
                         (default: False)
+  -f DATA_FORMATTER, --data_formatter DATA_FORMATTER
+                        The data formatter to apply (default: df-simple-
+                        string)
   -o FILE, --output_file FILE
                         The file to write the data to; Supported placeholders:
                         {HOME}, {CWD}, {TMP}, {INPUT_PATH}, {INPUT_NAMEEXT},
