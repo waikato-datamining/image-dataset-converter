@@ -23,6 +23,7 @@ from ._od_to_ic import ObjectDetectionToImageClassification, MULTIPLICITY, MULTI
 from ._pyfunc_filter import PythonFunctionFilter
 from ._remove_alpha import RemoveAlpha
 from ._remove_classes import RemoveClasses
+from ._rename import Rename
 from ._rgb_to_grayscale import RGBToGrayscale
 from ._sort_pixels import SortPixels
 from ._strip_annotations import StripAnnotations
