@@ -2,13 +2,14 @@
 
 * accepts: seppl.AnyData
 
-Prints the data to stdout using the supplied data formatter.
+Prints the data to stdout using the supplied data formatter. Any other placeholders will get expanded as well.
 
 ```
 usage: console [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-N LOGGER_NAME]
                [--skip] [-f DATA_FORMATTER]
 
-Prints the data to stdout using the supplied data formatter.
+Prints the data to stdout using the supplied data formatter. Any other
+placeholders will get expanded as well.
 
 options:
   -h, --help            show this help message and exit
@@ -23,3 +24,15 @@ options:
                         The data formatter to apply (default: df-simple-
                         string)
 ```
+
+Available placeholders:
+
+* `{HOME}`: The home directory of the current user.
+* `{CWD}`: The current working directory.
+* `{TMP}`: The temp directory.
+* `{INPUT_PATH}`: The directory part of the current input, i.e., `/some/where` of input `/some/where/file.txt`.
+* `{INPUT_NAMEEXT}`: The name (incl extension) of the current input, i.e., `file.txt` of input `/some/where/file.txt`.
+* `{INPUT_NAMENOEXT}`: The name (excl extension) of the current input, i.e., `file` of input `/some/where/file.txt`.
+* `{INPUT_EXT}`: The extension of the current input (incl dot), i.e., `.txt` of input `/some/where/file.txt`.
+* `{INPUT_PARENT_PATH}`: The directory part of the parent directory of the current input, i.e., `/some` of input `/some/where/file.txt`.
+* `{INPUT_PARENT_NAME}`: The name of the parent directory of the current input, i.e., `where` of input `/some/where/file.txt`.

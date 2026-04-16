@@ -2,7 +2,7 @@
 
 * accepts: seppl.AnyData
 
-Applies the specified data formatter to the incoming data and stores the result in the specified text file.
+Applies the specified data formatter to the incoming data and stores the result in the specified text file. Any other placeholders will get expanded in the data formatter output as well.
 
 ```
 usage: to-text-file [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
@@ -10,7 +10,8 @@ usage: to-text-file [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                     [-d]
 
 Applies the specified data formatter to the incoming data and stores the
-result in the specified text file.
+result in the specified text file. Any other placeholders will get expanded in
+the data formatter output as well.
 
 options:
   -h, --help            show this help message and exit
