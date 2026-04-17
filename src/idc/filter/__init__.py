@@ -25,6 +25,7 @@ from ._remove_alpha import RemoveAlpha
 from ._remove_classes import RemoveClasses
 from ._rename import Rename
 from ._rgb_to_grayscale import RGBToGrayscale
+from ._sanitize_name import SanitizeName
 from ._sort_pixels import SortPixels
 from ._strip_annotations import StripAnnotations
 from ._sub_process import SubProcess

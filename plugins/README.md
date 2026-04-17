@@ -89,6 +89,7 @@
 * [rename](rename.md)
 * [rgb-to-grayscale](rgb-to-grayscale.md)
 * [sample](sample.md)
+* [sanitize-name](sanitize-name.md)
 * [set-metadata](set-metadata.md)
 * [set-placeholder](set-placeholder.md)
 * [set-storage](set-storage.md)
