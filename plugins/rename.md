@@ -3,13 +3,14 @@
 * accepts: seppl.AnyData
 * generates: seppl.AnyData
 
-Renames files using a user-supplied format.
+Renames files using a user-supplied format. As a final step, expands placeholders as well.
 
 ```
 usage: rename [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-N LOGGER_NAME]
               [--skip] [-f NAME_FORMAT] [-r REGEXP] [-g GROUPS]
 
-Renames files using a user-supplied format.
+Renames files using a user-supplied format. As a final step, expands
+placeholders as well.
 
 options:
   -h, --help            show this help message and exit
