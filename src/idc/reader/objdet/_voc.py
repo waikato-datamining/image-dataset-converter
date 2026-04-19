@@ -14,7 +14,7 @@ from idc.api import ObjectDetectionData, locate_image
 class VOCObjectDetectionReader(Reader, PlaceholderSupporter):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
-                 image_rel_path: str = None, resume_from: str = None,
+                 image_rel_path: str = None, ignore_folder: bool = None, resume_from: str = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
         Initializes the reader.
@@ -23,6 +23,8 @@ class VOCObjectDetectionReader(Reader, PlaceholderSupporter):
         :param source_list: the file(s) with filename(s)
         :param image_rel_path: the relative path to apply to "folder" for locating the images
         :type image_rel_path: str
+        :param ignore_folder: whether to ignore the folder value from the XML
+        :type ignore_folder: bool
         :param resume_from: the file to resume from (glob)
         :type resume_from: str
         :param logger_name: the name to use for the logger
@@ -34,6 +36,7 @@ class VOCObjectDetectionReader(Reader, PlaceholderSupporter):
         self.source = source
         self.source_list = source_list
         self.image_rel_path = image_rel_path
+        self.ignore_folder = ignore_folder
         self.resume_from = resume_from
         self._inputs = None
         self._current_input = None
@@ -68,6 +71,7 @@ class VOCObjectDetectionReader(Reader, PlaceholderSupporter):
         parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the XML files to use; " + placeholder_list(obj=self), required=False, nargs="*")
         parser.add_argument("--resume_from", type=str, help="Glob expression matching the file to resume from, e.g., '*/012345.xml'", required=False)
         parser.add_argument("-r", "--image_rel_path", type=str, help="The relative path to use for the 'folder' property to locate the images.", required=False)
+        parser.add_argument("--ignore_folder", action="store_true", help="Whether to ignore the 'folder' information from the XML when looking for the image.", required=False)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
@@ -82,6 +86,7 @@ class VOCObjectDetectionReader(Reader, PlaceholderSupporter):
         self.source_list = ns.input_list
         self.image_rel_path = ns.image_rel_path
         self.resume_from = ns.resume_from
+        self.ignore_folder = ns.ignore_folder
 
     def generates(self) -> List:
         """
@@ -99,6 +104,8 @@ class VOCObjectDetectionReader(Reader, PlaceholderSupporter):
         super().initialize()
         if self.image_rel_path is None:
             self.image_rel_path = ""
+        if self.ignore_folder is None:
+            self.ignore_folder = False
         self._inputs = None
 
     def read(self) -> Iterable:
@@ -115,21 +122,15 @@ class VOCObjectDetectionReader(Reader, PlaceholderSupporter):
         self.logger().info("Reading from: " + str(self.session.current_input))
 
         xml = ElementTree.parse(self.session.current_input)
+        parts = [os.path.dirname(self.session.current_input)]
         if len(self.image_rel_path) > 0:
-            img = os.path.join(
-                os.path.dirname(self.session.current_input),
-                self.image_rel_path,
-                xml.findtext("folder"),
-                xml.findtext("filename")
-            )
-        else:
-            img = os.path.join(
-                os.path.dirname(self.session.current_input),
-                xml.findtext("folder"),
-                xml.findtext("filename")
-            )
+            parts.append(self.image_rel_path)
+        if not self.ignore_folder:
+            parts.append(xml.findtext("folder"))
+        parts.append(xml.findtext("filename"))
+        img = os.path.join(*parts)
         if not os.path.exists(img):
-            self.logger().warning("Failed to locate image based on information in XML.")
+            self.logger().warning("Failed to locate image based on information in XML, trying to locate.")
             img = locate_image(self.session.current_input)
             if img is None:
                 self.logger().warning("No corresponding image found for: %s" % self.session.current_input)

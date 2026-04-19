@@ -8,6 +8,7 @@ Loads the bounding box from the associated .xml file in PASCAL VOC format.
 usage: from-voc-od [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                    [-N LOGGER_NAME] [-i [INPUT ...]] [-I [INPUT_LIST ...]]
                    [--resume_from RESUME_FROM] [-r IMAGE_REL_PATH]
+                   [--ignore_folder]
 
 Loads the bounding box from the associated .xml file in PASCAL VOC format.
 
@@ -32,6 +33,8 @@ options:
   -r IMAGE_REL_PATH, --image_rel_path IMAGE_REL_PATH
                         The relative path to use for the 'folder' property to
                         locate the images. (default: None)
+  --ignore_folder       Whether to ignore the 'folder' information from the
+                        XML when looking for the image. (default: False)
 ```
 
 Available placeholders:

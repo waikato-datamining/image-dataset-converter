@@ -36,6 +36,7 @@ Changelog
   now load the placeholders correctly (fixed incorrect late lambda binding)
 - added `exif-autorotate` filter to automatically apply EXIF rotation to images (if applicable)
 - added support for data-formatters with `df-image-data` specifically for images
+- `from-voc-od` reader now has the `--ignore_folder` option to ignore the `folder` value from the XML file
 
 
 0.1.0 (2025-10-31)
