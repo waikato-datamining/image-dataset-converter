@@ -4,12 +4,12 @@ from typing import List, Iterable
 
 from wai.logging import LOGGING_WARNING
 
-from kasperl.api import make_list, BatchWriter
 from idc.api import ObjectDetectionData, get_object_label
-from seppl.placeholders import placeholder_list, PlaceholderSupporter
+from kasperl.api import make_list, BatchWriter
+from seppl.variables import VariableSupporter, variable_list
 
 
-class CombinedCSVObjectDetectionWriter(BatchWriter, PlaceholderSupporter):
+class CombinedCSVObjectDetectionWriter(BatchWriter, VariableSupporter):
 
     def __init__(self, output_file: str = None, output_polygon: bool = None, output_meta: bool = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
@@ -58,7 +58,7 @@ class CombinedCSVObjectDetectionWriter(BatchWriter, PlaceholderSupporter):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-o", "--output", type=str, help="The CSV file to store the object detection information in. " + placeholder_list(obj=self), required=True)
+        parser.add_argument("-o", "--output", type=str, help="The CSV file to store the object detection information in. " + variable_list(obj=self), required=True)
         parser.add_argument("-p", "--output_polygon", action="store_true", help="Whether to output any polygon information as well", required=False)
         parser.add_argument("-m", "--output_meta", action="store_true", help="Whether to output any meta-data information as well", required=False)
         return parser
@@ -103,7 +103,7 @@ class CombinedCSVObjectDetectionWriter(BatchWriter, PlaceholderSupporter):
         :param data: the data to write
         :type data: Iterable
         """
-        path = self.session.expand_placeholders(self.output_file)
+        path = self.session.expand_variables(self.output_file)
         with open(path, "w") as fp:
             writer = csv.writer(fp, quoting=csv.QUOTE_MINIMAL)
 

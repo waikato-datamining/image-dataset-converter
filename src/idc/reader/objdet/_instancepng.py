@@ -1,7 +1,7 @@
 import argparse
 from typing import List, Iterable, Union
 
-from seppl.placeholders import PlaceholderSupporter, placeholder_list
+from seppl.variables import VariableSupporter, variable_list
 from seppl.io import locate_files
 from wai.logging import LOGGING_WARNING
 
@@ -10,7 +10,7 @@ from idc.api import load_image_from_file, objdet_from_instancepng, JPEG_EXTENSIO
     PNG_EXTENSIONS, empty_image, FORMAT_JPEG, FORMAT_EXTENSIONS, ObjectDetectionData
 
 
-class InstancePngObjectDetectionReader(Reader, PlaceholderSupporter, AnnotationsOnlyReader):
+class InstancePngObjectDetectionReader(Reader, VariableSupporter, AnnotationsOnlyReader):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
                  image_path_rel: str = None, image_prefix: str = None, annotation_prefix: str = None,
@@ -86,8 +86,8 @@ class InstancePngObjectDetectionReader(Reader, PlaceholderSupporter, Annotations
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-i", "--input", type=str, help="Path to the PNG file(s) to read; glob syntax is supported; " + placeholder_list(obj=self), required=False, nargs="*")
-        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the PNG files to use; " + placeholder_list(obj=self), required=False, nargs="*")
+        parser.add_argument("-i", "--input", type=str, help="Path to the PNG file(s) to read; glob syntax is supported; " + variable_list(obj=self), required=False, nargs="*")
+        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the PNG files to use; " + variable_list(obj=self), required=False, nargs="*")
         parser.add_argument("--resume_from", type=str, help="Glob expression matching the file to resume from, e.g., '*/012345.png'", required=False)
         parser.add_argument("--image_path_rel", metavar="PATH", type=str, default=None, help="The relative path from the annotations to the images directory", required=False)
         parser.add_argument("--image_prefix", metavar="PREFIX", type=str, default=None, help="The prefix that the images use, e.g., 'image_'.", required=False)

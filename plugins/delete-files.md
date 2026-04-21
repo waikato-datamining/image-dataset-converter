@@ -22,7 +22,7 @@ options:
                         (default: False)
 ```
 
-Available placeholders:
+Available variables:
 
 * `{HOME}`: The home directory of the current user.
 * `{CWD}`: The current working directory.

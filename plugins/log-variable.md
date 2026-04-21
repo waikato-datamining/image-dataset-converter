@@ -1,17 +1,17 @@
-# log-placeholder
+# log-variable
 
 * accepts: seppl.AnyData
 * generates: seppl.AnyData
+* alias(es): log-placeholder
 
-Outputs the values of the specified placeholders. Logging must be set to INFO for the output to show.
+Outputs the values of the specified variables. Logging must be set to INFO for the output to show.
 
 ```
-usage: log-placeholder [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                       [-N LOGGER_NAME] [--skip] -p PLACEHOLDER
-                       [PLACEHOLDER ...]
+usage: log-variable [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
+                    [-N LOGGER_NAME] [--skip] -V VARIABLE [VARIABLE ...]
 
-Outputs the values of the specified placeholders. Logging must be set to INFO
-for the output to show.
+Outputs the values of the specified variables. Logging must be set to INFO for
+the output to show.
 
 options:
   -h, --help            show this help message and exit
@@ -22,12 +22,12 @@ options:
                         name by default (default: None)
   --skip                Disables the plugin, removing it from the pipeline.
                         (default: False)
-  -p PLACEHOLDER [PLACEHOLDER ...], --placeholder PLACEHOLDER [PLACEHOLDER ...]
-                        The name of the placeholders, without curly brackets.
+  -V VARIABLE [VARIABLE ...], -p VARIABLE [VARIABLE ...], --variable VARIABLE [VARIABLE ...], --placeholder VARIABLE [VARIABLE ...]
+                        The name of the variables, without curly brackets.
                         (default: None)
 ```
 
-Available placeholders:
+Available variables:
 
 * `{HOME}`: The home directory of the current user.
 * `{CWD}`: The current working directory.

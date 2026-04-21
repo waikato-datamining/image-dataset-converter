@@ -23,11 +23,11 @@ options:
                         The command-line of the reader for reading the files
                         (default: None)
   -i DIR_IN, --dir_in DIR_IN
-                        The directory to poll; Supported placeholders: {HOME},
+                        The directory to poll; Supported variables: {HOME},
                         {CWD}, {TMP} (default: None)
   -o DIR_OUT, --dir_out DIR_OUT
                         The directory to move the files to; Supported
-                        placeholders: {HOME}, {CWD}, {TMP} (default: None)
+                        variables: {HOME}, {CWD}, {TMP} (default: None)
   -w POLL_WAIT, --poll_wait POLL_WAIT
                         The poll interval in seconds (default: 1.0)
   -W PROCESS_WAIT, --process_wait PROCESS_WAIT
@@ -49,7 +49,7 @@ options:
                         unlimited (default: -1)
 ```
 
-Available placeholders:
+Available variables:
 
 * `{HOME}`: The home directory of the current user.
 * `{CWD}`: The current working directory.

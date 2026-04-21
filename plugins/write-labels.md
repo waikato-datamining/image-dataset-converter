@@ -25,7 +25,7 @@ options:
                         (default: False)
   -o OUTPUT_FILE, --output_file OUTPUT_FILE
                         The file to write the labels to; uses stdout if not
-                        provided; Supported placeholders: {HOME}, {CWD}, {TMP}
+                        provided; Supported variables: {HOME}, {CWD}, {TMP}
                         (default: None)
   -f {text,comma-separated,custom-separator}, --output_format {text,comma-separated,custom-separator}
                         The format to use for the labels (default: text)
@@ -34,7 +34,7 @@ options:
                         new line or carriage return (default: None)
 ```
 
-Available placeholders:
+Available variables:
 
 * `{HOME}`: The home directory of the current user.
 * `{CWD}`: The current working directory.

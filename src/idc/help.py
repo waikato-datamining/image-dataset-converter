@@ -3,7 +3,7 @@ import os
 from idc.api import DataTypeSupporter, data_types_help
 from idc.registry import REGISTRY
 from seppl import OutputProducer, InputConsumer, classes_to_str, get_aliases, has_aliases, Plugin
-from seppl.placeholders import PlaceholderSupporter, placeholder_help
+from seppl.variables import VariableSupporter, variable_help
 
 HELP_FORMAT_TEXT = "text"
 HELP_FORMAT_MARKDOWN = "markdown"
@@ -85,8 +85,8 @@ def generate_plugin_usage(plugin_name: str, help_format: str = HELP_FORMAT_TEXT,
         result += plugin.format_help() + "\n"
         if isinstance(plugin, DataTypeSupporter):
             result += "\n" + data_types_help(markdown=False) + "\n"
-        if isinstance(plugin, PlaceholderSupporter):
-            result += "\n" + placeholder_help(markdown=False, obj=plugin) + "\n"
+        if isinstance(plugin, VariableSupporter):
+            result += "\n" + variable_help(markdown=False, obj=plugin) + "\n"
     elif help_format == HELP_FORMAT_MARKDOWN:
         suffix = ".md"
         result += "#"*heading_level + " " + plugin_name + "\n"
@@ -106,8 +106,8 @@ def generate_plugin_usage(plugin_name: str, help_format: str = HELP_FORMAT_TEXT,
         result += "```\n"
         if isinstance(plugin, DataTypeSupporter):
             result += "\n" + data_types_help(markdown=True) + "\n"
-        if isinstance(plugin, PlaceholderSupporter):
-            result += "\n" + placeholder_help(markdown=True, obj=plugin) + "\n"
+        if isinstance(plugin, VariableSupporter):
+            result += "\n" + variable_help(markdown=True, obj=plugin) + "\n"
     else:
         raise Exception("Unhandled help format: %s" % help_format)
 

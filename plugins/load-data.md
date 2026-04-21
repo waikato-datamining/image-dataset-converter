@@ -3,14 +3,14 @@
 * accepts: str
 * generates: idc.api.ImageData
 
-Wraps the incoming file name in the specified data type and forwards it. The input file name can contain placeholders.
+Wraps the incoming file name in the specified data type and forwards it. The input file name can contain variables.
 
 ```
 usage: load-data [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                  [-N LOGGER_NAME] [--skip] -t {dp,ic,is,od}
 
 Wraps the incoming file name in the specified data type and forwards it. The
-input file name can contain placeholders.
+input file name can contain variables.
 
 options:
   -h, --help            show this help message and exit

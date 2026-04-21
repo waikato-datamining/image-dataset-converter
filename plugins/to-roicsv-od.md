@@ -38,7 +38,7 @@ options:
   -o OUTPUT, --output OUTPUT
                         The directory to store the images/.csv files in. Any
                         defined splits get added beneath there. Supported
-                        placeholders: {HOME}, {CWD}, {TMP}, {INPUT_PATH},
+                        variables: {HOME}, {CWD}, {TMP}, {INPUT_PATH},
                         {INPUT_NAMEEXT}, {INPUT_NAMENOEXT}, {INPUT_EXT},
                         {INPUT_PARENT_PATH}, {INPUT_PARENT_NAME} (default:
                         None)
@@ -50,7 +50,7 @@ options:
   --annotations_only    Outputs only the annotations. (default: False)
 ```
 
-Available placeholders:
+Available variables:
 
 * `{HOME}`: The home directory of the current user.
 * `{CWD}`: The current working directory.

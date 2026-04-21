@@ -7,10 +7,10 @@ from idc.api import load_image_from_file, DepthData, depth_from_grayscale, empty
     FORMAT_EXTENSIONS, locate_image, JPEG_EXTENSIONS
 from kasperl.api import Reader, AnnotationsOnlyReader, add_annotations_only_reader_param, annotation_to_name, locate_file
 from seppl.io import locate_files
-from seppl.placeholders import PlaceholderSupporter, placeholder_list
+from seppl.variables import VariableSupporter, variable_list
 
 
-class GrayscaleDepthInfoReader(Reader, PlaceholderSupporter, AnnotationsOnlyReader):
+class GrayscaleDepthInfoReader(Reader, VariableSupporter, AnnotationsOnlyReader):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
                  min_value: float = None, max_value: float = None, image_path_rel: str = None, resume_from: str = None,
@@ -72,8 +72,8 @@ class GrayscaleDepthInfoReader(Reader, PlaceholderSupporter, AnnotationsOnlyRead
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-i", "--input", type=str, help="Path to the PNG file(s) to read; glob syntax is supported; " + placeholder_list(obj=self), required=False, nargs="*")
-        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the PNG files to use; " + placeholder_list(obj=self), required=False, nargs="*")
+        parser.add_argument("-i", "--input", type=str, help="Path to the PNG file(s) to read; glob syntax is supported; " + variable_list(obj=self), required=False, nargs="*")
+        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the PNG files to use; " + variable_list(obj=self), required=False, nargs="*")
         parser.add_argument("--resume_from", type=str, help="Glob expression matching the file to resume from, e.g., '*/012345.png'", required=False)
         parser.add_argument("-m", "--min_value", type=float, help="The minimum value to use, grayscale values get offset by this.", default=None, required=False)
         parser.add_argument("-M", "--max_value", type=float, help="The maximum value to use, grayscale values 0-255 get scaled to min/max, requires min to be specified.", default=None, required=False)

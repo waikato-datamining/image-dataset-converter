@@ -1,18 +1,17 @@
-# set-placeholder
+# metadata-to-variable
 
 * accepts: seppl.AnyData
 * generates: seppl.AnyData
+* alias(es): metadata-to-placeholder
 
-Sets the placeholder to the specified value when data passes through. The value can contain other placeholders, which get expanded each time data passes through. Can use the data passing through instead of specified value as well.
+Sets the variable with the value from the meta-data passing through.
 
 ```
-usage: set-placeholder [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                       [-N LOGGER_NAME] [--skip] -p PLACEHOLDER [-v VALUE]
-                       [-u]
+usage: metadata-to-variable [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
+                            [-N LOGGER_NAME] [--skip] [-k METADATA_KEY] -V
+                            VARIABLE
 
-Sets the placeholder to the specified value when data passes through. The
-value can contain other placeholders, which get expanded each time data passes
-through. Can use the data passing through instead of specified value as well.
+Sets the variable with the value from the meta-data passing through.
 
 options:
   -h, --help            show this help message and exit
@@ -23,20 +22,15 @@ options:
                         name by default (default: None)
   --skip                Disables the plugin, removing it from the pipeline.
                         (default: False)
-  -p PLACEHOLDER, --placeholder PLACEHOLDER
-                        The name of the placeholder, without curly brackets.
+  -k METADATA_KEY, --metadata_key METADATA_KEY
+                        The key in the meta-data to get the value for the
+                        variable from. (default: None)
+  -V VARIABLE, -p VARIABLE, --variable VARIABLE, --placeholder VARIABLE
+                        The name of the variable, without curly brackets.
                         (default: None)
-  -v VALUE, --value VALUE
-                        The value of the placeholder, may contain other
-                        placeholders. Supported placeholders: {HOME}, {CWD},
-                        {TMP}, {INPUT_PATH}, {INPUT_NAMEEXT},
-                        {INPUT_NAMENOEXT}, {INPUT_EXT}, {INPUT_PARENT_PATH},
-                        {INPUT_PARENT_NAME} (default: None)
-  -u, --use_current     Whether to use the data passing through instead of the
-                        specified value. (default: False)
 ```
 
-Available placeholders:
+Available variables:
 
 * `{HOME}`: The home directory of the current user.
 * `{CWD}`: The current working directory.

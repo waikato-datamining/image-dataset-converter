@@ -4,13 +4,13 @@ from typing import List, Iterable, Union
 from wai.logging import LOGGING_WARNING
 from wai.common.geometry import NormalizedPoint, NormalizedPolygon
 from wai.common.adams.imaging.locateobjects import NormalizedLocatedObjects, NormalizedLocatedObject
-from seppl.placeholders import PlaceholderSupporter, placeholder_list
+from seppl.variables import VariableSupporter, variable_list
 from seppl.io import locate_files
 from kasperl.api import Reader
 from idc.api import ObjectDetectionData, locate_image, load_labels
 
 
-class YoloObjectDetectionReader(Reader, PlaceholderSupporter):
+class YoloObjectDetectionReader(Reader, VariableSupporter):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
                  image_path_rel: str = None, use_polygon_format: bool = False, labels: str = None,
@@ -70,8 +70,8 @@ class YoloObjectDetectionReader(Reader, PlaceholderSupporter):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-i", "--input", type=str, help="Path to the text file(s) to read; glob syntax is supported; " + placeholder_list(obj=self), required=False, nargs="*")
-        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the text files to use; " + placeholder_list(obj=self), required=False, nargs="*")
+        parser.add_argument("-i", "--input", type=str, help="Path to the text file(s) to read; glob syntax is supported; " + variable_list(obj=self), required=False, nargs="*")
+        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the text files to use; " + variable_list(obj=self), required=False, nargs="*")
         parser.add_argument("--resume_from", type=str, help="Glob expression matching the file to resume from, e.g., '*/012345.txt'", required=False)
         parser.add_argument("--image_path_rel", metavar="PATH", type=str, default=None, help="The relative path from the annotations to the images directory", required=False)
         parser.add_argument("-p", "--use_polygon_format", action="store_true", help="Whether to read the annotations in polygon format rather than bbox format", required=False)

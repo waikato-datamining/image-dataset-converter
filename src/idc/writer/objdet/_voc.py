@@ -6,7 +6,7 @@ from xml.etree.ElementTree import Element, ElementTree
 from wai.logging import LOGGING_WARNING
 from kasperl.api import make_list, SplittableStreamWriter, AnnotationsOnlyWriter, add_annotations_only_writer_param
 from idc.api import ObjectDetectionData, get_object_label
-from seppl.placeholders import placeholder_list, InputBasedPlaceholderSupporter
+from seppl.variables import InputBasedVariableSupporter, variable_list
 
 
 def append_element(to: Element, tag: str, value):
@@ -22,7 +22,7 @@ def append_element(to: Element, tag: str, value):
     to.append(element)
 
 
-class VOCObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter, InputBasedPlaceholderSupporter):
+class VOCObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter, InputBasedVariableSupporter):
 
     def __init__(self, output_dir: str = None, annotations_only: bool = None,
                  split_names: List[str] = None, split_ratios: List[int] = None, split_group: str = None,
@@ -75,7 +75,7 @@ class VOCObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter, In
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-o", "--output", type=str, help="The directory to store the images/.xml files in. Any defined splits get added beneath there. " + placeholder_list(obj=self), required=True)
+        parser.add_argument("-o", "--output", type=str, help="The directory to store the images/.xml files in. Any defined splits get added beneath there. " + variable_list(obj=self), required=True)
         add_annotations_only_writer_param(parser)
         return parser
 
@@ -126,7 +126,7 @@ class VOCObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter, In
         :param data: the data to write (single record or iterable of records)
         """
         for item in make_list(data):
-            sub_dir = self.session.expand_placeholders(self.output_dir)
+            sub_dir = self.session.expand_variables(self.output_dir)
             if self.splitter is not None:
                 split = self.splitter.next(item=item.image_name)
                 sub_dir = os.path.join(sub_dir, split)

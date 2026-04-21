@@ -7,10 +7,10 @@ from idc.api import ImageSegmentationData, load_image_from_file, imgseg_from_gra
     FORMAT_JPEG, FORMAT_EXTENSIONS, locate_image, JPEG_EXTENSIONS
 from kasperl.api import Reader, AnnotationsOnlyReader, add_annotations_only_reader_param, annotation_to_name, locate_file
 from seppl.io import locate_files
-from seppl.placeholders import PlaceholderSupporter, placeholder_list
+from seppl.variables import VariableSupporter, variable_list
 
 
-class GrayscaleImageSegmentationReader(Reader, PlaceholderSupporter, AnnotationsOnlyReader):
+class GrayscaleImageSegmentationReader(Reader, VariableSupporter, AnnotationsOnlyReader):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
                  image_path_rel: str = None, labels: List[str] = None, background: int = None, resume_from: str = None,
@@ -73,8 +73,8 @@ class GrayscaleImageSegmentationReader(Reader, PlaceholderSupporter, Annotations
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-i", "--input", type=str, help="Path to the PNG file(s) to read; glob syntax is supported; " + placeholder_list(obj=self), required=False, nargs="*")
-        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the PNG files to use; " + placeholder_list(obj=self), required=False, nargs="*")
+        parser.add_argument("-i", "--input", type=str, help="Path to the PNG file(s) to read; glob syntax is supported; " + variable_list(obj=self), required=False, nargs="*")
+        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the PNG files to use; " + variable_list(obj=self), required=False, nargs="*")
         parser.add_argument("--resume_from", type=str, help="Glob expression matching the file to resume from, e.g., '*/012345.png'", required=False)
         parser.add_argument("--image_path_rel", metavar="PATH", type=str, default=None, help="The relative path from the annotations to the images directory", required=False)
         parser.add_argument("--labels", metavar="LABEL", type=str, default=None, help="The labels that the indices represent.", nargs="+")

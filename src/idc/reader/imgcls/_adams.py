@@ -3,13 +3,13 @@ from typing import List, Iterable, Union
 
 from wai.logging import LOGGING_WARNING
 from wai.common.file.report import loadf
-from seppl.placeholders import PlaceholderSupporter, placeholder_list
+from seppl.variables import VariableSupporter, variable_list
 from seppl.io import locate_files
 from kasperl.api import Reader
 from idc.api import ImageClassificationData, locate_image
 
 
-class AdamsImageClassificationReader(Reader, PlaceholderSupporter):
+class AdamsImageClassificationReader(Reader, VariableSupporter):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
                  class_field: str = None, resume_from: str = None,
@@ -62,8 +62,8 @@ class AdamsImageClassificationReader(Reader, PlaceholderSupporter):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-i", "--input", type=str, help="Path to the report file(s) to read; glob syntax is supported; " + placeholder_list(obj=self), required=False, nargs="*")
-        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the report files to use; " + placeholder_list(obj=self), required=False, nargs="*")
+        parser.add_argument("-i", "--input", type=str, help="Path to the report file(s) to read; glob syntax is supported; " + variable_list(obj=self), required=False, nargs="*")
+        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the report files to use; " + variable_list(obj=self), required=False, nargs="*")
         parser.add_argument("--resume_from", type=str, help="Glob expression matching the file to resume from, e.g., '*/012345.report'", required=False)
         parser.add_argument("-c", "--class_field", metavar="FIELD", type=str, default=None, help="The report field containing the image classification label", required=True)
         return parser

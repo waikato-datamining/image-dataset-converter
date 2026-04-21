@@ -6,10 +6,10 @@ from typing import List
 from wai.logging import LOGGING_WARNING
 from kasperl.api import make_list, SplittableStreamWriter, AnnotationsOnlyWriter, add_annotations_only_writer_param
 from idc.api import ObjectDetectionData, save_labels, save_labels_csv
-from seppl.placeholders import placeholder_list, InputBasedPlaceholderSupporter
+from seppl.variables import InputBasedVariableSupporter, variable_list
 
 
-class YoloObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter, InputBasedPlaceholderSupporter):
+class YoloObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter, InputBasedVariableSupporter):
 
     def __init__(self, output_dir: str = None,
                  image_subdir: str = None, labels_subdir: str = None, categories: List[str] = None,
@@ -85,7 +85,7 @@ class YoloObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter, I
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-o", "--output", type=str, help="The directory to store the images/.txt files in. Any defined splits get added beneath there. " + placeholder_list(obj=self), required=True)
+        parser.add_argument("-o", "--output", type=str, help="The directory to store the images/.txt files in. Any defined splits get added beneath there. " + variable_list(obj=self), required=True)
         parser.add_argument("--image_subdir", metavar="DIR", type=str, default=None, help="The name of the sub-dir to use for storing the images in.", required=False)
         parser.add_argument("--labels_subdir", metavar="DIR", type=str, default=None, help="The name of the sub-dir to use for storing the annotations in.", required=False)
         parser.add_argument("-p", "--use_polygon_format", action="store_true", help="Whether to write the annotations in polygon format rather than bbox format", required=False)
@@ -147,7 +147,7 @@ class YoloObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter, I
         :param data: the data to write (single record or iterable of records)
         """
         for item in make_list(data):
-            sub_dir = self.session.expand_placeholders(self.output_dir)
+            sub_dir = self.session.expand_variables(self.output_dir)
             if self.splitter is not None:
                 split = self.splitter.next(item=item.image_name)
                 sub_dir = os.path.join(sub_dir, split)

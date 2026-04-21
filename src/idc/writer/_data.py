@@ -6,10 +6,10 @@ from wai.logging import LOGGING_WARNING
 
 from kasperl.api import make_list, SplittableStreamWriter
 from idc.api import ImageData
-from seppl.placeholders import placeholder_list, InputBasedPlaceholderSupporter
+from seppl.variables import InputBasedVariableSupporter, variable_list
 
 
-class DataWriter(SplittableStreamWriter, InputBasedPlaceholderSupporter):
+class DataWriter(SplittableStreamWriter, InputBasedVariableSupporter):
 
     def __init__(self, output_dir: str = None,
                  split_names: List[str] = None, split_ratios: List[int] = None, split_group: str = None,
@@ -59,7 +59,7 @@ class DataWriter(SplittableStreamWriter, InputBasedPlaceholderSupporter):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-o", "--output", type=str, help="The directory to store the images in. Any defined splits get added beneath there. " + placeholder_list(obj=self), required=True)
+        parser.add_argument("-o", "--output", type=str, help="The directory to store the images in. Any defined splits get added beneath there. " + variable_list(obj=self), required=True)
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
@@ -88,7 +88,7 @@ class DataWriter(SplittableStreamWriter, InputBasedPlaceholderSupporter):
         :param data: the data to write (single record or iterable of records)
         """
         for item in make_list(data):
-            sub_dir = self.session.expand_placeholders(self.output_dir)
+            sub_dir = self.session.expand_variables(self.output_dir)
             if self.splitter is not None:
                 split = self.splitter.next(item=item.image_name)
                 sub_dir = os.path.join(sub_dir, split)

@@ -29,11 +29,11 @@ options:
                         The command-line of the reader for reading the files
                         (default: None)
   -i DIR_IN, --dir_in DIR_IN
-                        The directory to poll; Supported placeholders: {HOME},
+                        The directory to poll; Supported variables: {HOME},
                         {CWD}, {TMP} (default: None)
   -o DIR_OUT, --dir_out DIR_OUT
                         The directory to move the files to; Supported
-                        placeholders: {HOME}, {CWD}, {TMP} (default: None)
+                        variables: {HOME}, {CWD}, {TMP} (default: None)
   -w CHECK_WAIT, --check_wait CHECK_WAIT
                         The number of seconds to wait before checking whether
                         any files were discovered. (default: 0.01)
@@ -60,7 +60,7 @@ options:
                         The events to monitor (default: None)
 ```
 
-Available placeholders:
+Available variables:
 
 * `{HOME}`: The home directory of the current user.
 * `{CWD}`: The current working directory.

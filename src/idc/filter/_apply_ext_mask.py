@@ -5,7 +5,7 @@ from typing import List
 
 from PIL import Image
 from seppl.io import BatchFilter
-from seppl.placeholders import InputBasedPlaceholderSupporter
+from seppl.variables import InputBasedVariableSupporter
 from wai.logging import LOGGING_WARNING
 
 from kasperl.api import make_list, flatten_list, safe_deepcopy
@@ -14,7 +14,7 @@ from idc.api import add_apply_to_param, APPLY_TO_IMAGE, APPLY_TO_ANNOTATIONS, AP
 from idc.api import load_image_from_file, ImageSegmentationData, DepthData
 
 
-class ApplyExternalMask(BatchFilter, InputBasedPlaceholderSupporter):
+class ApplyExternalMask(BatchFilter, InputBasedVariableSupporter):
     """
     Applies the binary mask loaded from an external PNG file with the same name.
     """
@@ -24,7 +24,7 @@ class ApplyExternalMask(BatchFilter, InputBasedPlaceholderSupporter):
         """
         Initializes the filter.
 
-        :param mask_dir: the directory with the external masks, can contain placeholders
+        :param mask_dir: the directory with the external masks, can contain variables
         :type mask_dir: str
         :param lenient: whether to be lenient, i.e., masks do not have to exist
         :type lenient: bool
@@ -123,7 +123,7 @@ class ApplyExternalMask(BatchFilter, InputBasedPlaceholderSupporter):
         result = []
 
         for item in make_list(data):
-            path = self.session.expand_placeholders(self.mask_dir)
+            path = self.session.expand_variables(self.mask_dir)
             path = os.path.join(path, os.path.splitext(os.path.basename(self.session.current_input))[0] + ".png")
             if not os.path.exists(path) or not os.path.isfile(path):
                 if self.lenient:

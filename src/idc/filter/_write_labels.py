@@ -2,7 +2,7 @@ import argparse
 import os
 from typing import List
 
-from seppl.placeholders import PlaceholderSupporter, placeholder_list, expand_placeholders
+from seppl.variables import VariableSupporter, variable_list, expand_variables
 from seppl.io import BatchFilter
 from wai.logging import LOGGING_WARNING
 
@@ -19,7 +19,7 @@ OUTPUT_FORMATS = [
 ]
 
 
-class WriteLabels(BatchFilter, PlaceholderSupporter):
+class WriteLabels(BatchFilter, VariableSupporter):
     """
     Collects labels passing through and writes them to the specified file (stdout if not provided).
     """
@@ -90,7 +90,7 @@ class WriteLabels(BatchFilter, PlaceholderSupporter):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-o", "--output_file", type=str, default=None, help="The file to write the labels to; uses stdout if not provided; " + placeholder_list(obj=self), required=False)
+        parser.add_argument("-o", "--output_file", type=str, default=None, help="The file to write the labels to; uses stdout if not provided; " + variable_list(obj=self), required=False)
         parser.add_argument("-f", "--output_format", choices=OUTPUT_FORMATS, default=OUTPUT_FORMAT_TEXT, help="The format to use for the labels", required=False)
         parser.add_argument("-s", "--custom_sep", default=None, help="The custom separator to use; use \\t, \\n or \\r for tab, new line or carriage return", required=False)
         return parser
@@ -163,7 +163,7 @@ class WriteLabels(BatchFilter, PlaceholderSupporter):
 
         output_file = None
         if self.output_file is not None:
-            output_file = expand_placeholders(self.output_file)
+            output_file = expand_variables(self.output_file)
         if (output_file is None) or os.path.isdir(output_file):
             print(text)
         else:

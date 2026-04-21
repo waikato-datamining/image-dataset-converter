@@ -8,10 +8,10 @@ from kasperl.api import make_list, SplittableStreamWriter, \
     AnnotationsOnlyWriter, add_annotations_only_writer_param
 from idc.api import ImageSegmentationData, imgseg_to_indexedpng
 from simple_palette_utils import generate_palette_list, PALETTE_AUTO, palettes
-from seppl.placeholders import placeholder_list, InputBasedPlaceholderSupporter
+from seppl.variables import InputBasedVariableSupporter, variable_list
 
 
-class IndexedPngImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnlyWriter, InputBasedPlaceholderSupporter):
+class IndexedPngImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnlyWriter, InputBasedVariableSupporter):
 
     def __init__(self, output_dir: str = None,
                  image_path_rel: str = None, palette: str = None, annotations_only: bool = None, background: int = None,
@@ -75,7 +75,7 @@ class IndexedPngImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnlyW
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-o", "--output", type=str, help="The directory to store the image files in. Any defined splits get added beneath there. " + placeholder_list(obj=self), required=True)
+        parser.add_argument("-o", "--output", type=str, help="The directory to store the image files in. Any defined splits get added beneath there. " + variable_list(obj=self), required=True)
         parser.add_argument("--image_path_rel", metavar="PATH", type=str, default=None, help="The relative path from the annotations to the images directory", required=False)
         parser.add_argument("-p", "--palette", metavar="PALETTE", type=str, default=PALETTE_AUTO, help="The palette to use; either palette name (%s) or comma-separated list of R,G,B values." % "|".join(palettes()), required=False)
         parser.add_argument("--background", type=int, help="The index (0-255) to use for the background", required=False, default=0)
@@ -123,7 +123,7 @@ class IndexedPngImageSegmentationWriter(SplittableStreamWriter, AnnotationsOnlyW
         :param data: the data to write (single record or iterable of records)
         """
         for item in make_list(data):
-            sub_dir = self.session.expand_placeholders(self.output_dir)
+            sub_dir = self.session.expand_variables(self.output_dir)
             if self.splitter is not None:
                 split = self.splitter.next(item=item.image_name)
                 sub_dir = os.path.join(sub_dir, split)

@@ -21,7 +21,7 @@ options:
                         (default: False)
   -o OUTPUT, --output OUTPUT
                         The CSV file to store the object detection information
-                        in. Supported placeholders: {HOME}, {CWD}, {TMP}
+                        in. Supported variables: {HOME}, {CWD}, {TMP}
                         (default: None)
   -p, --output_polygon  Whether to output any polygon information as well
                         (default: False)
@@ -29,7 +29,7 @@ options:
                         (default: False)
 ```
 
-Available placeholders:
+Available variables:
 
 * `{HOME}`: The home directory of the current user.
 * `{CWD}`: The current working directory.

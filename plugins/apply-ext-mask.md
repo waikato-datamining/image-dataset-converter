@@ -30,7 +30,7 @@ options:
                         Where to apply the filter to. (default: both)
 ```
 
-Available placeholders:
+Available variables:
 
 * `{HOME}`: The home directory of the current user.
 * `{CWD}`: The current working directory.

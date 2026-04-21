@@ -3,7 +3,7 @@ import json
 import os.path
 from typing import List, Iterable, Union, Dict
 
-from seppl.placeholders import PlaceholderSupporter, placeholder_list
+from seppl.variables import VariableSupporter, variable_list
 from seppl.io import locate_files
 from wai.common.adams.imaging.locateobjects import LocatedObjects, LocatedObject
 from wai.common.geometry import Point, Polygon
@@ -13,7 +13,7 @@ from kasperl.api import Reader
 from idc.api import ObjectDetectionData
 
 
-class COCOObjectDetectionReader(Reader, PlaceholderSupporter):
+class COCOObjectDetectionReader(Reader, VariableSupporter):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
                  resume_from: str = None, logger_name: str = None, logging_level: str = LOGGING_WARNING):
@@ -62,8 +62,8 @@ class COCOObjectDetectionReader(Reader, PlaceholderSupporter):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-i", "--input", type=str, help="Path to the JSON file(s) to read; glob syntax is supported; " + placeholder_list(obj=self), required=False, nargs="*")
-        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the JSON files to use; " + placeholder_list(obj=self), required=False, nargs="*")
+        parser.add_argument("-i", "--input", type=str, help="Path to the JSON file(s) to read; glob syntax is supported; " + variable_list(obj=self), required=False, nargs="*")
+        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the JSON files to use; " + variable_list(obj=self), required=False, nargs="*")
         parser.add_argument("--resume_from", type=str, help="Glob expression matching the file to resume from, e.g., '*/012345.json'", required=False)
         return parser
 

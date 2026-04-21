@@ -45,7 +45,7 @@ class LoadData(BatchFilter, DataTypeSupporter):
         :return: the description
         :rtype: str
         """
-        return "Wraps the incoming file name in the specified data type and forwards it. The input file name can contain placeholders."
+        return "Wraps the incoming file name in the specified data type and forwards it. The input file name can contain variables."
 
     def accepts(self) -> List:
         """
@@ -108,7 +108,7 @@ class LoadData(BatchFilter, DataTypeSupporter):
         result = []
 
         for item in make_list(data):
-            item_new = self._output_cls(source=self.session.expand_placeholders(item))
+            item_new = self._output_cls(source=self.session.expand_variables(item))
             result.append(item_new)
 
         return flatten_list(result)

@@ -26,29 +26,28 @@ options:
                         form
                         (SMTP_HOST|SMTP_PORT|SMTP_STARTTLS|SMTP_USER|SMTP_PW);
                         tries to load .env from the current directory if not
-                        specified; Supported placeholders: {HOME}, {CWD},
-                        {TMP}, {INPUT_PATH}, {INPUT_NAMEEXT},
-                        {INPUT_NAMENOEXT}, {INPUT_EXT}, {INPUT_PARENT_PATH},
-                        {INPUT_PARENT_NAME} (default: None)
+                        specified; Supported variables: {HOME}, {CWD}, {TMP},
+                        {INPUT_PATH}, {INPUT_NAMEEXT}, {INPUT_NAMENOEXT},
+                        {INPUT_EXT}, {INPUT_PARENT_PATH}, {INPUT_PARENT_NAME}
+                        (default: None)
   -f EMAIL, --email_from EMAIL
-                        The email address to use for FROM; placeholders get
+                        The email address to use for FROM; variables get
                         automatically expanded. (default: None)
   -t EMAIL [EMAIL ...], --email_to EMAIL [EMAIL ...]
-                        The email address(es) to send the email TO;
-                        placeholders get automatically expanded. (default:
-                        None)
+                        The email address(es) to send the email TO; variables
+                        get automatically expanded. (default: None)
   -s SUBJECT, --subject SUBJECT
-                        The SUBJECT for the email; placeholders get
-                        automatically expanded. (default: None)
+                        The SUBJECT for the email; variables get automatically
+                        expanded. (default: None)
   -b TEXT, --body TEXT  The email body to use, splits on ' ' strings (not
-                        newlines!); placeholders get automatically expanded.
+                        newlines!); variables get automatically expanded.
                         (default: None)
   -B FILE, --body_file FILE
-                        The file with the email body to use; placeholders get
+                        The file with the email body to use; variables get
                         automatically expanded. (default: None)
 ```
 
-Available placeholders:
+Available variables:
 
 * `{HOME}`: The home directory of the current user.
 * `{CWD}`: The current working directory.

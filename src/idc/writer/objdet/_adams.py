@@ -6,10 +6,10 @@ from wai.logging import LOGGING_WARNING
 from wai.common.file.report import Report, Field, save
 from kasperl.api import make_list, SplittableStreamWriter, AnnotationsOnlyWriter, add_annotations_only_writer_param
 from idc.api import ObjectDetectionData
-from seppl.placeholders import placeholder_list, InputBasedPlaceholderSupporter
+from seppl.variables import InputBasedVariableSupporter, variable_list
 
 
-class AdamsObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter, InputBasedPlaceholderSupporter):
+class AdamsObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter, InputBasedVariableSupporter):
 
     def __init__(self, output_dir: str = None, prefix: str = "Object.", annotations_only: bool = None,
                  split_names: List[str] = None, split_ratios: List[int] = None, split_group: str = None,
@@ -65,7 +65,7 @@ class AdamsObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter, 
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-o", "--output", type=str, help="The directory to store the images/.report files in. Any defined splits get added beneath there. " + placeholder_list(obj=self), required=True)
+        parser.add_argument("-o", "--output", type=str, help="The directory to store the images/.report files in. Any defined splits get added beneath there. " + variable_list(obj=self), required=True)
         parser.add_argument("-p", "--prefix", metavar="PREFIX", type=str, default="Object.", help="The field prefix to use in the .report files for identifying bbox/polygon object definitions", required=False)
         add_annotations_only_writer_param(parser)
         return parser
@@ -106,7 +106,7 @@ class AdamsObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter, 
         :param data: the data to write (single record or iterable of records)
         """
         for item in make_list(data):
-            sub_dir = self.session.expand_placeholders(self.output_dir)
+            sub_dir = self.session.expand_variables(self.output_dir)
             if self.splitter is not None:
                 split = self.splitter.next(item=item.image_name)
                 sub_dir = os.path.join(sub_dir, split)

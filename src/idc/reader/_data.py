@@ -4,12 +4,12 @@ from typing import List, Iterable, Union
 from seppl.io import locate_files
 from wai.logging import LOGGING_WARNING
 
-from seppl.placeholders import PlaceholderSupporter, placeholder_list
+from seppl.variables import VariableSupporter, variable_list
 from kasperl.api import Reader
 from idc.api import DATATYPES, data_type_to_class, DataTypeSupporter, ImageData
 
 
-class DataReader(Reader, PlaceholderSupporter, DataTypeSupporter):
+class DataReader(Reader, VariableSupporter, DataTypeSupporter):
 
     def __init__(self, source: Union[str, List[str]] = None, source_list: Union[str, List[str]] = None,
                  data_type: str = None, resume_from: str = None,
@@ -63,8 +63,8 @@ class DataReader(Reader, PlaceholderSupporter, DataTypeSupporter):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-i", "--input", type=str, help="Path to the image file(s) to read; glob syntax is supported; " + placeholder_list(obj=self), required=False, nargs="*")
-        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the image files to use; " + placeholder_list(obj=self), required=False, nargs="*")
+        parser.add_argument("-i", "--input", type=str, help="Path to the image file(s) to read; glob syntax is supported; " + variable_list(obj=self), required=False, nargs="*")
+        parser.add_argument("-I", "--input_list", type=str, help="Path to the text file(s) listing the image files to use; " + variable_list(obj=self), required=False, nargs="*")
         parser.add_argument("--resume_from", type=str, help="Glob expression matching the file to resume from, e.g., '*/012345.jpg'", required=False)
         parser.add_argument("-t", "--data_type", choices=DATATYPES, type=str, default=None, help="The type of data to forward", required=True)
         return parser

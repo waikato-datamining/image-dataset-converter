@@ -2,7 +2,7 @@
 
 * accepts: seppl.AnyData
 
-Applies the specified data formatter to the incoming data and stores the result in the specified text file. Any other placeholders will get expanded in the data formatter output as well.
+Applies the specified data formatter to the incoming data and stores the result in the specified text file. Any other variables will get expanded in the data formatter output as well.
 
 ```
 usage: to-text-file [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
@@ -10,7 +10,7 @@ usage: to-text-file [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                     [-d]
 
 Applies the specified data formatter to the incoming data and stores the
-result in the specified text file. Any other placeholders will get expanded in
+result in the specified text file. Any other variables will get expanded in
 the data formatter output as well.
 
 options:
@@ -26,7 +26,7 @@ options:
                         The data formatter to apply (default: df-simple-
                         string)
   -o FILE, --output_file FILE
-                        The file to write the data to; Supported placeholders:
+                        The file to write the data to; Supported variables:
                         {HOME}, {CWD}, {TMP}, {INPUT_PATH}, {INPUT_NAMEEXT},
                         {INPUT_NAMENOEXT}, {INPUT_EXT}, {INPUT_PARENT_PATH},
                         {INPUT_PARENT_NAME} (default: None)
@@ -37,7 +37,7 @@ options:
                         the writer. (default: False)
 ```
 
-Available placeholders:
+Available variables:
 
 * `{HOME}`: The home directory of the current user.
 * `{CWD}`: The current working directory.

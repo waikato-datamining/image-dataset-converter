@@ -8,8 +8,8 @@ Retrieves emails from the specified IMAP folder, saves the attachments in the sp
 usage: get-email [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                  [-N LOGGER_NAME] [-d FILE] [-f FOLDER] [-u]
                  [-a {none,read,delete}] [-r REGEXP] -o DIR [-w SECONDS]
-                 [-W SECONDS] [-c THRESHOLD] [-m MAX] [-F PLACEHOLDER]
-                 [-S PLACEHOLDER]
+                 [-W SECONDS] [-c THRESHOLD] [-m MAX] [-F VARIABLE]
+                 [-S VARIABLE]
 
 Retrieves emails from the specified IMAP folder, saves the attachments in the
 specified folder and forwards the file names of the saved attachments as list.
@@ -29,7 +29,7 @@ options:
                         The .env file to load the IMAP environment variables
                         form (IMAP_HOST|IMAP_PORT|IMAP_USER|IMAP_PW); tries to
                         load .env from the current directory if not specified;
-                        Supported placeholders: {HOME}, {CWD}, {TMP} (default:
+                        Supported variables: {HOME}, {CWD}, {TMP} (default:
                         None)
   -f FOLDER, --folder FOLDER
                         The IMAP folder to obtain emails from. (default:
@@ -44,7 +44,7 @@ options:
                         must match. (default: None)
   -o DIR, --output_dir DIR
                         The directory to store the attachments in; Supported
-                        placeholders: {HOME}, {CWD}, {TMP} (default: None)
+                        variables: {HOME}, {CWD}, {TMP} (default: None)
   -w SECONDS, --poll_wait SECONDS
                         The poll interval in seconds (default: 30.0)
   -W SECONDS, --poll_wait_slow SECONDS
@@ -57,15 +57,15 @@ options:
   -m MAX, --max_poll MAX
                         The maximum number of times to poll the folder; use <=
                         for infinite polling. (default: None)
-  -F PLACEHOLDER, --from_placeholder PLACEHOLDER
-                        The optional placeholder name to store the FROM email
+  -F VARIABLE, --from_variable VARIABLE, --from_placeholder VARIABLE
+                        The optional variable name to store the FROM email
                         address under, without curly brackets. (default: None)
-  -S PLACEHOLDER, --subject_placeholder PLACEHOLDER
-                        The optional placeholder name to store the SUBJECT
-                        under, without curly brackets. (default: None)
+  -S VARIABLE, --subject_variable VARIABLE, --subject_placeholder VARIABLE
+                        The optional variable name to store the SUBJECT under,
+                        without curly brackets. (default: None)
 ```
 
-Available placeholders:
+Available variables:
 
 * `{HOME}`: The home directory of the current user.
 * `{CWD}`: The current working directory.

@@ -21,11 +21,11 @@ options:
                         name by default (default: None)
   -i [INPUT ...], --input [INPUT ...]
                         Path to the CSV file(s) to read; glob syntax is
-                        supported; Supported placeholders: {HOME}, {CWD},
-                        {TMP} (default: None)
+                        supported; Supported variables: {HOME}, {CWD}, {TMP}
+                        (default: None)
   -I [INPUT_LIST ...], --input_list [INPUT_LIST ...]
                         Path to the text file(s) listing the CSV files to use;
-                        Supported placeholders: {HOME}, {CWD}, {TMP} (default:
+                        Supported variables: {HOME}, {CWD}, {TMP} (default:
                         None)
   --resume_from RESUME_FROM
                         Glob expression matching the file to resume from,
@@ -35,7 +35,7 @@ options:
                         -rois.csv)
 ```
 
-Available placeholders:
+Available variables:
 
 * `{HOME}`: The home directory of the current user.
 * `{CWD}`: The current working directory.
