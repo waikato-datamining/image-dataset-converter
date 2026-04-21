@@ -31,7 +31,7 @@ setup(
     packages=find_namespace_packages(where='src'),
     install_requires=[
         "setuptools",
-        "seppl>=0.3.0",
+        "seppl>=0.3.1",
         "kasperl>=0.0.1",
         "wai_logging",
         "wai_common>=0.0.45",
