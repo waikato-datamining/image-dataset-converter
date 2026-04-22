@@ -38,7 +38,8 @@ Changelog
 - added support for data-formatters with `df-image-data` specifically for images
 - `from-voc-od` reader now has the `--ignore_folder` option to ignore the `folder` value from the XML file
 - using `seppl.variables` now
-- requiring seppl>=0.3.1 now
+- requires seppl>=0.3.1 now
+- requires kasperl>=0.0.2 now
 
 
 0.1.0 (2025-10-31)

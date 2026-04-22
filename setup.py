@@ -32,7 +32,7 @@ setup(
     install_requires=[
         "setuptools",
         "seppl>=0.3.1",
-        "kasperl>=0.0.1",
+        "kasperl>=0.0.2",
         "wai_logging",
         "wai_common>=0.0.45",
         "pillow",
