@@ -1,11 +1,12 @@
 import argparse
+import numpy as np
 from typing import List, Iterable, Union
 
-from pypfm import PFMLoader
+from PIL import Image
 from wai.logging import LOGGING_WARNING
 
-from idc.api import DepthInformation, DepthData, locate_image
-from kasperl.api import Reader
+from idc.api import DepthInformation, DepthData, JPEG_EXTENSIONS
+from kasperl.api import Reader, locate_file
 from seppl.io import locate_files
 from seppl.variables import VariableSupporter, variable_list
 
@@ -111,15 +112,14 @@ class PFMDepthInfoReader(Reader, VariableSupporter):
         self.session.current_input = self._current_input
 
         # associated images?
-        imgs = locate_image(self.session.current_input, rel_path=self.image_path_rel)
+        imgs = locate_file(self.session.current_input, JPEG_EXTENSIONS, rel_path=self.image_path_rel)
         if len(imgs) == 0:
             self.logger().warning("Failed to locate associated image for: %s" % self.session.current_input)
             return None
 
         # read annotations
         self.logger().info("Reading from: " + str(self.session.current_input))
-        loader = PFMLoader(color=False)
-        annotations = loader.load_pfm(self.session.current_input)
+        annotations = np.asarray(Image.open(self.session.current_input))
 
         # associated image
         if len(imgs) > 1:

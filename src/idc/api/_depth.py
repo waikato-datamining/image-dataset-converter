@@ -112,7 +112,7 @@ def depth_to_grayscale(ann: DepthInformation, min_value: float = None, max_value
     :return: the grayscale image generated from the depth info
     :rtype: Image.Image
     """
-    array = ann.data
+    array = ann.data.copy()
 
     # apply min/max
     if min_value is not None:

@@ -2,7 +2,7 @@ import argparse
 import os
 from typing import List
 
-from pypfm import PFMLoader
+from PIL import Image
 from seppl.variables import InputBasedVariableSupporter, variable_list
 from wai.logging import LOGGING_WARNING
 
@@ -136,5 +136,5 @@ class PFMDepthInfoWriter(SplittableStreamWriter, AnnotationsOnlyWriter, InputBas
                 path = os.path.join(path, item.image_name)
                 path = os.path.splitext(path)[0] + ".pfm"
                 self.logger().info("Writing annotations to: %s" % path)
-                loader = PFMLoader(color=False, compress=False)
-                loader.save_pfm(path, item.annotation.data)
+                img = Image.fromarray(item.annotation.data)
+                img.save(path)
