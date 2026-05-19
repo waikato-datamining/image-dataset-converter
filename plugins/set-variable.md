@@ -30,7 +30,10 @@ options:
                         The value of the variable, may contain other
                         variables. Supported variables: {HOME}, {CWD}, {TMP},
                         {INPUT_PATH}, {INPUT_NAMEEXT}, {INPUT_NAMENOEXT},
-                        {INPUT_EXT}, {INPUT_PARENT_PATH}, {INPUT_PARENT_NAME}
+                        {INPUT_EXT}, {INPUT_PARENT_PATH}, {INPUT_PARENT_NAME};
+                        supports these additional variables if the item
+                        passing through implements kasperl.api.NameSupporter:
+                        {CURRENT_NAMEEXT}, {CURRENT_NAMENOEXT}, {CURRENT_EXT}
                         (default: None)
   -u, --use_current     Whether to use the data passing through instead of the
                         specified value. (default: False)
