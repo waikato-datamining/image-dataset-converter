@@ -46,7 +46,7 @@ class DiscardFilter(BatchFilter, abc.ABC):
         :param item: the item that is discarded
         """
         self.discarded += 1
-        self.logger().info("Discarding: %s" % str(item))
+        self.logger().debug("Discarding: %s" % str(item))
 
     def finalize(self):
         """
