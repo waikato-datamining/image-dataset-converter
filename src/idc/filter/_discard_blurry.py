@@ -111,7 +111,7 @@ class DiscardBlurry(DiscardFilter):
             image = np.asarray(item.image)
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             var = float(cv2.Laplacian(gray, cv2.CV_64F).var())
-            self.logger().info("laplacian variance: %f" % var)
+            self.logger().debug("laplacian variance: %f" % var)
             self._variances.append(var)
 
             if var >= self.threshold:
