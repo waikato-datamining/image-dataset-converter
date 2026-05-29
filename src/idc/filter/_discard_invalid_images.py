@@ -1,30 +1,15 @@
 from typing import List
 
-from seppl import AnyData
-from seppl.io import BatchFilter
-from wai.logging import LOGGING_WARNING
-
-from kasperl.api import make_list, flatten_list
 from idc.api import ImageData
+from kasperl.api import make_list, flatten_list
+from seppl import AnyData
+from ._discard_filter import DiscardFilter
 
 
-class DiscardInvalidImages(BatchFilter):
+class DiscardInvalidImages(DiscardFilter):
     """
     Discards invalid images, e.g., stemming from corrupt files.
     """
-
-    def __init__(self, logger_name: str = None, logging_level: str = LOGGING_WARNING):
-        """
-        Initializes the filter.
-
-        :param logger_name: the name to use for the logger
-        :type logger_name: str
-        :param logging_level: the logging level to use
-        :type logging_level: str
-        """
-        super().__init__(logger_name=logger_name, logging_level=logging_level)
-        self.kept = 0
-        self.discarded = 0
 
     def name(self) -> str:
         """
@@ -62,14 +47,6 @@ class DiscardInvalidImages(BatchFilter):
         """
         return [AnyData]
 
-    def initialize(self):
-        """
-        Initializes the processing, e.g., for opening files or databases.
-        """
-        super().initialize()
-        self.kept = 0
-        self.discarded = 0
-
     def _do_process(self, data):
         """
         Processes the data record(s).
@@ -88,18 +65,9 @@ class DiscardInvalidImages(BatchFilter):
                 keep = False
 
             if keep:
-                self.kept += 1
+                self._keep(item)
                 result.append(item)
             else:
-                self.discarded += 1
-                self.logger().info("Discarding image: %s" % item.image_name)
+                self._discard(item)
 
         return flatten_list(result)
-
-    def finalize(self):
-        """
-        Finishes the processing, e.g., for closing files or databases.
-        """
-        super().finalize()
-        self.logger().info("# kept: %d" % self.kept)
-        self.logger().info("# discarded: %d" % self.discarded)
