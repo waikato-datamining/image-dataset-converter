@@ -50,6 +50,7 @@
 * [depth-to-grayscale](depth-to-grayscale.md)
 * [dimension-discarder](dimension-discarder.md)
 * [dims-to-metadata](dims-to-metadata.md)
+* [discard-blurry](discard-blurry.md)
 * [discard-by-name](discard-by-name.md)
 * [discard-invalid-images](discard-invalid-images.md)
 * [discard-negatives](discard-negatives.md)

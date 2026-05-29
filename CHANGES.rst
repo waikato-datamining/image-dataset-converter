@@ -42,6 +42,7 @@ Changelog
 - requires kasperl>=0.0.2 now
 - method `depth_to_grayscale` now creates copy of array first
 - removed pypfm dependency, using pillow>=10.3.0 now
+- added `discard-blurry` filter
 
 
 0.1.0 (2025-10-31)
