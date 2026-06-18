@@ -212,7 +212,7 @@ class ImageData(AnnotationHandler, MetaDataHandler, NameSupporter, SourceSupport
         return self._source
 
     @property
-    def image(self) -> Image.Image:
+    def image(self) -> Optional[Image.Image]:
         """
         Returns the image, loads it if necessary.
 
@@ -884,7 +884,7 @@ def can_process_format(image: Image.Image, req_format: str, incorrect_format_act
     return True
 
 
-def remove_alpha(item: [ImageData, Image.Image], logger: logging.Logger = None) -> Optional[Image.Image]:
+def remove_alpha(item: Union[ImageData, Image.Image], logger: logging.Logger = None) -> Optional[Image.Image]:
     """
     Removes the alpha channel from the image.
 
