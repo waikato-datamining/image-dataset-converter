@@ -931,3 +931,26 @@ def remove_alpha(item: Union[ImageData, Image.Image], logger: logging.Logger = N
                 logger.info("No alpha channel present: %s" % item.image_name)
 
     return result
+
+
+def adjust_matrix(matrix: np.ndarray, width_new: int, height_new: int) -> np.ndarray:
+    """
+    Creates a matrix with the new dimensions and transfers the data from the old one.
+
+    :param matrix: the old matrix
+    :param width_new: the new width
+    :param height_new: the new height
+    :return: the new matrix with the content of the old matrix
+    """
+    height_old, width_old = matrix.shape
+    if height_old < height_new:
+        height_copy = height_old
+    else:
+        height_copy = height_new
+    if width_old < width_new:
+        width_copy = width_old
+    else:
+        width_copy = width_new
+    matrix_new = np.zeros((height_new, width_new), dtype=matrix.dtype)
+    matrix_new[0:height_copy, 0:width_copy] = matrix
+    return matrix_new
