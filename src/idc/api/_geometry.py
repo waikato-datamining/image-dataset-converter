@@ -74,7 +74,7 @@ def shapely_to_locatedobject(geometry: BaseGeometry, label: str = None) -> Locat
         geometry = geometry.convex_hull
 
     minx, miny, maxx, maxy = geometry.bounds
-    result = LocatedObject(minx, miny, maxx-minx+1, maxy-miny+1)
+    result = LocatedObject(int(minx), int(miny), int(maxx-minx+1), int(maxy-miny+1))
     if label is not None:
         result.metadata[LABEL_KEY] = label
 
@@ -82,7 +82,7 @@ def shapely_to_locatedobject(geometry: BaseGeometry, label: str = None) -> Locat
         x_list, y_list = geometry.exterior.coords.xy
         points = []
         for i in range(len(x_list)):
-            points.append(WaiPoint(x=x_list[i], y=y_list[i]))
+            points.append(WaiPoint(x=int(x_list[i]), y=int(y_list[i])))
         result.set_polygon(WaiPolygon(*points))
 
     return result
@@ -324,7 +324,7 @@ def fit_located_object(index: int, region: LocatedObject, annotation: LocatedObj
         x_list, y_list = sintersect.exterior.coords.xy
         points = []
         for i in range(len(x_list)):
-            points.append(WaiPoint(x=x_list[i]-region.x, y=y_list[i]-region.y))
+            points.append(WaiPoint(x=int(x_list[i]-region.x), y=int(y_list[i]-region.y)))
         result.set_polygon(WaiPolygon(*points))
     else:
         msg = "Unhandled geometry type returned from intersection, skipping: %s" % str(type(sintersect))
@@ -334,6 +334,32 @@ def fit_located_object(index: int, region: LocatedObject, annotation: LocatedObj
             logger.warning(msg)
 
     return result
+
+
+def fit_matrix(region: LocatedObject, matrix: np.ndarray, suppress_empty: bool) -> Optional[np.ndarray]:
+    """
+    Crops the matrix to the region.
+
+    :param region: the region to crop the layers to
+    :type region: LocatedObject
+    :param matrix: the annotations to crop
+    :type matrix: np.ndarray
+    :param suppress_empty: whether to suppress empty annotations
+    :type suppress_empty: bool
+    :return: the updated annotations, None if empty and to be suppressed
+    :rtype: np.ndarray
+    """
+    result = matrix[region.y:region.y+region.height, region.x:region.x+region.width]
+    keep = True
+    if suppress_empty:
+        unique = np.unique(result)
+        # only background? -> skip
+        if (len(unique) == 1) and (unique[0] == 0):
+            keep = False
+    if keep:
+        return result
+    else:
+        return None
 
 
 def fit_layers(region: LocatedObject, annotations: ImageSegmentationAnnotations, suppress_empty: bool) -> ImageSegmentationAnnotations:
@@ -351,13 +377,30 @@ def fit_layers(region: LocatedObject, annotations: ImageSegmentationAnnotations,
     """
     layers = dict()
     for label in annotations.layers:
-        layer = annotations.layers[label][region.y:region.y+region.height, region.x:region.x+region.width]
-        add = True
-        if suppress_empty:
-            unique = np.unique(layer)
-            # only background? -> skip
-            if (len(unique) == 1) and (unique[0] == 0):
-                add = False
-        if add:
+        layer = fit_matrix(region, annotations.layers[label], suppress_empty)
+        if layer is not None:
             layers[label] = layer
     return ImageSegmentationAnnotations(annotations.labels[:], layers)
+
+
+def adjust_matrix(matrix: np.ndarray, width_new: int, height_new: int) -> np.ndarray:
+    """
+    Creates a matrix with the new dimensions and transfers the data from the old one.
+
+    :param matrix: the old matrix
+    :param width_new: the new width
+    :param height_new: the new height
+    :return: the new matrix with the content of the old matrix
+    """
+    height_old, width_old = matrix.shape
+    if height_old > height_new:
+        height_copy = height_new
+    else:
+        height_copy = height_old
+    if width_old > width_new:
+        width_copy = width_new
+    else:
+        width_copy = width_old
+    result = np.zeros((height_new, width_new), dtype=matrix.dtype)
+    result[0:height_copy, 0:width_copy] = matrix[0:height_copy, 0:width_copy]
+    return result

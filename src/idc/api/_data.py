@@ -933,24 +933,3 @@ def remove_alpha(item: Union[ImageData, Image.Image], logger: logging.Logger = N
     return result
 
 
-def adjust_matrix(matrix: np.ndarray, width_new: int, height_new: int) -> np.ndarray:
-    """
-    Creates a matrix with the new dimensions and transfers the data from the old one.
-
-    :param matrix: the old matrix
-    :param width_new: the new width
-    :param height_new: the new height
-    :return: the new matrix with the content of the old matrix
-    """
-    height_old, width_old = matrix.shape
-    if height_old > height_new:
-        height_copy = height_new
-    else:
-        height_copy = height_old
-    if width_old > width_new:
-        width_copy = width_new
-    else:
-        width_copy = width_old
-    result = np.zeros((height_new, width_new), dtype=matrix.dtype)
-    result[0:height_copy, 0:width_copy] = matrix[0:height_copy, 0:width_copy]
-    return result
