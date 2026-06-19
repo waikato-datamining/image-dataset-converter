@@ -943,14 +943,14 @@ def adjust_matrix(matrix: np.ndarray, width_new: int, height_new: int) -> np.nda
     :return: the new matrix with the content of the old matrix
     """
     height_old, width_old = matrix.shape
-    if height_old < height_new:
-        height_copy = height_old
-    else:
+    if height_old > height_new:
         height_copy = height_new
-    if width_old < width_new:
-        width_copy = width_old
     else:
+        height_copy = height_old
+    if width_old > width_new:
         width_copy = width_new
-    matrix_new = np.zeros((height_new, width_new), dtype=matrix.dtype)
-    matrix_new[0:height_copy, 0:width_copy] = matrix
-    return matrix_new
+    else:
+        width_copy = width_old
+    result = np.zeros((height_new, width_new), dtype=matrix.dtype)
+    result[0:height_copy, 0:width_copy] = matrix[0:height_copy, 0:width_copy]
+    return result
