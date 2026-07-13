@@ -3,8 +3,8 @@ from typing import List
 from PIL import ExifTags, ImageOps
 from wai.logging import LOGGING_WARNING
 
-from idc.api import image_to_bytesio
-from kasperl.api import make_list, flatten_list
+from idc.api import array_to_image
+from kasperl.api import make_list, flatten_list, safe_deepcopy
 from seppl import AnyData
 from seppl.io import BatchFilter
 
@@ -90,8 +90,11 @@ class ExifAutorotate(BatchFilter):
                         modified = True
                         self.logger().info("Applying EXIF rotation: %s" % item.image_name)
                         img_new = ImageOps.exif_transpose(img)
-                        data_new = image_to_bytesio(img_new, item.image_format)
-                        item_new = item.duplicate(force_no_source=True, image=img_new, data=data_new.getvalue())
+                        item_new = type(item)(source=None, image_name=item.image_name,
+                                              data=array_to_image(img_new, item.image_format)[1].getvalue(),
+                                              image=img_new, image_format=item.image_format,
+                                              metadata=safe_deepcopy(item.get_metadata()),
+                                              annotation=safe_deepcopy(item.annotation))
                         result.append(item_new)
                     break
 
