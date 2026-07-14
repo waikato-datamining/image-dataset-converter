@@ -85,20 +85,20 @@ readers (30):
    from-roicsv-od, from-storage, from-subdir-ic, from-text-file, 
    from-voc-od, from-yolo-od, get-email, list-files, poll-dir, 
    shell-exec, start, watch-dir
-filters (78):
+filters (79):
    annotations-from-storage, annotations-to-storage, any-to-rgb, 
    apply-ext-mask, apply-label-mask, attach-metadata, block, 
    check-duplicate-filenames, coerce-box, coerce-mask, 
    convert-image-format, copy-files, count-data, count-specks, 
    delete-storage, depth-to-grayscale, depth-to-greyscale*, 
-   dimension-discarder, dims-to-metadata, discard-by-name, 
-   discard-invalid-images, discard-negatives, discard-positives, 
-   exif-autorotate, filter-labels, get-metadata, grayscale-to-binary, 
-   greyscale-to-binary*, inspect, is-to-od, label-from-name, 
-   label-present*, label-present-ic, label-present-is, label-present-od, 
-   label-to-metadata, list-to-sequence, load-data, log-data, 
-   log-placeholder*, log-variable, map-labels, max-records, metadata, 
-   metadata-from-name, metadata-od, metadata-to-placeholder*, 
+   dimension-discarder, dims-to-metadata, discard-blurry, 
+   discard-by-name, discard-invalid-images, discard-negatives, 
+   discard-positives, exif-autorotate, filter-labels, get-metadata, 
+   grayscale-to-binary, greyscale-to-binary*, inspect, is-to-od, 
+   label-from-name, label-present*, label-present-ic, label-present-is, 
+   label-present-od, label-to-metadata, list-to-sequence, load-data, 
+   log-data, log-placeholder*, log-variable, map-labels, max-records, 
+   metadata, metadata-from-name, metadata-od, metadata-to-placeholder*, 
    metadata-to-variable, move-files, od-to-ic, od-to-is, passthrough, 
    polygon-discarder, polygon-simplifier, pyfunc-filter, 
    randomize-records, record-window, remove-alpha, remove-classes, 
@@ -469,7 +469,7 @@ can define the following environment variable to automatically apply
 any EXIF rotation information when loading images using the 
 `load_image_from_bytes` and `load_image_from_file` functions 
 (module `idc.api`) as well as the image size determination of the
-`Image` class(module `idc.api`):
+`Image` class (module `idc.api`):
 
 ```
 IDC_EXIF_AUTOROTATE=true
