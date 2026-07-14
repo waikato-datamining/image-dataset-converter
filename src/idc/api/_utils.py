@@ -34,7 +34,7 @@ def locate_image(path: str, rel_path: str = None, suffix: str = None) -> Optiona
         return images[0]
 
 
-def load_image_from_bytes(data) -> Image:
+def load_image_from_bytes(data) -> Image.Image:
     """
     Loads a Pillow image from the bytes.
 
@@ -45,7 +45,7 @@ def load_image_from_bytes(data) -> Image:
     return Image.open(io.BytesIO(data))
 
 
-def load_image_from_file(path: str) -> Image:
+def load_image_from_file(path: str) -> Image.Image:
     """
     Loads a Pillow image from the specified file.
 
@@ -119,7 +119,7 @@ def save_labels_csv(path: str, labels: Dict[int, str], logger: logging.Logger = 
         writer.writerows(rows)
 
 
-def pad_image(img: Union[Image.Image, np.ndarray], pad_width: Optional[int] = None, pad_height: Optional[int] = None) -> Image:
+def pad_image(img: Union[Image.Image, np.ndarray], pad_width: Optional[int] = None, pad_height: Optional[int] = None) -> Image.Image:
     """
     Pads the image/layer if necessary (on the right/bottom).
 
@@ -160,7 +160,7 @@ def pad_image(img: Union[Image.Image, np.ndarray], pad_width: Optional[int] = No
     return result
 
 
-def crop_image(img: Union[Image.Image, np.ndarray], crop_width: Optional[int] = None, crop_height: Optional[int] = None) -> Image:
+def crop_image(img: Union[Image.Image, np.ndarray], crop_width: Optional[int] = None, crop_height: Optional[int] = None) -> Image.Image:
     """
     Crops the image/layer if necessary (removes on the right/bottom).
 
