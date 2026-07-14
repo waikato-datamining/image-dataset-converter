@@ -16,7 +16,7 @@ from wai.logging import set_logging_level, LOGGING_INFO
 
 from kasperl.api import safe_deepcopy, NameSupporter, SourceSupporter, AnnotationHandler, BytesSupporter
 from seppl import MetaDataHandler, LoggingHandler, get_class_name
-from ._utils import load_image_from_bytes, load_image_from_file
+from ._utils import load_image_from_bytes, load_image_from_file, exif_autorotate
 
 _logger = None
 
@@ -53,7 +53,7 @@ def logger() -> logging.Logger:
     """
     global _logger
     if _logger is None:
-        _logger = logging.getLogger("idc.api.data")
+        _logger = logging.getLogger("idc.api")
         set_logging_level(_logger, LOGGING_INFO)
     return _logger
 
@@ -310,7 +310,7 @@ class ImageData(AnnotationHandler, MetaDataHandler, NameSupporter, SourceSupport
 
         if self._data is not None:
             try:
-                size = imagesize.get(self._data)
+                size = imagesize.get(self._data, exif_rotation=exif_autorotate())
                 # imagesize >= 2.0.0 returns (-1, -1) for invalid images
                 if size != (-1, -1):
                     self._image_size = size

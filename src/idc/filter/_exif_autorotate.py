@@ -1,9 +1,8 @@
 from typing import List
 
-from PIL import ExifTags, ImageOps
 from wai.logging import LOGGING_WARNING
 
-from idc.api import array_to_image
+from idc.api import array_to_image, apply_exif_rotation, IDC_EXIF_AUTOROTATE, exif_autorotate, load_image_from_file
 from kasperl.api import make_list, flatten_list, safe_deepcopy
 from seppl import AnyData
 from seppl.io import BatchFilter
@@ -43,7 +42,7 @@ class ExifAutorotate(BatchFilter):
         :return: the description
         :rtype: str
         """
-        return "Automatically rotates the image according to the EXIF information (if applicable)."
+        return "Automatically rotates the image according to the EXIF information (if applicable). May not work as expected if auto-rotation is enforced via environment variable " + IDC_EXIF_AUTOROTATE + " as the implicit rotation will lose the EXIF information."
 
     def accepts(self) -> List:
         """
@@ -70,6 +69,8 @@ class ExifAutorotate(BatchFilter):
         super().initialize()
         self.unmodified = 0
         self.rotated = 0
+        if exif_autorotate():
+            self.logger().warning("EXIF auto-rotation is enforced via environment variable already " + IDC_EXIF_AUTOROTATE + "!")
 
     def _do_process(self, data):
         """
@@ -79,27 +80,29 @@ class ExifAutorotate(BatchFilter):
         :return: the potentially updated record(s)
         """
         result = []
+        implicit = exif_autorotate()
 
         for item in make_list(data):
-            img = item.image
-            exif = img.getexif()
             modified = False
-            for key, val in exif.items():
-                if (key in ExifTags.TAGS) and (ExifTags.TAGS[key] == "Orientation"):
-                    if val != 1:
-                        modified = True
-                        self.logger().info("Applying EXIF rotation: %s" % item.image_name)
-                        img_new = ImageOps.exif_transpose(img)
-                        item_new = type(item)(source=None, image_name=item.image_name,
-                                              data=array_to_image(img_new, item.image_format)[1].getvalue(),
-                                              image=img_new, image_format=item.image_format,
-                                              metadata=safe_deepcopy(item.get_metadata()),
-                                              annotation=safe_deepcopy(item.annotation))
-                        result.append(item_new)
-                    break
-
+            img_new = None
+            if implicit:
+                if item.source is not None:
+                    img_new = load_image_from_file(item.source, autorotate=True)
+                    modified = True
+                else:
+                    self.logger().warning("Implicit EXIF auto-rotation is enabled and no file name available, cannot apply EXIF rotation!")
+            else:
+                img = item.image
+                img_new, modified = apply_exif_rotation(img)
             if modified:
+                self.logger().info("Applied EXIF rotation: %s" % item.image_name)
+                item_new = type(item)(source=None, image_name=item.image_name,
+                                      data=array_to_image(img_new, item.image_format)[1].getvalue(),
+                                      image=img_new, image_format=item.image_format,
+                                      metadata=safe_deepcopy(item.get_metadata()),
+                                      annotation=safe_deepcopy(item.annotation))
                 self.rotated += 1
+                result.append(item_new)
             else:
                 self.logger().info("No need to rotate: %s" % item.image_name)
                 self.unmodified += 1

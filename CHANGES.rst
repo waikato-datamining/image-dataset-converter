@@ -43,6 +43,7 @@ Changelog
 - method `depth_to_grayscale` now creates copy of array first
 - removed pypfm dependency, using pillow>=10.3.0 now
 - added `discard-blurry` filter
+- introduced the `IDC_EXIF_AUTOROTATE` environment variable to implicitly apply the EXIF auto-rotation when loading an image
 
 
 0.1.0 (2025-10-31)

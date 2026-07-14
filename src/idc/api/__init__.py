@@ -11,7 +11,7 @@ from ._imgseg import ImageSegmentationData, ImageSegmentationAnnotations, combin
 from ._imgseg import imgseg_from_indexedpng, imgseg_from_bluechannel, imgseg_from_grayscale, imgseg_to_indexedpng, imgseg_to_grayscale, imgseg_to_bluechannel, imgseg_from_instancepng
 from ._imgseg import from_indexedpng, from_bluechannel, from_grayscale, to_indexedpng, to_bluechannel, to_grayscale
 from ._objdet import ObjectDetectionData, get_object_label, set_object_label, DEFAULT_LABEL, LABEL_KEY
-from ._utils import locate_image, load_image_from_bytes, load_image_from_file, JPEG_EXTENSIONS, PNG_EXTENSIONS
+from ._utils import locate_image, load_image_from_bytes, load_image_from_file, JPEG_EXTENSIONS, PNG_EXTENSIONS, exif_autorotate, apply_exif_rotation, IDC_EXIF_AUTOROTATE
 from ._utils import load_labels, save_labels, save_labels_csv
 from ._utils import crop_image, pad_image
 from ._data_types import DATATYPE_DEPTH, DATATYPE_IMGCLS, DATATYPE_OBJDET, DATATYPE_IMGSEG, DATATYPES, DATATYPES_LONG, data_type_to_class, data_types_help, DataTypeSupporter

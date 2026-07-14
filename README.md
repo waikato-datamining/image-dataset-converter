@@ -441,7 +441,6 @@ The following environment variables can be used to influence the class listers:
 
 Each variable is a comma-separated list of `module_name:function_name`, defining the class listers.
 
-
 ## JPEG quality
 
 Whenever possible, images get copied rather than read and then rewritten, 
@@ -461,6 +460,22 @@ For instance, the following setting would use a quality of 100%:
 ```
 IDC_JPEG_QUALITY=100
 ```
+
+## EXIF auto-rotate
+
+In order to avoid strange effects from implicit EXIF rotations and having 
+to explicitly specify the `exif-autorotate` filter in the pipeline, you
+can define the following environment variable to automatically apply
+any EXIF rotation information when loading images using the 
+`load_image_from_bytes` and `load_image_from_file` functions 
+(module `idc.api`) as well as the image size determination of the
+`Image` class(module `idc.api`):
+
+```
+IDC_EXIF_AUTOROTATE=true
+```
+
+The value of the variable is case-insensitive can be `on` or `yes` as well. 
 
 
 ## Caching plugins

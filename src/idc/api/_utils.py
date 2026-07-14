@@ -1,16 +1,82 @@
 import csv
 import io
 import logging
+import os
 from typing import Optional, Union, List, Dict, Tuple
 
 import numpy as np
-from PIL import Image
+from PIL import Image, ExifTags, ImageOps
 
 from kasperl.api import locate_file
+from wai.logging import set_logging_level, LOGGING_INFO
+
+_logger = None
 
 JPEG_EXTENSIONS = [".jpg", ".jpeg", ".JPG", ".JPEG"]
 
 PNG_EXTENSIONS = [".png", ".PNG"]
+
+IDC_EXIF_AUTOROTATE = "IDC_EXIF_AUTOROTATE"
+""" environment variable to indicate whether to rotate images automatically based on their EXIF information. """
+
+EXIF_AUTOROTATE = None
+""" whether to auto-rotate images based on their EXIT information. """
+
+DEFAULT_EXIF_AUTOROTATE = False
+
+
+def logger() -> logging.Logger:
+    """
+    Returns the logger instance to use, initializes it if necessary.
+
+    :return: the logger instance
+    :rtype: logging.Logger
+    """
+    global _logger
+    if _logger is None:
+        _logger = logging.getLogger("idc.api")
+        set_logging_level(_logger, LOGGING_INFO)
+    return _logger
+
+
+def exif_autorotate() -> bool:
+    """
+    Returns whether to auto-rotate images based on their EXIF information.
+
+    :return: the quality
+    :rtype: int
+    """
+    global EXIF_AUTOROTATE
+    if EXIF_AUTOROTATE is None:
+        try:
+            EXIF_AUTOROTATE = DEFAULT_EXIF_AUTOROTATE
+            if IDC_EXIF_AUTOROTATE in os.environ:
+                EXIF_AUTOROTATE = os.getenv(IDC_EXIF_AUTOROTATE, str(DEFAULT_EXIF_AUTOROTATE)).lower() in ["true", "on", "yes"]
+                logger().info("EXIF auto-rotate: %s" % str(EXIF_AUTOROTATE))
+        except:
+            EXIF_AUTOROTATE = DEFAULT_EXIF_AUTOROTATE
+    return EXIF_AUTOROTATE
+
+
+def apply_exif_rotation(img: Image.Image) -> Tuple[Image.Image, bool]:
+    """
+    Applies the EXIF rotation (if any) to the image.
+    Loses the EXIF information in the process.
+
+    :param img: the image to potentially rotate
+    :type img: Image.Image
+    :return: the tuple of image and whether it got rotated
+    :rtype: tuple
+    """
+    modified = False
+    exif = img.getexif()
+    for key, val in exif.items():
+        if (key in ExifTags.TAGS) and (ExifTags.TAGS[key] == "Orientation"):
+            if val != 1:
+                img = ImageOps.exif_transpose(img)
+                modified = True
+                break
+    return img, modified
 
 
 def locate_image(path: str, rel_path: str = None, suffix: str = None) -> Optional[str]:
@@ -34,29 +100,41 @@ def locate_image(path: str, rel_path: str = None, suffix: str = None) -> Optiona
         return images[0]
 
 
-def load_image_from_bytes(data) -> Image.Image:
+def load_image_from_bytes(data, autorotate: bool = None) -> Image.Image:
     """
     Loads a Pillow image from bytes/io.BytesIO.
+    By default, automatically applies EXIF rotation if env variable IDC_EXIF_AUTOROTATE=true.
 
     :param data: the bytes to load from
     :type data: bytes or io.BytesIO
+    :param autorotate: for overriding the implicit EXIF autorotation, None=implicit, True=apply autorotate, False=don't apply autorotate
+    :type autorotate: bool or None
     :return: the image loaded from the data
     :rtype: Image
     """
     if not isinstance(data, io.BytesIO):
         data = io.BytesIO(data)
-    return Image.open(data)
+    result = Image.open(data)
+    if exif_autorotate() or autorotate:
+        result = ImageOps.exif_transpose(result)
+    return result
 
 
-def load_image_from_file(path: str) -> Image.Image:
+def load_image_from_file(path: str, autorotate: bool = None) -> Image.Image:
     """
     Loads a Pillow image from the specified file.
+    By default, automatically applies EXIF rotation if env variable IDC_EXIF_AUTOROTATE=true.
 
     :param path: the path to load from
     :return: the image loaded from the file
+    :param autorotate: for overriding the implicit EXIF autorotation, None=implicit, True=apply autorotate, False=don't apply autorotate
+    :type autorotate: bool or None
     :rtype: Image
     """
-    return Image.open(path)
+    result = Image.open(path)
+    if exif_autorotate() or autorotate:
+        result = ImageOps.exif_transpose(result)
+    return result
 
 
 def load_labels(path: str, logger: logging.Logger = None) -> Tuple[List[str], Dict[int, str]]:
