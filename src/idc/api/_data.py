@@ -12,11 +12,11 @@ from PIL import Image
 from image_complete.bmp import is_bmp
 from image_complete.jpg import is_jpg
 from image_complete.png import is_png
-
-from seppl import MetaDataHandler, LoggingHandler, get_class_name
-from kasperl.api import safe_deepcopy, NameSupporter, SourceSupporter, AnnotationHandler, BytesSupporter
-from ._utils import load_image_from_bytes
 from wai.logging import set_logging_level, LOGGING_INFO
+
+from kasperl.api import safe_deepcopy, NameSupporter, SourceSupporter, AnnotationHandler, BytesSupporter
+from seppl import MetaDataHandler, LoggingHandler, get_class_name
+from ._utils import load_image_from_bytes, load_image_from_file
 
 _logger = None
 
@@ -227,7 +227,7 @@ class ImageData(AnnotationHandler, MetaDataHandler, NameSupporter, SourceSupport
             return self._image
         if self._source is not None:
             self._image_name = os.path.basename(self._source)
-            self._image = Image.open(self._source)
+            self._image = load_image_from_file(self._source)
             self._image_format = self._image.format
             return self._image
         return None

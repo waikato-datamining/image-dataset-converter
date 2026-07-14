@@ -1,11 +1,10 @@
 import argparse
-import numpy as np
 from typing import List, Iterable, Union
 
-from PIL import Image
+import numpy as np
 from wai.logging import LOGGING_WARNING
 
-from idc.api import DepthInformation, DepthData, JPEG_EXTENSIONS
+from idc.api import DepthInformation, DepthData, JPEG_EXTENSIONS, load_image_from_file
 from kasperl.api import Reader, locate_file
 from seppl.io import locate_files
 from seppl.variables import VariableSupporter, variable_list
@@ -119,7 +118,7 @@ class PFMDepthInfoReader(Reader, VariableSupporter):
 
         # read annotations
         self.logger().info("Reading from: " + str(self.session.current_input))
-        annotations = np.asarray(Image.open(self.session.current_input))
+        annotations = np.asarray(load_image_from_file(self.session.current_input))
 
         # associated image
         if len(imgs) > 1:

@@ -36,13 +36,16 @@ def locate_image(path: str, rel_path: str = None, suffix: str = None) -> Optiona
 
 def load_image_from_bytes(data) -> Image.Image:
     """
-    Loads a Pillow image from the bytes.
+    Loads a Pillow image from bytes/io.BytesIO.
 
     :param data: the bytes to load from
+    :type data: bytes or io.BytesIO
     :return: the image loaded from the data
     :rtype: Image
     """
-    return Image.open(io.BytesIO(data))
+    if not isinstance(data, io.BytesIO):
+        data = io.BytesIO(data)
+    return Image.open(data)
 
 
 def load_image_from_file(path: str) -> Image.Image:

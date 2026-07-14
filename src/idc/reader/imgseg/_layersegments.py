@@ -5,12 +5,12 @@ from typing import List, Iterable, Union
 
 import numpy as np
 from PIL import Image, ImageOps
-from seppl.variables import VariableSupporter, variable_list
-from seppl.io import locate_files
 from wai.logging import LOGGING_WARNING
 
+from idc.api import ImageSegmentationData, ImageSegmentationAnnotations, load_image_from_file
 from kasperl.api import Reader
-from idc.api import ImageSegmentationData, ImageSegmentationAnnotations
+from seppl.io import locate_files
+from seppl.variables import VariableSupporter, variable_list
 
 
 class LayerSegmentsImageSegmentationReader(Reader, VariableSupporter):
@@ -148,7 +148,7 @@ class LayerSegmentsImageSegmentationReader(Reader, VariableSupporter):
             ann_short = os.path.splitext(os.path.basename(ann))[0]
             label = ann_short[len(prefix_short + self.label_separator):]
             if label in self.labels:
-                img = Image.open(ann)
+                img = load_image_from_file(ann)
                 if img.mode != "1":
                     arr = np.asarray(img).astype(np.uint8)
                     unique = np.unique(arr)

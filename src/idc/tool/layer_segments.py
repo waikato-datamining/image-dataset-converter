@@ -1,16 +1,18 @@
 import argparse
 import logging
-import numpy as np
 import os
 import re
 import sys
 import traceback
 from typing import List, Dict, Tuple
 
+import numpy as np
 from PIL import Image
+from wai.logging import add_logging_level, init_logging, set_logging_level
+
+from idc.api import load_image_from_file
 from idc.core import ENV_IDC_LOGLEVEL
 from seppl.io import locate_files
-from wai.logging import add_logging_level, init_logging, set_logging_level
 
 LAYER_SEGMENTS = "idc-layer-segments"
 
@@ -160,7 +162,7 @@ def generate_output(base: str, anns: List[str], name: str, output: str,
     """
     # base image
     base_out = os.path.join(output, name + ".jpg")
-    base_img = Image.open(base)
+    base_img = load_image_from_file(base)
     if base_aug == BASE_AUGMENTATION_NONE:
         pass
     elif base_aug == BASE_AUGMENTATION_GRAYSCALE_STRETCH:
@@ -182,7 +184,7 @@ def generate_output(base: str, anns: List[str], name: str, output: str,
     # annotations
     for i, ann in enumerate(anns, start=1):
         try:
-            img = Image.open(ann)
+            img = load_image_from_file(ann)
             if ann_aug == ANN_AUGMENTATION_NONE:
                 pass
             elif ann_aug == ANN_AUGMENTATION_BINARY:
