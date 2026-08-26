@@ -19,5 +19,6 @@ options:
                         The format to use for the output, available
                         placeholders: data, image-name, image-name-noext,
                         image-format, image-width, image-height, has-
-                        annotations, annotations (default: {data})
+                        annotations, annotations, has-metadata; for metadata
+                        fields use metadata:<fieldname> (default: {data})
 ```

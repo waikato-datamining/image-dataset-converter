@@ -13,6 +13,8 @@ PH_IMAGE_WIDTH = "image-width"
 PH_IMAGE_HEIGHT = "image-height"
 PH_HAS_ANNOTATIONS = "has-annotations"
 PH_ANNOTATIONS = "annotations"
+PH_HAS_METADATA = "has-metadata"
+PH_METADATA_START = "metadata:"
 PLACEHOLDERS = [
     PH_DATA,
     PH_IMAGE_NAME,
@@ -22,6 +24,7 @@ PLACEHOLDERS = [
     PH_IMAGE_HEIGHT,
     PH_HAS_ANNOTATIONS,
     PH_ANNOTATIONS,
+    PH_HAS_METADATA,
 ]
 
 
@@ -68,7 +71,7 @@ class ImageDataFormatter(DataFormatter):
         :rtype: argparse.ArgumentParser
         """
         parser = super()._create_argparser()
-        parser.add_argument("-f", "--output_format", type=str, help="The format to use for the output, available placeholders: %s" % ", ".join(PLACEHOLDERS), required=False, default="{" + PH_DATA + "}")
+        parser.add_argument("-f", "--output_format", type=str, help="The format to use for the output, available placeholders: %s" % ", ".join(PLACEHOLDERS) + "; for metadata fields use " + PH_METADATA_START + "<fieldname>", required=False, default="{" + PH_DATA + "}")
         return parser
 
     def _apply_args(self, ns: argparse.Namespace):
@@ -111,9 +114,17 @@ class ImageDataFormatter(DataFormatter):
                     value = str(data.has_annotation())
                 elif ph == PH_ANNOTATIONS:
                     value = str(data.get_annotation())
+                elif ph == PH_HAS_METADATA:
+                    value = str(data.has_metadata())
                 if value is None:
                     self.logger().warning("Unsupported placeholder: {%s}" % ph_full)
                 else:
                     result = result.replace(ph_full, value)
+
+        if PH_METADATA_START in result:
+            for field in data.get_metadata():
+                ph_full = "{" + PH_METADATA_START + field + "}"
+                value = data.get_metadata()[field]
+                result = result.replace(ph_full, str(value))
 
         return result
