@@ -133,8 +133,7 @@ options:
 ```
 usage: idc-exec [-h] --exec_generator GENERATOR [--exec_dry_run]
                 [--exec_prefix PREFIX] [--exec_variables FILE]
-                [--exec_format {cmdline,file}] [--exec_dump_pipeline FILE]
-                [--exec_dump_pipeline_format {cmdline,file}]
+                [--exec_format {cmdline,file}] [--exec_global_opts OPTS]
                 [--exec_logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                 ...
 
@@ -172,12 +171,9 @@ options:
                         into individual arguments for execution; any line
                         starting with # is interpreted as commend and removed
                         before joining. (default: cmdline)
-  --exec_dump_pipeline FILE
-                        The file to dump the pipeline command in; supports
-                        variables. (default: None)
-  --exec_dump_pipeline_format {cmdline,file}
-                        The format used for dumping the pipeline. (default:
-                        cmdline)
+  --exec_global_opts OPTS
+                        The global options for the conversion function.
+                        (default: None)
   --exec_logging_level {DEBUG,INFO,WARNING,ERROR,CRITICAL}
                         The logging level to use. (default: WARN)
 ```
