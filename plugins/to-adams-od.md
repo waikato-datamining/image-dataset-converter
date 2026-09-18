@@ -9,7 +9,7 @@ usage: to-adams-od [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                    [-N LOGGER_NAME] [--skip]
                    [--split_ratios SPLIT_RATIOS [SPLIT_RATIOS ...]]
                    [--split_names SPLIT_NAMES [SPLIT_NAMES ...]]
-                   [--split_group SPLIT_GROUP] -o OUTPUT [-p PREFIX]
+                   [--split_group SPLIT_GROUP] -o OUTPUT [-p PREFIX] [-e .EXT]
                    [--annotations_only]
 
 Saves the bounding box/polygon definitions in an ADAMS .report file alongside
@@ -46,6 +46,9 @@ options:
                         The field prefix to use in the .report files for
                         identifying bbox/polygon object definitions (default:
                         Object.)
+  -e .EXT, --file_ext .EXT
+                        The file extension (incl dot) to use for the report
+                        files. (default: .report)
   --annotations_only    Outputs only the annotations. (default: False)
 ```
 

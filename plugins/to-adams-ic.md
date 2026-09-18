@@ -9,7 +9,7 @@ usage: to-adams-ic [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                    [-N LOGGER_NAME] [--skip]
                    [--split_ratios SPLIT_RATIOS [SPLIT_RATIOS ...]]
                    [--split_names SPLIT_NAMES [SPLIT_NAMES ...]]
-                   [--split_group SPLIT_GROUP] -o OUTPUT -c FIELD
+                   [--split_group SPLIT_GROUP] -o OUTPUT -c FIELD [-e .EXT]
                    [--annotations_only]
 
 Saves the classification label in an ADAMS .report file alongside the image.
@@ -44,6 +44,9 @@ options:
   -c FIELD, --class_field FIELD
                         The report field containing the image classification
                         label (default: None)
+  -e .EXT, --file_ext .EXT
+                        The file extension (incl dot) to use for the report
+                        files. (default: .report)
   --annotations_only    Outputs only the annotations. (default: False)
 ```
 

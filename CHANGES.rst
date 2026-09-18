@@ -45,6 +45,7 @@ Changelog
 - added `discard-blurry` filter
 - introduced the `IDC_EXIF_AUTOROTATE` environment variable to implicitly apply the EXIF auto-rotation when loading an image
 - `idc-exec` can specify global options to the conversion via `--exec_global_opts`
+- the writers `to-adams-ic` and `to-adams-od` now allow specifying the file extension to use for the report files
 
 
 0.1.0 (2025-10-31)

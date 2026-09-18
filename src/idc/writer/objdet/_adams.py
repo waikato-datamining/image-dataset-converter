@@ -11,7 +11,7 @@ from seppl.variables import InputBasedVariableSupporter, variable_list
 
 class AdamsObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter, InputBasedVariableSupporter):
 
-    def __init__(self, output_dir: str = None, prefix: str = "Object.", annotations_only: bool = None,
+    def __init__(self, output_dir: str = None, prefix: str = "Object.", annotations_only: bool = None, file_ext: str = None,
                  split_names: List[str] = None, split_ratios: List[int] = None, split_group: str = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
@@ -23,6 +23,8 @@ class AdamsObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter, 
         :type prefix: str
         :param annotations_only: whether to output only the annotations and not the images
         :type annotations_only: bool
+        :param file_ext: the file extension to use
+        :type file_ext: str
         :param split_names: the names of the splits, no splitting if None
         :type split_names: list
         :param split_ratios: the integer ratios of the splits (must sum up to 100)
@@ -38,6 +40,7 @@ class AdamsObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter, 
         self.output_dir = output_dir
         self.prefix = prefix
         self.annotations_only = annotations_only
+        self.file_ext = file_ext
 
     def name(self) -> str:
         """
@@ -67,6 +70,7 @@ class AdamsObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter, 
         parser = super()._create_argparser()
         parser.add_argument("-o", "--output", type=str, help="The directory to store the images/.report files in. Any defined splits get added beneath there. " + variable_list(obj=self), required=True)
         parser.add_argument("-p", "--prefix", metavar="PREFIX", type=str, default="Object.", help="The field prefix to use in the .report files for identifying bbox/polygon object definitions", required=False)
+        parser.add_argument("-e", "--file_ext", metavar=".EXT", type=str, default=".report", help="The file extension (incl dot) to use for the report files.", required=False)
         add_annotations_only_writer_param(parser)
         return parser
 
@@ -81,6 +85,7 @@ class AdamsObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter, 
         self.output_dir = ns.output
         self.prefix = ns.prefix
         self.annotations_only = ns.annotations_only
+        self.file_ext = ns.file_ext
 
     def accepts(self) -> List:
         """
@@ -98,6 +103,8 @@ class AdamsObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter, 
         super().initialize()
         if self.annotations_only is None:
             self.annotations_only = False
+        if self.file_ext is None:
+            self.file_ext = ".report"
 
     def write_stream(self, data):
         """
@@ -130,6 +137,6 @@ class AdamsObjectDetectionWriter(SplittableStreamWriter, AnnotationsOnlyWriter, 
                 item.save_image(path)
 
             if not empty:
-                path = os.path.splitext(path)[0] + ".report"
+                path = os.path.splitext(path)[0] + self.file_ext
                 self.logger().info("Writing report to: %s" % path)
                 save(report, path)

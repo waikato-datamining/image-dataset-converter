@@ -11,7 +11,7 @@ from seppl.variables import InputBasedVariableSupporter, variable_list
 
 class AdamsImageClassificationWriter(SplittableStreamWriter, AnnotationsOnlyWriter, InputBasedVariableSupporter):
 
-    def __init__(self, output_dir: str = None, class_field: str = None, annotations_only: bool = None,
+    def __init__(self, output_dir: str = None, class_field: str = None, annotations_only: bool = None, file_ext: str = None,
                  split_names: List[str] = None, split_ratios: List[int] = None, split_group: str = None,
                  logger_name: str = None, logging_level: str = LOGGING_WARNING):
         """
@@ -21,6 +21,8 @@ class AdamsImageClassificationWriter(SplittableStreamWriter, AnnotationsOnlyWrit
         :type output_dir: str
         :param class_field: the name of the field to store the classification label in
         :type class_field: str
+        :param file_ext: the file extension to use
+        :type file_ext: str
         :param split_names: the names of the splits, no splitting if None
         :type split_names: list
         :param split_ratios: the integer ratios of the splits (must sum up to 100)
@@ -36,6 +38,7 @@ class AdamsImageClassificationWriter(SplittableStreamWriter, AnnotationsOnlyWrit
         self.output_dir = output_dir
         self.class_field = class_field
         self.annotations_only = annotations_only
+        self.file_ext = file_ext
 
     def name(self) -> str:
         """
@@ -65,6 +68,7 @@ class AdamsImageClassificationWriter(SplittableStreamWriter, AnnotationsOnlyWrit
         parser = super()._create_argparser()
         parser.add_argument("-o", "--output", type=str, help="The directory to store the images/.report files in. Any defined splits get added beneath there. " + variable_list(obj=self), required=True)
         parser.add_argument("-c", "--class_field", metavar="FIELD", type=str, default=None, help="The report field containing the image classification label", required=True)
+        parser.add_argument("-e", "--file_ext", metavar=".EXT", type=str, default=".report", help="The file extension (incl dot) to use for the report files.", required=False)
         add_annotations_only_writer_param(parser)
         return parser
 
@@ -79,6 +83,7 @@ class AdamsImageClassificationWriter(SplittableStreamWriter, AnnotationsOnlyWrit
         self.output_dir = ns.output
         self.class_field = ns.class_field
         self.annotations_only = ns.annotations_only
+        self.file_ext = ns.file_ext
 
     def accepts(self) -> List:
         """
@@ -96,6 +101,8 @@ class AdamsImageClassificationWriter(SplittableStreamWriter, AnnotationsOnlyWrit
         super().initialize()
         if self.annotations_only is None:
             self.annotations_only = False
+        if self.file_ext is None:
+            self.file_ext = ".report"
 
     def write_stream(self, data):
         """
@@ -128,6 +135,6 @@ class AdamsImageClassificationWriter(SplittableStreamWriter, AnnotationsOnlyWrit
                 item.save_image(path)
 
             if not empty:
-                path = os.path.splitext(path)[0] + ".report"
+                path = os.path.splitext(path)[0] + self.file_ext
                 self.logger().info("Writing report to: %s" % path)
                 save(report, path)
