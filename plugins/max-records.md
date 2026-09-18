@@ -7,7 +7,7 @@ Suppresses records after the specified maximum number of records have passed thr
 
 ```
 usage: max-records [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
-                   [-N LOGGER_NAME] [--skip] [-m MAX_RECORDS]
+                   [-N LOGGER_NAME] [--skip] [-m MAX_RECORDS] [-s]
 
 Suppresses records after the specified maximum number of records have passed
 through.
@@ -24,4 +24,6 @@ options:
   -m MAX_RECORDS, --max_records MAX_RECORDS
                         The maximum number number of records to let through
                         before suppressing records. (default: -1)
+  -s, --stop_execution  Whether to stop the pipeline execution once the
+                        maximum has been reached. (default: False)
 ```
