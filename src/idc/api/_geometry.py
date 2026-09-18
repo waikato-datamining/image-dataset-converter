@@ -270,7 +270,8 @@ def merge_polygons(combined: Optional[ObjectDetectionData], max_slope_diff: floa
     return combined
 
 
-def fit_located_object(index: int, region: LocatedObject, annotation: LocatedObject, logger: Optional[logging.Logger]) -> LocatedObject:
+def fit_located_object(index: int, region: LocatedObject, annotation: LocatedObject,
+                       logger: Optional[logging.Logger] = None, context: str = None) -> LocatedObject:
     """
     Fits the annotation into the specified region, adjusts size if necessary.
 
@@ -282,6 +283,8 @@ def fit_located_object(index: int, region: LocatedObject, annotation: LocatedObj
     :type annotation: LocatedObject
     :param logger: the logger to use, can be None
     :type logger: logging.Logger
+    :param context: the optional context to output in the logging messages
+    :type context: str
     :return: the adjusted annotation
     :rtype: LocatedObject
     """
@@ -303,6 +306,8 @@ def fit_located_object(index: int, region: LocatedObject, annotation: LocatedObj
         sintersect = spolygon.intersection(sregion)
     except:
         msg = "Failed to compute intersection!"
+        if context is not None:
+            msg = context + ": " + msg
         if logger is None:
             print(msg)
         else:
@@ -320,18 +325,21 @@ def fit_located_object(index: int, region: LocatedObject, annotation: LocatedObj
                 sintersect = x
                 break
 
-    if isinstance(sintersect, Polygon):
-        x_list, y_list = sintersect.exterior.coords.xy
-        points = []
-        for i in range(len(x_list)):
-            points.append(WaiPoint(x=int(x_list[i]-region.x), y=int(y_list[i]-region.y)))
-        result.set_polygon(WaiPolygon(*points))
-    else:
-        msg = "Unhandled geometry type returned from intersection, skipping: %s" % str(type(sintersect))
-        if logger is None:
-            print(msg)
+    if sintersect is not None:
+        if isinstance(sintersect, Polygon):
+            x_list, y_list = sintersect.exterior.coords.xy
+            points = []
+            for i in range(len(x_list)):
+                points.append(WaiPoint(x=int(x_list[i]-region.x), y=int(y_list[i]-region.y)))
+            result.set_polygon(WaiPolygon(*points))
         else:
-            logger.warning(msg)
+            msg = "Unhandled geometry type returned from intersection, skipping: %s" % str(type(sintersect))
+            if context is not None:
+                msg = context + ": " + msg
+            if logger is None:
+                print(msg)
+            else:
+                logger.warning(msg)
 
     return result
 
