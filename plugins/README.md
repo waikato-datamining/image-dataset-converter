@@ -40,6 +40,7 @@
 * [attach-metadata](attach-metadata.md)
 * [block](block.md)
 * [check-duplicate-filenames](check-duplicate-filenames.md)
+* [check-polygon-validity](check-polygon-validity.md)
 * [coerce-box](coerce-box.md)
 * [coerce-mask](coerce-mask.md)
 * [convert-image-format](convert-image-format.md)
