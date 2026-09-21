@@ -140,22 +140,34 @@ class CheckPolygonValidity(BatchFilter):
                             continue
                         poly = locatedobject_polygon_to_shapely(lobj)
                         validity = explain_validity(poly)
-                        if self.logger().isEnabledFor(logging.INFO):
-                            self.logger().info("%s: %s" % (str(lobj), validity))
                         if self.action == ACTION_RECORD_ALL:
                             modified = True
                             lobj.metadata[self.field] = validity
                             ann_new.append(lobj)
+                            if self.logger().isEnabledFor(logging.INFO):
+                                self.logger().info("%s/%s: %s" % (item.image_name, str(lobj), validity))
                         elif self.action == ACTION_RECORD_INVALID:
                             if validity != VALID_GEOMETRY:
                                 modified = True
                                 lobj.metadata[self.field] = validity
                                 ann_new.append(lobj)
+                                if self.logger().isEnabledFor(logging.INFO):
+                                    self.logger().info("%s/%s: %s" % (item.image_name, str(lobj), validity))
+                            # make sure to remove any old flags, in case the annotations were updated
+                            elif self.field in lobj.metadata:
+                                modified = True
+                                del lobj.metadata[self.field]
                         elif self.action == ACTION_RECORD_VALID:
                             if validity == VALID_GEOMETRY:
                                 modified = True
                                 lobj.metadata[self.field] = validity
                                 ann_new.append(lobj)
+                                if self.logger().isEnabledFor(logging.INFO):
+                                    self.logger().info("%s/%s: %s" % (item.image_name, str(lobj), validity))
+                            # make sure to remove any old flags, in case the annotations were updated
+                            elif self.field in lobj.metadata:
+                                modified = True
+                                del lobj.metadata[self.field]
                     if modified:
                         item_new = item.duplicate()
                         item_new.annotation = ann_new
