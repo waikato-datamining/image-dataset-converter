@@ -150,24 +150,24 @@ class CheckPolygonValidity(BatchFilter):
                             if validity != VALID_GEOMETRY:
                                 modified = True
                                 lobj.metadata[self.field] = validity
-                                ann_new.append(lobj)
                                 if self.logger().isEnabledFor(logging.INFO):
                                     self.logger().info("%s/%s: %s" % (item.image_name, str(lobj), validity))
                             # make sure to remove any old flags, in case the annotations were updated
                             elif self.field in lobj.metadata:
                                 modified = True
                                 del lobj.metadata[self.field]
+                            ann_new.append(lobj)
                         elif self.action == ACTION_RECORD_VALID:
                             if validity == VALID_GEOMETRY:
                                 modified = True
                                 lobj.metadata[self.field] = validity
-                                ann_new.append(lobj)
                                 if self.logger().isEnabledFor(logging.INFO):
                                     self.logger().info("%s/%s: %s" % (item.image_name, str(lobj), validity))
                             # make sure to remove any old flags, in case the annotations were updated
                             elif self.field in lobj.metadata:
                                 modified = True
                                 del lobj.metadata[self.field]
+                            ann_new.append(lobj)
                     if modified:
                         item_new = item.duplicate()
                         item_new.annotation = ann_new
