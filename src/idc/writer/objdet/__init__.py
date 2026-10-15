@@ -1,5 +1,5 @@
 from ._adams import AdamsObjectDetectionWriter
-from ._coco import COCOObjectDetectionWriter
+from ._coco import COCOObjectDetectionWriter, COCOAnnotations
 from ._combined_csv import CombinedCSVObjectDetectionWriter
 from ._instancepng import InstancePngObjectDetectionWriter
 from ._opex import OPEXObjectDetectionWriter
