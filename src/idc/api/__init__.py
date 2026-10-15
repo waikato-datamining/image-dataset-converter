@@ -20,3 +20,4 @@ from ._geometry import intersect_over_union, COMBINATIONS, INTERSECT, UNION
 from ._geometry import merge_polygons, fit_located_object, fit_layers, fit_matrix, adjust_matrix
 from ._contours import MIN_RECT_WIDTH, MIN_RECT_HEIGHT, contours_to_objdet, objdet_from_instancepng
 from ._filter import APPLY_TO, APPLY_TO_IMAGE, APPLY_TO_ANNOTATIONS, APPLY_TO_BOTH, add_apply_to_param
+from ._coco import COCOAnnotations
