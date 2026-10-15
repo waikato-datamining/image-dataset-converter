@@ -18,7 +18,8 @@ class COCOAnnotations:
 
     def __init__(self, image_lookup: Dict[str, int], category_lookup: Dict[str, int],
                  license_name: str = "default", license_url: str = "",
-                 error_on_new_category: bool = False, default_supercategory: str = "Object"):
+                 error_on_new_category: bool = False, default_supercategory: str = "Object",
+                 default_score: float = 1.0):
         """
         Initializes the COCO annotations structure.
 
@@ -34,11 +35,14 @@ class COCOAnnotations:
         :type error_on_new_category: bool
         :param default_supercategory: the default category
         :type default_supercategory: str
+        :param default_score: the default score to use if not present in the annotations
+        :type default_score: float
         """
         self.image_lookup = image_lookup
         self.category_lookup = category_lookup
         self.error_on_new_category = error_on_new_category
         self.default_supercategory = default_supercategory
+        self.default_score = default_score
         self.license_name = license_name
         self.license_url = license_url
         self.data = dict()
@@ -139,6 +143,7 @@ class COCOAnnotations:
             annotation["id"] = annotation_id
             annotation["image_id"] = image_id
             annotation["category_id"] = category_id
+            annotation["score"] = float(obj.metadata["score"]) if ("score" in obj.metadata) else self.default_score
             annotation["bbox"] = [obj.x, obj.y, obj.width, obj.height]
             annotation["iscrowd"] = 0
             if obj.has_polygon():
