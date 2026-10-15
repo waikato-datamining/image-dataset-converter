@@ -45,6 +45,7 @@ setup(
         "python_image_complete",
         "simple_palette_utils",
         "opencv-python",
+        "pycocotools",
     ],
     version="0.1.0",
     author='Peter Reutemann',
