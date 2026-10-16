@@ -1,7 +1,9 @@
+import numpy as np
 from datetime import datetime
 from typing import List, Dict
 
-from idc.api import get_object_label
+from idc.api import get_object_label, ObjectDetectionData, ImageSegmentationData
+from pycocotools import mask as maskUtils
 
 
 class COCOAnnotations:
@@ -123,36 +125,62 @@ class COCOAnnotations:
         :param item: the image to append
         """
         image_id = self.image_lookup[item.image_name]
-        absolute = item.get_absolute()
-        for obj in absolute:
-            label = get_object_label(obj)
-            if label not in self.category_lookup:
-                if self.error_on_new_category:
-                    raise Exception("Undefined label encountered with image %s: %s" % (item.image_name, label))
-                self.category_lookup[label] = len(self.category_lookup) + 1
-            category_id = self.category_lookup[label]
-            annotation_id = len(self.data["annotations"]) + 1
-            annotation = dict()
-            annotation["id"] = annotation_id
-            annotation["image_id"] = image_id
-            annotation["category_id"] = category_id
-            annotation["score"] = float(obj.metadata["score"]) if ("score" in obj.metadata) else self.default_score
-            annotation["bbox"] = [obj.x, obj.y, obj.width, obj.height]
-            annotation["iscrowd"] = 0
-            if obj.has_polygon():
-                annotation["area"] = float(obj.get_actual_polygon().area())
-                x_list = obj.get_polygon_x()
-                y_list = obj.get_polygon_y()
-            else:
-                annotation["area"] = float(obj.width * obj.height)
-                x_list = [obj.x, obj.x + obj.width - 1, obj.x + obj.width - 1, obj.x]
-                y_list = [obj.y, obj.y, obj.y + obj.height - 1, obj.y + obj.height - 1]
-            segmentation = []
-            for x, y in zip(x_list, y_list):
-                segmentation.append(x)
-                segmentation.append(y)
-            annotation["segmentation"] = [segmentation]
-            self.data["annotations"].append(annotation)
+        if isinstance(item, ObjectDetectionData):
+            absolute = item.get_absolute()
+            for obj in absolute:
+                label = get_object_label(obj)
+                if label not in self.category_lookup:
+                    if self.error_on_new_category:
+                        raise Exception("Undefined label encountered with image %s: %s" % (item.image_name, label))
+                    self.category_lookup[label] = len(self.category_lookup) + 1
+                category_id = self.category_lookup[label]
+                annotation_id = len(self.data["annotations"]) + 1
+                annotation = dict()
+                annotation["id"] = annotation_id
+                annotation["image_id"] = image_id
+                annotation["category_id"] = category_id
+                annotation["score"] = float(obj.metadata["score"]) if ("score" in obj.metadata) else self.default_score
+                annotation["bbox"] = [obj.x, obj.y, obj.width, obj.height]
+                annotation["iscrowd"] = 0
+                if obj.has_polygon():
+                    annotation["area"] = float(obj.get_actual_polygon().area())
+                    x_list = obj.get_polygon_x()
+                    y_list = obj.get_polygon_y()
+                else:
+                    annotation["area"] = float(obj.width * obj.height)
+                    x_list = [obj.x, obj.x + obj.width - 1, obj.x + obj.width - 1, obj.x]
+                    y_list = [obj.y, obj.y, obj.y + obj.height - 1, obj.y + obj.height - 1]
+                segmentation = []
+                for x, y in zip(x_list, y_list):
+                    segmentation.append(x)
+                    segmentation.append(y)
+                annotation["segmentation"] = [segmentation]
+                self.data["annotations"].append(annotation)
+        elif isinstance(item, ImageSegmentationData):
+            for label in item.annotation.layers:
+                if label not in self.category_lookup:
+                    if self.error_on_new_category:
+                        raise Exception("Undefined label encountered with image %s: %s" % (item.image_name, label))
+                    self.category_lookup[label] = len(self.category_lookup) + 1
+                layer = item.annotation.layers[label]
+                category_id = self.category_lookup[label]
+                annotation_id = len(self.data["annotations"]) + 1
+                annotation = dict()
+                annotation["id"] = annotation_id
+                annotation["image_id"] = image_id
+                annotation["category_id"] = category_id
+                annotation["score"] = self.default_score
+                annotation["iscrowd"] = 0
+                rle_mask = maskUtils.encode(np.asfortranarray(layer))
+                annotation["segmentation"] = {
+                    "size": rle_mask["size"],
+                    "counts": rle_mask["counts"].decode("utf-8") if isinstance(rle_mask["counts"], bytes) else rle_mask["counts"]
+                }
+                annotation["bbox"] = maskUtils.toBbox(rle_mask).tolist()
+                annotation["area"] = int(maskUtils.area(rle_mask))
+                self.data["annotations"].append(annotation)
+        else:
+            raise Exception("Unsupported data structure: %s" % str(type(item)))
 
     def finalize(self):
         """
