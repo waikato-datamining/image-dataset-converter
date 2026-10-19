@@ -58,6 +58,7 @@
 * [discard-positives](discard-positives.md)
 * [exif-autorotate](exif-autorotate.md)
 * [filter-labels](filter-labels.md)
+* [fix-invalid-polygons](fix-invalid-polygons.md)
 * [get-metadata](get-metadata.md)
 * [grayscale-to-binary](grayscale-to-binary.md)
 * [inspect](inspect.md)

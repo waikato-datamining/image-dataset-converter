@@ -2,6 +2,7 @@ from ._check_polygon_validity import CheckPolygonValidity, ACTIONS, ACTION_RECOR
 from ._coerce_box import CoerceBox
 from ._coerce_mask import CoerceMask
 from ._dimension_discarder import DimensionDiscarder
+from ._fix_invalid_polygons import FixInvalidPolygons
 from ._label_present import LabelPresent
 from ._polygon_discarder import PolygonDiscarder
 from ._polygon_simplifier import PolygonSimplifier
