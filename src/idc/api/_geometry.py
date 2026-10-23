@@ -270,7 +270,7 @@ def merge_polygons(combined: Optional[ObjectDetectionData], max_slope_diff: floa
     return combined
 
 
-def fit_located_object(index: int, region: LocatedObject, annotation: LocatedObject,
+def fit_located_object(index: int, region: LocatedObject, annotation: LocatedObject, relocate: bool = True,
                        logger: Optional[logging.Logger] = None, context: str = None) -> LocatedObject:
     """
     Fits the annotation into the specified region, adjusts size if necessary.
@@ -281,6 +281,8 @@ def fit_located_object(index: int, region: LocatedObject, annotation: LocatedObj
     :type region: LocatedObject
     :param annotation: the annotation to fit
     :type annotation: LocatedObject
+    :param relocate: whether to move the coordinates relative to the regions top/left corner
+    :type relocate: bool
     :param logger: the logger to use, can be None
     :type logger: logging.Logger
     :param context: the optional context to output in the logging messages
@@ -288,12 +290,18 @@ def fit_located_object(index: int, region: LocatedObject, annotation: LocatedObj
     :return: the adjusted annotation
     :rtype: LocatedObject
     """
+    if relocate:
+        region_x = region.x
+        region_y = region.y
+    else:
+        region_x = 0
+        region_y = 0
     sregion = locatedobject_bbox_to_shapely(region)
     sbbox = locatedobject_bbox_to_shapely(annotation)
     sintersect = sbbox.intersection(sregion)
     minx, miny, maxx, maxy = [int(x) for x in sintersect.bounds]
-    result = LocatedObject(x=minx-region.x, y=miny-region.y, width=maxx-minx+1, height=maxy-miny+1, **annotation.metadata)
-    if index > -1:
+    result = LocatedObject(x=minx-region_x, y=miny-region_y, width=maxx-minx+1, height=maxy-miny+1, **annotation.metadata)
+    if relocate and (index > -1):
         result.metadata["region_index"] = index
         result.metadata["region_xywh"] = "%d,%d,%d,%d" % (region.x, region.y, region.width, region.height)
 
@@ -330,7 +338,7 @@ def fit_located_object(index: int, region: LocatedObject, annotation: LocatedObj
             x_list, y_list = sintersect.exterior.coords.xy
             points = []
             for i in range(len(x_list)):
-                points.append(WaiPoint(x=int(x_list[i]-region.x), y=int(y_list[i]-region.y)))
+                points.append(WaiPoint(x=int(x_list[i]-region_x), y=int(y_list[i]-region_y)))
             result.set_polygon(WaiPolygon(*points))
         else:
             msg = "Unhandled geometry type returned from intersection, skipping: %s" % str(type(sintersect))
