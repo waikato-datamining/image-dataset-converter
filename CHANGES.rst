@@ -49,6 +49,7 @@ Changelog
 - added `check-polygon-validity` object detection filter that can check for, e.g., self-intersecting polygons
   using shapely's `shapely.validation.explain_validity` function.
 - added the `fix-invalid-polygons` object detection filter, which attempts to fix invalid polygons
+- added `idc.api.shapely_to_polygon` help method
 
 
 0.1.0 (2025-10-31)

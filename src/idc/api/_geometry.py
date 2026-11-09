@@ -57,6 +57,30 @@ def locatedobject_polygon_to_shapely(lobj: LocatedObject) -> Polygon:
     return Polygon(coords)
 
 
+def shapely_to_polygon(geometry: BaseGeometry) -> Optional[WaiPolygon]:
+    """
+    Turns the shapely geometry back into a Polygon object, if possible.
+    Assumes absolute coordinates.
+
+    :param geometry: the geometry to convert
+    :type geometry: BaseGeometry
+    :return: the generated polygon, or None if failed to convert
+    :rtype: WaiPolygon
+    """
+    # use convex hull in case of MultiPolygon
+    if isinstance(geometry, MultiPolygon):
+        geometry = geometry.convex_hull
+
+    if isinstance(geometry, Polygon):
+        x_list, y_list = geometry.exterior.coords.xy
+        points = []
+        for i in range(len(x_list)):
+            points.append(WaiPoint(x=int(x_list[i]), y=int(y_list[i])))
+        return WaiPolygon(*points)
+
+    return None
+
+
 def shapely_to_locatedobject(geometry: BaseGeometry, label: str = None) -> LocatedObject:
     """
     Turns the shapely geometry back into a located object.

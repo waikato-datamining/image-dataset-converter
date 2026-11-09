@@ -15,7 +15,7 @@ from ._utils import locate_image, load_image_from_bytes, load_image_from_file, J
 from ._utils import load_labels, save_labels, save_labels_csv
 from ._utils import crop_image, pad_image
 from ._data_types import DATATYPE_DEPTH, DATATYPE_IMGCLS, DATATYPE_OBJDET, DATATYPE_IMGSEG, DATATYPES, DATATYPES_LONG, data_type_to_class, data_types_help, DataTypeSupporter
-from ._geometry import locatedobjects_to_shapely, shapely_to_locatedobject, locatedobject_polygon_to_shapely, locatedobject_bbox_to_shapely
+from ._geometry import locatedobjects_to_shapely, shapely_to_locatedobject, locatedobject_polygon_to_shapely, locatedobject_bbox_to_shapely, shapely_to_polygon
 from ._geometry import intersect_over_union, COMBINATIONS, INTERSECT, UNION
 from ._geometry import merge_polygons, fit_located_object, fit_layers, fit_matrix, adjust_matrix
 from ._contours import MIN_RECT_WIDTH, MIN_RECT_HEIGHT, contours_to_objdet, objdet_from_instancepng
