@@ -114,7 +114,7 @@ class ObjectDetectionToImageClassification(BatchFilter):
                     if self.multiplicity == "error":
                         raise Exception("More than one detected object for: %s" % item.image_name)
                     elif self.multiplicity == "skip":
-                        return
+                        continue
                     elif self.multiplicity == "single":
                         labels = set(map(get_object_label, ann))
                         if len(labels) > 1:
