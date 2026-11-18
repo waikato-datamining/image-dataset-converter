@@ -11,7 +11,8 @@ from ._imgseg import ImageSegmentationData, ImageSegmentationAnnotations, combin
 from ._imgseg import imgseg_from_indexedpng, imgseg_from_bluechannel, imgseg_from_grayscale, imgseg_to_indexedpng, imgseg_to_grayscale, imgseg_to_bluechannel, imgseg_from_instancepng
 from ._imgseg import from_indexedpng, from_bluechannel, from_grayscale, to_indexedpng, to_bluechannel, to_grayscale
 from ._objdet import ObjectDetectionData, get_object_label, set_object_label, DEFAULT_LABEL, LABEL_KEY
-from ._utils import locate_image, load_image_from_bytes, load_image_from_file, JPEG_EXTENSIONS, PNG_EXTENSIONS, exif_autorotate, apply_exif_rotation, IDC_EXIF_AUTOROTATE, exif_rotation_str
+from ._utils import locate_image, load_image_from_bytes, load_image_from_file, JPEG_EXTENSIONS, PNG_EXTENSIONS, exif_autorotate, apply_exif_rotation, IDC_EXIF_AUTOROTATE, exif_orientation_str
+from ._utils import EXIF_ORIENTATION_NONE, EXIF_ORIENTATION_FLIP_LEFT_RIGHT, EXIF_ORIENTATION_FLIP_TOP_BOTTOM, EXIF_ORIENTATION_ROTATE_90, EXIF_ORIENTATION_ROTATE_180, EXIF_ORIENTATION_ROTATE_270, EXIF_ORIENTATION_TRANSPOSE, EXIF_ORIENTATION_TRANSVERSE, EXIF_ORIENTATION_UNKNOWN, EXIF_ORIENTATIONS
 from ._utils import load_labels, save_labels, save_labels_csv
 from ._utils import crop_image, pad_image
 from ._data_types import DATATYPE_DEPTH, DATATYPE_IMGCLS, DATATYPE_OBJDET, DATATYPE_IMGSEG, DATATYPES, DATATYPES_LONG, data_type_to_class, data_types_help, DataTypeSupporter

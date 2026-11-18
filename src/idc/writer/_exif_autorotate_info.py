@@ -3,7 +3,7 @@ from typing import List
 
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ImageData, exif_rotation_str
+from idc.api import ImageData, exif_orientation_str
 from kasperl.api import make_list, StreamWriter
 from seppl.variables import InputBasedVariableSupporter, variable_list
 
@@ -80,7 +80,7 @@ class ExifAutorotateInfoWriter(StreamWriter, InputBasedVariableSupporter):
         :param data: the data to write (single record or iterable of records)
         """
         for item in make_list(data):
-            orientation_str = exif_rotation_str(item.image)
+            orientation_str = exif_orientation_str(item.image)
             if self.output_file is None:
                 print("%s: %s" % (item.image_name, orientation_str))
             else:

@@ -24,6 +24,27 @@ EXIF_AUTOROTATE = None
 
 DEFAULT_EXIF_AUTOROTATE = False
 
+EXIF_ORIENTATION_NONE = "none"
+EXIF_ORIENTATION_FLIP_LEFT_RIGHT = "flip-left-right"
+EXIF_ORIENTATION_ROTATE_180 = "rotate-180"
+EXIF_ORIENTATION_FLIP_TOP_BOTTOM = "flip-top-bottom"
+EXIF_ORIENTATION_TRANSPOSE = "transpose"
+EXIF_ORIENTATION_ROTATE_270 = "rotate-270"
+EXIF_ORIENTATION_TRANSVERSE = "transverse"
+EXIF_ORIENTATION_ROTATE_90 = "rotate-90"
+EXIF_ORIENTATION_UNKNOWN = "unknown"
+EXIF_ORIENTATIONS = [
+    EXIF_ORIENTATION_NONE,
+    EXIF_ORIENTATION_FLIP_LEFT_RIGHT,
+    EXIF_ORIENTATION_ROTATE_180,
+    EXIF_ORIENTATION_FLIP_TOP_BOTTOM,
+    EXIF_ORIENTATION_TRANSPOSE,
+    EXIF_ORIENTATION_ROTATE_270,
+    EXIF_ORIENTATION_TRANSVERSE,
+    EXIF_ORIENTATION_ROTATE_90,
+    EXIF_ORIENTATION_UNKNOWN,
+]
+
 
 def logger() -> logging.Logger:
     """
@@ -79,9 +100,9 @@ def apply_exif_rotation(img: Image.Image) -> Tuple[Image.Image, bool]:
     return img, modified
 
 
-def exif_rotation_str(image: Image.Image) -> str:
+def exif_orientation_str(image: Image.Image) -> str:
     """
-    Returns a string of the EXIF rotation string.
+    Returns a string of the EXIF orientation string.
 
     :param image: the image to get the info for
     :type image: Image.Image
@@ -92,23 +113,23 @@ def exif_rotation_str(image: Image.Image) -> str:
     image_exif = image.getexif()
     orientation = image_exif.get(ExifTags.Base.Orientation, 1)
     if orientation == 1:
-        return "none"
+        return EXIF_ORIENTATION_NONE
     elif orientation == 2:
-        return "flip-left-right"
+        return EXIF_ORIENTATION_FLIP_LEFT_RIGHT
     elif orientation == 3:
-        return "rotate-180"
+        return EXIF_ORIENTATION_ROTATE_180
     elif orientation == 4:
-        return "flip-top-bottom"
+        return EXIF_ORIENTATION_FLIP_TOP_BOTTOM
     elif orientation == 5:
-        return "transpose"
+        return EXIF_ORIENTATION_TRANSPOSE
     elif orientation == 6:
-        return "rotate-270"
+        return EXIF_ORIENTATION_ROTATE_270
     elif orientation == 7:
-        return "transverse"
+        return EXIF_ORIENTATION_TRANSVERSE
     elif orientation == 8:
-        return "rotate-90"
+        return EXIF_ORIENTATION_ROTATE_90
     else:
-        return "unknown"
+        return EXIF_ORIENTATION_UNKNOWN
 
 
 def locate_image(path: str, rel_path: str = None, suffix: str = None) -> Optional[str]:
