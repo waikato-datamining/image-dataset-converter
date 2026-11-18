@@ -51,6 +51,7 @@ Changelog
 - added the `fix-invalid-polygons` object detection filter, which attempts to fix invalid polygons
 - added `idc.api.shapely_to_polygon` help method
 - added `exif-autorotate-info` writer
+- fixed duplication of data for filters `rename` and `sanitize-name` to handle in-memory items
 
 
 0.1.0 (2025-10-31)

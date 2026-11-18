@@ -1,4 +1,3 @@
-import os
 from typing import Any
 
 from kasperl.filter import SanitizeName as KSanitizeName
@@ -17,4 +16,4 @@ class SanitizeName(KSanitizeName):
         :type name_new: str
         :return: the duplicated item
         """
-        return item.duplicate(source=os.path.join(path, name_new), name=name_new)
+        return item.duplicate(source=None, force_no_source=True, name=name_new)
