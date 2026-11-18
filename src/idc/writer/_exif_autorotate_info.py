@@ -1,10 +1,9 @@
 import argparse
 from typing import List
 
-from PIL import ExifTags
 from wai.logging import LOGGING_WARNING
 
-from idc.api import ImageData
+from idc.api import ImageData, exif_rotation_str
 from kasperl.api import make_list, StreamWriter
 from seppl.variables import InputBasedVariableSupporter, variable_list
 
@@ -81,29 +80,7 @@ class ExifAutorotateInfoWriter(StreamWriter, InputBasedVariableSupporter):
         :param data: the data to write (single record or iterable of records)
         """
         for item in make_list(data):
-            image = item.image
-            image.load()
-            image_exif = image.getexif()
-            orientation = image_exif.get(ExifTags.Base.Orientation, 1)
-            if orientation == 1:
-                orientation_str = "none"
-            elif orientation == 2:
-                orientation_str = "flip-left-right"
-            elif orientation == 3:
-                orientation_str = "rotate-180"
-            elif orientation == 4:
-                orientation_str = "flip-top-bottom"
-            elif orientation == 5:
-                orientation_str = "transpose"
-            elif orientation == 6:
-                orientation_str = "rotate-270"
-            elif orientation == 7:
-                orientation_str = "transverse"
-            elif orientation == 8:
-                orientation_str = "rotate-90"
-            else:
-                orientation_str = "unknown"
-
+            orientation_str = exif_rotation_str(item.image)
             if self.output_file is None:
                 print("%s: %s" % (item.image_name, orientation_str))
             else:

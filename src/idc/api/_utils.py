@@ -79,6 +79,38 @@ def apply_exif_rotation(img: Image.Image) -> Tuple[Image.Image, bool]:
     return img, modified
 
 
+def exif_rotation_str(image: Image.Image) -> str:
+    """
+    Returns a string of the EXIF rotation string.
+
+    :param image: the image to get the info for
+    :type image: Image.Image
+    :return: the rotation information
+    :rtype: str
+    """
+    image.load()
+    image_exif = image.getexif()
+    orientation = image_exif.get(ExifTags.Base.Orientation, 1)
+    if orientation == 1:
+        return "none"
+    elif orientation == 2:
+        return "flip-left-right"
+    elif orientation == 3:
+        return "rotate-180"
+    elif orientation == 4:
+        return "flip-top-bottom"
+    elif orientation == 5:
+        return "transpose"
+    elif orientation == 6:
+        return "rotate-270"
+    elif orientation == 7:
+        return "transverse"
+    elif orientation == 8:
+        return "rotate-90"
+    else:
+        return "unknown"
+
+
 def locate_image(path: str, rel_path: str = None, suffix: str = None) -> Optional[str]:
     """
     Tries to locate the image (png or jpg) for the given path by replacing its extension.
