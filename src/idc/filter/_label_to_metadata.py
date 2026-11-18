@@ -117,11 +117,11 @@ class LabelToMetaData(BatchFilter):
         Processes the image classification data.
 
         :param current: the item to process
-        :type current: ObjectDetectionData
+        :type current: ImageClassificationData
         :param items: the list to add the new items to
         :type items: list
         """
-        # If the object doesn't have a label, skip it
+        # If the item doesn't have a label, skip it
         if current.annotation is None:
             return
         new_item = safe_deepcopy(current)
