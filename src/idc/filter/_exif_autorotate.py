@@ -42,7 +42,7 @@ class ExifAutorotate(BatchFilter):
         :return: the description
         :rtype: str
         """
-        return "Automatically rotates the image according to the EXIF information (if applicable). May not work as expected if auto-rotation is enforced via environment variable " + IDC_EXIF_AUTOROTATE + " as the implicit rotation will lose the EXIF information."
+        return "Automatically rotates the image according to the EXIF information (if applicable). May not work as expected if auto-rotation is enforced via environment variable " + IDC_EXIF_AUTOROTATE + " as the implicit rotation will lose the EXIF information. Does NOT rotate any annotations!"
 
     def accepts(self) -> List:
         """

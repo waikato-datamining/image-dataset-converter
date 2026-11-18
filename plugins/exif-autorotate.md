@@ -3,7 +3,7 @@
 * accepts: seppl.AnyData
 * generates: seppl.AnyData
 
-Automatically rotates the image according to the EXIF information (if applicable). May not work as expected if auto-rotation is enforced via environment variable IDC_EXIF_AUTOROTATE as the implicit rotation will lose the EXIF information.
+Automatically rotates the image according to the EXIF information (if applicable). May not work as expected if auto-rotation is enforced via environment variable IDC_EXIF_AUTOROTATE as the implicit rotation will lose the EXIF information. Does NOT rotate any annotations!
 
 ```
 usage: exif-autorotate [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
@@ -12,7 +12,7 @@ usage: exif-autorotate [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
 Automatically rotates the image according to the EXIF information (if
 applicable). May not work as expected if auto-rotation is enforced via
 environment variable IDC_EXIF_AUTOROTATE as the implicit rotation will lose
-the EXIF information.
+the EXIF information. Does NOT rotate any annotations!
 
 options:
   -h, --help            show this help message and exit
