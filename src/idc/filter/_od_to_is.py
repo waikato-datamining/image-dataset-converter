@@ -6,7 +6,7 @@ from typing import List
 from PIL import Image, ImageDraw
 from seppl.io import BatchFilter
 from wai.logging import LOGGING_WARNING
-from kasperl.api import make_list, flatten_list
+from kasperl.api import make_list, flatten_list, safe_deepcopy
 from idc.api import ObjectDetectionData, ImageSegmentationData, ImageSegmentationAnnotations, get_object_label
 
 
@@ -161,7 +161,7 @@ class ObjectDetectionToImageSegmentation(BatchFilter):
 
             # generate imgseg container
             ann = ImageSegmentationAnnotations(labels=self.labels[:], layers=layers)
-            imgseg = ImageSegmentationData(source=item.source, image_name=item.image_name, data=item.data, annotation=ann, metadata=item.get_metadata())
+            imgseg = ImageSegmentationData(source=item.source, image_name=item.image_name, data=item.data, annotation=ann, metadata=safe_deepcopy(item.get_metadata()))
             result.append(imgseg)
 
         return flatten_list(result)

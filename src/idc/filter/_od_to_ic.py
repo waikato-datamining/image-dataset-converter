@@ -3,7 +3,7 @@ from typing import List
 
 from seppl.io import BatchFilter
 from wai.logging import LOGGING_WARNING
-from kasperl.api import make_list, flatten_list
+from kasperl.api import make_list, flatten_list, safe_deepcopy
 from idc.api import ObjectDetectionData, ImageClassificationData, get_object_label
 
 
@@ -108,7 +108,7 @@ class ObjectDetectionToImageClassification(BatchFilter):
         for item in make_list(data):
             ann = item.annotation
             if (ann is None) or (len(ann) == 0):
-                item_new = ImageClassificationData(source=item.source, image=item.image, data=item.data, metadata=item.get_metadata())
+                item_new = ImageClassificationData(source=item.source, image=item.image, data=item.data, metadata=safe_deepcopy(item.get_metadata()))
             else:
                 if len(ann) > 1:
                     if self.multiplicity == "error":
@@ -132,7 +132,7 @@ class ObjectDetectionToImageClassification(BatchFilter):
                         raise Exception("Unhandled multiplicity: %s" % self.multiplicity)
                 else:
                     label = get_object_label(ann[0])
-                item_new = ImageClassificationData(source=item.source, image_name=item.image_name, image=item.image, data=item.data, metadata=item.get_metadata(), annotation=label)
+                item_new = ImageClassificationData(source=item.source, image_name=item.image_name, image=item.image, data=item.data, metadata=safe_deepcopy(item.get_metadata()), annotation=label)
 
             result.append(item_new)
 
