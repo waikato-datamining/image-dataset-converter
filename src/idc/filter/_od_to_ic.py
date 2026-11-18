@@ -132,7 +132,7 @@ class ObjectDetectionToImageClassification(BatchFilter):
                         raise Exception("Unhandled multiplicity: %s" % self.multiplicity)
                 else:
                     label = get_object_label(ann[0])
-                item_new = ImageClassificationData(source=item.source, image=item.image, data=item.data, metadata=item.get_metadata(), annotation=label)
+                item_new = ImageClassificationData(source=item.source, image_name=item.image_name, image=item.image, data=item.data, metadata=item.get_metadata(), annotation=label)
 
             result.append(item_new)
 
