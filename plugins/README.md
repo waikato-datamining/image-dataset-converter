@@ -33,6 +33,7 @@
 
 ## Filters
 * [annotations-from-storage](annotations-from-storage.md)
+* [annotations-to-metadata](annotations-to-metadata.md)
 * [annotations-to-storage](annotations-to-storage.md)
 * [any-to-rgb](any-to-rgb.md)
 * [apply-ext-mask](apply-ext-mask.md)
@@ -110,6 +111,7 @@
 ## Writers
 * [console](console.md)
 * [delete-files](delete-files.md)
+* [exif-autorotate-info](exif-autorotate-info.md)
 * [send-email](send-email.md)
 * [to-adams-ic](to-adams-ic.md)
 * [to-adams-od](to-adams-od.md)

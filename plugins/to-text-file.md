@@ -7,7 +7,7 @@ Applies the specified data formatter to the incoming data and stores the result 
 ```
 usage: to-text-file [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
                     [-N LOGGER_NAME] [--skip] [-f DATA_FORMATTER] -o FILE [-a]
-                    [-d]
+                    [-d] [-H HEADER]
 
 Applies the specified data formatter to the incoming data and stores the
 result in the specified text file. Any other variables will get expanded in
@@ -35,6 +35,9 @@ options:
   -d, --delete_on_initialize
                         Whether to remove any existing file when initializing
                         the writer. (default: False)
+  -H HEADER, --header HEADER
+                        The header string to output before the first item is
+                        being output or when not appending (default: None)
 ```
 
 Available variables:

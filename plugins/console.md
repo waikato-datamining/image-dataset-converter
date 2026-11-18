@@ -6,7 +6,7 @@ Prints the data to stdout using the supplied data formatter. Any other variables
 
 ```
 usage: console [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-N LOGGER_NAME]
-               [--skip] [-f DATA_FORMATTER]
+               [--skip] [-f DATA_FORMATTER] [-H HEADER]
 
 Prints the data to stdout using the supplied data formatter. Any other
 variables will get expanded as well.
@@ -23,6 +23,9 @@ options:
   -f DATA_FORMATTER, --data_formatter DATA_FORMATTER
                         The data formatter to apply (default: df-simple-
                         string)
+  -H HEADER, --header HEADER
+                        The header string to output before the first item is
+                        being output (default: None)
 ```
 
 Available variables:
