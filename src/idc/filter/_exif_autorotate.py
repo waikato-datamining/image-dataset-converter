@@ -3,7 +3,7 @@ from typing import List
 from wai.logging import LOGGING_WARNING
 
 from idc.api import array_to_image, apply_exif_rotation, IDC_EXIF_AUTOROTATE, exif_autorotate, load_image_from_file
-from kasperl.api import make_list, flatten_list, safe_deepcopy
+from kasperl.api import make_list, flatten_list, safe_deepcopy, AnnotationHandler
 from seppl import AnyData
 from seppl.io import BatchFilter
 
@@ -103,6 +103,8 @@ class ExifAutorotate(BatchFilter):
                                       annotation=safe_deepcopy(item.annotation))
                 self.rotated += 1
                 result.append(item_new)
+                if item.has_annotation():
+                    self.logger().warning("Annotations did not get rotated with image, use 'exif-autorotate-annotations' instead!")
             else:
                 self.logger().info("No need to rotate: %s" % item.image_name)
                 self.unmodified += 1
