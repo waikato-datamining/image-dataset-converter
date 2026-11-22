@@ -3,14 +3,15 @@
 * accepts: seppl.AnyData
 * generates: seppl.AnyData
 
-Renames files using a user-supplied format. As a final step, expands placeholders as well.
+Renames files using a user-supplied format. As a final step, expands placeholders/variables and, if the data manages meta-data, meta-data placeholders of the format {meta:METADATAKEY}.
 
 ```
 usage: rename [-h] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-N LOGGER_NAME]
               [--skip] [-f NAME_FORMAT] [-r REGEXP] [-g GROUPS]
 
 Renames files using a user-supplied format. As a final step, expands
-placeholders as well.
+placeholders/variables and, if the data manages meta-data, meta-data
+placeholders of the format {meta:METADATAKEY}.
 
 options:
   -h, --help            show this help message and exit

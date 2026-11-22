@@ -3,6 +3,7 @@ from ._image_and_annotation_filter import ImageAndAnnotationFilter, OUTPUT_FORMA
 from ._attach_metadata import AttachMetaData
 from ._any_to_rgb import AnyToRGB
 from ._apply_ext_mask import ApplyExternalMask
+from ._block import Block
 from ._convert_image_format import ConvertImageFormat
 from ._count_specks import CountSpecks
 from ._dims_to_metadata import DimensionToMetadata
@@ -29,6 +30,7 @@ from ._rename import Rename
 from ._rgb_to_grayscale import RGBToGrayscale
 from ._sanitize_name import SanitizeName
 from ._sort_pixels import SortPixels
+from ._stop import Stop
 from ._strip_annotations import StripAnnotations
 from ._sub_process import SubProcess
 from ._tee import Tee

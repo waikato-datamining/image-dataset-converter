@@ -36,6 +36,16 @@ class Trigger(KTrigger):
                          field=field, comparison=comparison, value=value,
                          logger_name=logger_name, logging_level=logging_level)
 
+    def _available_data_formatters(self) -> Dict[str, Plugin]:
+        """
+        Returns the available data formatter plugins.
+
+        :return: the plugins (name -> plugin)
+        :rtype: dict
+        """
+        from idc.registry import available_data_formatters
+        return available_data_formatters()
+
     def _available_readers(self) -> Dict[str, Plugin]:
         """
         Returns the available readers from the registry.

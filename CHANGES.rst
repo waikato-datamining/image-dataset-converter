@@ -52,6 +52,8 @@ Changelog
 - added `idc.api.shapely_to_polygon` help method
 - added `exif-autorotate-info` writer
 - fixed duplication of data for filters `rename` and `sanitize-name` to handle in-memory items
+- the filters `block`, `sub-process`, `tee`, `trigger` and `stop` now can use a value generated with
+  the specified data-formatter instead of a meta-data value
 
 
 0.1.0 (2025-10-31)
