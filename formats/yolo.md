@@ -14,7 +14,7 @@ class x_center y_center width height
 
 The coordinates and dimensions are normalized (0-1) rather than absolute.
 
-## Polygon format
+## Polygon/segmentation format
 
 In order to accommodate mask/shape detection, a variant for managing polygons was 
 introduced later, using this format:
